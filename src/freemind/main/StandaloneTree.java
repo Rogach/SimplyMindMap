@@ -7,10 +7,12 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapMapModel;
 import freemind.modes.mindmapmode.MindMapMode;
 import freemind.view.mindmapview.MapView;
+import java.awt.BorderLayout;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 public class StandaloneTree {
   public static void main(String[] args) {
@@ -28,8 +30,18 @@ public class StandaloneTree {
     mc.setView(mapView);
     
     JFrame frame = new JFrame();
+    
+    MapView.ScrollPane scrollPane = new MapView.ScrollPane();
+    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+    scrollPane.setViewportView(mapView);
+    
     // need scrollpane to wrap mind map
-    frame.setContentPane(mapView);
+    BorderLayout layout = new BorderLayout();
+    frame.getContentPane().setLayout(layout);
+    frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+    
+    
     frame.setSize(500, 500);
     frame.setVisible(true);
     mapView.requestFocus();

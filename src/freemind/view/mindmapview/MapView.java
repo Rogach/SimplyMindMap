@@ -80,6 +80,8 @@ import freemind.modes.common.CommonNodeKeyListener;
 import freemind.modes.common.listeners.MindMapMouseWheelEventHandler;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.NewChildAction;
+import freemind.modes.mindmapmode.actions.NewPreviousSiblingAction;
+import freemind.modes.mindmapmode.actions.NewSiblingAction;
 import freemind.modes.mindmapmode.listeners.MindMapMouseMotionManager;
 import freemind.preferences.FreemindPropertyListener;
 import java.awt.event.KeyListener;
@@ -393,7 +395,15 @@ public class MapView extends JPanel implements Printable, Autoscroll {
     
     NewChildAction newChildAction = new NewChildAction(controller);
     this.getActionMap().put("new_child_action", newChildAction);
-    this.getInputMap().put(KeyStroke.getKeyStroke("INSERT"), "new_child_action");
+    this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("INSERT"), "new_child_action");
+    
+    NewSiblingAction newSiblingAction = new NewSiblingAction(controller);
+    this.getActionMap().put("new_sibling_action", newSiblingAction);
+    this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("ENTER"), "new_sibling_action");
+    
+    NewPreviousSiblingAction newPreviousSiblingAction = new NewPreviousSiblingAction(controller);
+    this.getActionMap().put("new_previous_sibling_action", newPreviousSiblingAction);
+    this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("shift ENTER"), "new_previous_sibling_action");
 
 		// fc, 20.6.2004: to enable tab for insert.
 		setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
