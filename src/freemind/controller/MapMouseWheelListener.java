@@ -28,11 +28,9 @@ import java.awt.event.MouseWheelListener;
  */
 public class MapMouseWheelListener implements MouseWheelListener {
 
-	private final Controller c;
 	private MouseWheelListener mListener;
 
-	public MapMouseWheelListener(Controller controller) {
-		c = controller;
+	public MapMouseWheelListener() {
 	}
 
 	public void mouseWheelMoved(MouseWheelEvent e) {

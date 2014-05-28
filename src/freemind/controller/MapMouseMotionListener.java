@@ -20,6 +20,8 @@
 
 package freemind.controller;
 
+import freemind.modes.mindmapmode.MindMapController;
+import freemind.view.mindmapview.MapView;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -41,11 +43,13 @@ public class MapMouseMotionListener implements MouseMotionListener,
 	}
 
 	private MapMouseMotionReceiver mReceiver;
+  
+  private final MapView view;
+  private final MindMapController controller;
 
-	private final Controller c;
-
-	public MapMouseMotionListener(Controller controller) {
-		c = controller;
+	public MapMouseMotionListener(MapView view, MindMapController controller) {
+    this.view = view;
+    this.controller = controller;
 	}
 
 	public void register(MapMouseMotionReceiver receiver) {
@@ -61,18 +65,16 @@ public class MapMouseMotionListener implements MouseMotionListener,
 			JPopupMenu popup = null;
 			// detect collision with an element placed on the root pane of the
 			// window.
-			java.lang.Object obj = c.getView().detectCollision(e.getPoint());
+			java.lang.Object obj = view.detectCollision(e.getPoint());
 			if (obj != null) {
 				// there is a collision with object obj.
 				// call the modecontroller to give a popup menu for this object
-				popup = c.getModeController().getPopupForModel(obj);
+				popup = controller.getPopupForModel(obj);
 			}
-			if (popup == null) { // no context popup found:
-				// normal popup:
-				popup = c.getFrame().getFreeMindMenuBar().getMapsPopupMenu();
-			}
-			popup.show(e.getComponent(), e.getX(), e.getY());
-			popup.setVisible(true);
+      if (popup != null) {
+        popup.show(e.getComponent(), e.getX(), e.getY());
+        popup.setVisible(true);
+      }
 		}
 	}
 
@@ -87,8 +89,7 @@ public class MapMouseMotionListener implements MouseMotionListener,
 
 	public void mouseClicked(MouseEvent e) {
 		// to loose the focus in edit
-		c.getView().selectAsTheOnlyOneSelected(c.getView().getSelected());
-		c.obtainFocusForSelected();
+		view.selectAsTheOnlyOneSelected(view.getSelected());
 	}
 
 	public void mouseEntered(MouseEvent e) {
@@ -112,7 +113,7 @@ public class MapMouseMotionListener implements MouseMotionListener,
 		}
 		handlePopup(e);
 		e.consume();
-		c.getView().setMoveCursor(false); // release the cursor to default
+		view.setMoveCursor(false); // release the cursor to default
 											// (PN)
 	}
 }

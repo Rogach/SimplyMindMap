@@ -38,6 +38,7 @@ import freemind.controller.actions.generated.instance.EditNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.FreeMind;
 import freemind.main.HtmlTools;
+import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.MindMapNode;
 import freemind.modes.NodeAdapter;
@@ -132,7 +133,7 @@ public class EditAction extends AbstractAction implements ActorXml {
 		mMindMapController.setBlocked(true); // locally "modal" stated
 
 		String text = node.getModel().toString();
-		String htmlEditingOption = mMindMapController.getController()
+		String htmlEditingOption = Resources.getInstance()
 				.getProperty("html_editing_option");
 
 		boolean isHtmlNode = HtmlTools.isHtmlNode(text);

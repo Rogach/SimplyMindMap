@@ -505,7 +505,7 @@ public abstract class NodeAdapter implements MindMapNode {
 		if (getFont() != null) {
 			return new Integer(getFont().getSize()).toString();
 		} else {
-			return getFrame().getProperty("defaultfontsize");
+			return Resources.getInstance().getProperty("defaultfontsize");
 		}
 	}
 
@@ -513,7 +513,7 @@ public abstract class NodeAdapter implements MindMapNode {
 		if (getFont() != null) {
 			return getFont().getFamily();
 		} else {
-			return getFrame().getProperty("defaultfont");
+			return Resources.getInstance().getProperty("defaultfontsize");
 		}
 	}
 

@@ -260,7 +260,7 @@ public abstract class ControllerAdapter implements ModeController,
 				NodeSelectionListener listener = (NodeSelectionListener) iter
 						.next();
 				listener.onFocusNode(node);
-			}
+      }
 			for (Iterator i = node.getModel().getActivatedHooks().iterator(); i
 					.hasNext();) {
 				PermanentNodeHook hook = (PermanentNodeHook) i.next();
@@ -388,7 +388,7 @@ public abstract class ControllerAdapter implements ModeController,
 	//
 
 	public String getText(String textId) {
-		return getController().getResourceString(textId);
+		return Resources.getInstance().getResourceString(textId);
 	}
 
 	public MindMap newMap() {
@@ -1483,7 +1483,7 @@ public abstract class ControllerAdapter implements ModeController,
 					fileOpener);
 		}
 		getController().getMapMouseWheelListener().register(
-				new MindMapMouseWheelEventHandler(this));
+				new MindMapMouseWheelEventHandler());
 	}
 
 	/**

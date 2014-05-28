@@ -34,6 +34,7 @@ import javax.swing.ImageIcon;
 
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.AbstractXmlAction;
@@ -150,7 +151,7 @@ public class UndoAction extends AbstractXmlAction {
 			// and cut vector, if bigger than given size:
 			int maxEntries = 100;
 			try {
-				maxEntries = new Integer(controller.getFrame().getProperty(
+				maxEntries = new Integer(Resources.getInstance().getProperty(
 						"undo_levels")).intValue();
 			} catch (NumberFormatException e) {
 				freemind.main.Resources.getInstance().logException(e);

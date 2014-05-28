@@ -226,9 +226,9 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 			}
 			++changesPerformedSinceLastSave;
 		}
-		if (setTitle) {
-			getModeController().getController().setTitle();
-		}
+//		if (setTitle) {
+//			getModeController().getController().setTitle();
+//		}
 	}
 
 	protected int getNumberOfChangesSinceLastSave() {

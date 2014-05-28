@@ -64,12 +64,12 @@ public class CommonNodeKeyListener implements KeyListener {
 		c = controller;
 		this.editHandler = editHandler;
 		if (logger == null) {
-			logger = controller.getFrame().getLogger(this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		}
-		up = c.getFrame().getAdjustableProperty("keystroke_move_up");
-		down = c.getFrame().getAdjustableProperty("keystroke_move_down");
-		left = c.getFrame().getAdjustableProperty("keystroke_move_left");
-		right = c.getFrame().getAdjustableProperty("keystroke_move_right");
+		up = Resources.getInstance().common.getAdjustableProperty("keystroke_move_up");
+		down = Resources.getInstance().common.getAdjustableProperty("keystroke_move_down");
+		left = Resources.getInstance().common.getAdjustableProperty("keystroke_move_left");
+		right = Resources.getInstance().common.getAdjustableProperty("keystroke_move_right");
 
 		// like in excel - write a letter means edit (PN)
 		// on the other hand it doesn't allow key navigation (sdfe)

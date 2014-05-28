@@ -785,11 +785,6 @@ public class MindMapController extends ControllerAdapter implements
 
 	public void nodeChanged(MindMapNode n) {
 		super.nodeChanged(n);
-		final MapModule mapModule = getController().getMapModule();
-		// only for the selected node (fc, 2.5.2004)
-		if (mapModule != null && n == mapModule.getModeController().getSelected()) {
-			updateToolbar(n);
-		}
 	}
 
 	/* (non-Javadoc)
@@ -2293,8 +2288,6 @@ public class MindMapController extends ControllerAdapter implements
 	 * Delegate method to Controller. Must be called after cut.s
 	 */
 	public void obtainFocusForSelected() {
-		getController().obtainFocusForSelected();
-
 	}
 
 	public boolean doTransaction(String pName, ActionPair pPair) {

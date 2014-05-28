@@ -63,6 +63,8 @@ import javax.swing.JViewport;
 import javax.swing.KeyStroke;
 
 import freemind.controller.Controller;
+import freemind.controller.MapMouseMotionListener;
+import freemind.controller.MapMouseWheelListener;
 import freemind.controller.NodeKeyListener;
 import freemind.controller.NodeMotionListener;
 import freemind.controller.NodeMouseMotionListener;
@@ -74,7 +76,12 @@ import freemind.modes.MindMap;
 import freemind.modes.MindMapArrowLink;
 import freemind.modes.MindMapLink;
 import freemind.modes.MindMapNode;
+import freemind.modes.common.CommonNodeKeyListener;
+import freemind.modes.common.listeners.MindMapMouseWheelEventHandler;
+import freemind.modes.mindmapmode.MindMapController;
+import freemind.modes.mindmapmode.listeners.MindMapMouseMotionManager;
 import freemind.preferences.FreemindPropertyListener;
+import java.awt.event.KeyListener;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -259,7 +266,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	private MindMap model;
 	private NodeView rootView = null;
 	private Selected selected = new Selected();
-	private Controller controller = null;
 	private float zoom = 1F;
 	private boolean disableMoveCursor = true;
 	private int siblingMaxLevel;
@@ -270,6 +276,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	private Rectangle boundingRectangle = null;
 	private boolean fitToPage = true;
   private Properties properties = null;
+  private MindMapController controller = null;
 
 	/** Used to identify a right click onto a link curve. */
 	private Vector/* of ArrowLinkViews */mArrowLinkViews = new Vector();
@@ -287,9 +294,10 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	static boolean NEED_PREF_SIZE_BUG_FIX = Controller.JAVA_VERSION
 			.compareTo("1.5.0") < 0;
 
-	public MapView(MindMap model, Properties properties) {
+	public MapView(MindMap model, Properties properties, final MindMapController controller) {
 		super();
     this.properties = properties;
+    this.controller = controller;
 		this.model = model;
 		if (logger == null)
 			logger = Logger.getLogger(this.getClass().getName());
@@ -360,10 +368,27 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 		initRoot();
 
 		setBackground(standardMapBackgroundColor);
-//		addMouseListener(controller.getMapMouseMotionListener());
-//		addMouseMotionListener(controller.getMapMouseMotionListener());
-//		addMouseWheelListener(controller.getMapMouseWheelListener());
-//		addKeyListener(getNodeKeyListener());
+    
+    MapMouseMotionListener mapMouseMotionListener = new MapMouseMotionListener(this, controller);
+		addMouseListener(mapMouseMotionListener);
+		addMouseMotionListener(mapMouseMotionListener);
+    mapMouseMotionListener.register(new MindMapMouseMotionManager(controller));
+    
+    MapMouseWheelListener mapMouseWheelListener = new MapMouseWheelListener();
+		addMouseWheelListener(mapMouseWheelListener);
+    mapMouseWheelListener.register(new MindMapMouseWheelEventHandler());
+    
+    NodeKeyListener nodeKeyListener = new NodeKeyListener();
+    addKeyListener(nodeKeyListener);
+    nodeKeyListener.register(
+      new CommonNodeKeyListener(controller, new CommonNodeKeyListener.EditHandler() {
+
+					public void edit(KeyEvent e, boolean addNew,
+							boolean editLong) {
+						controller.edit(e, addNew, editLong);
+
+					}
+		}));
 
 		// fc, 20.6.2004: to enable tab for insert.
 		setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,

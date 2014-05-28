@@ -29,12 +29,9 @@ import java.awt.event.KeyListener;
  */
 public class NodeKeyListener implements KeyListener {
 
-	private Controller c;
-
 	private KeyListener mListener;
 
-	public NodeKeyListener(Controller controller) {
-		c = controller;
+	public NodeKeyListener() {
 	}
 
 	public void register(KeyListener listener) {

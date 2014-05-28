@@ -30,6 +30,7 @@ import java.util.Set;
 
 import freemind.controller.Controller;
 import freemind.main.FreeMind;
+import freemind.main.Resources;
 import freemind.modes.ControllerAdapter;
 import freemind.modes.mindmapmode.actions.MindMapActions.MouseWheelEventHandler;
 import freemind.preferences.FreemindPropertyListener;
@@ -53,7 +54,7 @@ public class MindMapMouseWheelEventHandler implements MouseWheelListener {
 	/**
 	 *
 	 */
-	public MindMapMouseWheelEventHandler(ControllerAdapter controller) {
+	public MindMapMouseWheelEventHandler() {
 		super();
 		if (logger == null) {
 			logger = freemind.main.Resources.getInstance().getLogger(
@@ -68,7 +69,7 @@ public class MindMapMouseWheelEventHandler implements MouseWheelListener {
 				}
 			}
 		});
-		SCROLL_SKIPS = controller.getFrame().getIntProperty(
+		SCROLL_SKIPS = Resources.getInstance().getIntProperty(
 				FreeMind.RESOURCES_WHEEL_VELOCITY, 8);
 		logger.info("Setting SCROLL_SKIPS to " + SCROLL_SKIPS);
 	}

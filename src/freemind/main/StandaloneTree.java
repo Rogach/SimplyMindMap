@@ -20,16 +20,19 @@ public class StandaloneTree {
     mindMapMode.init();
     
     FreeMindCommon common = new FreeMindCommon(defaultPreferences);
-    ModeController mc = new MindMapController(mindMapMode);
+    MindMapController mc = new MindMapController(mindMapMode);
     MindMap m = new MindMapMapModel(common, mc);
     
-    MapView mapView = new MapView(m, defaultPreferences);
+    MapView mapView = new MapView(m, defaultPreferences, mc);
+    mapView.selectAsTheOnlyOneSelected(mapView.getRoot());
+    mc.setView(mapView);
     
     JFrame frame = new JFrame();
     // need scrollpane to wrap mind map
     frame.setContentPane(mapView);
     frame.setSize(500, 500);
     frame.setVisible(true);
+    mapView.requestFocus();
   }
   
   public static Properties readDefaultPreferences() {

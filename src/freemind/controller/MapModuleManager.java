@@ -241,10 +241,10 @@ public class MapModuleManager {
 	}
 
 	public void newMapModule(MindMap map, ModeController modeController) {
-		MapModule mapModule = new MapModule(map, new MapView(map, new Properties()),
-				modeController.getMode(), modeController);
-		addToOrChangeInMapModules(mapModule.toString(), mapModule);
-		setMapModule(mapModule, modeController.getMode());
+//		MapModule mapModule = new MapModule(map, new MapView(map, new Properties()),
+//				modeController.getMode(), modeController);
+//		addToOrChangeInMapModules(mapModule.toString(), mapModule);
+//		setMapModule(mapModule, modeController.getMode());
 	}
 
 	public MapModule getModuleGivenModeController(ModeController pModeController) {
