@@ -553,7 +553,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 				}
 			}
 		}
-		mMindMapController.getFrame().setWaitingCursor(false);
+//		mMindMapController.getFrame().setWaitingCursor(false);
 	}
 
 	/**

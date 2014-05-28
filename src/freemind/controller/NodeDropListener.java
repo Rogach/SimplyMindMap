@@ -30,12 +30,10 @@ import java.awt.dnd.DropTargetListener;
 
 public class NodeDropListener implements DropTargetListener {
 
-	private final Controller c;
 
 	private DropTargetListener mListener;
 
-	public NodeDropListener(Controller controller) {
-		c = controller;
+	public NodeDropListener() {
 	}
 
 	public void register(DropTargetListener listener) {

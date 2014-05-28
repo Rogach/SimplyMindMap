@@ -65,6 +65,8 @@ import javax.swing.KeyStroke;
 import freemind.controller.Controller;
 import freemind.controller.MapMouseMotionListener;
 import freemind.controller.MapMouseWheelListener;
+import freemind.controller.NodeDragListener;
+import freemind.controller.NodeDropListener;
 import freemind.controller.NodeKeyListener;
 import freemind.controller.NodeMotionListener;
 import freemind.controller.NodeMouseMotionListener;
@@ -83,7 +85,9 @@ import freemind.modes.mindmapmode.actions.NewChildAction;
 import freemind.modes.mindmapmode.actions.NewPreviousSiblingAction;
 import freemind.modes.mindmapmode.actions.NewSiblingAction;
 import freemind.modes.mindmapmode.listeners.MindMapMouseMotionManager;
+import freemind.modes.mindmapmode.listeners.MindMapNodeDropListener;
 import freemind.preferences.FreemindPropertyListener;
+import java.awt.dnd.DragGestureEvent;
 import java.awt.event.KeyListener;
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -172,6 +176,8 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	static boolean standardDrawRectangleForSelection;
 	private static Stroke standardSelectionStroke;
 	static private FreemindPropertyListener propertyChangeListener;
+  
+  
 
 	private class Selected {
 		private Vector mySelected = new Vector();
@@ -280,6 +286,9 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	private boolean fitToPage = true;
   private Properties properties = null;
   private MindMapController controller = null;
+  
+  private NodeDragListener nodeDragListener;
+  private NodeDropListener nodeDropListener;
 
 	/** Used to identify a right click onto a link curve. */
 	private Vector/* of ArrowLinkViews */mArrowLinkViews = new Vector();
@@ -449,6 +458,10 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 				"disable_cursor_move_paper");
 
 		addComponentListener(new ResizeListener());
+    
+    nodeDragListener = new NodeDragListener(controller);
+    nodeDropListener = new NodeDropListener();
+    nodeDropListener.register(new MindMapNodeDropListener(controller));
 	}
 
 	private void createPropertyChangeListener() {
@@ -1029,12 +1042,13 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 		return getController().getNodeKeyListener();
 	}
 
+  
 	DragGestureListener getNodeDragListener() {
-		return getController().getNodeDragListener();
+		return nodeDragListener;
 	}
 
 	DropTargetListener getNodeDropListener() {
-		return getController().getNodeDropListener();
+		return nodeDropListener;
 	}
 
 	public NodeView getSelected() {

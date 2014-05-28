@@ -34,6 +34,7 @@ import freemind.modes.MindMap;
 import freemind.modes.ModeController;
 import freemind.modes.NodeAdapter;
 import freemind.modes.XMLElementAdapter;
+import java.util.logging.Logger;
 
 public class MindMapXMLElement extends XMLElementAdapter {
 
@@ -56,7 +57,7 @@ public class MindMapXMLElement extends XMLElementAdapter {
      */
 	private void init() {
 		if (logger == null) {
-			logger = getFrame().getLogger(this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		}
 	}
 
@@ -67,9 +68,9 @@ public class MindMapXMLElement extends XMLElementAdapter {
 				mIdToTarget);
 	}
 
-	protected NodeAdapter createNodeAdapter(FreeMindMain frame, String nodeClass) {
+	protected NodeAdapter createNodeAdapter(String nodeClass) {
 		if (nodeClass == null) {
-			return new MindMapNodeModel(frame, getMap());
+			return new MindMapNodeModel(getMap());
 		}
 		// reflection:
 		try {
@@ -79,7 +80,7 @@ public class MindMapXMLElement extends XMLElementAdapter {
 			Class nodeJavaClass = Class.forName(nodeClass, true, loader);
 			Class[] constrArgs = new Class[] { Object.class,
 					FreeMindMain.class, MindMap.class };
-			Object[] constrObjs = new Object[] { null, frame, getMap() };
+			Object[] constrObjs = new Object[] { null, getMap() };
 			Constructor constructor = nodeJavaClass.getConstructor(constrArgs);
 			NodeAdapter nodeImplementor = (NodeAdapter) constructor
 					.newInstance(constrObjs);
@@ -88,13 +89,13 @@ public class MindMapXMLElement extends XMLElementAdapter {
 			freemind.main.Resources.getInstance().logException(e,
 					"Error occurred loading node implementor: " + nodeClass);
 			// the best we can do is to return the normal class:
-			NodeAdapter node = new MindMapNodeModel(frame, getMap());
+			NodeAdapter node = new MindMapNodeModel(getMap());
 			return node;
 		}
 	}
 
-	protected EdgeAdapter createEdgeAdapter(NodeAdapter node, FreeMindMain frame) {
-		return new MindMapEdgeModel(node, frame);
+	protected EdgeAdapter createEdgeAdapter(NodeAdapter node) {
+		return new MindMapEdgeModel(node);
 	}
 
 	protected CloudAdapter createCloudAdapter(NodeAdapter node,
@@ -113,8 +114,7 @@ public class MindMapXMLElement extends XMLElementAdapter {
 	}
 	
 	protected NodeAdapter createEncryptedNode(String additionalInfo) {
-		NodeAdapter node = createNodeAdapter(frame,
-				EncryptedMindMapNode.class.getName());
+		NodeAdapter node = createNodeAdapter(EncryptedMindMapNode.class.getName());
 		setUserObject(node);
 		copyAttributesToNode(node);
 		node.setAdditionalInfo(additionalInfo);

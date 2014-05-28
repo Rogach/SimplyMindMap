@@ -40,13 +40,13 @@ public class BrowseNodeModel extends NodeAdapter {
 	public BrowseNodeModel(FreeMindMain frame, MindMap map) {
 		super(frame, map);
 		children = new LinkedList();
-		setEdge(new BrowseEdgeModel(this, getFrame()));
+		setEdge(new BrowseEdgeModel(this));
 	}
 
 	public BrowseNodeModel(Object userObject, FreeMindMain frame, MindMap map) {
 		super(userObject, map);
 		children = new LinkedList();
-		setEdge(new BrowseEdgeModel(this, getFrame()));
+		setEdge(new BrowseEdgeModel(this));
 	}
 
 	//

@@ -52,8 +52,8 @@ public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {
 
 	// private static Color standardEdgeColor = new Color(0);
 
-	public EdgeAdapter(MindMapNode target, FreeMindMain frame) {
-		super(target, frame);
+	public EdgeAdapter(MindMapNode target) {
+		super(target);
 		NORMAL_WIDTH = WIDTH_PARENT;
 		if (listener == null) {
 			listener = new EdgeAdapterListener();

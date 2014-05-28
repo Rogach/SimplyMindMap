@@ -57,15 +57,15 @@ public class BrowseXMLElement extends XMLElementAdapter {
 				mIdToTarget);
 	}
 
-	protected NodeAdapter createNodeAdapter(FreeMindMain frame, String nodeClass) {
+	protected NodeAdapter createNodeAdapter(String nodeClass) {
 		if (nodeClass == ENCRYPTED_BROWSE_NODE) {
 			return new EncryptedBrowseNode(frame, mModeController);
 		}
-		return new BrowseNodeModel(frame, getMap());
+		return new BrowseNodeModel(null, getMap());
 	}
 
-	protected EdgeAdapter createEdgeAdapter(NodeAdapter node, FreeMindMain frame) {
-		return new BrowseEdgeModel(node, frame);
+	protected EdgeAdapter createEdgeAdapter(NodeAdapter node) {
+		return new BrowseEdgeModel(node);
 	}
 
 	protected CloudAdapter createCloudAdapter(NodeAdapter node,
@@ -85,7 +85,7 @@ public class BrowseXMLElement extends XMLElementAdapter {
 	}
 	
 	protected NodeAdapter createEncryptedNode(String additionalInfo) {
-		NodeAdapter node = createNodeAdapter(frame, ENCRYPTED_BROWSE_NODE);
+		NodeAdapter node = createNodeAdapter(ENCRYPTED_BROWSE_NODE);
 		setUserObject(node);
 		copyAttributesToNode(node);
 		node.setAdditionalInfo(additionalInfo);

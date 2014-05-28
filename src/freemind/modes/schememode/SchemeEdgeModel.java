@@ -27,6 +27,6 @@ import freemind.modes.MindMapNode;
 public class SchemeEdgeModel extends EdgeAdapter {
 
 	public SchemeEdgeModel(MindMapNode node, FreeMindMain frame) {
-		super(node, frame);
+		super(node);
 	}
 }

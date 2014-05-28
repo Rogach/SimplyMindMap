@@ -49,7 +49,7 @@ public class MindMapNodeModel extends NodeAdapter {
 	public MindMapNodeModel(Object userObject, MindMap map) {
 		super(userObject, map);
 		children = new LinkedList();
-		setEdge(new MindMapEdgeModel(this, getFrame()));
+		setEdge(new MindMapEdgeModel(this));
 	}
 
 	//

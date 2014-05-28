@@ -26,8 +26,8 @@ import freemind.modes.MindMapNode;
 
 public class MindMapEdgeModel extends EdgeAdapter {
 
-	public MindMapEdgeModel(MindMapNode node, FreeMindMain frame) {
-		super(node, frame);
+	public MindMapEdgeModel(MindMapNode node) {
+		super(node);
 	}
 
 }

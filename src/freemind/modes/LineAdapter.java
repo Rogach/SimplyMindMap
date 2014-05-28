@@ -42,8 +42,7 @@ public abstract class LineAdapter implements MindMapLine {
 	//
 	// Constructors
 	//
-	public LineAdapter(MindMapNode target, FreeMindMain frame) {
-		this.frame = frame;
+	public LineAdapter(MindMapNode target) {
 		this.target = target;
 		width = DEFAULT_WIDTH;
 		updateStandards();
@@ -75,10 +74,6 @@ public abstract class LineAdapter implements MindMapLine {
 				// setStandardStyle(Style.RED);
 			}
 		}
-	}
-
-	public FreeMindMain getFrame() {
-		return frame;
 	}
 
 	public Color getColor() {

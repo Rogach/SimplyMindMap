@@ -32,6 +32,7 @@ import freemind.main.XMLElement;
 import freemind.modes.attributes.Attribute;
 import freemind.modes.attributes.AttributeRegistry;
 import freemind.modes.attributes.AttributeTableLayoutModel;
+import java.util.logging.Logger;
 
 public abstract class XMLElementAdapter extends XMLElement {
 
@@ -93,22 +94,19 @@ public abstract class XMLElementAdapter extends XMLElement {
 	protected XMLElementAdapter(ModeController modeController,
 			Vector arrowLinkAdapters, HashMap IDToTarget) {
 		this.mModeController = modeController;
-		this.frame = modeController.getFrame();
 		this.mArrowLinkAdapters = arrowLinkAdapters;
 		this.mIdToTarget = IDToTarget;
 		if (logger == null) {
-			logger = frame.getLogger(this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		}
 	}
 
 	/** abstract method to create elements of my type (factory). */
 	abstract protected XMLElement createAnotherElement();
 
-	abstract protected NodeAdapter createNodeAdapter(FreeMindMain frame,
-			String nodeClass);
+	abstract protected NodeAdapter createNodeAdapter(String nodeClass);
 
-	abstract protected EdgeAdapter createEdgeAdapter(NodeAdapter node,
-			FreeMindMain frame);
+	abstract protected EdgeAdapter createEdgeAdapter(NodeAdapter node);
 
 	abstract protected CloudAdapter createCloudAdapter(NodeAdapter node,
 			FreeMindMain frame);
@@ -143,10 +141,10 @@ public abstract class XMLElementAdapter extends XMLElement {
 		super.setName(name);
 		// Create user object based on name
 		if (name.equals(XML_NODE)) {
-			userObject = createNodeAdapter(frame, null);
+			userObject = createNodeAdapter(null);
 			nodeAttributes.clear();
 		} else if (name.equals("edge")) {
-			userObject = createEdgeAdapter(null, frame);
+			userObject = createEdgeAdapter(null);
 		} else if (name.equals("cloud")) {
 			userObject = createCloudAdapter(null, frame);
 		} else if (name.equals("arrowlink")) {

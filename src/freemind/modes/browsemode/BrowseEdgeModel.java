@@ -29,8 +29,8 @@ import freemind.modes.MindMapNode;
 
 public class BrowseEdgeModel extends EdgeAdapter {
 
-	public BrowseEdgeModel(MindMapNode node, FreeMindMain frame) {
-		super(node, frame);
+	public BrowseEdgeModel(MindMapNode node) {
+		super(node);
 	}
 
 	public XMLElement save() {

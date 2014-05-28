@@ -34,6 +34,7 @@ import java.awt.event.InputEvent;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.MindMapNode;
+import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.MainView;
 
 /**
@@ -41,10 +42,10 @@ import freemind.view.mindmapview.MainView;
  */
 public class NodeDragListener implements DragGestureListener {
 
-	private final Controller c;
+	private final MindMapController controller;
 
-	public NodeDragListener(Controller controller) {
-		c = controller;
+	public NodeDragListener(MindMapController controller) {
+    this.controller = controller;
 	}
 
 	public Cursor getCursorByAction(int dragAction) {
@@ -89,7 +90,7 @@ public class NodeDragListener implements DragGestureListener {
 			dragAction = "COPY";
 		}
 
-		Transferable t = c.getModeController().copy();
+		Transferable t = controller.copy();
 		// new MindMapNodesSelection("Ahoj","Ahoj","Ahoj", dragAction);
 		((MindMapNodesSelection) t).setDropAction(dragAction);
 		// public void setDropAction(String dropActionContent) {

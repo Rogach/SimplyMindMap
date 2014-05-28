@@ -541,7 +541,7 @@ public class MindMapMapModel extends MapAdapter {
 			freemind.main.Resources.getInstance().logException(ex);
 			MindMapXMLElement mapElement = new MindMapXMLElement(
 					mModeController);
-			NodeAdapter result = mapElement.createNodeAdapter(getFrame(), null);
+			NodeAdapter result = mapElement.createNodeAdapter(null);
 			result.setText(errorMessage);
 			return (MindMapNodeModel) result;
 		} finally {

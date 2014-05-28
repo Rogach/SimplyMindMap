@@ -200,8 +200,8 @@ public class NodeView extends JComponent implements TreeModelListener {
 		ToolTipManager.sharedInstance().registerComponent(mainView);
 		mainView.addMouseListener(this.map.getNodeMouseMotionListener());
 		mainView.addMouseMotionListener(this.map.getNodeMouseMotionListener());
-//		addDragListener(map.getNodeDragListener());
-//		addDropListener(map.getNodeDropListener());
+		addDragListener(map.getNodeDragListener());
+		addDropListener(map.getNodeDropListener());
 		if (!model.isRoot() && "true".equals(Resources.getInstance().getProperty(FreeMindMain.ENABLE_NODE_MOVEMENT))) {
 			motionListenerView = new NodeMotionListenerView(this);
 			add(motionListenerView);
