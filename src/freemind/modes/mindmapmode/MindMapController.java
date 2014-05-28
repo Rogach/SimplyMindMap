@@ -423,7 +423,7 @@ public class MindMapController extends ControllerAdapter implements
 	private List mRegistrations;
 	private List mPatternsList = new Vector();
 	private long mGetEventIfChangedAfterThisTimeInMillies = 0;
-
+  
 	public MindMapController(Mode mode) {
 		super(mode);
 		if (logger == null) {
@@ -1684,7 +1684,7 @@ public class MindMapController extends ControllerAdapter implements
 
 		public void actionPerformed(ActionEvent e) {
 			setImageByFileChooser();
-			getController().obtainFocusForSelected();
+      getView().requestFocusInWindow();
 		}
 	}
 
@@ -2035,7 +2035,7 @@ public class MindMapController extends ControllerAdapter implements
 		logger.fine("MouseEvent: extend:" + extend + ", range:" + range
 				+ ", branch:" + branch + ", event:" + e + ", retValue:"
 				+ retValue);
-		obtainFocusForSelected();
+    getView().requestFocusInWindow();
 		return retValue;
 	}
 
@@ -2288,6 +2288,7 @@ public class MindMapController extends ControllerAdapter implements
 	 * Delegate method to Controller. Must be called after cut.s
 	 */
 	public void obtainFocusForSelected() {
+    getView().requestFocusInWindow();
 	}
 
 	public boolean doTransaction(String pName, ActionPair pPair) {

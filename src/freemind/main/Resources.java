@@ -34,7 +34,6 @@ import java.util.logging.Logger;
 import freemind.common.NamedObject;
 import freemind.common.TextTranslator;
 import freemind.main.FreeMindMain.VersionInformation;
-import static freemind.main.StandaloneTree.readDefaultPreferences;
 import java.io.InputStream;
 
 /**
@@ -50,7 +49,7 @@ public class Resources implements TextTranslator {
   public static Properties readDefaultPreferences() {
     String propsLoc = "freemind.properties";
     URL defaultPropsURL =
-        StandaloneTree.class.getClassLoader().getResource(propsLoc);
+        Resources.class.getClassLoader().getResource(propsLoc);
     Properties props = new Properties();
     try {
       InputStream in = defaultPropsURL.openStream();

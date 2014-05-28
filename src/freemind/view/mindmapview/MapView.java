@@ -404,7 +404,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
     NewPreviousSiblingAction newPreviousSiblingAction = new NewPreviousSiblingAction(controller);
     this.getActionMap().put("new_previous_sibling_action", newPreviousSiblingAction);
     this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("shift ENTER"), "new_previous_sibling_action");
-
+    
 		// fc, 20.6.2004: to enable tab for insert.
 		setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
 				Collections.EMPTY_SET);
