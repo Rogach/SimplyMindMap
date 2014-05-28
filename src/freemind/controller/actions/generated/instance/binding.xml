@@ -1,0 +1,944 @@
+<?xml version="1.0" encoding="UTF-8"?><binding>
+<format type="java.lang.String" serializer="de.foltin.StringEncoder.encode" deserializer="de.foltin.StringEncoder.decode"/>
+  <mapping class='freemind.controller.actions.generated.instance.XmlAction' type-name='xml_action_type' abstract='true'>
+  </mapping>
+  <mapping name="xml_action" class="freemind.controller.actions.generated.instance.XmlAction"><structure map-as="xml_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.CompoundAction' type-name='compound_action_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+    <collection field='choiceList' ordered='false'>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.CompoundAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.SelectNodeAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.CutNodeAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.PasteNodeAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.UndoPasteNodeAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.RevertXmlAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.BoldNodeAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.ItalicNodeAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.UnderlinedNodeAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.FontSizeNodeAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.FontNodeAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.NodeColorFormatAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.NodeBackgroundColorFormatAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.NodeStyleFormatAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.EdgeColorFormatAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.EdgeWidthFormatAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.EdgeStyleFormatAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.DeleteNodeAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.EditNodeAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.NewNodeAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.FoldAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.MoveNodesAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.HookNodeAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.AddIconAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.RemoveIconXmlAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.RemoveAllIconsXmlAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.MoveNodeXmlAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.AddCloudXmlAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.CloudColorXmlAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.AddArrowLinkXmlAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.AddLinkXmlAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.RemoveArrowLinkXmlAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.ArrowLinkColorXmlAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.ArrowLinkArrowXmlAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.ArrowLinkPointXmlAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.SetAttributeNameElementaryAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.SetAttributeValueElementaryAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.InsertAttributeElementaryAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.DeleteAttributeElementaryAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.SetAttributeColumnWidthElementaryAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.RegistryAttributeElementaryAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.UnregistryAttributeElementaryAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.RegistryAttributeValueElementaryAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.UnregistryAttributeValueElementaryAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.ReplaceAttributeValueElementaryAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.SetAttributeFontSizeElementaryAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.SetAttributeVisibleElementaryAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.SetAttributeRestrictedElementaryAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.EditNoteToNodeAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.PlaceNodeXmlAction"/>
+    </collection>
+  </mapping>
+  <mapping name="compound_action" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.CompoundAction"><structure map-as="compound_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.SelectNodeAction' type-name='select_node_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+  </mapping>
+  <mapping name="select_node_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.SelectNodeAction"><structure map-as="select_node_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.TransferableFile' type-name='transferable_file_type' abstract='true'>
+    <value name='file_name' field='fileName' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="transferable_file" class="freemind.controller.actions.generated.instance.TransferableFile"><structure map-as="transferable_file_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.TransferableImage' type-name='transferable_image_type' abstract='true'>
+    <value name='image' field='image' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="transferable_image" class="freemind.controller.actions.generated.instance.TransferableImage"><structure map-as="transferable_image_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.TransferableContent' type-name='transferable_content_type' abstract='true'>
+    <collection field="transferableFileList">
+      <structure map-as="freemind.controller.actions.generated.instance.TransferableFile"/>
+    </collection>
+    <collection field="transferableImageList">
+      <structure map-as="freemind.controller.actions.generated.instance.TransferableImage"/>
+    </collection>
+      <value name="Transferable" field="transferable" usage="optional"/>
+      <value name="TransferableAsPlainText" field="transferableAsPlainText" usage="optional"/>
+      <value name="TransferableAsRTF" field="transferableAsRTF" usage="optional"/>
+      <value name="TransferableAsDrop" field="transferableAsDrop" usage="optional"/>
+      <value name="TransferableAsHtml" field="transferableAsHtml" usage="optional"/>
+      <value name="TransferableAsImage" field="transferableAsImage" usage="optional"/>
+  </mapping>
+  <mapping name="transferable_content" class="freemind.controller.actions.generated.instance.TransferableContent"><structure map-as="transferable_content_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.CutNodeAction' type-name='cut_node_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+  </mapping>
+  <mapping name="cut_node_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.CutNodeAction"><structure map-as="cut_node_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PasteNodeAction' type-name='paste_node_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+      <structure field="transferableContent" usage="required" map-as="freemind.controller.actions.generated.instance.TransferableContent"/>
+    <value name='isLeft' field='isLeft' usage='required' style='attribute'/>
+    <value name='asSibling' field='asSibling' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="paste_node_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.PasteNodeAction"><structure map-as="paste_node_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.UndoPasteNodeAction' type-name='undo_paste_node_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+    <value name='isLeft' field='isLeft' usage='required' style='attribute'/>
+    <value name='asSibling' field='asSibling' usage='required' style='attribute'/>
+    <value name='node_amount' field='nodeAmount' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="undo_paste_node_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.UndoPasteNodeAction"><structure map-as="undo_paste_node_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.RevertXmlAction' type-name='revert_xml_action_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+    <value name='map' field='map' usage='required' style='attribute'/>
+    <value name='localFileName' field='localFileName' usage='optional' style='attribute'/>
+    <value name='filePrefix' field='filePrefix' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="revert_xml_action" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.RevertXmlAction"><structure map-as="revert_xml_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.NodeAction' type-name='node_action_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+    <value name='node' field='node' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="node_action" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.NodeAction"><structure map-as="node_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.ChangeRootNodeAction' type-name='change_root_node_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+  </mapping>
+  <mapping name="change_root_node_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.ChangeRootNodeAction"><structure map-as="change_root_node_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.AddIconAction' type-name='add_icon_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+    <value name='icon_name' field='iconName' usage='required' style='attribute'/>
+    <value name='icon_position' field='iconPosition' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="add_icon_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.AddIconAction"><structure map-as="add_icon_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.RemoveIconXmlAction' type-name='remove_icon_xml_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+    <value name='icon_position' field='iconPosition' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="remove_icon_xml_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.RemoveIconXmlAction"><structure map-as="remove_icon_xml_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.RemoveAllIconsXmlAction' type-name='remove_all_icons_xml_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+  </mapping>
+  <mapping name="remove_all_icons_xml_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.RemoveAllIconsXmlAction"><structure map-as="remove_all_icons_xml_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.AddCloudXmlAction' type-name='add_cloud_xml_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+    <value name='enabled' field='enabled' usage='required' style='attribute'/>
+    <value name='color' field='color' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="add_cloud_xml_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.AddCloudXmlAction"><structure map-as="add_cloud_xml_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.MoveNodeXmlAction' type-name='move_node_xml_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+    <value name='v_gap' field='vGap' usage='required' style='attribute'/>
+    <value name='h_gap' field='hGap' usage='required' style='attribute'/>
+    <value name='shift_y' field='shiftY' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="move_node_xml_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.MoveNodeXmlAction"><structure map-as="move_node_xml_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.CloudColorXmlAction' type-name='cloud_color_xml_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+    <value name='color' field='color' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="cloud_color_xml_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.CloudColorXmlAction"><structure map-as="cloud_color_xml_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.AddLinkXmlAction' type-name='add_link_xml_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+    <value name='destination' field='destination' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="add_link_xml_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.AddLinkXmlAction"><structure map-as="add_link_xml_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.AddArrowLinkXmlAction' type-name='add_arrow_link_xml_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+    <value name='destination' field='destination' usage='required' style='attribute'/>
+    <value name='new_id' field='newId' usage='optional' style='attribute'/>
+    <value name='color' field='color' usage='optional' style='attribute'/>
+    <value name='startInclination' field='startInclination' usage='optional' style='attribute'/>
+    <value name='endInclination' field='endInclination' usage='optional' style='attribute'/>
+    <value name='startArrow' field='startArrow' usage='optional' style='attribute'/>
+    <value name='endArrow' field='endArrow' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="add_arrow_link_xml_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.AddArrowLinkXmlAction"><structure map-as="add_arrow_link_xml_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.RemoveArrowLinkXmlAction' type-name='remove_arrow_link_xml_action_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+    <value name='id' field='id' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="remove_arrow_link_xml_action" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.RemoveArrowLinkXmlAction"><structure map-as="remove_arrow_link_xml_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.ArrowLinkColorXmlAction' type-name='arrow_link_color_xml_action_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+    <value name='id' field='id' usage='required' style='attribute'/>
+    <value name='color' field='color' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="arrow_link_color_xml_action" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.ArrowLinkColorXmlAction"><structure map-as="arrow_link_color_xml_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.ArrowLinkArrowXmlAction' type-name='arrow_link_arrow_xml_action_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+    <value name='id' field='id' usage='required' style='attribute'/>
+    <value name='end_arrow' field='endArrow' usage='optional' style='attribute'/>
+    <value name='start_arrow' field='startArrow' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="arrow_link_arrow_xml_action" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.ArrowLinkArrowXmlAction"><structure map-as="arrow_link_arrow_xml_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.ArrowLinkPointXmlAction' type-name='arrow_link_point_xml_action_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+    <value name='id' field='id' usage='required' style='attribute'/>
+    <value name='end_point' field='endPoint' usage='optional' style='attribute'/>
+    <value name='start_point' field='startPoint' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="arrow_link_point_xml_action" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.ArrowLinkPointXmlAction"><structure map-as="arrow_link_point_xml_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.FormatNodeAction' type-name='format_node_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+  </mapping>
+  <mapping name="format_node_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.FormatNodeAction"><structure map-as="format_node_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.BoldNodeAction' type-name='bold_node_action_type' abstract='true'>
+    <structure map-as="format_node_action_type"/>
+    <value name='bold' field='bold' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="bold_node_action" extends="freemind.controller.actions.generated.instance.FormatNodeAction" class="freemind.controller.actions.generated.instance.BoldNodeAction"><structure map-as="bold_node_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.ItalicNodeAction' type-name='italic_node_action_type' abstract='true'>
+    <structure map-as="format_node_action_type"/>
+    <value name='italic' field='italic' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="italic_node_action" extends="freemind.controller.actions.generated.instance.FormatNodeAction" class="freemind.controller.actions.generated.instance.ItalicNodeAction"><structure map-as="italic_node_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.UnderlinedNodeAction' type-name='underlined_node_action_type' abstract='true'>
+    <structure map-as="format_node_action_type"/>
+    <value name='underlined' field='underlined' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="underlined_node_action" extends="freemind.controller.actions.generated.instance.FormatNodeAction" class="freemind.controller.actions.generated.instance.UnderlinedNodeAction"><structure map-as="underlined_node_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.NodeColorFormatAction' type-name='node_color_format_action_type' abstract='true'>
+    <structure map-as="format_node_action_type"/>
+    <value name='color' field='color' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="node_color_format_action" extends="freemind.controller.actions.generated.instance.FormatNodeAction" class="freemind.controller.actions.generated.instance.NodeColorFormatAction"><structure map-as="node_color_format_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.NodeBackgroundColorFormatAction' type-name='node_background_color_format_action_type' abstract='true'>
+    <structure map-as="format_node_action_type"/>
+    <value name='color' field='color' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="node_background_color_format_action" extends="freemind.controller.actions.generated.instance.FormatNodeAction" class="freemind.controller.actions.generated.instance.NodeBackgroundColorFormatAction"><structure map-as="node_background_color_format_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.EdgeColorFormatAction' type-name='edge_color_format_action_type' abstract='true'>
+    <structure map-as="format_node_action_type"/>
+    <value name='color' field='color' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="edge_color_format_action" extends="freemind.controller.actions.generated.instance.FormatNodeAction" class="freemind.controller.actions.generated.instance.EdgeColorFormatAction"><structure map-as="edge_color_format_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.EdgeStyleFormatAction' type-name='edge_style_format_action_type' abstract='true'>
+    <structure map-as="format_node_action_type"/>
+    <value name='style' field='style' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="edge_style_format_action" extends="freemind.controller.actions.generated.instance.FormatNodeAction" class="freemind.controller.actions.generated.instance.EdgeStyleFormatAction"><structure map-as="edge_style_format_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.EdgeWidthFormatAction' type-name='edge_width_format_action_type' abstract='true'>
+    <structure map-as="format_node_action_type"/>
+    <value name='width' field='width' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="edge_width_format_action" extends="freemind.controller.actions.generated.instance.FormatNodeAction" class="freemind.controller.actions.generated.instance.EdgeWidthFormatAction"><structure map-as="edge_width_format_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.NodeStyleFormatAction' type-name='node_style_format_action_type' abstract='true'>
+    <structure map-as="format_node_action_type"/>
+    <value name='style' field='style' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="node_style_format_action" extends="freemind.controller.actions.generated.instance.FormatNodeAction" class="freemind.controller.actions.generated.instance.NodeStyleFormatAction"><structure map-as="node_style_format_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.FontSizeNodeAction' type-name='font_size_node_action_type' abstract='true'>
+    <structure map-as="format_node_action_type"/>
+    <value name='size' field='size' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="font_size_node_action" extends="freemind.controller.actions.generated.instance.FormatNodeAction" class="freemind.controller.actions.generated.instance.FontSizeNodeAction"><structure map-as="font_size_node_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.FontNodeAction' type-name='font_node_action_type' abstract='true'>
+    <structure map-as="format_node_action_type"/>
+    <value name='font' field='font' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="font_node_action" extends="freemind.controller.actions.generated.instance.FormatNodeAction" class="freemind.controller.actions.generated.instance.FontNodeAction"><structure map-as="font_node_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.DeleteNodeAction' type-name='delete_node_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+  </mapping>
+  <mapping name="delete_node_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.DeleteNodeAction"><structure map-as="delete_node_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.TextNodeAction' type-name='text_node_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+      <value name="text" field="text" usage="optional"/>
+  </mapping>
+  <mapping name="text_node_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.TextNodeAction"><structure map-as="text_node_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.EditNodeAction' type-name='edit_node_action_type' abstract='true'>
+    <structure map-as="text_node_action_type"/>
+  </mapping>
+  <mapping name="edit_node_action" extends="freemind.controller.actions.generated.instance.TextNodeAction" class="freemind.controller.actions.generated.instance.EditNodeAction"><structure map-as="edit_node_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.EditNoteToNodeAction' type-name='edit_note_to_node_action_type' abstract='true'>
+    <structure map-as="text_node_action_type"/>
+  </mapping>
+  <mapping name="edit_note_to_node_action" extends="freemind.controller.actions.generated.instance.TextNodeAction" class="freemind.controller.actions.generated.instance.EditNoteToNodeAction"><structure map-as="edit_note_to_node_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.NewNodeAction' type-name='new_node_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+    <value name='position' field='position' usage='optional' style='attribute'/>
+    <value name='index' field='index' usage='optional' style='attribute'/>
+    <value name='newId' field='newId' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="new_node_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.NewNodeAction"><structure map-as="new_node_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.FoldAction' type-name='fold_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+    <value name='folded' field='folded' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="fold_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.FoldAction"><structure map-as="fold_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.NodeListMember' type-name='node_list_member_type' abstract='true'>
+    <value name='node' field='node' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="node_list_member" class="freemind.controller.actions.generated.instance.NodeListMember"><structure map-as="node_list_member_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.NodeChildParameter' type-name='node_child_parameter_type' abstract='true'>
+    <value name='key' field='key' usage='required' style='attribute'/>
+    <value name='value' field='value' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="node_child_parameter" class="freemind.controller.actions.generated.instance.NodeChildParameter"><structure map-as="node_child_parameter_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.MoveNodesAction' type-name='move_nodes_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+    <collection field="nodeListMemberList">
+      <structure map-as="freemind.controller.actions.generated.instance.NodeListMember"/>
+    </collection>
+    <value name='direction' field='direction' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="move_nodes_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.MoveNodesAction"><structure map-as="move_nodes_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PlaceNodeXmlAction' type-name='place_node_xml_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+    <value name='map_center_longitude' field='mapCenterLongitude' usage='optional' style='attribute'/>
+    <value name='map_center_latitude' field='mapCenterLatitude' usage='optional' style='attribute'/>
+    <value name='cursor_longitude' field='cursorLongitude' usage='optional' style='attribute'/>
+    <value name='cursor_latitude' field='cursorLatitude' usage='optional' style='attribute'/>
+    <value name='zoom' field='zoom' usage='optional' style='attribute'/>
+    <value name='tile_source' field='tileSource' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="place_node_xml_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.PlaceNodeXmlAction"><structure map-as="place_node_xml_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.Place' type-name='place_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+    <value name='place_id' field='placeId' usage='optional' style='attribute'/>
+    <value name='osm_type' field='osmType' usage='optional' style='attribute'/>
+    <value name='osm_id' field='osmId' usage='optional' style='attribute'/>
+    <value name='place_rank' field='placeRank' usage='optional' style='attribute'/>
+    <value name='boundingbox' field='boundingbox' usage='optional' style='attribute'/>
+    <value name='lat' field='lat' usage='optional' style='attribute'/>
+    <value name='lon' field='lon' usage='optional' style='attribute'/>
+    <value name='display_name' field='displayName' usage='optional' style='attribute'/>
+    <value name='class' field='classMember' usage='optional' style='attribute'/>
+    <value name='type' field='type' usage='optional' style='attribute'/>
+    <value name='icon' field='icon' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="place" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.Place"><structure map-as="place_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.Searchresults' type-name='searchresults_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+    <collection field="placeList">
+      <structure map-as="freemind.controller.actions.generated.instance.Place"/>
+    </collection>
+    <value name='timestamp' field='timestamp' usage='optional' style='attribute'/>
+    <value name='attribution' field='attribution' usage='optional' style='attribute'/>
+    <value name='querystring' field='querystring' usage='optional' style='attribute'/>
+    <value name='polygon' field='polygon' usage='optional' style='attribute'/>
+    <value name='exclude_place_ids' field='excludePlaceIds' usage='optional' style='attribute'/>
+    <value name='more_url' field='moreUrl' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="searchresults" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.Searchresults"><structure map-as="searchresults_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.Reversegeocode' type-name='reversegeocode_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+    <collection field="resultList">
+      <structure map-as="freemind.controller.actions.generated.instance.Result"/>
+    </collection>
+    <value name='attribution' field='attribution' usage='required' style='attribute'/>
+    <value name='querystring' field='querystring' usage='required' style='attribute'/>
+    <value name='timestamp' field='timestamp' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="reversegeocode" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.Reversegeocode"><structure map-as="reversegeocode_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.ResultBase' type-name='result_base_type' abstract='true'>
+    <value name='lat' field='lat' usage='required' style='attribute'/>
+    <value name='lon' field='lon' usage='required' style='attribute'/>
+    <value name='osm_id' field='osmId' usage='required' style='attribute'/>
+    <value name='osm_type' field='osmType' usage='required' style='attribute'/>
+    <value name='place_id' field='placeId' usage='required' style='attribute'/>
+    <value name='ref' field='ref' usage='optional' style='attribute'/>
+     <value field='content' style='text'/>
+  </mapping>
+  <mapping name="result_base" class="freemind.controller.actions.generated.instance.ResultBase"><structure map-as="result_base_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.Result' type-name='result_type' abstract='true'>
+    <structure map-as="result_base_type"/>
+  </mapping>
+  <mapping name="result" extends="freemind.controller.actions.generated.instance.ResultBase" class="freemind.controller.actions.generated.instance.Result"><structure map-as="result_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.HookNodeAction' type-name='hook_node_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+    <collection field="nodeListMemberList">
+      <structure map-as="freemind.controller.actions.generated.instance.NodeListMember"/>
+    </collection>
+    <collection field="nodeChildParameterList">
+      <structure map-as="freemind.controller.actions.generated.instance.NodeChildParameter"/>
+    </collection>
+    <value name='hook_name' field='hookName' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="hook_node_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.HookNodeAction"><structure map-as="hook_node_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.SetAttributeNameElementaryAction' type-name='set_attribute_name_elementary_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+    <value name='row' field='row' usage='optional' style='attribute'/>
+    <value name='name' field='name' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="set_attribute_name_elementary_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.SetAttributeNameElementaryAction"><structure map-as="set_attribute_name_elementary_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.SetAttributeValueElementaryAction' type-name='set_attribute_value_elementary_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+      <value name="value" field="value" usage="required"/>
+    <value name='row' field='row' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="set_attribute_value_elementary_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.SetAttributeValueElementaryAction"><structure map-as="set_attribute_value_elementary_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.InsertAttributeElementaryAction' type-name='insert_attribute_elementary_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+      <value name="value" field="value" usage="optional"/>
+    <value name='row' field='row' usage='optional' style='attribute'/>
+    <value name='name' field='name' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="insert_attribute_elementary_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.InsertAttributeElementaryAction"><structure map-as="insert_attribute_elementary_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.DeleteAttributeElementaryAction' type-name='delete_attribute_elementary_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+    <value name='row' field='row' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="delete_attribute_elementary_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.DeleteAttributeElementaryAction"><structure map-as="delete_attribute_elementary_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.SetAttributeColumnWidthElementaryAction' type-name='set_attribute_column_width_elementary_action_type' abstract='true'>
+    <structure map-as="node_action_type"/>
+    <value name='column' field='column' usage='optional' style='attribute'/>
+    <value name='width' field='width' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="set_attribute_column_width_elementary_action" extends="freemind.controller.actions.generated.instance.NodeAction" class="freemind.controller.actions.generated.instance.SetAttributeColumnWidthElementaryAction"><structure map-as="set_attribute_column_width_elementary_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.RegistryAttributeElementaryAction' type-name='registry_attribute_elementary_action_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+    <value name='name' field='name' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="registry_attribute_elementary_action" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.RegistryAttributeElementaryAction"><structure map-as="registry_attribute_elementary_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.UnregistryAttributeElementaryAction' type-name='unregistry_attribute_elementary_action_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+    <value name='name' field='name' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="unregistry_attribute_elementary_action" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.UnregistryAttributeElementaryAction"><structure map-as="unregistry_attribute_elementary_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.RegistryAttributeValueElementaryAction' type-name='registry_attribute_value_elementary_action_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+      <value name="value" field="value" usage="optional"/>
+    <value name='name' field='name' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="registry_attribute_value_elementary_action" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.RegistryAttributeValueElementaryAction"><structure map-as="registry_attribute_value_elementary_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.UnregistryAttributeValueElementaryAction' type-name='unregistry_attribute_value_elementary_action_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+      <value name="value" field="value" usage="optional"/>
+    <value name='name' field='name' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="unregistry_attribute_value_elementary_action" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.UnregistryAttributeValueElementaryAction"><structure map-as="unregistry_attribute_value_elementary_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.ReplaceAttributeValueElementaryAction' type-name='replace_attribute_value_elementary_action_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+      <value name="old_value" field="oldValue" usage="optional"/>
+      <value name="new_value" field="newValue" usage="optional"/>
+    <value name='name' field='name' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="replace_attribute_value_elementary_action" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.ReplaceAttributeValueElementaryAction"><structure map-as="replace_attribute_value_elementary_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.SetAttributeFontSizeElementaryAction' type-name='set_attribute_font_size_elementary_action_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+    <value name='size' field='size' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="set_attribute_font_size_elementary_action" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.SetAttributeFontSizeElementaryAction"><structure map-as="set_attribute_font_size_elementary_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.SetAttributeVisibleElementaryAction' type-name='set_attribute_visible_elementary_action_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+    <value name='index' field='index' usage='required' style='attribute'/>
+    <value name='isVisible' field='isVisible' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="set_attribute_visible_elementary_action" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.SetAttributeVisibleElementaryAction"><structure map-as="set_attribute_visible_elementary_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.SetAttributeRestrictedElementaryAction' type-name='set_attribute_restricted_elementary_action_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+    <value name='index' field='index' usage='required' style='attribute'/>
+    <value name='isRestricted' field='isRestricted' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="set_attribute_restricted_elementary_action" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.SetAttributeRestrictedElementaryAction"><structure map-as="set_attribute_restricted_elementary_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.CollaborationAction' type-name='collaboration_action_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+    <value name='user' field='user' usage='optional' style='attribute'/>
+    <value name='timestamp' field='timestamp' usage='optional' style='attribute'/>
+    <value name='cmd' field='cmd' usage='required' style='attribute'/>
+    <value name='map' field='map' usage='optional' style='attribute'/>
+    <value name='filename' field='filename' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="collaboration_action" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.CollaborationAction"><structure map-as="collaboration_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.CollaborationActionBase' type-name='collaboration_action_base_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+  </mapping>
+  <mapping name="collaboration_action_base" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.CollaborationActionBase"><structure map-as="collaboration_action_base_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.CollaborationRequireLock' type-name='collaboration_require_lock_type' abstract='true'>
+    <structure map-as="collaboration_action_base_type"/>
+  </mapping>
+  <mapping name="collaboration_require_lock" extends="freemind.controller.actions.generated.instance.CollaborationActionBase" class="freemind.controller.actions.generated.instance.CollaborationRequireLock"><structure map-as="collaboration_require_lock_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.CollaborationUserInformation' type-name='collaboration_user_information_type' abstract='true'>
+    <structure map-as="collaboration_action_base_type"/>
+    <value name='user_ids' field='userIds' usage='required' style='attribute'/>
+    <value name='master_ip' field='masterIp' usage='required' style='attribute'/>
+    <value name='master_port' field='masterPort' usage='required' style='attribute'/>
+    <value name='master_hostname' field='masterHostname' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="collaboration_user_information" extends="freemind.controller.actions.generated.instance.CollaborationActionBase" class="freemind.controller.actions.generated.instance.CollaborationUserInformation"><structure map-as="collaboration_user_information_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.CollaborationWhoAreYou' type-name='collaboration_who_are_you_type' abstract='true'>
+    <structure map-as="collaboration_action_base_type"/>
+  </mapping>
+  <mapping name="collaboration_who_are_you" extends="freemind.controller.actions.generated.instance.CollaborationActionBase" class="freemind.controller.actions.generated.instance.CollaborationWhoAreYou"><structure map-as="collaboration_who_are_you_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.CollaborationHello' type-name='collaboration_hello_type' abstract='true'>
+    <structure map-as="collaboration_action_base_type"/>
+    <value name='user_id' field='userId' usage='required' style='attribute'/>
+    <value name='password' field='password' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="collaboration_hello" extends="freemind.controller.actions.generated.instance.CollaborationActionBase" class="freemind.controller.actions.generated.instance.CollaborationHello"><structure map-as="collaboration_hello_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.CollaborationWelcome' type-name='collaboration_welcome_type' abstract='true'>
+    <structure map-as="collaboration_action_base_type"/>
+    <value name='map' field='map' usage='optional' style='attribute'/>
+    <value name='filename' field='filename' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="collaboration_welcome" extends="freemind.controller.actions.generated.instance.CollaborationActionBase" class="freemind.controller.actions.generated.instance.CollaborationWelcome"><structure map-as="collaboration_welcome_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.CollaborationGoodbye' type-name='collaboration_goodbye_type' abstract='true'>
+    <structure map-as="collaboration_action_base_type"/>
+    <value name='user_id' field='userId' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="collaboration_goodbye" extends="freemind.controller.actions.generated.instance.CollaborationActionBase" class="freemind.controller.actions.generated.instance.CollaborationGoodbye"><structure map-as="collaboration_goodbye_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.CollaborationUnableToLock' type-name='collaboration_unable_to_lock_type' abstract='true'>
+    <structure map-as="collaboration_action_base_type"/>
+  </mapping>
+  <mapping name="collaboration_unable_to_lock" extends="freemind.controller.actions.generated.instance.CollaborationActionBase" class="freemind.controller.actions.generated.instance.CollaborationUnableToLock"><structure map-as="collaboration_unable_to_lock_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.CollaborationWrongCredentials' type-name='collaboration_wrong_credentials_type' abstract='true'>
+    <structure map-as="collaboration_action_base_type"/>
+  </mapping>
+  <mapping name="collaboration_wrong_credentials" extends="freemind.controller.actions.generated.instance.CollaborationActionBase" class="freemind.controller.actions.generated.instance.CollaborationWrongCredentials"><structure map-as="collaboration_wrong_credentials_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.CollaborationReceiveLock' type-name='collaboration_receive_lock_type' abstract='true'>
+    <structure map-as="collaboration_action_base_type"/>
+    <value name='id' field='id' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="collaboration_receive_lock" extends="freemind.controller.actions.generated.instance.CollaborationActionBase" class="freemind.controller.actions.generated.instance.CollaborationReceiveLock"><structure map-as="collaboration_receive_lock_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.CollaborationTransaction' type-name='collaboration_transaction_type' abstract='true'>
+    <structure map-as="collaboration_action_base_type"/>
+    <value name='id' field='id' usage='required' style='attribute'/>
+    <value name='do_action' field='doAction' usage='required' style='attribute'/>
+    <value name='undo_action' field='undoAction' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="collaboration_transaction" extends="freemind.controller.actions.generated.instance.CollaborationActionBase" class="freemind.controller.actions.generated.instance.CollaborationTransaction"><structure map-as="collaboration_transaction_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.WindowConfigurationStorage' type-name='window_configuration_storage_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+    <value name='x' field='x' usage='required' style='attribute'/>
+    <value name='y' field='y' usage='required' style='attribute'/>
+    <value name='width' field='width' usage='required' style='attribute'/>
+    <value name='height' field='height' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="window_configuration_storage" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.WindowConfigurationStorage"><structure map-as="window_configuration_storage_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.NormalWindowConfigurationStorage' type-name='normal_window_configuration_storage_type' abstract='true'>
+    <structure map-as="window_configuration_storage_type"/>
+  </mapping>
+  <mapping name="normal_window_configuration_storage" extends="freemind.controller.actions.generated.instance.WindowConfigurationStorage" class="freemind.controller.actions.generated.instance.NormalWindowConfigurationStorage"><structure map-as="normal_window_configuration_storage_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.OptionPanelWindowConfigurationStorage' type-name='option_panel_window_configuration_storage_type' abstract='true'>
+    <structure map-as="window_configuration_storage_type"/>
+    <value name='panel' field='panel' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="option_panel_window_configuration_storage" extends="freemind.controller.actions.generated.instance.WindowConfigurationStorage" class="freemind.controller.actions.generated.instance.OptionPanelWindowConfigurationStorage"><structure map-as="option_panel_window_configuration_storage_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.TimeWindowConfigurationStorage' type-name='time_window_configuration_storage_type' abstract='true'>
+    <structure map-as="window_configuration_storage_type"/>
+    <collection field="timeWindowColumnSettingList">
+      <structure map-as="freemind.controller.actions.generated.instance.TimeWindowColumnSetting"/>
+    </collection>
+    <value name='view_folded_nodes' field='viewFoldedNodes' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="time_window_configuration_storage" extends="freemind.controller.actions.generated.instance.WindowConfigurationStorage" class="freemind.controller.actions.generated.instance.TimeWindowConfigurationStorage"><structure map-as="time_window_configuration_storage_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.MapLocationStorage' type-name='map_location_storage_type' abstract='true'>
+    <value name='cursor_longitude' field='cursorLongitude' usage='optional' style='attribute'/>
+    <value name='cursor_latitude' field='cursorLatitude' usage='optional' style='attribute'/>
+    <value name='zoom' field='zoom' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="map_location_storage" class="freemind.controller.actions.generated.instance.MapLocationStorage"><structure map-as="map_location_storage_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.MapWindowConfigurationStorage' type-name='map_window_configuration_storage_type' abstract='true'>
+    <structure map-as="window_configuration_storage_type"/>
+    <collection field="tableColumnSettingList">
+      <structure map-as="freemind.controller.actions.generated.instance.TableColumnSetting"/>
+    </collection>
+    <collection field="mapLocationStorageList">
+      <structure map-as="freemind.controller.actions.generated.instance.MapLocationStorage"/>
+    </collection>
+    <value name='map_center_longitude' field='mapCenterLongitude' usage='optional' style='attribute'/>
+    <value name='map_center_latitude' field='mapCenterLatitude' usage='optional' style='attribute'/>
+    <value name='cursor_longitude' field='cursorLongitude' usage='optional' style='attribute'/>
+    <value name='cursor_latitude' field='cursorLatitude' usage='optional' style='attribute'/>
+    <value name='zoom' field='zoom' usage='optional' style='attribute'/>
+    <value name='last_divider_position' field='lastDividerPosition' usage='optional' style='attribute'/>
+    <value name='tile_source' field='tileSource' usage='optional' style='attribute'/>
+    <value name='showMapMarker' field='showMapMarker' usage='optional' style='attribute'/>
+    <value name='tileGridVisible' field='tileGridVisible' usage='optional' style='attribute'/>
+    <value name='zoomControlsVisible' field='zoomControlsVisible' usage='optional' style='attribute'/>
+    <value name='searchControlVisible' field='searchControlVisible' usage='optional' style='attribute'/>
+    <value name='hideFoldedNodes' field='hideFoldedNodes' usage='optional' style='attribute'/>
+    <value name='limitSearchToVisibleArea' field='limitSearchToVisibleArea' usage='optional' style='attribute'/>
+    <value name='map_location_storage_index' field='mapLocationStorageIndex' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="map_window_configuration_storage" extends="freemind.controller.actions.generated.instance.WindowConfigurationStorage" class="freemind.controller.actions.generated.instance.MapWindowConfigurationStorage"><structure map-as="map_window_configuration_storage_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.LogFileViewerConfigurationStorage' type-name='log_file_viewer_configuration_storage_type' abstract='true'>
+    <structure map-as="window_configuration_storage_type"/>
+  </mapping>
+  <mapping name="log_file_viewer_configuration_storage" extends="freemind.controller.actions.generated.instance.WindowConfigurationStorage" class="freemind.controller.actions.generated.instance.LogFileViewerConfigurationStorage"><structure map-as="log_file_viewer_configuration_storage_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.TableColumnSetting' type-name='table_column_setting_type' abstract='true'>
+    <value name='column_width' field='columnWidth' usage='required' style='attribute'/>
+    <value name='column_sorting' field='columnSorting' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="table_column_setting" class="freemind.controller.actions.generated.instance.TableColumnSetting"><structure map-as="table_column_setting_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.TimeWindowColumnSetting' type-name='time_window_column_setting_type' abstract='true'>
+    <structure map-as="table_column_setting_type"/>
+  </mapping>
+  <mapping name="time_window_column_setting" extends="freemind.controller.actions.generated.instance.TableColumnSetting" class="freemind.controller.actions.generated.instance.TimeWindowColumnSetting"><structure map-as="time_window_column_setting_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.ScriptEditorWindowConfigurationStorage' type-name='script_editor_window_configuration_storage_type' abstract='true'>
+    <structure map-as="window_configuration_storage_type"/>
+    <value name='left_ratio' field='leftRatio' usage='optional' style='attribute'/>
+    <value name='top_ratio' field='topRatio' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="script_editor_window_configuration_storage" extends="freemind.controller.actions.generated.instance.WindowConfigurationStorage" class="freemind.controller.actions.generated.instance.ScriptEditorWindowConfigurationStorage"><structure map-as="script_editor_window_configuration_storage_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.ManageStyleEditorWindowConfigurationStorage' type-name='manage_style_editor_window_configuration_storage_type' abstract='true'>
+    <structure map-as="window_configuration_storage_type"/>
+    <value name='divider_position' field='dividerPosition' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="manage_style_editor_window_configuration_storage" extends="freemind.controller.actions.generated.instance.WindowConfigurationStorage" class="freemind.controller.actions.generated.instance.ManageStyleEditorWindowConfigurationStorage"><structure map-as="manage_style_editor_window_configuration_storage_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.MindmapLastStateStorage' type-name='mindmap_last_state_storage_type' abstract='true'>
+    <value name='last_changed' field='lastChanged' usage='required' style='attribute'/>
+    <value name='tab_index' field='tabIndex' usage='required' style='attribute'/>
+    <value name='restorable_name' field='restorableName' usage='required' style='attribute'/>
+    <value name='last_zoom' field='lastZoom' usage='required' style='attribute'/>
+    <value name='x' field='x' usage='required' style='attribute'/>
+    <value name='y' field='y' usage='required' style='attribute'/>
+    <value name='last_selected' field='lastSelected' usage='required' style='attribute'/>
+    <collection field="nodeListMemberList">
+      <structure map-as="freemind.controller.actions.generated.instance.NodeListMember"/>
+    </collection>
+  </mapping>
+  <mapping name="mindmap_last_state_storage" class="freemind.controller.actions.generated.instance.MindmapLastStateStorage"><structure map-as="mindmap_last_state_storage_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.MindmapLastStateMapStorage' type-name='mindmap_last_state_map_storage_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+    <value name='last_focused_tab' field='lastFocusedTab' usage='optional' style='attribute'/>
+    <collection field="mindmapLastStateStorageList">
+      <structure map-as="freemind.controller.actions.generated.instance.MindmapLastStateStorage"/>
+    </collection>
+  </mapping>
+  <mapping name="mindmap_last_state_map_storage" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.MindmapLastStateMapStorage"><structure map-as="mindmap_last_state_map_storage_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PatternPropertyBase' type-name='pattern_property_base_type' abstract='true'>
+    <value name='value' field='value' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="pattern_property_base" class="freemind.controller.actions.generated.instance.PatternPropertyBase"><structure map-as="pattern_property_base_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PatternNodeBackgroundColor' type-name='pattern_node_background_color_type' abstract='true'>
+    <structure map-as="pattern_property_base_type"/>
+  </mapping>
+  <mapping name="pattern_node_background_color" extends="freemind.controller.actions.generated.instance.PatternPropertyBase" class="freemind.controller.actions.generated.instance.PatternNodeBackgroundColor"><structure map-as="pattern_node_background_color_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PatternNodeColor' type-name='pattern_node_color_type' abstract='true'>
+    <structure map-as="pattern_property_base_type"/>
+  </mapping>
+  <mapping name="pattern_node_color" extends="freemind.controller.actions.generated.instance.PatternPropertyBase" class="freemind.controller.actions.generated.instance.PatternNodeColor"><structure map-as="pattern_node_color_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PatternNodeStyle' type-name='pattern_node_style_type' abstract='true'>
+    <structure map-as="pattern_property_base_type"/>
+  </mapping>
+  <mapping name="pattern_node_style" extends="freemind.controller.actions.generated.instance.PatternPropertyBase" class="freemind.controller.actions.generated.instance.PatternNodeStyle"><structure map-as="pattern_node_style_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PatternNodeText' type-name='pattern_node_text_type' abstract='true'>
+    <structure map-as="pattern_property_base_type"/>
+  </mapping>
+  <mapping name="pattern_node_text" extends="freemind.controller.actions.generated.instance.PatternPropertyBase" class="freemind.controller.actions.generated.instance.PatternNodeText"><structure map-as="pattern_node_text_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PatternNodeFontName' type-name='pattern_node_font_name_type' abstract='true'>
+    <structure map-as="pattern_property_base_type"/>
+  </mapping>
+  <mapping name="pattern_node_font_name" extends="freemind.controller.actions.generated.instance.PatternPropertyBase" class="freemind.controller.actions.generated.instance.PatternNodeFontName"><structure map-as="pattern_node_font_name_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PatternNodeFontBold' type-name='pattern_node_font_bold_type' abstract='true'>
+    <structure map-as="pattern_property_base_type"/>
+  </mapping>
+  <mapping name="pattern_node_font_bold" extends="freemind.controller.actions.generated.instance.PatternPropertyBase" class="freemind.controller.actions.generated.instance.PatternNodeFontBold"><structure map-as="pattern_node_font_bold_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PatternNodeFontItalic' type-name='pattern_node_font_italic_type' abstract='true'>
+    <structure map-as="pattern_property_base_type"/>
+  </mapping>
+  <mapping name="pattern_node_font_italic" extends="freemind.controller.actions.generated.instance.PatternPropertyBase" class="freemind.controller.actions.generated.instance.PatternNodeFontItalic"><structure map-as="pattern_node_font_italic_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PatternNodeFontSize' type-name='pattern_node_font_size_type' abstract='true'>
+    <structure map-as="pattern_property_base_type"/>
+  </mapping>
+  <mapping name="pattern_node_font_size" extends="freemind.controller.actions.generated.instance.PatternPropertyBase" class="freemind.controller.actions.generated.instance.PatternNodeFontSize"><structure map-as="pattern_node_font_size_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PatternIcon' type-name='pattern_icon_type' abstract='true'>
+    <structure map-as="pattern_property_base_type"/>
+  </mapping>
+  <mapping name="pattern_icon" extends="freemind.controller.actions.generated.instance.PatternPropertyBase" class="freemind.controller.actions.generated.instance.PatternIcon"><structure map-as="pattern_icon_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PatternEdgeColor' type-name='pattern_edge_color_type' abstract='true'>
+    <structure map-as="pattern_property_base_type"/>
+  </mapping>
+  <mapping name="pattern_edge_color" extends="freemind.controller.actions.generated.instance.PatternPropertyBase" class="freemind.controller.actions.generated.instance.PatternEdgeColor"><structure map-as="pattern_edge_color_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PatternEdgeStyle' type-name='pattern_edge_style_type' abstract='true'>
+    <structure map-as="pattern_property_base_type"/>
+  </mapping>
+  <mapping name="pattern_edge_style" extends="freemind.controller.actions.generated.instance.PatternPropertyBase" class="freemind.controller.actions.generated.instance.PatternEdgeStyle"><structure map-as="pattern_edge_style_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PatternEdgeWidth' type-name='pattern_edge_width_type' abstract='true'>
+    <structure map-as="pattern_property_base_type"/>
+  </mapping>
+  <mapping name="pattern_edge_width" extends="freemind.controller.actions.generated.instance.PatternPropertyBase" class="freemind.controller.actions.generated.instance.PatternEdgeWidth"><structure map-as="pattern_edge_width_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PatternChild' type-name='pattern_child_type' abstract='true'>
+    <structure map-as="pattern_property_base_type"/>
+  </mapping>
+  <mapping name="pattern_child" extends="freemind.controller.actions.generated.instance.PatternPropertyBase" class="freemind.controller.actions.generated.instance.PatternChild"><structure map-as="pattern_child_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PatternScript' type-name='pattern_script_type' abstract='true'>
+    <structure map-as="pattern_property_base_type"/>
+  </mapping>
+  <mapping name="pattern_script" extends="freemind.controller.actions.generated.instance.PatternPropertyBase" class="freemind.controller.actions.generated.instance.PatternScript"><structure map-as="pattern_script_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.Pattern' type-name='pattern_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+    <structure field="patternNodeBackgroundColor" usage="optional" map-as="freemind.controller.actions.generated.instance.PatternNodeBackgroundColor"/>
+    <structure field="patternNodeColor" usage="optional" map-as="freemind.controller.actions.generated.instance.PatternNodeColor"/>
+    <structure field="patternNodeStyle" usage="optional" map-as="freemind.controller.actions.generated.instance.PatternNodeStyle"/>
+    <structure field="patternNodeText" usage="optional" map-as="freemind.controller.actions.generated.instance.PatternNodeText"/>
+    <structure field="patternNodeFontName" usage="optional" map-as="freemind.controller.actions.generated.instance.PatternNodeFontName"/>
+    <structure field="patternNodeFontBold" usage="optional" map-as="freemind.controller.actions.generated.instance.PatternNodeFontBold"/>
+    <structure field="patternNodeFontItalic" usage="optional" map-as="freemind.controller.actions.generated.instance.PatternNodeFontItalic"/>
+    <structure field="patternNodeFontSize" usage="optional" map-as="freemind.controller.actions.generated.instance.PatternNodeFontSize"/>
+    <structure field="patternIcon" usage="optional" map-as="freemind.controller.actions.generated.instance.PatternIcon"/>
+    <structure field="patternEdgeColor" usage="optional" map-as="freemind.controller.actions.generated.instance.PatternEdgeColor"/>
+    <structure field="patternEdgeStyle" usage="optional" map-as="freemind.controller.actions.generated.instance.PatternEdgeStyle"/>
+    <structure field="patternEdgeWidth" usage="optional" map-as="freemind.controller.actions.generated.instance.PatternEdgeWidth"/>
+    <structure field="patternChild" usage="optional" map-as="freemind.controller.actions.generated.instance.PatternChild"/>
+    <structure field="patternScript" usage="optional" map-as="freemind.controller.actions.generated.instance.PatternScript"/>
+    <value name='name' field='name' usage='required' style='attribute'/>
+    <value name='original_name' field='originalName' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="pattern" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.Pattern"><structure map-as="pattern_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.Patterns' type-name='patterns_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+    <collection field='choiceList' ordered='false'>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.Pattern"/>
+    </collection>
+  </mapping>
+  <mapping name="patterns" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.Patterns"><structure map-as="patterns_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.Plugin' type-name='plugin_type' abstract='true'>
+    <collection field='choiceList' ordered='false'>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.PluginClasspath"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.PluginRegistration"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.PluginAction"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.PluginStrings"/>
+    </collection>
+    <value name='label' field='label' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="plugin" class="freemind.controller.actions.generated.instance.Plugin"><structure map-as="plugin_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PluginClasspath' type-name='plugin_classpath_type' abstract='true'>
+    <value name='jar' field='jar' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="plugin_classpath" class="freemind.controller.actions.generated.instance.PluginClasspath"><structure map-as="plugin_classpath_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PluginRegistration' type-name='plugin_registration_type' abstract='true'>
+    <collection field="pluginModeList">
+      <structure map-as="freemind.controller.actions.generated.instance.PluginMode"/>
+    </collection>
+    <value name='class_name' field='className' usage='required' style='attribute'/>
+    <value name='isPluginBase' field='isPluginBase' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="plugin_registration" class="freemind.controller.actions.generated.instance.PluginRegistration"><structure map-as="plugin_registration_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PluginMode' type-name='plugin_mode_type' abstract='true'>
+    <value name='class_name' field='className' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="plugin_mode" class="freemind.controller.actions.generated.instance.PluginMode"><structure map-as="plugin_mode_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PluginProperty' type-name='plugin_property_type' abstract='true'>
+    <value name='name' field='name' usage='required' style='attribute'/>
+    <value name='value' field='value' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="plugin_property" class="freemind.controller.actions.generated.instance.PluginProperty"><structure map-as="plugin_property_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PluginAction' type-name='plugin_action_type' abstract='true'>
+    <collection field='choiceList' ordered='false'>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.PluginMode"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.PluginMenu"/>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.PluginProperty"/>
+    </collection>
+    <value name='label' field='label' usage='required' style='attribute'/>
+    <value name='name' field='name' usage='optional' style='attribute'/>
+    <value name='base' field='base' usage='required' style='attribute'/>
+    <value name='class_name' field='className' usage='required' style='attribute'/>
+    <value name='documentation' field='documentation' usage='optional' style='attribute'/>
+    <value name='icon_path' field='iconPath' usage='optional' style='attribute'/>
+    <value name='key_stroke' field='keyStroke' usage='optional' style='attribute'/>
+    <value name='instanciation' field='instanciation' usage='optional' style='attribute'/>
+    <value name='isSelectable' field='isSelectable' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="plugin_action" class="freemind.controller.actions.generated.instance.PluginAction"><structure map-as="plugin_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PluginMenu' type-name='plugin_menu_type' abstract='true'>
+    <value name='location' field='location' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="plugin_menu" class="freemind.controller.actions.generated.instance.PluginMenu"><structure map-as="plugin_menu_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PluginStrings' type-name='plugin_strings_type' abstract='true'>
+    <collection field="pluginStringList">
+      <structure map-as="freemind.controller.actions.generated.instance.PluginString"/>
+    </collection>
+    <value name='language' field='language' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="plugin_strings" class="freemind.controller.actions.generated.instance.PluginStrings"><structure map-as="plugin_strings_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.PluginString' type-name='plugin_string_type' abstract='true'>
+    <value name='key' field='key' usage='required' style='attribute'/>
+    <value name='value' field='value' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="plugin_string" class="freemind.controller.actions.generated.instance.PluginString"><structure map-as="plugin_string_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.NodeList' type-name='node_list_type' abstract='true'>
+    <structure map-as="xml_action_type"/>
+    <collection field="nodeListMemberList">
+      <structure map-as="freemind.controller.actions.generated.instance.NodeListMember"/>
+    </collection>
+  </mapping>
+  <mapping name="node_list" extends="freemind.controller.actions.generated.instance.XmlAction" class="freemind.controller.actions.generated.instance.NodeList"><structure map-as="node_list_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.MenuStructure' type-name='menu_structure_type' abstract='true'>
+    <collection field='choiceList' ordered='false'>
+      <structure usage="optional" map-as="freemind.controller.actions.generated.instance.MenuCategory"/>
+    </collection>
+  </mapping>
+  <mapping name="menu_structure" class="freemind.controller.actions.generated.instance.MenuStructure"><structure map-as="menu_structure_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.MenuCategoryBase' type-name='menu_category_base_type' abstract='true'>
+    <collection field='choiceList' ordered='false'>
+    </collection>
+    <value name='name' field='name' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="menu_category_base" class="freemind.controller.actions.generated.instance.MenuCategoryBase"><structure map-as="menu_category_base_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.MenuCategory' type-name='menu_category_type' abstract='true'>
+    <structure map-as="menu_category_base_type"/>
+  </mapping>
+  <mapping name="menu_category" extends="freemind.controller.actions.generated.instance.MenuCategoryBase" class="freemind.controller.actions.generated.instance.MenuCategory"><structure map-as="menu_category_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.MenuSubmenu' type-name='menu_submenu_type' abstract='true'>
+    <structure map-as="menu_category_base_type"/>
+    <value name='name_ref' field='nameRef' usage='required' style='attribute'/>
+  </mapping>
+  <mapping name="menu_submenu" extends="freemind.controller.actions.generated.instance.MenuCategoryBase" class="freemind.controller.actions.generated.instance.MenuSubmenu"><structure map-as="menu_submenu_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.MenuActionBase' type-name='menu_action_base_type' abstract='true'>
+    <value name='field' field='field' usage='required' style='attribute'/>
+    <value name='key_ref' field='keyRef' usage='optional' style='attribute'/>
+    <value name='name' field='name' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="menu_action_base" class="freemind.controller.actions.generated.instance.MenuActionBase"><structure map-as="menu_action_base_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.MenuAction' type-name='menu_action_type' abstract='true'>
+    <structure map-as="menu_action_base_type"/>
+  </mapping>
+  <mapping name="menu_action" extends="freemind.controller.actions.generated.instance.MenuActionBase" class="freemind.controller.actions.generated.instance.MenuAction"><structure map-as="menu_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.MenuCheckedAction' type-name='menu_checked_action_type' abstract='true'>
+    <structure map-as="menu_action_base_type"/>
+  </mapping>
+  <mapping name="menu_checked_action" extends="freemind.controller.actions.generated.instance.MenuActionBase" class="freemind.controller.actions.generated.instance.MenuCheckedAction"><structure map-as="menu_checked_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.MenuRadioAction' type-name='menu_radio_action_type' abstract='true'>
+    <structure map-as="menu_action_base_type"/>
+    <value name='selected' field='selected' usage='optional' style='attribute'/>
+  </mapping>
+  <mapping name="menu_radio_action" extends="freemind.controller.actions.generated.instance.MenuActionBase" class="freemind.controller.actions.generated.instance.MenuRadioAction"><structure map-as="menu_radio_action_type"/></mapping>
+
+  <mapping class='freemind.controller.actions.generated.instance.MenuSeparator' type-name='menu_separator_type' abstract='true'>
+  </mapping>
+  <mapping name="menu_separator" class="freemind.controller.actions.generated.instance.MenuSeparator"><structure map-as="menu_separator_type"/></mapping>
+
+</binding>
