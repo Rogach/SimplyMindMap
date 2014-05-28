@@ -79,6 +79,7 @@ import freemind.modes.MindMapNode;
 import freemind.modes.common.CommonNodeKeyListener;
 import freemind.modes.common.listeners.MindMapMouseWheelEventHandler;
 import freemind.modes.mindmapmode.MindMapController;
+import freemind.modes.mindmapmode.actions.NewChildAction;
 import freemind.modes.mindmapmode.listeners.MindMapMouseMotionManager;
 import freemind.preferences.FreemindPropertyListener;
 import java.awt.event.KeyListener;
@@ -389,6 +390,10 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 
 					}
 		}));
+    
+    NewChildAction newChildAction = new NewChildAction(controller);
+    this.getActionMap().put("new_child_action", newChildAction);
+    this.getInputMap().put(KeyStroke.getKeyStroke("INSERT"), "new_child_action");
 
 		// fc, 20.6.2004: to enable tab for insert.
 		setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
@@ -1005,8 +1010,9 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 		return new NodeMouseMotionListener();
 	}
 
+  private NodeMotionListener nodeMotionListener = new NodeMotionListener();
 	NodeMotionListener getNodeMotionListener() {
-		return getController().getNodeMotionListener();
+		return nodeMotionListener;
 	}
 
 	NodeKeyListener getNodeKeyListener() {

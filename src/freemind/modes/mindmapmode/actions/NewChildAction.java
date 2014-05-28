@@ -35,6 +35,7 @@ import freemind.controller.actions.generated.instance.DeleteNodeAction;
 import freemind.controller.actions.generated.instance.NewNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.extensions.PermanentNodeHook;
+import freemind.main.Resources;
 import freemind.modes.MindMapNode;
 import freemind.modes.NodeAdapter;
 import freemind.modes.mindmapmode.MindMapController;
@@ -134,7 +135,7 @@ public class NewChildAction extends AbstractAction implements ActorXml {
 			if (parentFolded) {
 				c.setFolded(targetNode, false);
 			}
-			int position = c.getFrame().getProperty("placenewbranches")
+			int position = Resources.getInstance().getProperty("placenewbranches")
 					.equals("last") ? targetNode.getChildCount() : 0;
 			newNode = addNewNode(targetNode, position);
 			final NodeView nodeView = c.getNodeView(newNode);

@@ -225,7 +225,7 @@ public class Controller implements MapModuleChangeObserver {
 		initialization();
 
 		nodeMouseMotionListener = new NodeMouseMotionListener();
-		nodeMotionListener = new NodeMotionListener(this);
+		nodeMotionListener = new NodeMotionListener();
 		nodeKeyListener = new NodeKeyListener();
 		nodeDragListener = new NodeDragListener(this);
 		nodeDropListener = new NodeDropListener(this);

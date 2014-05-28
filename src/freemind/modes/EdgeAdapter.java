@@ -25,6 +25,7 @@ import java.awt.Color;
 import freemind.controller.Controller;
 import freemind.main.FreeMind;
 import freemind.main.FreeMindMain;
+import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
 import freemind.preferences.FreemindPropertyListener;
@@ -99,7 +100,7 @@ public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {
 	public String getStyle() {
 		if (style == null) {
 			if (getTarget().isRoot()) {
-				return getFrame().getProperty(getStandardStylePropertyString());
+				return Resources.getInstance().getProperty(getStandardStylePropertyString());
 			}
 			return getSource().getEdge().getStyle();
 		}

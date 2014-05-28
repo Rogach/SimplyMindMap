@@ -35,12 +35,9 @@ public class NodeMotionListener extends MouseAdapter implements
 			implements MouseMotionListener, MouseListener {
 
 	}
-
-	private final Controller c;
 	private NodeMotionAdapter mListener;
 
-	public NodeMotionListener(Controller controller) {
-		c = controller;
+	public NodeMotionListener() {
 	}
 
 	public void register(NodeMotionAdapter listener) {
