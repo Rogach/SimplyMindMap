@@ -51,13 +51,11 @@ public class ImportWizard {
 	public final String lookFor = ".xml";
 	/** Stores the list of all classes in the classpath */
 	public Vector CLASS_LIST = new Vector(500);
-	private final FreeMindMain mFrame;
 	private static Logger logger = null;
 
-	public ImportWizard(FreeMindMain frame) {
-		this.mFrame = frame;
+	public ImportWizard() {
 		if (logger == null) {
-			logger = frame.getLogger(this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		}
 	}
 
@@ -74,9 +72,6 @@ public class ImportWizard {
 	public void buildClassList() {
 		String classPath = System.getProperty("java.class.path");
 		String classPathSeparator = File.pathSeparator;
-		// add the current dir to find more plugins
-		classPath = mFrame.getFreemindBaseDir() + classPathSeparator
-				+ classPath;
 		logger.info("Classpath for plugins:" + classPath);
 		// to remove duplicates
 		HashSet foundPlugins = new HashSet();

@@ -45,7 +45,7 @@ public class EdgeColorAction extends AbstractAction implements ActorXml {
 	private final MindMapController controller;
 
 	public EdgeColorAction(MindMapController controller) {
-		super(controller.getText("edge_color"));
+		super("");
 		this.controller = controller;
 		controller.getActionFactory().registerActor(this, getDoActionClass());
 	}

@@ -47,11 +47,11 @@ public class ToggleFoldedAction extends AbstractAction implements ActorXml {
 	private Logger logger;
 
 	public ToggleFoldedAction(MindMapController controller) {
-		super(controller.getText("toggle_folded"));
+		super("");
 		this.modeController = controller;
 		modeController.getActionFactory().registerActor(this,
 				getDoActionClass());
-		logger = modeController.getFrame().getLogger(this.getClass().getName());
+		logger = Logger.getLogger(this.getClass().getName());
 	}
 
 	public void actionPerformed(ActionEvent e) {

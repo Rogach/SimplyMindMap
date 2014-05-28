@@ -64,6 +64,7 @@ import freemind.modes.ModeController;
 import freemind.modes.NodeAdapter;
 import freemind.preferences.FreemindPropertyListener;
 import freemind.view.mindmapview.attributeview.AttributeView;
+import java.awt.RenderingHints;
 
 /**
  * This class represents a single Node of a MindMap (in analogy to
@@ -119,8 +120,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 	protected NodeView(MindMapNode model, int position, MapView map,
 			Container parent) {
 		if (logger == null) {
-			logger = map.getController().getFrame()
-					.getLogger(this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		}
 		if(sListener == null){
 			sListener = new FreemindPropertyListener() {
@@ -200,8 +200,8 @@ public class NodeView extends JComponent implements TreeModelListener {
 		ToolTipManager.sharedInstance().registerComponent(mainView);
 		mainView.addMouseListener(this.map.getNodeMouseMotionListener());
 		mainView.addMouseMotionListener(this.map.getNodeMouseMotionListener());
-		addDragListener(map.getNodeDragListener());
-		addDropListener(map.getNodeDropListener());
+//		addDragListener(map.getNodeDragListener());
+//		addDropListener(map.getNodeDropListener());
 		if (!model.isRoot() && "true".equals(map.getController().getProperty(FreeMindMain.ENABLE_NODE_MOVEMENT))) {
 			motionListenerView = new NodeMotionListenerView(this);
 			add(motionListenerView);
@@ -981,7 +981,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 
 	private void updateFont() {
 		Font font = getModel().getFont();
-		font = font == null ? getController().getDefaultFont() : font;
 		if (font != null) {
 			mainView.setFont(font);
 		} else {
@@ -996,7 +995,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 		boolean iconPresent = false;
 		/* fc, 06.10.2003: images? */
 
-		FreeMindMain frame = getFrame();
 		Map stateIcons = (getModel()).getStateIcons();
 		for (Iterator i = stateIcons.keySet().iterator(); i.hasNext();) {
 			String key = (String) i.next();
@@ -1024,7 +1022,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 			} else if (Tools.executableByExtension(link)) {
 				iconPath = "images/Executable.png";
 			}
-			ImageIcon icon = new ImageIcon(frame.getResource(iconPath));
+			ImageIcon icon = new ImageIcon(Resources.getInstance().getResource(iconPath));
 			iconImages.addImage(icon);
 		}
 		// /* Folded icon by Matthias Schade (mascha2), fc, 20.12.2003*/
@@ -1494,7 +1492,9 @@ public class NodeView extends JComponent implements TreeModelListener {
 	}
 
 	private void paintCloudsAndEdges(Graphics2D g) {
-		Object renderingHint = getController().setEdgesRenderingHint(g);
+    Object renderingHint1 = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, (true) ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF);
+		Object renderingHint = renderingHint1;
 		for (int i = 0; i < getComponentCount(); i++) {
 			final Component component = getComponent(i);
 			if (!(component instanceof NodeView)) {

@@ -224,7 +224,7 @@ public class Controller implements MapModuleChangeObserver {
 	public void init() {
 		initialization();
 
-		nodeMouseMotionListener = new NodeMouseMotionListener(this);
+		nodeMouseMotionListener = new NodeMouseMotionListener();
 		nodeMotionListener = new NodeMotionListener(this);
 		nodeKeyListener = new NodeKeyListener(this);
 		nodeDragListener = new NodeDragListener(this);
@@ -1980,24 +1980,6 @@ public class Controller implements MapModuleChangeObserver {
 			((ShowAllAttributesAction) showAllAttributes)
 					.setAttributeViewType(map);
 		}
-	}
-
-	public Object setEdgesRenderingHint(Graphics2D g) {
-		Object renderingHint = g
-				.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				(getAntialiasEdges()) ? RenderingHints.VALUE_ANTIALIAS_ON
-						: RenderingHints.VALUE_ANTIALIAS_OFF);
-		return renderingHint;
-	}
-
-	public void setTextRenderingHint(Graphics2D g) {
-		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-				(getAntialiasAll()) ? RenderingHints.VALUE_TEXT_ANTIALIAS_ON
-						: RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				(getAntialiasAll()) ? RenderingHints.VALUE_ANTIALIAS_ON
-						: RenderingHints.VALUE_ANTIALIAS_OFF);
 	}
 
 	public void addTabbedPane(JTabbedPane pTabbedPane) {

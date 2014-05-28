@@ -42,12 +42,12 @@ public class MindMapNodeModel extends NodeAdapter {
 	// Constructors
 	//
 
-	public MindMapNodeModel(FreeMindMain frame, MindMap map) {
-		this(null, frame, map);
+	public MindMapNodeModel(MindMap map) {
+		this(null, map);
 	}
 
-	public MindMapNodeModel(Object userObject, FreeMindMain frame, MindMap map) {
-		super(userObject, frame, map);
+	public MindMapNodeModel(Object userObject, MindMap map) {
+		super(userObject, map);
 		children = new LinkedList();
 		setEdge(new MindMapEdgeModel(this, getFrame()));
 	}

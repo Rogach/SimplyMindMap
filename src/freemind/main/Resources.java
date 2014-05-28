@@ -34,59 +34,82 @@ import java.util.logging.Logger;
 import freemind.common.NamedObject;
 import freemind.common.TextTranslator;
 import freemind.main.FreeMindMain.VersionInformation;
+import static freemind.main.StandaloneTree.readDefaultPreferences;
+import java.io.InputStream;
 
 /**
  * @author Dimitri Polivaev 12.07.2005
  */
 public class Resources implements TextTranslator {
-	private FreeMindMain main;
 	static Resources resourcesInstance = null;
 	private HashMap countryMap;
 	private Logger logger = null;
+  public FreeMindCommon common;
+  private Properties properties;
+  
+  public static Properties readDefaultPreferences() {
+    String propsLoc = "freemind.properties";
+    URL defaultPropsURL =
+        StandaloneTree.class.getClassLoader().getResource(propsLoc);
+    Properties props = new Properties();
+    try {
+      InputStream in = defaultPropsURL.openStream();
+      props.load(in);
+      in.close();
+    } catch (Exception ex) {
+      ex.printStackTrace();
+      System.err.println("Panic! Error while loading default properties.");
+    }
+    return props;
+  }
 
-	private Resources(FreeMindMain frame) {
-		this.main = frame;
+	private Resources() {
 		if (logger == null) {
-			logger = main.getLogger(this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		}
+    properties = readDefaultPreferences();
+    common = new FreeMindCommon(properties);
 	}
 
-	static public void createInstance(FreeMindMain frame) {
+	static public void createInstance() {
 		if (resourcesInstance == null) {
-			resourcesInstance = new Resources(frame);
+			resourcesInstance = new Resources();
 		}
 	}
 
 	public URL getResource(String resource) {
-		return main.getResource(resource);
+		return this.getClass().getClassLoader().getResource(resource);
 	}
 
 	public String getResourceString(String resource) {
-		return main.getResourceString(resource);
+		return common.getResourceString(resource);
 	}
 
 	public String getResourceString(String key, String resource) {
-		return main.getResourceString(key, resource);
+		return common.getResourceString(key, resource);
 	}
 
 	static public Resources getInstance() {
 		if(resourcesInstance == null) {
-			//createInstance(new FreeMindMainMock());
-			System.err.println("Resources without FreeMind called.");
+			createInstance();
 		}
 		return resourcesInstance;
 	}
 
 	public String getFreemindDirectory() {
-		return main.getFreemindDirectory();
+		return null;
 	}
 
 	public VersionInformation getFreemindVersion() {
-		return main.getFreemindVersion();
+		return null;
 	}
 
 	public int getIntProperty(String key, int defaultValue) {
-		return main.getIntProperty(key, defaultValue);
+    try {
+			return Integer.parseInt(getProperty(key));
+		} catch (NumberFormatException nfe) {
+			return defaultValue;
+		}
 	}
 	
 	public long getLongProperty(String key, long defaultValue) {
@@ -110,15 +133,15 @@ public class Resources implements TextTranslator {
 	}
 
 	public Properties getProperties() {
-		return main.getProperties();
+		return properties;
 	}
 
 	public String getProperty(String key) {
-		return main.getProperty(key);
+		return properties.getProperty(key);
 	}
 
 	public ResourceBundle getResources() {
-		return main.getResources();
+		return common.getResources();
 	}
 
 	public HashMap getCountryMap() {
@@ -138,7 +161,7 @@ public class Resources implements TextTranslator {
 
 	/* To obtain a logging element, ask here. */
 	public java.util.logging.Logger getLogger(String forClass) {
-		return main.getLogger(forClass);
+		return Logger.getLogger(forClass);
 	}
 
 	public void logException(Throwable e) {

@@ -34,7 +34,9 @@ import java.util.Vector;
 import freemind.controller.actions.generated.instance.Plugin;
 import freemind.controller.actions.generated.instance.PluginClasspath;
 import freemind.main.FreeMindMain;
+import freemind.main.Resources;
 import freemind.main.Tools;
+import java.util.logging.Logger;
 
 /**
  * @author foltin
@@ -48,8 +50,6 @@ public class HookDescriptorBase {
 
 	protected final Plugin pluginBase;
 
-	protected final FreeMindMain frame;
-
 	protected final String mXmlPluginFile;
 
 	/**
@@ -57,14 +57,12 @@ public class HookDescriptorBase {
 	 * @param frame
 	 * @param xmlPluginFile
 	 */
-	public HookDescriptorBase(final Plugin pluginBase,
-			final FreeMindMain frame, final String xmlPluginFile) {
+	public HookDescriptorBase(final Plugin pluginBase, final String xmlPluginFile) {
 		super();
 		this.pluginBase = pluginBase;
-		this.frame = frame;
 		mXmlPluginFile = xmlPluginFile;
 		if (logger == null) {
-			logger = frame.getLogger(this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		}
 	}
 
@@ -75,7 +73,7 @@ public class HookDescriptorBase {
 			return string;
 		}
 		if (string.startsWith("%")) {
-			return frame.getController().getResourceString(string.substring(1));
+			return Resources.getInstance().getResourceString(string.substring(1));
 		}
 		return string;
 	}
@@ -85,7 +83,7 @@ public class HookDescriptorBase {
 			return string;
 		}
 		if (string.startsWith("%")) {
-			return frame.getProperty(string.substring(1));
+			return Resources.getInstance().getProperty(string.substring(1));
 		}
 		return string;
 	}
@@ -94,8 +92,7 @@ public class HookDescriptorBase {
 	 * @return the relative/absolute(?) position of the plugin xml file.
 	 */
 	private String getPluginDirectory() {
-		return frame.getFreemindBaseDir() + "/"
-				+ new File(mXmlPluginFile).getParent();
+		return null;
 	}
 
 	public Plugin getPluginBase() {
@@ -166,8 +163,7 @@ public class HookDescriptorBase {
 						+ file.exists());
 				urls[j++] = Tools.fileToUrl(file);
 			}
-			ClassLoader loader = new URLClassLoader(urls,
-					frame.getFreeMindClassLoader());
+			ClassLoader loader = new URLClassLoader(urls, Resources.getInstance().common.getFreeMindClassLoader());
 			classLoaderCache.put(key, loader);
 			return loader;
 		} catch (MalformedURLException e) {

@@ -44,7 +44,7 @@ public class BrowseNodeModel extends NodeAdapter {
 	}
 
 	public BrowseNodeModel(Object userObject, FreeMindMain frame, MindMap map) {
-		super(userObject, frame, map);
+		super(userObject, map);
 		children = new LinkedList();
 		setEdge(new BrowseEdgeModel(this, getFrame()));
 	}

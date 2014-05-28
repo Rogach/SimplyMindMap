@@ -37,12 +37,9 @@ public class NodeMouseMotionListener implements MouseMotionListener,
 
 	}
 
-	private final Controller c;
-
 	private NodeMouseMotionObserver mListener;
 
-	public NodeMouseMotionListener(Controller controller) {
-		c = controller;
+	public NodeMouseMotionListener() {
 	}
 
 	public void register(NodeMouseMotionObserver listener) {

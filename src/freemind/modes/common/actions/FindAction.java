@@ -94,8 +94,7 @@ public class FindAction extends AbstractAction {
 	private String mLastSearchString;
 
 	public FindAction(ControllerAdapter controller) {
-		super(controller.getText("find"), new ImageIcon(
-				controller.getResource("images/filefind.png")));
+		super("", null);
 		this.controller = controller;
 	}
 
@@ -227,7 +226,7 @@ public class FindAction extends AbstractAction {
 		private final FindAction find;
 
 		public FindNextAction(ControllerAdapter controller, FindAction find) {
-			super(controller.getText("find_next"));
+			super("");
 			this.controller = controller;
 			this.find = find;
 		}

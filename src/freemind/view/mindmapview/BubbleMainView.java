@@ -29,6 +29,7 @@ import java.awt.Stroke;
 
 import freemind.main.Tools;
 import freemind.modes.MindMapNode;
+import java.awt.RenderingHints;
 
 class BubbleMainView extends MainView {
 	private final static Stroke BOLD_STROKE = new BasicStroke(2.0f,
@@ -53,8 +54,10 @@ class BubbleMainView extends MainView {
 		final MindMapNode model = nodeView.getModel();
 		if (model == null)
 			return;
+    Object renderingHint1 = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, (true) ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF);
 
-		Object renderingHint = getController().setEdgesRenderingHint(g);
+		Object renderingHint = renderingHint1;
 		paintSelected(g);
 		paintDragOver(g);
 

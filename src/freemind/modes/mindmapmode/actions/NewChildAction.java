@@ -47,12 +47,11 @@ public class NewChildAction extends AbstractAction implements ActorXml {
 	private static Logger logger = null;
 
 	public NewChildAction(MindMapController modeController) {
-		super(modeController.getText("new_child"), new ImageIcon(
-				modeController.getResource("images/idea.png")));
+		super("", null);
 		this.c = modeController;
 		this.c.getActionFactory().registerActor(this, getDoActionClass());
 		if (logger == null) {
-			logger = c.getFrame().getLogger(NewChildAction.class.getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		}
 
 	}

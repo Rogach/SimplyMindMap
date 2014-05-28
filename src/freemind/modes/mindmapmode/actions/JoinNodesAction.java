@@ -37,7 +37,7 @@ public class JoinNodesAction extends AbstractAction {
 	private final MindMapController controller;
 
 	public JoinNodesAction(MindMapController controller) {
-		super(controller.getText("join_nodes"));
+		super("");
 		this.controller = controller;
 	}
 

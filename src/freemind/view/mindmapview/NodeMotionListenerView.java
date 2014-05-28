@@ -31,6 +31,7 @@ import javax.swing.JComponent;
 import freemind.controller.Controller;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import java.awt.RenderingHints;
 
 /**
  * 
@@ -70,8 +71,10 @@ public class NodeMotionListenerView extends JComponent {
 		if (isMouseEntered()) {
 			Graphics2D g2 = (Graphics2D) g;
 			Controller controller = movedView.getMap().getController();
+      Object renderingHint1 = g2.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, (true) ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF);
 			// set antialiasing.
-			Object renderingHint = controller.setEdgesRenderingHint(g2);
+			Object renderingHint = renderingHint1;
 			Color color = g2.getColor();
 			Stroke oldStroke = g2.getStroke();
 			g2.setStroke(new BasicStroke());

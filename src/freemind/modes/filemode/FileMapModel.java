@@ -45,7 +45,7 @@ public class FileMapModel extends MapAdapter {
 
 	public FileMapModel(File root, FreeMindMain frame,
 			ModeController modeController) {
-		super(frame, modeController);
+		super(modeController);
 		setRoot(new FileNodeModel(root, getFrame(), this));
 		getRootNode().setFolded(false);
 		linkRegistry = new MindMapLinkRegistry();

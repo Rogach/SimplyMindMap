@@ -47,13 +47,12 @@ public class NodeUpAction extends AbstractAction implements ActorXml {
 	private static Logger logger;
 
 	public NodeUpAction(MindMapController modeController) {
-		super(modeController.getText("node_up"));
+		super("");
 		this.modeController = modeController;
 		modeController.getActionFactory().registerActor(this,
 				getDoActionClass());
 		if (logger == null) {
-			logger = modeController.getFrame().getLogger(
-					this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		}
 	}
 

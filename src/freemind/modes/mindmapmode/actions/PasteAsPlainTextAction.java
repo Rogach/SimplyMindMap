@@ -43,11 +43,10 @@ public class PasteAsPlainTextAction extends AbstractAction {
 	private static Logger logger;
 
 	public PasteAsPlainTextAction(MindMapController pMindMapController) {
-		super(pMindMapController.getText("paste_as_plain_text"), null);
+		super("", null);
 		this.mMindMapController = pMindMapController;
 		if (logger == null) {
-			logger = mMindMapController.getFrame().getLogger(
-					this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		}
 
 		setEnabled(false);

@@ -99,9 +99,9 @@ public class EdgeWidthAction extends NodeGeneralAction implements NodeActorXml, 
 	private static String getWidthTitle(MindMapController controller, int width) {
 		String returnValue;
 		if (width == EdgeAdapter.WIDTH_PARENT) {
-			returnValue = controller.getText("edge_width_parent");
+			returnValue = "";
 		} else if (width == EdgeAdapter.WIDTH_THIN) {
-			returnValue = controller.getText("edge_width_thin");
+			returnValue = "";
 		} else {
 			returnValue = Integer.toString(width);
 		}

@@ -57,6 +57,7 @@ import freemind.main.FreeMind;
 import freemind.main.FreeMindCommon;
 import freemind.main.FreeMindMain;
 import freemind.main.HtmlTools;
+import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
 import freemind.modes.attributes.Attribute;
@@ -64,6 +65,7 @@ import freemind.modes.attributes.NodeAttributeTableModel;
 import freemind.preferences.FreemindPropertyListener;
 import freemind.view.mindmapview.NodeView;
 import freemind.view.mindmapview.NodeViewVisitor;
+import java.util.logging.Logger;
 
 /**
  * This class represents a single Node of a Tree. It contains direct handles to
@@ -166,17 +168,16 @@ public abstract class NodeAdapter implements MindMapNode {
 	// Constructors
 	//
 
-	protected NodeAdapter(FreeMindMain frame, MindMap map) {
-		this(null, frame, map);
+	protected NodeAdapter(MindMap map) {
+		this(null, map);
 	}
 
-	protected NodeAdapter(Object userObject, FreeMindMain frame, MindMap map) {
-		this.frame = frame;
+	protected NodeAdapter(Object userObject, MindMap map) {
 		setText((String) userObject);
 		hooks = null; // lazy, fc, 30.6.2005.
 		activatedHooks = null; // lazy, fc, 30.6.2005
 		if (logger == null)
-			logger = frame.getLogger(this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		// create creation time:
 		setHistoryInformation(new HistoryInformation());
 		this.map = map;
@@ -297,7 +298,7 @@ public abstract class NodeAdapter implements MindMapNode {
 	}
 
 	public FreeMindMain getFrame() {
-		return frame;
+		return null;
 	}
 
 	//
@@ -375,10 +376,10 @@ public abstract class NodeAdapter implements MindMapNode {
 		String returnedString = style; /* Style string returned */
 		if (style == null) {
 			if (this.isRoot()) {
-				returnedString = getFrame().getProperty(
+				returnedString = Resources.getInstance().getProperty(
 						FreeMind.RESOURCES_ROOT_NODE_STYLE);
 			} else {
-				String stdstyle = getFrame().getProperty(
+				String stdstyle = Resources.getInstance().getProperty(
 						FreeMind.RESOURCES_NODE_STYLE);
 				if (stdstyle.equals(MindMapNode.STYLE_AS_PARENT)) {
 					returnedString = getParentNode().getStyle();
@@ -387,7 +388,7 @@ public abstract class NodeAdapter implements MindMapNode {
 				}
 			}
 		} else if (this.isRoot() && style.equals(MindMapNode.STYLE_AS_PARENT)) {
-			returnedString = getFrame().getProperty(
+			returnedString = Resources.getInstance().getProperty(
 					FreeMind.RESOURCES_ROOT_NODE_STYLE);
 		} else if (style.equals(MindMapNode.STYLE_AS_PARENT)) {
 			returnedString = getParentNode().getStyle();

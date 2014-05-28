@@ -30,6 +30,7 @@ import java.awt.Point;
 import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import java.awt.RenderingHints;
 
 class RootMainView extends MainView {
 
@@ -50,8 +51,10 @@ class RootMainView extends MainView {
 
 		if (getNodeView().getModel() == null)
 			return;
+    Object renderingHint1 = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, (true) ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF);
 
-		Object renderingHint = getController().setEdgesRenderingHint(g);
+		Object renderingHint = renderingHint1;
 		paintSelected(g);
 		paintDragOver(g);
 

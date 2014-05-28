@@ -34,7 +34,6 @@ import freemind.modes.ModeController;
 
 public class MindMapMode extends Mode {
 
-	private Controller c;
 	private MindMapController modecontroller;
 	private final String MODENAME = "MindMap";
 	private boolean isRunning = false;
@@ -44,12 +43,14 @@ public class MindMapMode extends Mode {
 	}
 
 	public void init(Controller c) {
-		this.c = c;
-		if (logger == null) {
-			logger = c.getFrame().getLogger(this.getClass().getName());
-		}
+    logger = Logger.getLogger(this.getClass().getName());
 		modecontroller = (MindMapController) createModeController();
 	}
+  
+  public void init() {
+    logger = Logger.getLogger(this.getClass().getName());
+		modecontroller = (MindMapController) createModeController();
+  }
 
 	public ModeController createModeController() {
 		logger.finest("Creating new MindMapController...");
@@ -68,11 +69,6 @@ public class MindMapMode extends Mode {
 	 * etc.)
 	 */
 	public void activate() {
-		if (isRunning) {
-			c.getMapModuleManager().changeToMapOfMode(this);
-		} else {
-			isRunning = true;
-		}
 	}
 
 	public void restore(String restoreable) throws FileNotFoundException,
@@ -82,7 +78,7 @@ public class MindMapMode extends Mode {
 	}
 
 	public Controller getController() {
-		return c;
+		return null;
 	}
 
 	public ModeController getDefaultModeController() {

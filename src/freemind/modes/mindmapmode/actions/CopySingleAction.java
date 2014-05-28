@@ -33,7 +33,7 @@ public class CopySingleAction extends AbstractAction {
 	private final MindMapController controller;
 
 	public CopySingleAction(MindMapController controller) {
-		super(controller.getText("copy_single"));
+		super("");
 		this.controller = controller;
 		setEnabled(false);
 	}

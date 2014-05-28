@@ -33,7 +33,7 @@ public class NodeDownAction extends AbstractAction {
 	private final MindMapController modeController;
 
 	public NodeDownAction(MindMapController adapter) {
-		super(adapter.getText("node_down"));
+		super("");
 		this.modeController = adapter;
 	}
 

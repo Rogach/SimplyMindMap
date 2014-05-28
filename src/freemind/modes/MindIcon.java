@@ -181,8 +181,7 @@ public class MindIcon implements Comparable, IconInformation {
 		if (mAllIconNames != null)
 			return mAllIconNames;
 		Vector mAllIconNames = new Vector();
-		String icons = Resources.getInstance().getProperty(
-				PROPERTY_STRING_ICONS_LIST);
+		String icons = Resources.getInstance().getProperty(PROPERTY_STRING_ICONS_LIST);
 		StringTokenizer tokenizer = new StringTokenizer(icons, ";");
 		while (tokenizer.hasMoreTokens()) {
 			mAllIconNames.add(tokenizer.nextToken());

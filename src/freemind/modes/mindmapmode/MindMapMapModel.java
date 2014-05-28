@@ -53,6 +53,7 @@ import javax.swing.JOptionPane;
 import freemind.common.OptionalDontShowMeAgainDialog;
 import freemind.common.UnicodeReader;
 import freemind.main.FreeMind;
+import freemind.main.FreeMindCommon;
 import freemind.main.FreeMindMain;
 import freemind.main.HtmlTools;
 import freemind.main.Resources;
@@ -63,6 +64,7 @@ import freemind.modes.MindMapLinkRegistry;
 import freemind.modes.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.NodeAdapter;
+import java.util.Properties;
 
 public class MindMapMapModel extends MapAdapter {
 
@@ -84,13 +86,13 @@ public class MindMapMapModel extends MapAdapter {
 	// Constructors
 	//
 
-	public MindMapMapModel(FreeMindMain frame, ModeController modeController) {
-		this(null, frame, modeController);
+	public MindMapMapModel(FreeMindCommon common, ModeController modeController) {
+		this(null, common, modeController);
 	}
 
-	public MindMapMapModel(MindMapNodeModel root, FreeMindMain frame,
+	public MindMapMapModel(MindMapNodeModel root, FreeMindCommon common,
 			ModeController modeController) {
-		super(frame, modeController);
+		super(modeController);
 		lockManager = Resources.getInstance().getBoolProperty(
 				"experimental_file_locking_on") ? new LockManager()
 				: new DummyLockManager();
@@ -99,8 +101,8 @@ public class MindMapMapModel extends MapAdapter {
 		linkRegistry = new MindMapLinkRegistry();
 
 		if (root == null)
-			root = new MindMapNodeModel(frame.getResourceString("new_mindmap"),
-					frame, this);
+			root = new MindMapNodeModel(common.getResourceString("new_mindmap"),
+					 this);
 		setRoot(root);
 		readOnly = false;
 		// automatic save: start timer after the map is completely loaded
@@ -575,19 +577,19 @@ public class MindMapMapModel extends MapAdapter {
 	}
 
 	private void scheduleTimerForAutomaticSaving() {
-		int numberOfTempFiles = Integer.parseInt(getFrame().getProperty(
+		int numberOfTempFiles = Integer.parseInt(Resources.getInstance().getProperty(
 				"number_of_different_files_for_automatic_save"));
 		boolean filesShouldBeDeletedAfterShutdown = Resources.getInstance()
 				.getBoolProperty("delete_automatic_saves_at_exit");
-		String path = getFrame().getProperty("path_to_automatic_saves");
+		String path = Resources.getInstance().getProperty("path_to_automatic_saves");
 		/* two standard values: */
 		if (Tools.safeEquals(path, "default")) {
 			path = null;
 		}
 		if (Tools.safeEquals(path, "freemind_home")) {
-			path = getFrame().getFreemindDirectory();
+			path = Resources.getInstance().getFreemindDirectory();
 		}
-		int delay = Integer.parseInt(getFrame().getProperty(
+		int delay = Integer.parseInt(Resources.getInstance().getProperty(
 				"time_for_automatic_save"));
 		File dirToStore = null;
 		if (path != null) {

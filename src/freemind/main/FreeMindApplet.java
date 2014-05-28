@@ -62,8 +62,8 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
 	private JComponent mComponentInSplitPane;
 
 	public FreeMindApplet() {
-		mFreeMindCommon = new FreeMindCommon(this);
-		Resources.createInstance(this);
+		mFreeMindCommon = new FreeMindCommon(null);
+		Resources.createInstance();
 	}// Constructor
 
 	public boolean isApplet() {

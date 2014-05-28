@@ -20,6 +20,7 @@
 
 package freemind.modes.mindmapmode.actions;
 
+import freemind.main.FreeMindCommon;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.net.MalformedURLException;
@@ -42,7 +43,7 @@ public class ExportBranchAction extends AbstractAction {
 	private final MindMapController mMindMapController;
 
 	public ExportBranchAction(MindMapController pMindMapController) {
-		super(pMindMapController.getText("export_branch_new"));
+		super("");
 		mMindMapController = pMindMapController;
 	}
 
@@ -121,7 +122,7 @@ public class ExportBranchAction extends AbstractAction {
 			ModeController newModeController = mMindMapController.getMode()
 					.createModeController();
 			MindMapMapModel map = new MindMapMapModel(node,
-					mMindMapController.getFrame(), newModeController);
+					new FreeMindCommon(null), newModeController);
 			map.save(chosenFile);
 			// new node instead:
 			MindMapNode newNode = mMindMapController.addNewNode(parent,

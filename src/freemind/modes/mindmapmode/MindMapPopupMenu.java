@@ -40,7 +40,7 @@ public class MindMapPopupMenu extends FreeMindPopupMenu {
 		super();
 		this.c = c;
 		if (logger == null) {
-			logger = c.getFrame().getLogger(this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		}
 	}
 

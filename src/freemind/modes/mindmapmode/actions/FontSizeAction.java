@@ -46,7 +46,7 @@ public class FontSizeAction extends NodeGeneralAction implements NodeActorXml {
 		super(modeController, "font_size", null, (NodeActorXml) null);
 		addActor(this);
 		// default value:
-		actionSize = modeController.getFrame().getProperty("defaultfontsize");
+		actionSize = "";
 	}
 
 	public void actionPerformed(String size) {

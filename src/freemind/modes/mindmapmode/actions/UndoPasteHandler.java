@@ -26,6 +26,7 @@ import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.PasteAction.NodeCoordinate;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
+import java.util.logging.Logger;
 
 /**
  * @author foltin
@@ -43,8 +44,7 @@ public class UndoPasteHandler implements ActorXml {
 	public UndoPasteHandler(MindMapController pMindMapController) {
 		mMindMapController = pMindMapController;
 		if (logger == null) {
-			logger = freemind.main.Resources.getInstance().getLogger(
-					this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		}
 	}
 

@@ -47,7 +47,7 @@ public class BrowseMapModel extends MapAdapter {
 
 	public BrowseMapModel(BrowseNodeModel root, FreeMindMain frame,
 			ModeController modeController) {
-		super(frame, modeController);
+    super(modeController);
 		if (root != null)
 			setRoot(root);
 		else

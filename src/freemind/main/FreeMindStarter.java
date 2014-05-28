@@ -172,7 +172,7 @@ public class FreeMindStarter {
 		return auto;
 	}
 
-	private File getUserPreferencesFile(Properties defaultPreferences) {
+	public File getUserPreferencesFile(Properties defaultPreferences) {
 		if (defaultPreferences == null) {
 			System.err.println("Panic! Error while loading default properties.");
 			System.exit(1);

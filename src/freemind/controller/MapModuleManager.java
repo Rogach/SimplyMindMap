@@ -41,6 +41,7 @@ import freemind.modes.Mode;
 import freemind.modes.ModeController;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
+import java.util.Properties;
 
 /**
  * Manages the list of MapModules. As this task is very complex, I exported it
@@ -240,7 +241,7 @@ public class MapModuleManager {
 	}
 
 	public void newMapModule(MindMap map, ModeController modeController) {
-		MapModule mapModule = new MapModule(map, new MapView(map, mController),
+		MapModule mapModule = new MapModule(map, new MapView(map, new Properties()),
 				modeController.getMode(), modeController);
 		addToOrChangeInMapModules(mapModule.toString(), mapModule);
 		setMapModule(mapModule, modeController.getMode());

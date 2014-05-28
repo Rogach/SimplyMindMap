@@ -36,7 +36,7 @@ public class ImportExplorerFavoritesAction extends AbstractAction {
 	private final MindMapController controller;
 
 	public ImportExplorerFavoritesAction(MindMapController controller) {
-		super(controller.getText("import_explorer_favorites"));
+		super("");
 		this.controller = controller;
 	}
 

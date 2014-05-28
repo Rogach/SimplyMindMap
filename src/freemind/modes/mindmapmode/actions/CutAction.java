@@ -43,6 +43,7 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.PasteAction.NodeCoordinate;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
+import java.util.logging.Logger;
 
 public class CutAction extends AbstractAction implements ActorXml {
 	private String text;
@@ -50,14 +51,12 @@ public class CutAction extends AbstractAction implements ActorXml {
 	private static java.util.logging.Logger logger = null;
 
 	public CutAction(MindMapController c) {
-		super(c.getText("cut"), new ImageIcon(
-				c.getResource("images/editcut.png")));
+		super("", null);
 		if (logger == null) {
-			logger = freemind.main.Resources.getInstance().getLogger(
-					this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		}
 		this.mMindMapController = c;
-		this.text = c.getText("cut");
+		this.text = "";
 		setEnabled(false);
 		this.mMindMapController.getActionFactory().registerActor(this,
 				getDoActionClass());

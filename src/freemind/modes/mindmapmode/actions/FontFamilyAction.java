@@ -48,7 +48,7 @@ public class FontFamilyAction extends NodeGeneralAction implements NodeActorXml 
 		super(modeController, "font_family", null, (NodeActorXml) null);
 		addActor(this);
 		// default value:
-		actionFont = modeController.getFrame().getProperty("defaultfont");
+		actionFont = "";
 	}
 
 	public void actionPerformed(String font) {

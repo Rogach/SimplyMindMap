@@ -44,7 +44,7 @@ public class SchemeMapModel extends MapAdapter {
 	//
 
 	public SchemeMapModel(FreeMindMain frame, ModeController modeController) {
-		super(frame, modeController);
+		super(modeController);
 		setRoot(new SchemeNodeModel(getFrame(), this));
 	}
 

@@ -111,7 +111,7 @@ public class FreeMindCommon {
 		 */
 		private PropertyResourceBundle getLanguageResources(String lang)
 				throws IOException {
-			URL systemResource = mFreeMindMain.getResource("Resources_" + lang
+			URL systemResource = this.getClass().getClassLoader().getResource("Resources_" + lang
 					+ ".properties");
 			if (systemResource == null) {
 				return null;
@@ -174,8 +174,8 @@ public class FreeMindCommon {
 	public static final String DEFAULT_LANGUAGE = "en";
 
 	public static final String LOCAL_PROPERTIES = "LocalProperties.";
-
-	private final FreeMindMain mFreeMindMain;
+  
+  private final Properties properties;
 
 	private String baseDir;
 
@@ -218,20 +218,19 @@ public class FreeMindCommon {
 	/**
 	 * 
 	 */
-	public FreeMindCommon(FreeMindMain main) {
+	public FreeMindCommon(Properties properties) {
 		super();
-		// TODO Auto-generated constructor stub
-		this.mFreeMindMain = main;
+    this.properties = properties;
 		if (logger == null)
-			logger = main.getLogger(this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 	}
 
 	public String getProperty(String key) {
-		return mFreeMindMain.getProperty(key);
+		return properties.getProperty(key);
 	}
 
 	private void setDefaultProperty(String key, String value) {
-		mFreeMindMain.setDefaultProperty(key, value);
+		
 	}
 
 	/** Returns the ResourceBundle with the current language */

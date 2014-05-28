@@ -30,6 +30,7 @@ import freemind.controller.Controller;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.modes.mindmapmode.actions.xml.ActionFilter.FinalActionFilter;
 import freemind.modes.mindmapmode.actions.xml.ActionFilter.FirstActionFilter;
+import java.util.logging.Logger;
 
 /**
  * @author foltin
@@ -57,8 +58,7 @@ public class ActionFactory {
 		super();
 		this.controller = c;
 		if (logger == null) {
-			logger = freemind.main.Resources.getInstance().getLogger(
-					this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		}
 		registeredHandler = new Vector();
 		registeredFilters = new Vector();

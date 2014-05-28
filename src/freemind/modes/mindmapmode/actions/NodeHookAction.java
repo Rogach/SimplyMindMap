@@ -70,7 +70,7 @@ public class NodeHookAction extends FreemindAction implements HookAction,
 		this._hookName = hookName;
 		this.mMindMapController = controller;
 		if (logger == null)
-			logger = controller.getFrame().getLogger(this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		controller.getActionFactory().registerActor(this, getDoActionClass());
 	}
 

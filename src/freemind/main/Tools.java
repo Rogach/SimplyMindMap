@@ -112,6 +112,7 @@ import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.NodeView;
+import java.util.logging.Logger;
 
 /**
  * @author foltin
@@ -125,7 +126,7 @@ public class Tools {
 
 	private static java.util.logging.Logger logger = null;
 	static {
-		logger = freemind.main.Resources.getInstance().getLogger("Tools");
+		logger = Logger.getLogger("Tools");
 	}
 
 	public static final String CONTENTS_JAVA_FREEMIND_JAR = "Contents/Java/freemind.jar";

@@ -33,6 +33,7 @@ import freemind.controller.Controller;
 import freemind.controller.FreeMindToolBar;
 import freemind.controller.StructuredMenuHolder;
 import freemind.controller.ZoomListener;
+import freemind.main.Resources;
 import freemind.main.Tools;
 
 public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
@@ -126,22 +127,7 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 			}
 		};
 		size.addItemListener(sizeListener);
-		userDefinedZoom = controller.getText("user_defined_zoom");
-
-		zoom = new FreeMindComboBox(controller.getController().getZooms());
-		zoom.setSelectedItem("100%");
-		zoom.addItem(userDefinedZoom);
-		// Focus fix.
-		zoom.setFocusable(false);
-		zoom.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				// todo: dialog with user zoom value, if user zoom is chosen.
-				// change proposed by dimitri:
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					setZoomByItem(e.getItem());
-				}
-			}
-		});
+		userDefinedZoom = Resources.getInstance().getProperty("user_defined_zoom");
 
 	}
 

@@ -36,11 +36,13 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import freemind.controller.Controller;
+import freemind.main.FreeMindCommon;
 import freemind.main.FreeMindMain;
 import freemind.main.Tools;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapMapModel;
 import freemind.modes.mindmapmode.MindMapMode;
+import java.util.Properties;
 
 /**
  * @author foltin
@@ -63,7 +65,7 @@ public class IndependantMapViewCreator {
 		};
 		mode.init(controller);
 		MindMapController mc = (MindMapController) mode.createModeController();
-		MindMapMapModel model = new MindMapMapModel(pFreeMindMain, mc);
+		MindMapMapModel model = new MindMapMapModel(new FreeMindCommon(new Properties()), mc);
 		mc.setModel(model);
 		model.load(new File(inputFileName));
 		MapView mapView = createMapView(controller, model);
@@ -109,21 +111,7 @@ public class IndependantMapViewCreator {
 	}
 
 	protected MapView createMapView(Controller controller, MindMapMapModel model) {
-		MapView mapView = new MapView(model, controller) {
-			DragGestureListener getNodeDragListener() {
-				return null;
-			}
-
-			DropTargetListener getNodeDropListener() {
-				return null;
-			}
-
-			public void selectAsTheOnlyOneSelected(NodeView pNewSelected,
-					boolean pRequestFocus) {
-			}
-
-		};
-		return mapView;
+		return null;
 	}
 
 }

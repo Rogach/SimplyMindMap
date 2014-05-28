@@ -94,6 +94,7 @@ import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
 import freemind.view.mindmapview.attributeview.AttributeTable;
 import freemind.view.mindmapview.attributeview.AttributeView;
+import java.util.logging.Logger;
 
 /**
  * Derive from this class to implement the Controller for your mode. Overload
@@ -125,7 +126,7 @@ public abstract class ControllerAdapter implements ModeController,
 	public ControllerAdapter(Mode mode) {
 		this.setMode(mode);
 		if (logger == null) {
-			logger = getFrame().getLogger(this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		}
 		// for updates of nodes:
 		// FIXME
@@ -1235,8 +1236,7 @@ public abstract class ControllerAdapter implements ModeController,
 		ControllerAdapter mc;
 
 		public OpenAction(ControllerAdapter modeController) {
-			super(getText("open"), new ImageIcon(
-					getResource("images/fileopen.png")));
+			super("", null);
 			mc = modeController;
 		}
 
@@ -1250,8 +1250,7 @@ public abstract class ControllerAdapter implements ModeController,
 		ControllerAdapter mc;
 
 		public SaveAction(ControllerAdapter modeController) {
-			super(Tools.removeMnemonic(getText("save")), new ImageIcon(
-					getResource("images/filesave.png")));
+			super("", null);
 			mc = modeController;
 		}
 
@@ -1272,8 +1271,7 @@ public abstract class ControllerAdapter implements ModeController,
 		ControllerAdapter mc;
 
 		public SaveAsAction(ControllerAdapter modeController) {
-			super(getText("save_as"), new ImageIcon(
-					getResource("images/filesaveas.png")));
+			super("", null);
 			mc = modeController;
 		}
 
@@ -1285,8 +1283,7 @@ public abstract class ControllerAdapter implements ModeController,
 
 	protected class EditAttributesAction extends AbstractAction {
 		public EditAttributesAction() {
-			super(Resources.getInstance().getResourceString(
-					"attributes_edit_in_place"));
+			super("");
 		};
 
 		public void actionPerformed(ActionEvent e) {

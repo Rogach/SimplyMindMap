@@ -43,8 +43,7 @@ public class EdgeStyleAction extends NodeGeneralAction implements NodeActorXml, 
 
 	public EdgeStyleAction(MindMapController controller, String style) {
 		super(controller, null, null);
-		setName(/* controller.getText("edge_style") + */controller
-				.getText(style));
+		setName("");
 		this.mStyle = style;
 		addActor(this);
 	}

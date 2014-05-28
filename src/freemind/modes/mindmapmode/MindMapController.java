@@ -269,7 +269,7 @@ public class MindMapController extends ControllerAdapter implements
 
 	protected class AssignAttributesAction extends AbstractAction {
 		public AssignAttributesAction() {
-			super(getText("attributes_assign_dialog"));
+			super("");
 		}
 
 		public void actionPerformed(ActionEvent e) {
@@ -427,7 +427,7 @@ public class MindMapController extends ControllerAdapter implements
 	public MindMapController(Mode mode) {
 		super(mode);
 		if (logger == null) {
-			logger = getFrame().getLogger(this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		}
 		// create action factory:
 		actionFactory = new ActionFactory(getController());
@@ -451,7 +451,7 @@ public class MindMapController extends ControllerAdapter implements
 		// load menus:
 		try {
 			InputStream in;
-			in = this.getFrame().getResource("mindmap_menus.xml").openStream();
+			in = Resources.getInstance().getResource("mindmap_menus.xml").openStream();
 			mMenuStructure = updateMenusFromXml(in);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -469,8 +469,6 @@ public class MindMapController extends ControllerAdapter implements
 		mRegistrations = new Vector();
 
 		attributeController = new MindMapModeAttributeController(this);
-		showAttributeManagerAction = getController().showAttributeManagerAction;
-		propertyAction = getController().propertyAction;
 	}
 
 	private void createStandardActions() {
@@ -578,49 +576,7 @@ public class MindMapController extends ControllerAdapter implements
 	 * while reading the pattern file).
 	 */
 	private void loadPatternActions() {
-		try {
-			loadPatterns(getPatternReader());
-		} catch (Exception ex) {
-			System.err.println("Patterns not loaded:" + ex);
-			// repair old patterns:
-			String repairTitle = "Repair patterns";
-			File patternsFile = getFrame().getPatternsFile();
-			int result = JOptionPane
-					.showConfirmDialog(
-							null,
-							"<html>The pattern file format has changed, <br>"
-									+ "and it seems, that your pattern file<br>"
-									+ "'"
-									+ patternsFile.getAbsolutePath()
-									+ "'<br> is formatted in the old way. <br>"
-									+ "Should I try to repair the pattern file <br>"
-									+ "(otherwise, you should update it by hand or delete it)?",
-							repairTitle, JOptionPane.YES_NO_OPTION);
-			if (result == JOptionPane.YES_OPTION) {
-				// try xslt script:
-				boolean success = false;
-				try {
-					loadPatterns(Tools.getUpdateReader(
-							Tools.getReaderFromFile(patternsFile),
-							"patterns_updater.xslt", getFrame()));
-					// save patterns directly:
-					StylePatternFactory.savePatterns(new FileWriter(
-							patternsFile), mPatternsList);
-					success = true;
-				} catch (Exception e) {
-					freemind.main.Resources.getInstance().logException(e);
-				}
-				if (success) {
-					JOptionPane.showMessageDialog(null,
-							"Successfully repaired the pattern file.",
-							repairTitle, JOptionPane.PLAIN_MESSAGE);
-				} else {
-					JOptionPane.showMessageDialog(null,
-							"An error occured repairing the pattern file.",
-							repairTitle, JOptionPane.WARNING_MESSAGE);
-				}
-			}
-		}
+		
 	}
 
 	/**
@@ -764,7 +720,7 @@ public class MindMapController extends ControllerAdapter implements
 	}
 
 	public MapAdapter newModel(ModeController modeController) {
-		return new MindMapMapModel(getFrame(), modeController);
+		return new MindMapMapModel(new FreeMindCommon(new Properties()), modeController);
 	}
 
 	private void createIconActions() {
@@ -865,7 +821,7 @@ public class MindMapController extends ControllerAdapter implements
 	public class DefaultMindMapNodeCreator implements NewNodeCreator {
 
 		public MindMapNode createNode(Object userObject, MindMap map) {
-			return new MindMapNodeModel(userObject, getFrame(), map);
+			return new MindMapNodeModel(userObject, map);
 		}
 
 	}
@@ -1212,7 +1168,7 @@ public class MindMapController extends ControllerAdapter implements
 		MindMapController c;
 
 		public ExportToHTMLAction(MindMapController controller) {
-			super(getText("export_to_html"));
+			super("");
 			c = controller;
 		}
 
@@ -1240,7 +1196,7 @@ public class MindMapController extends ControllerAdapter implements
 		MindMapController c;
 
 		public ExportBranchToHTMLAction(MindMapController controller) {
-			super(getText("export_branch_to_html"));
+			super("");
 			c = controller;
 		}
 
@@ -1266,7 +1222,7 @@ public class MindMapController extends ControllerAdapter implements
 
 	private class ImportBranchAction extends AbstractAction {
 		ImportBranchAction() {
-			super(getText("import_branch"));
+			super("");
 		}
 
 		public void actionPerformed(ActionEvent e) {
@@ -1291,7 +1247,7 @@ public class MindMapController extends ControllerAdapter implements
 
 	private class ImportLinkedBranchAction extends AbstractAction {
 		ImportLinkedBranchAction() {
-			super(getText("import_linked_branch"));
+			super("");
 		}
 
 		public void actionPerformed(ActionEvent e) {
@@ -1328,7 +1284,7 @@ public class MindMapController extends ControllerAdapter implements
 	 */
 	private class ImportLinkedBranchWithoutRootAction extends AbstractAction {
 		ImportLinkedBranchWithoutRootAction() {
-			super(getText("import_linked_branch_without_root"));
+			super("");
 		}
 
 		public void actionPerformed(ActionEvent e) {
@@ -1718,7 +1674,7 @@ public class MindMapController extends ControllerAdapter implements
 
 	protected class SetLinkByFileChooserAction extends AbstractAction {
 		public SetLinkByFileChooserAction() {
-			super(getText("set_link_by_filechooser"));
+			super("");
 		}
 
 		public void actionPerformed(ActionEvent e) {
@@ -1728,7 +1684,7 @@ public class MindMapController extends ControllerAdapter implements
 
 	protected class SetImageByFileChooserAction extends AbstractAction {
 		public SetImageByFileChooserAction() {
-			super(getText("set_image_by_filechooser"));
+			super("");
 		}
 
 		public void actionPerformed(ActionEvent e) {
@@ -1757,7 +1713,7 @@ public class MindMapController extends ControllerAdapter implements
 
 	protected class FollowLinkAction extends LinkActionBase {
 		public FollowLinkAction() {
-			super(getText("follow_link"));
+			super("");
 		}
 
 		public void actionPerformed(ActionEvent e) {
@@ -1773,7 +1729,7 @@ public class MindMapController extends ControllerAdapter implements
 
 	protected class OpenLinkDirectoryAction extends LinkActionBase {
 		public OpenLinkDirectoryAction() {
-			super(getText("open_link_directory"));
+			super("");
 		}
 
 		public void actionPerformed(ActionEvent event) {
@@ -1826,7 +1782,7 @@ public class MindMapController extends ControllerAdapter implements
 	public HookFactory getHookFactory() {
 		// lazy creation.
 		if (nodeHookFactory == null) {
-			nodeHookFactory = new MindMapHookFactory(getFrame());
+			nodeHookFactory = new MindMapHookFactory();
 		}
 		return nodeHookFactory;
 	}
@@ -1871,7 +1827,7 @@ public class MindMapController extends ControllerAdapter implements
 
 	protected class EditLongAction extends AbstractAction {
 		public EditLongAction() {
-			super(getText("edit_long_node"));
+			super("");
 		}
 
 		public void actionPerformed(ActionEvent e) {

@@ -59,7 +59,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 	protected boolean readOnly = true;
 	private File file;
 	private long mFileTime = 0;
-	private FreeMindMain frame;
 	static protected Logger logger;
 	private MapRegistry registry;
 	private Filter filter = null;
@@ -67,13 +66,12 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 	private HashSet mMapSourceChangedObserverSet = new HashSet();
 	private Timer mTimerForFileChangeObservation;
 
-	public MapAdapter(FreeMindMain frame, ModeController modeController) {
+	public MapAdapter(ModeController modeController) {
 		super(null);
-		this.frame = frame;
 		this.mModeController = modeController;
 		mModeController.setModel(this);
 		if (logger == null) {
-			logger = frame.getLogger(this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		}
 		registry = new MapRegistry(this, modeController);
 		filter = new DefaultFilter(NoFilteringCondition.createCondition(),
@@ -196,7 +194,7 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 	}
 
 	public FreeMindMain getFrame() {
-		return frame;
+		return null;
 	}
 
 	//

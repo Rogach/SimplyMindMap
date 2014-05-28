@@ -35,8 +35,7 @@ public class CopyAction extends AbstractAction {
 	private final MindMapController controller;
 
 	public CopyAction(MindMapController controller) {
-		super(controller.getText("copy"), new ImageIcon(
-				controller.getResource("images/editcopy.png")));
+		super("", null);
 		this.controller = controller;
 		setEnabled(false);
 	}

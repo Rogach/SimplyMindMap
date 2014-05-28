@@ -23,6 +23,7 @@ package freemind.modes;
 import java.awt.Color;
 
 import freemind.main.FreeMindMain;
+import freemind.main.Resources;
 import freemind.main.Tools;
 
 public abstract class LineAdapter implements MindMapLine {
@@ -57,7 +58,7 @@ public abstract class LineAdapter implements MindMapLine {
      */
 	protected void updateStandards() {
 		if (getStandardColor() == null) {
-			String stdColor = getFrame().getProperty(
+			String stdColor = Resources.getInstance().getProperty(
 					getStandardColorPropertyString());
 			if (stdColor != null && stdColor.length() == 7) {
 				setStandardColor(Tools.xmlToColor(stdColor));
@@ -66,7 +67,7 @@ public abstract class LineAdapter implements MindMapLine {
 			}
 		}
 		if (getStandardStyle() == null) {
-			String stdStyle = getFrame().getProperty(
+			String stdStyle = Resources.getInstance().getProperty(
 					getStandardStylePropertyString());
 			if (stdStyle != null) {
 				setStandardStyle(stdStyle);

@@ -39,8 +39,7 @@ public class GotoLinkNodeAction extends AbstractAction {
 	private final ModeController controller;
 
 	public GotoLinkNodeAction(ModeController controller, MindMapNode source) {
-		super(controller.getText("goto_link_node_action"), new ImageIcon(
-				controller.getResource("images/Link.png")));
+		super("", null);
 		this.controller = controller;
 		// only display a reasonable part of the string. the rest is available
 		// via the short description (tooltip).

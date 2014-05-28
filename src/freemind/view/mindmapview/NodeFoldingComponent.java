@@ -47,6 +47,7 @@ import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.MindMapNode;
+import java.awt.RenderingHints;
 
 /**
  * @author Foltin
@@ -194,9 +195,10 @@ public class NodeFoldingComponent extends JButton {
 			super.paint(g, c);
 			Graphics2D g2 = (Graphics2D) g;
 			initShape(c);
+      Object renderingHint = g2.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, (true) ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF);
 			// Border
-			Object oldRenderingHint = nodeView.getController()
-					.setEdgesRenderingHint(g2);
+			Object oldRenderingHint = renderingHint;
 			g2.setColor(c.getBackground());
 			g2.setStroke(BubbleMainView.DEF_STROKE);
 			NodeFoldingComponent b = (NodeFoldingComponent) c;

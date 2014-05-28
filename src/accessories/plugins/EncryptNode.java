@@ -159,7 +159,7 @@ public class EncryptNode extends MindMapNodeHookAdapter {
 				getMindMapController().getFrame(), null);
 		encryptedMindMapNode.setPassword(password);
 		MapAdapter newModel = new MindMapMapModel(encryptedMindMapNode,
-				getMindMapController().getFrame(), newModeController);
+				null, newModeController);
 		MindMapController mindmapcontroller = getMindMapController();
 		encryptedMindMapNode.setMap(newModel);
 		mindmapcontroller.newMap(newModel);

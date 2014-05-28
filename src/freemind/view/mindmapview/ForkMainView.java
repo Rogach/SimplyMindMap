@@ -30,6 +30,7 @@ import freemind.main.Tools;
 import freemind.modes.EdgeAdapter;
 import freemind.modes.MindMapEdge;
 import freemind.modes.MindMapNode;
+import java.awt.RenderingHints;
 
 class ForkMainView extends MainView {
 	public void paint(Graphics graphics) {
@@ -39,8 +40,10 @@ class ForkMainView extends MainView {
 		final MindMapNode model = nodeView.getModel();
 		if (model == null)
 			return;
+    Object renderingHint1 = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, (true) ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF);
 
-		Object renderingHint = getController().setEdgesRenderingHint(g);
+		Object renderingHint = renderingHint1;
 		paintSelected(g);
 		paintDragOver(g);
 

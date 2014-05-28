@@ -68,6 +68,7 @@ import freemind.modes.mindmapmode.MindMapMapModel;
 import freemind.modes.mindmapmode.MindMapNodeModel;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
+import java.util.logging.Logger;
 
 public class PasteAction extends AbstractAction implements ActorXml {
 
@@ -76,12 +77,10 @@ public class PasteAction extends AbstractAction implements ActorXml {
 	private UndoPasteHandler mUndoPasteHandler;
 
 	public PasteAction(MindMapController pMindMapController) {
-		super(pMindMapController.getText("paste"), new ImageIcon(
-				pMindMapController.getResource("images/editpaste.png")));
+		super("", null);
 		this.mMindMapController = pMindMapController;
 		if (logger == null) {
-			logger = mMindMapController.getFrame().getLogger(
-					this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		}
 
 		setEnabled(false);

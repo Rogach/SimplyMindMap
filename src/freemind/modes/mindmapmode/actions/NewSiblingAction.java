@@ -32,7 +32,7 @@ public class NewSiblingAction extends AbstractAction {
 	private final MindMapController controller;
 
 	public NewSiblingAction(MindMapController controller) {
-		super(controller.getText("new_sibling_behind"));
+		super("");
 		this.controller = controller;
 	}
 

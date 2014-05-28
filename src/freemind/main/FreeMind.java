@@ -306,8 +306,8 @@ public class FreeMind extends JFrame implements FreeMindMain {
 			info.append(System.getProperty("os.version"));
 			logger.info(info.toString());
 		}
-		mFreeMindCommon = new FreeMindCommon(this);
-		Resources.createInstance(this);
+		mFreeMindCommon = new FreeMindCommon(null);
+		Resources.createInstance();
 	}
 
 	void init(FeedBack feedback) {

@@ -75,7 +75,7 @@ public class EncryptedMindMapNode extends MindMapNodeModel {
      */
 	public EncryptedMindMapNode(Object userObject, FreeMindMain frame,
 			MindMap map) {
-		super(userObject, frame, map);
+		super(userObject, map);
 		if (encryptedIcon == null) {
 			encryptedIcon = MindIcon.factory("encrypted").getIcon();
 		}
