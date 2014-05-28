@@ -981,6 +981,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 
 	private void updateFont() {
 		Font font = getModel().getFont();
+    font = font == null ? getDefaultFont() : font;
 		if (font != null) {
 			mainView.setFont(font);
 		} else {
@@ -988,6 +989,13 @@ public class NodeView extends JComponent implements TreeModelListener {
 			System.err.println("NodeView.update(): default font is null.");
 		}
 	}
+  
+  public static Font getDefaultFont() {
+    String fontFamily = Resources.getInstance().getProperty("defaultfont");
+    int fontStyle = Resources.getInstance().getIntProperty("defaultfontstyle", 0);
+    int fontSize = Resources.getInstance().getIntProperty("defaultfontsize", 12);
+    return new Font(fontFamily, fontStyle, fontSize);
+  }
 
 	private void updateIcons() {
 		updateIconPosition();
