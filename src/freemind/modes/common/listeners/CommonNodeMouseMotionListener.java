@@ -30,10 +30,12 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import freemind.controller.NodeMouseMotionListener.NodeMouseMotionObserver;
+import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.ModeController;
 import freemind.view.mindmapview.MainView;
 import freemind.view.mindmapview.NodeView;
+import java.util.logging.Logger;
 
 /**
  * The MouseMotionListener which belongs to every NodeView.
@@ -61,18 +63,18 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
 			timeForDelayedSelection = new Tools.IntHolder();
 		}
 		delayedSelectionEnabled = new Tools.BooleanHolder();
-		delayedSelectionEnabled.setValue(c.getFrame()
+		delayedSelectionEnabled.setValue(Resources.getInstance()
 				.getProperty("selection_method")
 				.equals("selection_method_direct") ? false : true);
 		/*
 		 * set time for delay to infinity, if selection_method equals
 		 * selection_method_by_click.
 		 */
-		if (c.getFrame().getProperty("selection_method")
+		if (Resources.getInstance().getProperty("selection_method")
 				.equals("selection_method_by_click")) {
 			timeForDelayedSelection.setValue(Integer.MAX_VALUE);
 		} else {
-			timeForDelayedSelection.setValue(Integer.parseInt(c.getFrame()
+			timeForDelayedSelection.setValue(Integer.parseInt(Resources.getInstance()
 					.getProperty("time_for_delayed_selection")));
 		}
 	}
@@ -90,7 +92,7 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
 	public CommonNodeMouseMotionListener(ModeController controller) {
 		c = controller;
 		if (logger == null)
-			logger = c.getFrame().getLogger(this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		if (delayedSelectionEnabled == null)
 			updateSelectionMethod();
 	}

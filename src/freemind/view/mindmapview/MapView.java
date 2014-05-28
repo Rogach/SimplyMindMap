@@ -79,6 +79,7 @@ import freemind.modes.MindMapArrowLink;
 import freemind.modes.MindMapLink;
 import freemind.modes.MindMapNode;
 import freemind.modes.common.CommonNodeKeyListener;
+import freemind.modes.common.listeners.CommonNodeMouseMotionListener;
 import freemind.modes.common.listeners.MindMapMouseWheelEventHandler;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.NewChildAction;
@@ -86,6 +87,7 @@ import freemind.modes.mindmapmode.actions.NewPreviousSiblingAction;
 import freemind.modes.mindmapmode.actions.NewSiblingAction;
 import freemind.modes.mindmapmode.listeners.MindMapMouseMotionManager;
 import freemind.modes.mindmapmode.listeners.MindMapNodeDropListener;
+import freemind.modes.mindmapmode.listeners.MindMapNodeMotionListener;
 import freemind.preferences.FreemindPropertyListener;
 import java.awt.dnd.DragGestureEvent;
 import java.awt.event.KeyListener;
@@ -289,6 +291,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
   
   private NodeDragListener nodeDragListener;
   private NodeDropListener nodeDropListener;
+  private NodeMouseMotionListener nodeMouseMotionListener;
 
 	/** Used to identify a right click onto a link curve. */
 	private Vector/* of ArrowLinkViews */mArrowLinkViews = new Vector();
@@ -460,8 +463,12 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 		addComponentListener(new ResizeListener());
     
     nodeDragListener = new NodeDragListener(controller);
+    
     nodeDropListener = new NodeDropListener();
     nodeDropListener.register(new MindMapNodeDropListener(controller));
+    
+    nodeMouseMotionListener = new NodeMouseMotionListener();
+    nodeMouseMotionListener.register(new CommonNodeMouseMotionListener(controller));
 	}
 
 	private void createPropertyChangeListener() {
@@ -1030,7 +1037,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	}
 
 	NodeMouseMotionListener getNodeMouseMotionListener() {
-		return new NodeMouseMotionListener();
+		return nodeMouseMotionListener;
 	}
 
   private NodeMotionListener nodeMotionListener = new NodeMotionListener();
