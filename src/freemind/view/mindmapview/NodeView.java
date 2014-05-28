@@ -811,11 +811,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 	 */
 
 	NodeView insert(MindMapNode newNode, int position) {
-//    System.out.println("NodeView.insert(" + position + ")");
-    if (position > 0) {
-      (new Exception()).printStackTrace();
-    }
-    
 		NodeView newView = NodeViewFactory.getInstance().newNodeView(newNode,
 				position, getMap(), this);
 		newView.insert();
