@@ -2026,11 +2026,6 @@ public class MindMapController extends ControllerAdapter implements
 
 		if (retValue) {
 			e.consume();
-
-			// Display link in status line
-			String link = newlySelectedNodeView.getModel().getLink();
-			link = (link != null ? link : " ");
-			getController().getFrame().out(link);
 		}
 		logger.fine("MouseEvent: extend:" + extend + ", range:" + range
 				+ ", branch:" + branch + ", event:" + e + ", retValue:"
