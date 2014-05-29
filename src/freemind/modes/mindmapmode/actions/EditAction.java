@@ -47,7 +47,6 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
 import freemind.view.mindmapview.EditNodeBase;
 import freemind.view.mindmapview.EditNodeDialog;
-import freemind.view.mindmapview.EditNodeExternalApplication;
 import freemind.view.mindmapview.EditNodeTextField;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
