@@ -50,7 +50,7 @@ public class MindMapMouseWheelEventHandler implements MouseWheelListener {
 	// |= oldX >=0 iff we are in the drag
 
 	private static java.util.logging.Logger logger = null;
-
+  
 	/**
 	 *
 	 */
@@ -105,14 +105,15 @@ public class MindMapMouseWheelEventHandler implements MouseWheelListener {
 			float newZoomFactor = 1f + Math.abs((float) e.getWheelRotation()) / 10f;
 			if (e.getWheelRotation() < 0)
 				newZoomFactor = 1 / newZoomFactor;
-			final float oldZoom = ((MapView) e.getComponent()).getZoom();
+      MapView view = (MapView) e.getComponent();
+			final float oldZoom = view.getZoom();
 			float newZoom = oldZoom / newZoomFactor;
 			// round the value due to possible rounding problems.
 			newZoom = (float) Math.rint(newZoom * 1000f) / 1000f;
 			newZoom = Math.max(1f / 32f, newZoom);
 			newZoom = Math.min(32f, newZoom);
 			if (newZoom != oldZoom) {
-				mController.getController().setZoom(newZoom);
+        view.setZoom(newZoom);
 			}
 			// end zoomchange
 		} else if ((e.getModifiers() & HORIZONTAL_SCROLL_MASK) != 0) {
