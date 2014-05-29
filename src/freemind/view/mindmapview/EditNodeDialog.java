@@ -44,6 +44,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import com.inet.jortho.SpellChecker;
+import freemind.main.Resources;
 
 import freemind.main.Tools;
 import freemind.modes.ModeController;
@@ -88,21 +89,21 @@ public class EditNodeDialog extends EditNodeBase {
 			int preferredHeight = getNode().getHeight();
 			preferredHeight = Math.max(
 					preferredHeight,
-					Integer.parseInt(getFrame().getProperty(
+					Integer.parseInt(Resources.getInstance().getProperty(
 							"el__min_default_window_height")));
 			preferredHeight = Math.min(
 					preferredHeight,
-					Integer.parseInt(getFrame().getProperty(
+					Integer.parseInt(Resources.getInstance().getProperty(
 							"el__max_default_window_height")));
 
 			int preferredWidth = getNode().getWidth();
 			preferredWidth = Math.max(
 					preferredWidth,
-					Integer.parseInt(getFrame().getProperty(
+					Integer.parseInt(Resources.getInstance().getProperty(
 							"el__min_default_window_width")));
 			preferredWidth = Math.min(
 					preferredWidth,
-					Integer.parseInt(getFrame().getProperty(
+					Integer.parseInt(Resources.getInstance().getProperty(
 							"el__max_default_window_width")));
 
 			editorScrollPane.setPreferredSize(new Dimension(preferredWidth,
@@ -114,13 +115,11 @@ public class EditNodeDialog extends EditNodeBase {
 			// String performedAction;
 			final JButton okButton = new JButton();
 			final JButton cancelButton = new JButton();
-			final JButton splitButton = new JButton();
 			final JCheckBox enterConfirms = new JCheckBox("",
 					binOptionIsTrue("el__enter_confirms_by_default"));
 
 			Tools.setLabelAndMnemonic(okButton, getText("ok"));
 			Tools.setLabelAndMnemonic(cancelButton, getText("cancel"));
-			Tools.setLabelAndMnemonic(splitButton, getText("split"));
 			Tools.setLabelAndMnemonic(enterConfirms, getText("enter_confirms"));
 
 			if (booleanHolderForConfirmState == null) {
@@ -146,12 +145,6 @@ public class EditNodeDialog extends EditNodeBase {
 			cancelButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					cancel();
-				}
-			});
-
-			splitButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					split();
 				}
 			});
 
@@ -243,10 +236,9 @@ public class EditNodeDialog extends EditNodeBase {
 			buttonPane.add(enterConfirms);
 			buttonPane.add(okButton);
 			buttonPane.add(cancelButton);
-			buttonPane.add(splitButton);
 			buttonPane.setMaximumSize(new Dimension(1000, 20));
 
-			if (getFrame().getProperty("el__buttons_position").equals("above")) {
+			if (Resources.getInstance().getProperty("el__buttons_position").equals("above")) {
 				panel.add(buttonPane);
 				panel.add(editorScrollPane);
 			} else {

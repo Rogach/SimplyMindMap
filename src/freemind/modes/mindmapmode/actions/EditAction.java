@@ -49,7 +49,6 @@ import freemind.view.mindmapview.EditNodeBase;
 import freemind.view.mindmapview.EditNodeDialog;
 import freemind.view.mindmapview.EditNodeExternalApplication;
 import freemind.view.mindmapview.EditNodeTextField;
-import freemind.view.mindmapview.EditNodeWYSIWYG;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
 
@@ -164,67 +163,9 @@ public class EditAction extends AbstractAction implements ActorXml {
 		boolean editHtml = isHtmlNode
 				|| (editLong && Tools.safeEquals(useRichTextInNewLongNodes,
 						"true"));
-		boolean editInternalWysiwyg = editHtml
-				&& Tools.safeEquals(htmlEditingOption, "internal-wysiwyg");
-		boolean editExternal = editHtml
-				&& Tools.safeEquals(htmlEditingOption, "external");
 
 		if (editHtml && !isHtmlNode) {
 			text = HtmlTools.plainToHTML(text);
-		}
-		if (editInternalWysiwyg) {
-			EditNodeWYSIWYG editNodeWYSIWYG = new EditNodeWYSIWYG(node, text,
-					firstEvent, mMindMapController,
-					new EditNodeBase.EditControl() {
-						public void cancel() {
-							mMindMapController.setBlocked(false);
-							mCurrentEditDialog = null;
-							mMindMapController.getController()
-									.obtainFocusForSelected();
-						}
-
-						public void ok(String newText) {
-							setHtmlText(node, newText);
-							cancel();
-						}
-
-						public void split(String newText, int position) {
-							mMindMapController.splitNode(node.getModel(),
-									position, newText);
-							cancel();
-						}
-					}); // focus fix
-			mCurrentEditDialog = editNodeWYSIWYG;
-			editNodeWYSIWYG.show();
-			return;
-		}
-
-		if (editExternal) {
-			EditNodeExternalApplication editNodeExternalApplication = new EditNodeExternalApplication(
-					node, text, firstEvent, mMindMapController,
-					new EditNodeBase.EditControl() {
-						public void cancel() {
-							mMindMapController.setBlocked(false);
-							mCurrentEditDialog = null;
-							mMindMapController.getController()
-									.obtainFocusForSelected();
-						}
-
-						public void ok(String newText) {
-							setHtmlText(node, newText);
-							cancel();
-						}
-
-						public void split(String newText, int position) {
-							mMindMapController.splitNode(node.getModel(),
-									position, newText);
-							cancel();
-						}
-					}); // focus fix
-			mCurrentEditDialog = editNodeExternalApplication;
-			editNodeExternalApplication.show();
-			// We come here before quitting the editor window.
-			return;
 		}
 
 		if (isLongNode || editLong) {
@@ -235,8 +176,7 @@ public class EditAction extends AbstractAction implements ActorXml {
 						public void cancel() {
 							mMindMapController.setBlocked(false);
 							mCurrentEditDialog = null;
-							mMindMapController.getController()
-									.obtainFocusForSelected(); // focus fix
+              mMindMapController.obtainFocusForSelected();
 						}
 
 						public void ok(String newText) {

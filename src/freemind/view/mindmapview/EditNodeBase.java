@@ -50,6 +50,7 @@ import freemind.main.FreeMindMain;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.ModeController;
+import java.awt.Component;
 
 /**
  * @author foltin
@@ -208,8 +209,15 @@ public class EditNodeBase {
 		return controller.getText(string);
 	}
 
-	protected FreeMindMain getFrame() {
-		return controller.getFrame();
+	protected JFrame getFrame() {
+    Component c = node;
+    while (!(c instanceof JFrame) && c != null) {
+      c = c.getParent();
+    }
+    if (c == null) {
+      throw new RuntimeException("Failed to get parent JFrame for dialog");
+    }
+		return (JFrame) c;
 	}
 
 	protected boolean binOptionIsTrue(String option) {

@@ -23,6 +23,7 @@
 
 package freemind.view.mindmapview;
 
+import freemind.main.Resources;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileWriter;
@@ -67,7 +68,7 @@ public class EditNodeExternalApplication extends EditNodeBase {
 					writer.close();
 
 					// b. Call the editor
-					String htmlEditingCommand = getFrame().getProperty(
+					String htmlEditingCommand = Resources.getInstance().getProperty(
 							"html_editing_command");
 					String expandedHtmlEditingCommand = new MessageFormat(
 							htmlEditingCommand)
