@@ -264,8 +264,6 @@ public class FreeMind extends JFrame implements FreeMindMain {
 
 	private List mStartupDoneListeners = new Vector();
 
-	private EditServer mEditServer = null;
-
 	private Vector mLoggerList = new Vector();
 
 	private static LogFileLogHandler sLogFileHandler;
@@ -500,9 +498,6 @@ public class FreeMind extends JFrame implements FreeMindMain {
 			Resources.getInstance().logException(ex);
 		}
 		getController().getFilterController().saveConditions();
-		if (pIsShutdown && mEditServer != null) {
-			mEditServer.stopServer();
-		}
 	}
 
 	public MapView getView() {
@@ -879,8 +874,6 @@ public class FreeMind extends JFrame implements FreeMindMain {
 		final FreeMind frame = new FreeMind(pDefaultPreferences,
 				pUserPreferences, pAutoPropertiesFile);
 		IFreeMindSplash splash = null;
-		frame.checkForAnotherInstance(args);
-		frame.initServer();
 		final FeedBack feedBack;
 		// change here, if you don't like the splash
 		if (true) {
@@ -989,80 +982,6 @@ public class FreeMind extends JFrame implements FreeMindMain {
             super.postEvent(theEvent);
         }
     }
-
-	private void initServer() {
-		String portFile = getPortFile();
-		if (portFile == null) {
-			return;
-		}
-		mEditServer = new EditServer(portFile, this);
-		mEditServer.start();
-	}
-
-	private void checkForAnotherInstance(String[] pArgs) {
-		String portFile = getPortFile();
-		if (portFile == null) {
-			return;
-		}
-		// {{{ Try connecting to another running FreeMind instance
-		if (portFile != null && new File(portFile).exists()) {
-			try {
-				BufferedReader in = new BufferedReader(new FileReader(portFile));
-				String check = in.readLine();
-				if (!check.equals("b"))
-					throw new Exception("Wrong port file format");
-
-				int port = Integer.parseInt(in.readLine());
-				int key = Integer.parseInt(in.readLine());
-
-				Socket socket = new Socket(InetAddress.getByName("127.0.0.1"),
-						port);
-				DataOutputStream out = new DataOutputStream(
-						socket.getOutputStream());
-				out.writeInt(key);
-
-				String script;
-				// Put url to open here
-				script = Tools.arrayToUrls(pArgs);
-				out.writeUTF(script);
-
-				logger.info("Waiting for server");
-				// block until its closed
-				try {
-					socket.getInputStream().read();
-				} catch (Exception e) {
-				}
-
-				in.close();
-				out.close();
-
-				System.exit(0);
-			} catch (Exception e) {
-				// ok, this one seems to confuse newbies
-				// endlessly, so log it as NOTICE, not
-				// ERROR
-				logger.info("An error occurred"
-						+ " while connecting to the FreeMind server instance."
-						+ " This probably means that"
-						+ " FreeMind crashed and/or exited abnormally"
-						+ " the last time it was run." + " If you don't"
-						+ " know what this means, don't worry. Exception: "+e );
-			}
-		}
-
-	}
-
-	/**
-	 * @return null, if no port should be opened.
-	 */
-	private String getPortFile() {
-		if (mEditServer == null
-				&& Resources.getInstance().getBoolProperty(
-						RESOURCES_DON_T_OPEN_PORT)) {
-			return null;
-		}
-		return getFreemindDirectory() + File.separator + getProperty(PORT_FILE);
-	}
 
 	private void fireStartupDone() {
 		mStartupDone = true;
