@@ -81,9 +81,12 @@ import freemind.modes.common.dialogs.IconSelectionPopupDialog;
 import freemind.modes.common.listeners.CommonNodeMouseMotionListener;
 import freemind.modes.common.listeners.MindMapMouseWheelEventHandler;
 import freemind.modes.mindmapmode.MindMapController;
+import freemind.modes.mindmapmode.actions.CopyAction;
+import freemind.modes.mindmapmode.actions.CutAction;
 import freemind.modes.mindmapmode.actions.NewChildAction;
 import freemind.modes.mindmapmode.actions.NewPreviousSiblingAction;
 import freemind.modes.mindmapmode.actions.NewSiblingAction;
+import freemind.modes.mindmapmode.actions.PasteAction;
 import freemind.modes.mindmapmode.listeners.MindMapMouseMotionManager;
 import freemind.modes.mindmapmode.listeners.MindMapNodeDropListener;
 import freemind.modes.mindmapmode.listeners.MindMapNodeMotionListener;
@@ -427,6 +430,18 @@ public class MapView extends JPanel implements Printable, Autoscroll {
     NewPreviousSiblingAction newPreviousSiblingAction = new NewPreviousSiblingAction(controller);
     this.getActionMap().put("new_previous_sibling_action", newPreviousSiblingAction);
     this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("shift ENTER"), "new_previous_sibling_action");
+    
+    CopyAction copyAction = new CopyAction(controller);
+    this.getActionMap().put("copy_action", copyAction);
+    this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("control C"), "copy_action");
+    
+    PasteAction pasteAction = new PasteAction(controller);
+    this.getActionMap().put("paste_action", pasteAction);
+    this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("control V"), "paste_action");
+    
+    CutAction cutAction = new CutAction(controller);
+    this.getActionMap().put("cut_action", cutAction);
+    this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("control X"), "cut_action");
     
     Action iconSelection = new AbstractAction() {
 

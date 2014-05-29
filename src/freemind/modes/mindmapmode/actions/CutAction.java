@@ -38,6 +38,7 @@ import freemind.controller.actions.generated.instance.CutNodeAction;
 import freemind.controller.actions.generated.instance.UndoPasteNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.FreeMind;
+import freemind.main.Resources;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.PasteAction.NodeCoordinate;
@@ -57,7 +58,6 @@ public class CutAction extends AbstractAction implements ActorXml {
 		}
 		this.mMindMapController = c;
 		this.text = "";
-		setEnabled(false);
 		this.mMindMapController.getActionFactory().registerActor(this,
 				getDoActionClass());
 	}
@@ -65,19 +65,8 @@ public class CutAction extends AbstractAction implements ActorXml {
 	public void actionPerformed(ActionEvent e) {
 		if (mMindMapController.getView().getRoot().isSelected()) {
 			mMindMapController.getController().errorMessage(
-					mMindMapController.getFrame().getResourceString(
+					Resources.getInstance().getResourceString(
 							"cannot_delete_root"));
-			return;
-		}
-		int showResult = new OptionalDontShowMeAgainDialog(mMindMapController
-				.getFrame().getJFrame(), mMindMapController.getSelectedView(),
-				"really_cut_node", "confirmation", mMindMapController,
-				new OptionalDontShowMeAgainDialog.StandardPropertyHandler(
-						mMindMapController.getController(),
-						FreeMind.RESOURCES_CUT_NODES_WITHOUT_QUESTION),
-				OptionalDontShowMeAgainDialog.ONLY_OK_SELECTION_IS_STORED)
-				.show().getResult();
-		if (showResult != JOptionPane.OK_OPTION) {
 			return;
 		}
 		Transferable copy = mMindMapController.cut();

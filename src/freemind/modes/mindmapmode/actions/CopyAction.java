@@ -37,10 +37,10 @@ public class CopyAction extends AbstractAction {
 	public CopyAction(MindMapController controller) {
 		super("", null);
 		this.controller = controller;
-		setEnabled(false);
 	}
 
 	public void actionPerformed(ActionEvent e) {
+    System.out.println("CopyAction");
 		if (controller.getMap() != null) {
 			Transferable copy = controller.copy();
 			if (copy != null) {

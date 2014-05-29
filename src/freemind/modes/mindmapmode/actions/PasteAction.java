@@ -83,7 +83,6 @@ public class PasteAction extends AbstractAction implements ActorXml {
 			logger = Logger.getLogger(this.getClass().getName());
 		}
 
-		setEnabled(false);
 		this.mMindMapController.getActionFactory().registerActor(this,
 				getDoActionClass());
 
