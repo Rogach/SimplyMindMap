@@ -72,7 +72,7 @@ public class CutAction extends AbstractAction implements ActorXml {
 		Transferable copy = mMindMapController.cut();
 		// and set it.
 		mMindMapController.setClipboardContents(copy);
-		mMindMapController.getController().obtainFocusForSelected();
+    mMindMapController.obtainFocusForSelected();
 	}
 
 	public CutNodeAction getCutNodeAction(MindMapNode node) {

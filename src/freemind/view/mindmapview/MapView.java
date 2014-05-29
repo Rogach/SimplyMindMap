@@ -83,6 +83,7 @@ import freemind.modes.common.listeners.MindMapMouseWheelEventHandler;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.CopyAction;
 import freemind.modes.mindmapmode.actions.CutAction;
+import freemind.modes.mindmapmode.actions.EditAction;
 import freemind.modes.mindmapmode.actions.NewChildAction;
 import freemind.modes.mindmapmode.actions.NewPreviousSiblingAction;
 import freemind.modes.mindmapmode.actions.NewSiblingAction;
@@ -419,29 +420,26 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 					}
 		}));
     
-    NewChildAction newChildAction = new NewChildAction(controller);
-    this.getActionMap().put("new_child_action", newChildAction);
+    this.getActionMap().put("new_child_action", controller.newChild);
     this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("INSERT"), "new_child_action");
     
-    NewSiblingAction newSiblingAction = new NewSiblingAction(controller);
-    this.getActionMap().put("new_sibling_action", newSiblingAction);
+    this.getActionMap().put("new_sibling_action", controller.newSibling);
     this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("ENTER"), "new_sibling_action");
     
-    NewPreviousSiblingAction newPreviousSiblingAction = new NewPreviousSiblingAction(controller);
-    this.getActionMap().put("new_previous_sibling_action", newPreviousSiblingAction);
+    this.getActionMap().put("new_previous_sibling_action", controller.newPreviousSibling);
     this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("shift ENTER"), "new_previous_sibling_action");
     
-    CopyAction copyAction = new CopyAction(controller);
-    this.getActionMap().put("copy_action", copyAction);
+    this.getActionMap().put("copy_action", controller.copy);
     this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("control C"), "copy_action");
     
-    PasteAction pasteAction = new PasteAction(controller);
-    this.getActionMap().put("paste_action", pasteAction);
+    this.getActionMap().put("paste_action", controller.paste);
     this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("control V"), "paste_action");
     
-    CutAction cutAction = new CutAction(controller);
-    this.getActionMap().put("cut_action", cutAction);
+    this.getActionMap().put("cut_action", controller.cut);
     this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("control X"), "cut_action");
+    
+    this.getActionMap().put("edit_action", controller.edit);
+    this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("F2"), "edit_action");
     
     Action iconSelection = new AbstractAction() {
 

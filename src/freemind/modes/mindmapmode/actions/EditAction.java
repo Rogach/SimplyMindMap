@@ -70,6 +70,7 @@ public class EditAction extends AbstractAction implements ActorXml {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
+    System.out.println("edit action");
 		MindMapNode selected = this.mMindMapController.getSelected();
 		this.mMindMapController.edit(null, false, false);
 	}
