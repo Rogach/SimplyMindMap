@@ -272,9 +272,6 @@ public class PasteAction extends AbstractAction implements ActorXml {
 			if (textFromClipboard != null) {
 				String[] textLines = textFromClipboard
 						.split(ModeController.NODESEPARATOR);
-				if (textLines.length > 1) {
-					mMindMapController.getFrame().setWaitingCursor(true);
-				}
 				// and now? paste it:
 				String mapContent = MindMapMapModel.MAP_INITIAL_START
 						+ FreeMind.XML_VERSION + "\"><node TEXT=\"DUMMY\">";
@@ -335,7 +332,6 @@ public class PasteAction extends AbstractAction implements ActorXml {
 			// ^ This outputs transfer data to standard output. I don't know
 			// why.
 			// { Alternative pasting of HTML
-			mMindMapController.getFrame().setWaitingCursor(true);
 			textFromClipboard = textFromClipboard
 					.replaceFirst("(?i)(?s)<head>.*</head>", "")
 					.replaceFirst("(?i)(?s)^.*<html[^>]*>", "<html>")
@@ -377,7 +373,6 @@ public class PasteAction extends AbstractAction implements ActorXml {
 
 			insertNodeInto(node, target);
 			// addUndoAction(node);
-			mMindMapController.getFrame().setWaitingCursor(false);
 		}
 
 		public DataFlavor getDataFlavor() {
@@ -495,7 +490,6 @@ public class PasteAction extends AbstractAction implements ActorXml {
 				throws UnsupportedFlavorException, IOException {
 			logger.info("imageFlavor");
 
-			mMindMapController.getFrame().setWaitingCursor(true);
 
 			/*
 			 * BufferedImage img = null; try { img = ImageIO.read(new
@@ -513,7 +507,6 @@ public class PasteAction extends AbstractAction implements ActorXml {
 
 			insertNodeInto(node, target);
 			// addUndoAction(node);
-			mMindMapController.getFrame().setWaitingCursor(false);
 
 		}
 
@@ -552,7 +545,6 @@ public class PasteAction extends AbstractAction implements ActorXml {
 				}
 			}
 		}
-//		mMindMapController.getFrame().setWaitingCursor(false);
 	}
 
 	/**
@@ -631,10 +623,6 @@ public class PasteAction extends AbstractAction implements ActorXml {
 		Pattern mailPattern = Pattern.compile("([^@ <>\\*']+@[^@ <>\\*']+)");
 
 		String[] textLines = textFromClipboard.split("\n");
-
-		if (textLines.length > 1) {
-			mMindMapController.getFrame().setWaitingCursor(true);
-		}
 
 		MindMapNode realParent = null;
 		if (asSibling) {
@@ -914,8 +902,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 	protected int determineAmountOfNewNodes(Transferable t)
 			throws UnsupportedFlavorException, IOException {
 		// create a new node for testing purposes.
-		MindMapNodeModel parent = new MindMapNodeModel(
-				mMindMapController.getFrame(), mMindMapController.getMap());
+		MindMapNodeModel parent = new MindMapNodeModel(mMindMapController.getMap());
 		pasteStringWithoutRedisplay(t, parent, false, false);
 		final int childCount = parent.getChildCount();
 		return childCount;
