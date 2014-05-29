@@ -39,11 +39,13 @@ public class StandaloneTree {
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     scrollPane.setViewportView(mapView);
     
+    
     // need scrollpane to wrap mind map
     BorderLayout layout = new BorderLayout();
     frame.getContentPane().setLayout(layout);
     frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
     
+    mapView.centerNode(mapView.getRoot());
     
     frame.setSize(500, 500);
     frame.setVisible(true);
