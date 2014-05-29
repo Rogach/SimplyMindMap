@@ -155,7 +155,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 	protected void addFoldingListener() {
 		if(mFoldingListener == null && getModel().hasVisibleChilds() && !getModel().isRoot()) {
 			mFoldingListener = new NodeFoldingComponent(this);
-			add(mFoldingListener, getComponentCount()-1);
+			add(mFoldingListener, 0);
 
 			mFoldingListener.addActionListener(new ActionListener() {
 				
@@ -196,6 +196,12 @@ public class NodeView extends JComponent implements TreeModelListener {
 		} else {
 			add(newMainView);
 		}
+    // put folding listener first
+    if (mFoldingListener != null) {
+      remove(mFoldingListener);
+      add(mFoldingListener, 0);
+    }
+    
 		this.mainView = newMainView;
 		ToolTipManager.sharedInstance().registerComponent(mainView);
 		mainView.addMouseListener(this.map.getNodeMouseMotionListener());

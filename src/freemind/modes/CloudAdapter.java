@@ -42,8 +42,8 @@ public abstract class CloudAdapter extends LineAdapter implements MindMapCloud {
 	//
 	// Constructors
 	//
-	public CloudAdapter(MindMapNode target, FreeMindMain frame) {
-		super(target, frame);
+	public CloudAdapter(MindMapNode target) {
+		super(target);
 		NORMAL_WIDTH = 3;
 		iterativeLevel = -1;
 		if (listener == null) {

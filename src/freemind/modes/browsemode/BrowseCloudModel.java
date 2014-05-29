@@ -28,7 +28,7 @@ import freemind.modes.MindMapNode;
 public class BrowseCloudModel extends CloudAdapter {
 
 	public BrowseCloudModel(MindMapNode node, FreeMindMain frame) {
-		super(node, frame);
+		super(node);
 	}
 
 	public XMLElement save() {

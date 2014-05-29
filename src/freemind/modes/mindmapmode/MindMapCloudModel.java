@@ -27,7 +27,7 @@ import freemind.modes.MindMapNode;
 public class MindMapCloudModel extends CloudAdapter {
 
 	public MindMapCloudModel(MindMapNode node, FreeMindMain frame) {
-		super(node, frame);
+		super(node);
 	}
 
 }

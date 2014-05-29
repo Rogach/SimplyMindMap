@@ -42,7 +42,7 @@ public abstract class LinkAdapter extends LineAdapter implements MindMapLink {
 
 	public LinkAdapter(MindMapNode source, MindMapNode target,
 			FreeMindMain frame) {
-		super(target, frame);
+		super(target);
 		this.source = source;
 		destinationLabel = null;
 		referenceText = null;
