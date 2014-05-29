@@ -41,9 +41,6 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 
-import freemind.controller.filter.DefaultFilter;
-import freemind.controller.filter.Filter;
-import freemind.controller.filter.condition.NoFilteringCondition;
 import freemind.main.FreeMindMain;
 import freemind.main.Tools;
 import freemind.main.XMLParseException;
@@ -60,8 +57,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 	private File file;
 	private long mFileTime = 0;
 	static protected Logger logger;
-	private MapRegistry registry;
-	private Filter filter = null;
 	protected final ModeController mModeController;
 	private HashSet mMapSourceChangedObserverSet = new HashSet();
 	private Timer mTimerForFileChangeObservation;
@@ -73,9 +68,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 		if (logger == null) {
 			logger = Logger.getLogger(this.getClass().getName());
 		}
-		registry = new MapRegistry(this, modeController);
-		filter = new DefaultFilter(NoFilteringCondition.createCondition(),
-				true, false);
 		mTimerForFileChangeObservation = new Timer();
 		mTimerForFileChangeObservation.schedule(
 				new FileChangeInspectorTimerTask(),
@@ -475,18 +467,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 			}
 		}
 		return e;
-	}
-
-	public MapRegistry getRegistry() {
-		return registry;
-	}
-
-	public Filter getFilter() {
-		return filter;
-	}
-
-	public void setFilter(Filter filter) {
-		this.filter = filter;
 	}
 
 	public void registerMapSourceChangedObserver(

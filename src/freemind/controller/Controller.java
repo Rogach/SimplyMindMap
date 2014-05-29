@@ -87,7 +87,6 @@ import javax.swing.event.ChangeListener;
 import freemind.common.BooleanProperty;
 import freemind.controller.MapModuleManager.MapModuleChangeObserver;
 import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
-import freemind.controller.filter.FilterController;
 import freemind.controller.printpreview.PreviewDialog;
 import freemind.main.FreeMind;
 import freemind.main.FreeMindCommon;
@@ -145,8 +144,6 @@ public class Controller implements MapModuleChangeObserver {
 	private boolean antialiasEdges = false;
 	private boolean antialiasAll = false;
 	private Map fontMap = new HashMap();
-
-	private FilterController mFilterController;
 
 	boolean isPrintingAllowed = true;
 	boolean menubarVisible = true;
@@ -238,7 +235,6 @@ public class Controller implements MapModuleChangeObserver {
 		navigationNextMap = new NavigationNextMapAction(this);
 		navigationMoveMapLeftAction = new NavigationMoveMapLeftAction(this);
 		navigationMoveMapRightAction = new NavigationMoveMapRightAction(this);
-		showFilterToolbarAction = new ShowFilterToolbarAction(this);
 		toggleMenubar = new ToggleMenubarAction(this);
 		toggleToolbar = new ToggleToolbarAction(this);
 		toggleLeftToolbar = new ToggleLeftToolbarAction(this);
@@ -254,8 +250,6 @@ public class Controller implements MapModuleChangeObserver {
 		// Create the ToolBar
 		northToolbarPanel = new JPanel(new BorderLayout());
 		toolbar = new MainToolBar(this);
-		mFilterController = new FilterController(this);
-		filterToolbar = mFilterController.getFilterToolbar();
 		getFrame().getContentPane().add(northToolbarPanel, BorderLayout.NORTH);
 		northToolbarPanel.add(toolbar, BorderLayout.NORTH);
 		northToolbarPanel.add(filterToolbar, BorderLayout.SOUTH);
@@ -1343,21 +1337,6 @@ public class Controller implements MapModuleChangeObserver {
 		}
 	}
 
-	private class ShowFilterToolbarAction extends AbstractAction {
-		ShowFilterToolbarAction(Controller controller) {
-			super(getResourceString("filter_toolbar"), new ImageIcon(
-					getResource("images/filter.gif")));
-		}
-
-		public void actionPerformed(ActionEvent event) {
-			if (!getFilterController().isVisible()) {
-				getFilterController().showFilterToolbar(true);
-			} else {
-				getFilterController().showFilterToolbar(false);
-			}
-		}
-	}
-
 	private class NavigationNextMapAction extends AbstractAction {
 		NavigationNextMapAction(Controller controller) {
 			super(controller.getResourceString("next_map"), new ImageIcon(
@@ -1625,10 +1604,6 @@ public class Controller implements MapModuleChangeObserver {
 				c.errorMessage(ex);
 			}
 		}
-	}
-
-	public FilterController getFilterController() {
-		return mFilterController;
 	}
 
 	public PageFormat getPageFormat() {

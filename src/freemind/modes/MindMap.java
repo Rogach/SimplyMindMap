@@ -32,7 +32,6 @@ import java.util.List;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 
-import freemind.controller.filter.Filter;
 import freemind.main.XMLParseException;
 
 public interface MindMap extends TreeModel {
@@ -115,17 +114,7 @@ public interface MindMap extends TreeModel {
 	 * @return true if map is clean (saved), false if it is dirty.
 	 */
 	boolean isSaved();
-
-	/**
-     */
-	MapRegistry getRegistry();
-
-	Filter getFilter();
-
-	/**
-     */
-	void setFilter(Filter inactiveFilter);
-
+  
 	void nodeStructureChanged(TreeNode node);
 
 	/**

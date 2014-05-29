@@ -36,7 +36,6 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
 
-import freemind.controller.filter.FilterInfo;
 import freemind.extensions.NodeHook;
 import freemind.extensions.PermanentNodeHook;
 import freemind.main.XMLElement;
@@ -131,8 +130,6 @@ public interface MindMapNode extends MutableTreeNode {
 	List getChildren();
 
 	boolean hasChildren();
-
-	public FilterInfo getFilterInfo();
 
 	/** @return -1 if the argument childNode is not a child. */
 	int getChildPosition(MindMapNode childNode);

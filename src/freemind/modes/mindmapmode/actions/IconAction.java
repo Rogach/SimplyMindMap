@@ -32,7 +32,6 @@ import javax.swing.KeyStroke;
 
 import freemind.controller.actions.generated.instance.AddIconAction;
 import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.controller.filter.condition.IconContainedCondition;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.IconInformation;
@@ -42,6 +41,7 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapNodeModel;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
+import java.util.List;
 
 public class IconAction extends FreemindAction implements ActorXml,
 		IconInformation {
@@ -100,14 +100,6 @@ public class IconAction extends FreemindAction implements ActorXml,
 		}
 	}
 
-	private void toggleIcon() {
-		for (ListIterator it = modeController.getSelecteds().listIterator(); it
-				.hasNext();) {
-			MindMapNodeModel selected = (MindMapNodeModel) it.next();
-			toggleIcon(selected, icon);
-		}
-	}
-
 	private void removeAllIcons() {
 		for (ListIterator it = modeController.getSelecteds().listIterator(); it
 				.hasNext();) {
@@ -121,11 +113,6 @@ public class IconAction extends FreemindAction implements ActorXml,
 	public void addIcon(MindMapNode node, MindIcon icon) {
 		modeController.doTransaction(
 				(String) getValue(NAME), getAddLastIconActionPair(node, icon));
-	}
-
-	private void toggleIcon(MindMapNode node, MindIcon icon) {
-		modeController.doTransaction(
-				(String) getValue(NAME), getToggleIconActionPair(node, icon));
 	}
 
 	private void removeIcon(MindMapNode node, MindIcon icon, boolean removeFirst) {
@@ -154,28 +141,40 @@ public class IconAction extends FreemindAction implements ActorXml,
 	}
 
 	/**
-     */
-	private ActionPair getToggleIconActionPair(MindMapNode node, MindIcon icon) {
-		int iconIndex = IconContainedCondition.iconFirstIndex(node,
-				icon.getName());
-		if (iconIndex == -1) {
-			return getAddLastIconActionPair(node, icon);
-		} else {
-			return getRemoveIconActionPair(node, icon, iconIndex);
-		}
-	}
-
-	/**
 	 * @param removeFirst
 	 */
 	private ActionPair getRemoveIconActionPair(MindMapNode node, MindIcon icon,
 			boolean removeFirst) {
-		int iconIndex = removeFirst ? IconContainedCondition.iconFirstIndex(
-				node, icon.getName()) : IconContainedCondition.iconLastIndex(
+		int iconIndex = removeFirst ? iconFirstIndex(
+				node, icon.getName()) : iconLastIndex(
 				node, icon.getName());
 		return iconIndex >= 0 ? getRemoveIconActionPair(node, icon, iconIndex)
 				: null;
 	}
+  
+ 	static public int iconFirstIndex(MindMapNode node, String iconName) {
+		List icons = node.getIcons();
+		for (ListIterator i = icons.listIterator(); i.hasNext();) {
+			MindIcon nextIcon = (MindIcon) i.next();
+			if (iconName.equals(nextIcon.getName()))
+				return i.previousIndex();
+		}
+		return -1;
+
+	}
+
+	static public int iconLastIndex(MindMapNode node, String iconName) {
+		List icons = node.getIcons();
+		ListIterator i = icons.listIterator(icons.size());
+		while (i.hasPrevious()) {
+			MindIcon nextIcon = (MindIcon) i.previous();
+			if (iconName.equals(nextIcon.getName()))
+				return i.nextIndex();
+		}
+		return -1;
+
+	}
+
 
 	private ActionPair getRemoveIconActionPair(MindMapNode node, MindIcon icon,
 			int iconIndex) {

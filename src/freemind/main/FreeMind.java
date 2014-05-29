@@ -470,7 +470,6 @@ public class FreeMind extends JFrame implements FreeMindMain {
 		} catch (Exception ex) {
 			Resources.getInstance().logException(ex);
 		}
-		getController().getFilterController().saveConditions();
 	}
 
 	public MapView getView() {

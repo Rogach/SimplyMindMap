@@ -48,8 +48,6 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import freemind.controller.Controller;
-import freemind.controller.filter.Filter;
-import freemind.controller.filter.FilterInfo;
 import freemind.extensions.DontSaveMarker;
 import freemind.extensions.NodeHook;
 import freemind.extensions.PermanentNodeHook;
@@ -116,8 +114,6 @@ public abstract class NodeAdapter implements MindMapNode {
 	protected Font font;
 	protected boolean underlined = false;
 
-	private FilterInfo filterInfo = new FilterInfo();
-
 	private MindMapNode parent;
 	/**
 	 * the edge which leads to this node, only root has none In future it has to
@@ -162,7 +158,6 @@ public abstract class NodeAdapter implements MindMapNode {
      */
 	public void setMap(MindMap map) {
 		this.map = map;
-		map.getRegistry().registrySubtree(this, true);
 	}
 
 	public String getText() {
@@ -249,10 +244,6 @@ public abstract class NodeAdapter implements MindMapNode {
 					link.substring(1));
 		}
 		this.link = link;
-	}
-
-	public FilterInfo getFilterInfo() {
-		return filterInfo;
 	}
 
 	public FreeMindMain getFrame() {
@@ -481,7 +472,6 @@ public abstract class NodeAdapter implements MindMapNode {
 		} else {
 			icons.add(position, _icon);
 		}
-		getMap().getRegistry().addIcon(_icon);
 	}
 
 	/** @return returns the number of remaining icons. */
@@ -1269,7 +1259,6 @@ public abstract class NodeAdapter implements MindMapNode {
 		createStateIcons();
 		if (icon != null) {
 			stateIcons.put(key, icon);
-			getMap().getRegistry().addIcon(MindIcon.factory(key, icon));
 		} else if (stateIcons.containsKey(key)) {
 			stateIcons.remove(key);
 		}
@@ -1309,8 +1298,7 @@ public abstract class NodeAdapter implements MindMapNode {
 	}
 
 	public boolean isVisible() {
-		Filter filter = getMap().getFilter();
-		return filter == null || filter.isVisible(this);
+		return true;
 	}
 
 	EventListenerList listenerList = new EventListenerList();
