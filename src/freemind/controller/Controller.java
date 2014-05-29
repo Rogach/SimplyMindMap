@@ -84,10 +84,8 @@ import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import freemind.common.BooleanProperty;
 import freemind.controller.MapModuleManager.MapModuleChangeObserver;
 import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
-import freemind.controller.printpreview.PreviewDialog;
 import freemind.main.FreeMind;
 import freemind.main.FreeMindCommon;
 import freemind.main.FreeMindMain;
@@ -219,7 +217,6 @@ public class Controller implements MapModuleChangeObserver {
 
 		print = new PrintAction(this, true);
 		printDirect = new PrintAction(this, false);
-		printPreview = new PrintPreviewAction(this);
 		page = new PageAction(this);
 		quit = new QuitAction(this);
 		about = new AboutAction(this);
@@ -1125,28 +1122,6 @@ public class Controller implements MapModuleChangeObserver {
 		}
 	}
 
-	private class PrintPreviewAction extends AbstractAction {
-		Controller controller;
-
-		PrintPreviewAction(Controller controller) {
-			super(controller.getResourceString("print_preview"));
-			this.controller = controller;
-		}
-
-		public void actionPerformed(ActionEvent e) {
-			if (!acquirePrinterJobAndPageFormat()) {
-				return;
-			}
-			PreviewDialog previewDialog = new PreviewDialog(
-					controller.getResourceString("print_preview_title"),
-					getView());
-			previewDialog.pack();
-			previewDialog.setLocationRelativeTo(JOptionPane
-					.getFrameForComponent(getView()));
-			previewDialog.setVisible(true);
-		}
-	}
-
 	private class PageAction extends AbstractAction {
 		Controller controller;
 
@@ -1549,17 +1524,15 @@ public class Controller implements MapModuleChangeObserver {
 
 	public void toggleSelectionAsRectangle() {
 		if (isSelectionAsRectangle()) {
-			setProperty(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION,
-					BooleanProperty.FALSE_VALUE);
+			setProperty(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION, "false");
 		} else {
-			setProperty(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION,
-					BooleanProperty.TRUE_VALUE);
+			setProperty(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION, "true");
 		}
 	}
 
 	private boolean isSelectionAsRectangle() {
 		return getProperty(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION)
-				.equalsIgnoreCase(BooleanProperty.TRUE_VALUE);
+				.equalsIgnoreCase("true");
 	}
 
 	/**
