@@ -381,6 +381,17 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 
 		this.setLayout(new MindMapLayout());
 
+    nodeDragListener = new NodeDragListener(controller);
+    
+    nodeDropListener = new NodeDropListener();
+    nodeDropListener.register(new MindMapNodeDropListener(controller));
+    
+    nodeMotionListener = new NodeMotionListener();
+    nodeMotionListener.register(new MindMapNodeMotionListener(controller));
+    
+    nodeMouseMotionListener = new NodeMouseMotionListener();
+    nodeMouseMotionListener.register(new CommonNodeMouseMotionListener(controller));
+    
 		initRoot();
 
 		setBackground(standardMapBackgroundColor);
@@ -463,16 +474,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 
 		addComponentListener(new ResizeListener());
     
-    nodeDragListener = new NodeDragListener(controller);
     
-    nodeDropListener = new NodeDropListener();
-    nodeDropListener.register(new MindMapNodeDropListener(controller));
-    
-    nodeMotionListener = new NodeMotionListener();
-    nodeMotionListener.register(new MindMapNodeMotionListener(controller));
-    
-    nodeMouseMotionListener = new NodeMouseMotionListener();
-    nodeMouseMotionListener.register(new CommonNodeMouseMotionListener(controller));
 	}
 
 	private void createPropertyChangeListener() {
