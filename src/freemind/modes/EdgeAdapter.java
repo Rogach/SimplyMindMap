@@ -28,15 +28,13 @@ import freemind.main.FreeMindMain;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
-import freemind.preferences.FreemindPropertyListener;
 
 public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {
 
 	public static final String EDGE_WIDTH_THIN_STRING = "thin";
 	private static Color standardColor = null;
 	private static String standardStyle = null;
-	private static EdgeAdapterListener listener = null;
-
+  
 	public static final int WIDTH_PARENT = -1;
 
 	public static final int WIDTH_THIN = 0;
@@ -55,10 +53,6 @@ public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {
 	public EdgeAdapter(MindMapNode target) {
 		super(target);
 		NORMAL_WIDTH = WIDTH_PARENT;
-		if (listener == null) {
-			listener = new EdgeAdapterListener();
-			Controller.addPropertyChangeListener(listener);
-		}
 	}
 
 	//
@@ -163,19 +157,6 @@ public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {
 
 	protected String getStandardStylePropertyString() {
 		return FreeMind.RESOURCES_EDGE_STYLE;
-	}
-
-	protected static class EdgeAdapterListener implements
-			FreemindPropertyListener {
-		public void propertyChanged(String propertyName, String newValue,
-				String oldValue) {
-			if (propertyName.equals(FreeMind.RESOURCES_EDGE_COLOR)) {
-				EdgeAdapter.standardColor = Tools.xmlToColor(newValue);
-			}
-			if (propertyName.equals(FreeMind.RESOURCES_EDGE_STYLE)) {
-				EdgeAdapter.standardStyle = newValue;
-			}
-		}
 	}
 
 	/* (non-Javadoc)

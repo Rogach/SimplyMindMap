@@ -58,9 +58,6 @@ import freemind.modes.ModeController;
 import freemind.modes.StylePatternFactory;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.hooks.PermanentMindMapNodeHookAdapter;
-import freemind.preferences.FreemindPropertyContributor;
-import freemind.preferences.FreemindPropertyListener;
-import freemind.preferences.layout.OptionPanel;
 
 /**
  * @author foltin
@@ -77,41 +74,14 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
 	 * 
 	 */
 	public static class Registration implements HookRegistration {
-		private AutomaticLayoutPropertyContributor mAutomaticLayoutPropertyContributor;
-
-		private final MindMapController modeController;
-
-		private static FreemindPropertyListener listener = null;
 
 		public Registration(ModeController controller, MindMap map) {
-			modeController = (MindMapController) controller;
 		}
 
-		static class MyFreemindPropertyListener implements
-				FreemindPropertyListener {
-			public void propertyChanged(String propertyName, String newValue,
-					String oldValue) {
-				if (propertyName.startsWith(AUTOMATIC_FORMAT_LEVEL)) {
-					patterns = null;
-				}
-			}
-		};
-
 		public void register() {
-			// add listener:
-			if (listener == null) {
-				listener = new MyFreemindPropertyListener();
-			}
-			Controller.addPropertyChangeListener(listener);
-
-			mAutomaticLayoutPropertyContributor = new AutomaticLayoutPropertyContributor(
-					modeController);
-			OptionPanel.addContributor(mAutomaticLayoutPropertyContributor);
 		}
 
 		public void deRegister() {
-			OptionPanel.removeContributor(mAutomaticLayoutPropertyContributor);
-			Controller.removePropertyChangeListener(listener);
 		}
 
 	}
@@ -343,28 +313,6 @@ public class AutomaticLayout extends PermanentMindMapNodeHookAdapter {
 			});
 		}
 
-	}
-
-	private static final class AutomaticLayoutPropertyContributor implements
-			FreemindPropertyContributor {
-
-		private final MindMapController modeController;
-
-		public AutomaticLayoutPropertyContributor(
-				MindMapController modeController) {
-			this.modeController = modeController;
-		}
-
-		public List getControls(TextTranslator pTextTranslator) {
-			Vector controls = new Vector();
-			controls.add(new OptionPanel.NewTabProperty(
-					"accessories/plugins/AutomaticLayout.properties_PatternTabName"));
-			controls.add(new SeparatorProperty(
-					"accessories/plugins/AutomaticLayout.properties_PatternSeparatorName"));
-			controls.add(new StylePatternListProperty("level",
-					AUTOMATIC_FORMAT_LEVEL, pTextTranslator, modeController));
-			return controls;
-		}
 	}
 
 	private static Patterns patterns = null;

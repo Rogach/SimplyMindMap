@@ -98,9 +98,6 @@ import freemind.modes.MindMap;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
 import freemind.modes.ModesCreator;
-import freemind.preferences.FreemindPropertyListener;
-import freemind.preferences.layout.OptionPanel;
-import freemind.preferences.layout.OptionPanel.OptionPanelFeedback;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
 
@@ -163,7 +160,6 @@ public class Controller implements MapModuleChangeObserver {
 	public Action page;
 	public Action quit;
 
-	public OptionAntialiasAction optionAntialiasAction;
 	public Action optionHTMLExportFoldingAction;
 	public Action optionSelectionMechanismAction;
 
@@ -188,7 +184,6 @@ public class Controller implements MapModuleChangeObserver {
 	public Action zoomOut;
 
 	public Action showSelectionAsRectangle;
-	public PropertyAction propertyAction;
 	public OpenURLAction freemindUrl;
 
 	private static final float[] zoomValues = { 25 / 100f, 50 / 100f,
@@ -247,15 +242,11 @@ public class Controller implements MapModuleChangeObserver {
 		toggleMenubar = new ToggleMenubarAction(this);
 		toggleToolbar = new ToggleToolbarAction(this);
 		toggleLeftToolbar = new ToggleLeftToolbarAction(this);
-		optionAntialiasAction = new OptionAntialiasAction(this);
 		optionHTMLExportFoldingAction = new OptionHTMLExportFoldingAction(this);
-		optionSelectionMechanismAction = new OptionSelectionMechanismAction(
-				this);
 
 		zoomIn = new ZoomInAction(this);
 		zoomOut = new ZoomOutAction(this);
-		propertyAction = new PropertyAction(this);
-
+    
 		showSelectionAsRectangle = new ShowSelectionAsRectangleAction(this);
 
 		moveToRoot = new MoveToRootAction(this);
@@ -330,14 +321,6 @@ public class Controller implements MapModuleChangeObserver {
 
 	private void firePropertyChanged(String property, String value,
 			String oldValue) {
-		if (oldValue == null || !oldValue.equals(value)) {
-			for (Iterator i = Controller.getPropertyChangeListeners()
-					.iterator(); i.hasNext();) {
-				FreemindPropertyListener listener = (FreemindPropertyListener) i
-						.next();
-				listener.propertyChanged(property, value, oldValue);
-			}
-		}
 	}
 
 	public FreeMindMain getFrame() {
@@ -1606,146 +1589,9 @@ public class Controller implements MapModuleChangeObserver {
 		return getMapModule().getModel();
 	}
 
-	public static void addPropertyChangeListener(
-			FreemindPropertyListener listener) {
-		Controller.propertyChangeListeners.add(listener);
-	}
-
-	/**
-	 * @param listener
-	 *            The new listener. All currently available properties are sent
-	 *            to the listener after registration. Here, the oldValue
-	 *            parameter is set to null.
-	 */
-	public static void addPropertyChangeListenerAndPropagate(
-			FreemindPropertyListener listener) {
-		Controller.addPropertyChangeListener(listener);
-		Properties properties = Resources.getInstance().getProperties();
-		for (Iterator it = properties.keySet().iterator(); it.hasNext();) {
-			String key = (String) it.next();
-			listener.propertyChanged(key, properties.getProperty(key), null);
-		}
-	}
-
-	public static void removePropertyChangeListener(
-			FreemindPropertyListener listener) {
-		Controller.propertyChangeListeners.remove(listener);
-	}
-
-	/**
-	 * @author foltin
-	 * 
-	 */
-	public class PropertyAction extends AbstractAction {
-
-		private final Controller controller;
-
-		/**
-		 *
-		 */
-		public PropertyAction(Controller controller) {
-			super(controller.getResourceString("property_dialog"));
-			this.controller = controller;
-		}
-
-		public void actionPerformed(ActionEvent arg0) {
-			JDialog dialog = new JDialog(getFrame().getJFrame(), true /* modal */);
-			dialog.setResizable(true);
-			dialog.setUndecorated(false);
-			final OptionPanel options = new OptionPanel((FreeMind) getFrame(),
-					dialog, new OptionPanelFeedback() {
-
-						public void writeProperties(Properties props) {
-							Vector sortedKeys = new Vector();
-							sortedKeys.addAll(props.keySet());
-							Collections.sort(sortedKeys);
-							boolean propertiesChanged = false;
-							for (Iterator i = sortedKeys.iterator(); i
-									.hasNext();) {
-								String key = (String) i.next();
-								// save only changed keys:
-								String newProperty = props.getProperty(key);
-								propertiesChanged = propertiesChanged
-										|| !newProperty.equals(controller
-												.getProperty(key));
-								controller.setProperty(key, newProperty);
-							}
-
-							if (propertiesChanged) {
-								JOptionPane
-										.showMessageDialog(
-												null,
-												getResourceString("option_changes_may_require_restart"));
-								controller.getFrame().saveProperties(false);
-							}
-						}
-					});
-			options.buildPanel();
-			options.setProperties();
-			dialog.setTitle("Freemind Properties");
-			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			dialog.addWindowListener(new WindowAdapter() {
-				public void windowClosing(WindowEvent event) {
-					options.closeWindow();
-				}
-			});
-			Action action = new AbstractAction() {
-
-				public void actionPerformed(ActionEvent arg0) {
-					options.closeWindow();
-				}
-			};
-			Tools.addEscapeActionToDialog(dialog, action);
-			dialog.setVisible(true);
-
-		}
-
-	}
-
 	private class BackgroundSwatch extends ColorSwatch {
 		Color getColor() {
 			return getView().getBackground();
-		}
-	}
-
-	public class OptionAntialiasAction extends AbstractAction implements
-			FreemindPropertyListener {
-		OptionAntialiasAction(Controller controller) {
-			Controller.addPropertyChangeListener(this);
-		}
-
-		public void actionPerformed(ActionEvent e) {
-			String command = e.getActionCommand();
-			changeAntialias(command);
-		}
-
-		/**
-	     */
-		public void changeAntialias(String command) {
-			if (command == null) {
-				return;
-			}
-			if (command.equals("antialias_none")) {
-				setAntialiasEdges(false);
-				setAntialiasAll(false);
-			}
-			if (command.equals("antialias_edges")) {
-				setAntialiasEdges(true);
-				setAntialiasAll(false);
-			}
-			if (command.equals("antialias_all")) {
-				setAntialiasEdges(true);
-				setAntialiasAll(true);
-			}
-			if (getView() != null)
-				getView().repaint();
-		}
-
-		public void propertyChanged(String propertyName, String newValue,
-				String oldValue) {
-			if (propertyName.equals(FreeMindCommon.RESOURCE_ANTIALIAS)) {
-				changeAntialias(newValue);
-			}
 		}
 	}
 
@@ -1755,40 +1601,6 @@ public class Controller implements MapModuleChangeObserver {
 
 		public void actionPerformed(ActionEvent e) {
 			setProperty("html_export_folding", e.getActionCommand());
-		}
-	}
-
-	// switch auto properties for selection mechanism fc, 7.12.2003.
-	private class OptionSelectionMechanismAction extends AbstractAction
-			implements FreemindPropertyListener {
-		Controller c;
-
-		OptionSelectionMechanismAction(Controller controller) {
-			c = controller;
-			Controller.addPropertyChangeListener(this);
-		}
-
-		public void actionPerformed(ActionEvent e) {
-			String command = e.getActionCommand();
-			changeSelection(command);
-		}
-
-		/**
-         */
-		private void changeSelection(String command) {
-			setProperty("selection_method", command);
-			// and update the selection method in the NodeMouseMotionListener
-			c.getNodeMouseMotionListener().updateSelectionMethod();
-			String statusBarString = c.getResourceString(command);
-			if (statusBarString != null) // should not happen
-				c.getFrame().out(statusBarString);
-		}
-
-		public void propertyChanged(String propertyName, String newValue,
-				String oldValue) {
-			if (propertyName.equals(FreeMind.RESOURCES_SELECTION_METHOD)) {
-				changeSelection(newValue);
-			}
 		}
 	}
 

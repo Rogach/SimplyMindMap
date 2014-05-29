@@ -86,7 +86,6 @@ import freemind.modes.mindmapmode.actions.NewSiblingAction;
 import freemind.modes.mindmapmode.listeners.MindMapMouseMotionManager;
 import freemind.modes.mindmapmode.listeners.MindMapNodeDropListener;
 import freemind.modes.mindmapmode.listeners.MindMapNodeMotionListener;
-import freemind.preferences.FreemindPropertyListener;
 import java.awt.dnd.DragGestureEvent;
 import java.awt.event.KeyListener;
 import java.util.Properties;
@@ -175,10 +174,8 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	public static Color standardNodeTextColor;
 	static boolean standardDrawRectangleForSelection;
 	private static Stroke standardSelectionStroke;
-	static private FreemindPropertyListener propertyChangeListener;
   
   
-
 	private class Selected {
 		private Vector mySelected = new Vector();
 
@@ -372,8 +369,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 				printOnWhiteBackground = true;
 			}
 
-			createPropertyChangeListener();
-
 		}
 		this.setAutoscrolls(true);
 
@@ -473,35 +468,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 		addComponentListener(new ResizeListener());
     
     
-	}
-
-	private void createPropertyChangeListener() {
-		propertyChangeListener = new FreemindPropertyListener() {
-
-			public void propertyChanged(String propertyName, String newValue,
-					String oldValue) {
-				if (propertyName.equals(FreeMind.RESOURCES_NODE_TEXT_COLOR)) {
-					standardNodeTextColor = Tools.xmlToColor(newValue);
-				} else if (propertyName
-						.equals(FreeMind.RESOURCES_BACKGROUND_COLOR)) {
-					standardMapBackgroundColor = Tools.xmlToColor(newValue);
-				} else if (propertyName
-						.equals(FreeMind.RESOURCES_SELECTED_NODE_COLOR)) {
-					standardSelectColor = Tools.xmlToColor(newValue);
-				} else if (propertyName
-						.equals(FreeMind.RESOURCES_SELECTED_NODE_RECTANGLE_COLOR)) {
-					standardSelectRectangleColor = Tools.xmlToColor(newValue);
-				} else if (propertyName
-						.equals(FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION)) {
-					standardDrawRectangleForSelection = Tools
-							.xmlToBoolean(newValue);
-				} else if (propertyName
-						.equals(FreeMind.RESOURCE_PRINT_ON_WHITE_BACKGROUND)) {
-					printOnWhiteBackground = Tools.xmlToBoolean(newValue);
-				}
-			}
-		};
-		Controller.addPropertyChangeListener(propertyChangeListener);
 	}
 
 	public void initRoot() {

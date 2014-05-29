@@ -60,7 +60,6 @@ import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
-import freemind.preferences.FreemindPropertyListener;
 import freemind.view.mindmapview.NodeView;
 import freemind.view.mindmapview.NodeViewVisitor;
 import java.util.logging.Logger;
@@ -137,7 +136,6 @@ public abstract class NodeAdapter implements MindMapNode {
 	private MindMap map = null;
 	private String noteText;
 	private String xmlNoteText;
-	private static FreemindPropertyListener sSaveIdPropertyChangeListener;
 	private static boolean sSaveOnlyIntrinsicallyNeededIds = false;
 
 	//
@@ -157,21 +155,6 @@ public abstract class NodeAdapter implements MindMapNode {
 		// create creation time:
 		setHistoryInformation(new HistoryInformation());
 		this.map = map;
-		if (sSaveIdPropertyChangeListener == null) {
-			sSaveIdPropertyChangeListener = new FreemindPropertyListener() {
-
-				public void propertyChanged(String propertyName,
-						String newValue, String oldValue) {
-					if (propertyName
-							.equals(FreeMindCommon.SAVE_ONLY_INTRISICALLY_NEEDED_IDS)) {
-						sSaveOnlyIntrinsicallyNeededIds = Boolean.valueOf(
-								newValue).booleanValue();
-					}
-				}
-			};
-			Controller
-					.addPropertyChangeListenerAndPropagate(sSaveIdPropertyChangeListener);
-		}
 
 	}
 

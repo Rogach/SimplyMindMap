@@ -61,7 +61,6 @@ import freemind.modes.MindIcon;
 import freemind.modes.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.NodeAdapter;
-import freemind.preferences.FreemindPropertyListener;
 import java.awt.RenderingHints;
 
 /**
@@ -99,7 +98,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 
 	final private static Point zeroPoint = new Point(0, 0);
 	private static Logger logger;
-	private static FreemindPropertyListener sListener;
 	//
 	// Constructors
 	//
@@ -118,22 +116,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 			Container parent) {
 		if (logger == null) {
 			logger = Logger.getLogger(this.getClass().getName());
-		}
-		if(sListener == null){
-			sListener = new FreemindPropertyListener() {
-				
-				public void propertyChanged(String pPropertyName,
-						String pNewValue, String pOldValue) {
-					if (Tools.safeEquals(pPropertyName,
-							FreeMind.TOOLTIP_DISPLAY_TIME)) {
-						// control tooltip times:
-						ToolTipManager.sharedInstance().setDismissDelay(
-								Resources.getInstance().getIntProperty(
-										FreeMind.TOOLTIP_DISPLAY_TIME, 4000));
-					}
-				}
-			};
-			Controller.addPropertyChangeListenerAndPropagate(sListener);
 		}
 
 		setFocusCycleRoot(true);

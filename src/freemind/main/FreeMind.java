@@ -90,7 +90,6 @@ import freemind.controller.MenuBar;
 import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
 import freemind.main.FreeMindStarter.ProxyAuthenticator;
 import freemind.modes.ModeController;
-import freemind.preferences.FreemindPropertyListener;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
 
@@ -327,33 +326,7 @@ public class FreeMind extends JFrame implements FreeMindMain {
 		controller.init();
 		feedback.increase("FreeMind.progress.settingPreferences", null);
 		// add a listener for the controller, resource bundle:
-		Controller.addPropertyChangeListener(new FreemindPropertyListener() {
-
-			public void propertyChanged(String propertyName, String newValue,
-					String oldValue) {
-				if (propertyName.equals(FreeMindCommon.RESOURCE_LANGUAGE)) {
-					// re-read resources:
-					mFreeMindCommon.clearLanguageResources();
-					getResources();
-				}
-			}
-		});
-		// fc, disabled with purpose (see java look and feel styleguides).
-		// http://java.sun.com/products/jlf/ed2/book/index.html
-		// // add a listener for the controller, look and feel:
-		// Controller.addPropertyChangeListener(new FreemindPropertyListener() {
-		//
-		// public void propertyChanged(String propertyName, String newValue,
-		// String oldValue) {
-		// if (propertyName.equals(RESOURCE_LOOKANDFEEL)) {
-		// updateLookAndFeel();
-		// }
-		// }
-		// });
 		
-		controller.optionAntialiasAction
-				.changeAntialias(getProperty(FreeMindCommon.RESOURCE_ANTIALIAS));
-
 		setupSpellChecking();
 		setupProxy();
 		feedback.increase("FreeMind.progress.propageteLookAndFeel", null);
