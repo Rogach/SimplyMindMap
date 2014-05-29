@@ -251,11 +251,6 @@ public interface MindMapNode extends MutableTreeNode {
 
 	// end, fc, 24.9.2003
 
-	// clouds, fc, 08.11.2003:
-	MindMapCloud getCloud();
-
-	void setCloud(MindMapCloud cloud);
-
 	// end clouds.
 
 	// fc, 24.2.2004: background color:

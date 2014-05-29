@@ -109,9 +109,6 @@ public class ExportBranchAction extends AbstractAction {
 			 */
 			MindMapNodeModel parent = (MindMapNodeModel) node.getParentNode();
 			// set a link from the new root to the old map
-			String linkToNewMapString = Tools.fileToRelativeUrlString(
-					mMindMapController.getModel().getFile(), chosenFile);
-			mMindMapController.setLink(node, linkToNewMapString);
 			int nodePosition = parent.getChildPosition(node);
 			mMindMapController.deleteNode(node);
 			// save node:
@@ -130,8 +127,6 @@ public class ExportBranchAction extends AbstractAction {
 			// TODO: Keep formatting of node.
 			mMindMapController.setNodeText(newNode, node.getText());
 
-			String linkString = Tools.fileToRelativeUrlString(chosenFile, mMindMapController.getModel().getFile());
-			mMindMapController.setLink(newNode, linkString);
 			mMindMapController.newMap(map);
 			// old map should not be save automatically!!
 		}

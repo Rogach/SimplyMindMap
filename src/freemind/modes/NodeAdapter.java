@@ -103,10 +103,6 @@ public abstract class NodeAdapter implements MindMapNode {
 
 	protected TreeMap /* of String to MindIcon s */stateIcons = null; // lazy, fc,
 																	// 30.6.2005
-	// /**stores the label associated with this node:*/
-	// protected String mLabel;
-	/** parameters of an eventually associated cloud */
-	protected MindMapCloud cloud;
 
 	protected Color color;
 	protected Color backgroundColor;
@@ -341,34 +337,6 @@ public abstract class NodeAdapter implements MindMapNode {
 
 	public void setEdge(MindMapEdge edge) {
 		this.edge = edge;
-	}
-
-	public MindMapCloud getCloud() {
-		return cloud;
-	}
-
-	public void setCloud(MindMapCloud cloud) {
-		// Take care to keep the calculated iterative levels consistent
-		if (cloud != null && this.cloud == null) {
-			changeChildCloudIterativeLevels(1);
-		} else if (cloud == null && this.cloud != null) {
-			changeChildCloudIterativeLevels(-1);
-		}
-		this.cloud = cloud;
-	}
-
-	/**
-	 * Correct iterative level values of children
-	 */
-	private void changeChildCloudIterativeLevels(int deltaLevel) {
-		for (ListIterator e = childrenUnfolded(); e.hasNext();) {
-			NodeAdapter childNode = (NodeAdapter) e.next();
-			MindMapCloud childCloud = childNode.getCloud();
-			if (childCloud != null) {
-				childCloud.changeIterativeLevel(deltaLevel);
-			}
-			childNode.changeChildCloudIterativeLevels(deltaLevel);
-		}
 	}
 
 	/** A Node-Style like MindMapNode.STYLE_FORK or MindMapNode.STYLE_BUBBLE */
@@ -1148,30 +1116,6 @@ public abstract class NodeAdapter implements MindMapNode {
 			node.addChild(edge);
 		}
 
-		if (getCloud() != null) {
-			XMLElement cloud = (getCloud()).save();
-			node.addChild(cloud);
-		}
-
-		Vector linkVector = registry.getAllLinksFromMe(this);
-		for (int i = 0; i < linkVector.size(); ++i) {
-			if (linkVector.get(i) instanceof ArrowLinkAdapter) {
-				XMLElement arrowLinkElement = ((ArrowLinkAdapter) linkVector
-						.get(i)).save();
-				node.addChild(arrowLinkElement);
-			}
-		}
-
-		// virtual link targets:
-		Vector targetVector = registry.getAllLinksIntoMe(this);
-		for (int i = 0; i < targetVector.size(); ++i) {
-			if (targetVector.get(i) instanceof ArrowLinkAdapter) {
-				XMLElement arrowLinkTargetElement = ((ArrowLinkAdapter) targetVector
-						.get(i)).createArrowLinkTarget(registry).save();
-				node.addChild(arrowLinkTargetElement);
-			}
-		}
-
 		if (isFolded()) {
 			node.setAttribute("FOLDED", "true");
 		}
@@ -1185,9 +1129,7 @@ public abstract class NodeAdapter implements MindMapNode {
 		// the id is used, if there is a local hyperlink pointing to me or a
 		// real link.
 		String label = registry.getLabel(this);
-		if (!sSaveOnlyIntrinsicallyNeededIds
-				|| (registry.isTargetOfLocalHyperlinks(label) || (registry
-						.getAllLinksIntoMe(this).size() > 0))) {
+		if (!sSaveOnlyIntrinsicallyNeededIds) {
 			if (label != null) {
 				node.setAttribute("ID", label);
 			}

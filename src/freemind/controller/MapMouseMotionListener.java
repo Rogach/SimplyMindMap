@@ -61,21 +61,6 @@ public class MapMouseMotionListener implements MouseMotionListener,
 	}
 
 	private void handlePopup(MouseEvent e) {
-		if (e.isPopupTrigger()) {
-			JPopupMenu popup = null;
-			// detect collision with an element placed on the root pane of the
-			// window.
-			java.lang.Object obj = view.detectCollision(e.getPoint());
-			if (obj != null) {
-				// there is a collision with object obj.
-				// call the modecontroller to give a popup menu for this object
-				popup = controller.getPopupForModel(obj);
-			}
-      if (popup != null) {
-        popup.show(e.getComponent(), e.getX(), e.getY());
-        popup.setVisible(true);
-      }
-		}
 	}
 
 	public void mouseMoved(MouseEvent e) {

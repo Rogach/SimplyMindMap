@@ -128,8 +128,6 @@ import freemind.modes.MapAdapter;
 import freemind.modes.MindIcon;
 import freemind.modes.MindMap;
 import freemind.modes.MindMap.MapSourceChangedObserver;
-import freemind.modes.MindMapArrowLink;
-import freemind.modes.MindMapLink;
 import freemind.modes.MindMapNode;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
@@ -146,14 +144,8 @@ import freemind.modes.common.actions.FindAction;
 import freemind.modes.common.actions.FindAction.FindNextAction;
 import freemind.modes.common.actions.NewMapAction;
 import freemind.modes.common.listeners.CommonNodeMouseMotionListener;
-import freemind.modes.mindmapmode.actions.AddArrowLinkAction;
-import freemind.modes.mindmapmode.actions.AddLocalLinkAction;
 import freemind.modes.mindmapmode.actions.ApplyPatternAction;
 import freemind.modes.mindmapmode.actions.BoldAction;
-import freemind.modes.mindmapmode.actions.ChangeArrowLinkEndPoints;
-import freemind.modes.mindmapmode.actions.ChangeArrowsInArrowLinkAction;
-import freemind.modes.mindmapmode.actions.CloudAction;
-import freemind.modes.mindmapmode.actions.ColorArrowLinkAction;
 import freemind.modes.mindmapmode.actions.CompoundActionHandler;
 import freemind.modes.mindmapmode.actions.CopyAction;
 import freemind.modes.mindmapmode.actions.CopySingleAction;
@@ -191,12 +183,10 @@ import freemind.modes.mindmapmode.actions.PasteAction;
 import freemind.modes.mindmapmode.actions.PasteAsPlainTextAction;
 import freemind.modes.mindmapmode.actions.RedoAction;
 import freemind.modes.mindmapmode.actions.RemoveAllIconsAction;
-import freemind.modes.mindmapmode.actions.RemoveArrowLinkAction;
 import freemind.modes.mindmapmode.actions.RemoveIconAction;
 import freemind.modes.mindmapmode.actions.RevertAction;
 import freemind.modes.mindmapmode.actions.SelectAllAction;
 import freemind.modes.mindmapmode.actions.SelectBranchAction;
-import freemind.modes.mindmapmode.actions.SetLinkByTextFieldAction;
 import freemind.modes.mindmapmode.actions.SingleNodeOperation;
 import freemind.modes.mindmapmode.actions.ToggleChildrenFoldedAction;
 import freemind.modes.mindmapmode.actions.ToggleFoldedAction;
@@ -323,7 +313,6 @@ public class MindMapController extends ControllerAdapter implements
 	public Action assignAttributes = new AssignAttributesAction();
 	public Action newSibling = new NewSiblingAction(this);
 	public Action newPreviousSibling = new NewPreviousSiblingAction(this);
-	public Action setLinkByFileChooser = new SetLinkByFileChooserAction();
 	public Action setImageByFileChooser = new SetImageByFileChooserAction();
 	public Action followLink = new FollowLinkAction();
 	public Action openLinkDirectory = new OpenLinkDirectoryAction();
@@ -386,26 +375,17 @@ public class MindMapController extends ControllerAdapter implements
 	public NodeColorBlendAction nodeColorBlend = null;
 	public NodeStyleAction fork = null;
 	public NodeStyleAction bubble = null;
-	public CloudAction cloud = null;
-	public freemind.modes.mindmapmode.actions.CloudColorAction cloudColor = null;
-	public AddArrowLinkAction addArrowLinkAction = null;
-	public RemoveArrowLinkAction removeArrowLinkAction = null;
-	public ColorArrowLinkAction colorArrowLinkAction = null;
-	public ChangeArrowsInArrowLinkAction changeArrowsInArrowLinkAction = null;
 	public NodeBackgroundColorAction nodeBackgroundColor = null;
 	public RemoveNodeBackgroundColorAction removeNodeBackgroundColor = null;
 
 	public IconAction unknownIconAction = null;
 	public RemoveIconAction removeLastIconAction = null;
 	public RemoveAllIconsAction removeAllIconsAction = null;
-	public SetLinkByTextFieldAction setLinkByTextField = null;
-	public AddLocalLinkAction addLocalLinkAction = null;
 	public GotoLinkNodeAction gotoLinkNodeAction = null;
 	public JoinNodesAction joinNodes = null;
 	public MoveNodeAction moveNodeAction = null;
 	public ImportExplorerFavoritesAction importExplorerFavorites = null;
 	public ImportFolderStructureAction importFolderStructure = null;
-	public ChangeArrowLinkEndPoints changeArrowLinkEndPoints = null;
 
 	public FindAction find = null;
 	public FindNextAction findNext = null;
@@ -542,25 +522,13 @@ public class MindMapController extends ControllerAdapter implements
 		edgeStyles = new EdgeStyleAction[] { EdgeStyle_linear,
 				EdgeStyle_bezier, EdgeStyle_sharp_linear,
 				EdgeStyle_sharp_bezier };
-		cloud = new CloudAction(this);
-		cloudColor = new freemind.modes.mindmapmode.actions.CloudColorAction(
-				this);
-		addArrowLinkAction = new AddArrowLinkAction(this);
-		removeArrowLinkAction = new RemoveArrowLinkAction(this, null);
-		addArrowLinkAction.setRemoveAction(removeArrowLinkAction);
-		colorArrowLinkAction = new ColorArrowLinkAction(this, null);
-		changeArrowsInArrowLinkAction = new ChangeArrowsInArrowLinkAction(this,
-				"none", null, null, true, true);
 		nodeBackgroundColor = new NodeBackgroundColorAction(this);
 		removeNodeBackgroundColor = new RemoveNodeBackgroundColorAction(this);
-		setLinkByTextField = new SetLinkByTextFieldAction(this);
-		addLocalLinkAction = new AddLocalLinkAction(this);
 		gotoLinkNodeAction = new GotoLinkNodeAction(this, null);
 		moveNodeAction = new MoveNodeAction(this);
 		joinNodes = new JoinNodesAction(this);
 		importExplorerFavorites = new ImportExplorerFavoritesAction(this);
 		importFolderStructure = new ImportFolderStructureAction(this);
-		changeArrowLinkEndPoints = new ChangeArrowLinkEndPoints(this);
 		find = new FindAction(this);
 		findNext = new FindNextAction(this, find);
 		nodeHookAction = new NodeHookAction("no_title", this);
@@ -978,73 +946,6 @@ public class MindMapController extends ControllerAdapter implements
 	 * least removelink available.
 	 */
 	public JPopupMenu getPopupForModel(java.lang.Object obj) {
-		if (obj instanceof MindMapArrowLinkModel) {
-			// yes, this is a link.
-			MindMapArrowLinkModel link = (MindMapArrowLinkModel) obj;
-			JPopupMenu arrowLinkPopup = new JPopupMenu();
-			// block the screen while showing popup.
-			arrowLinkPopup.addPopupMenuListener(this.popupListenerSingleton);
-			removeArrowLinkAction.setArrowLink(link);
-			arrowLinkPopup.add(new RemoveArrowLinkAction(this, link));
-			arrowLinkPopup.add(new ColorArrowLinkAction(this, link));
-			arrowLinkPopup.addSeparator();
-			/* The arrow state as radio buttons: */
-			JRadioButtonMenuItem itemnn = new JRadioButtonMenuItem(
-					new ChangeArrowsInArrowLinkAction(this, "none",
-							"images/arrow-mode-none.png", link, false, false));
-			JRadioButtonMenuItem itemnt = new JRadioButtonMenuItem(
-					new ChangeArrowsInArrowLinkAction(this, "forward",
-							"images/arrow-mode-forward.png", link, false, true));
-			JRadioButtonMenuItem itemtn = new JRadioButtonMenuItem(
-					new ChangeArrowsInArrowLinkAction(this, "backward",
-							"images/arrow-mode-backward.png", link, true, false));
-			JRadioButtonMenuItem itemtt = new JRadioButtonMenuItem(
-					new ChangeArrowsInArrowLinkAction(this, "both",
-							"images/arrow-mode-both.png", link, true, true));
-			itemnn.setText(null);
-			itemnt.setText(null);
-			itemtn.setText(null);
-			itemtt.setText(null);
-			arrowLinkPopup.add(itemnn);
-			arrowLinkPopup.add(itemnt);
-			arrowLinkPopup.add(itemtn);
-			arrowLinkPopup.add(itemtt);
-			// select the right one:
-			boolean a = !link.getStartArrow().equals("None");
-			boolean b = !link.getEndArrow().equals("None");
-			itemtt.setSelected(a && b);
-			itemnt.setSelected(!a && b);
-			itemtn.setSelected(a && !b);
-			itemnn.setSelected(!a && !b);
-
-			arrowLinkPopup.addSeparator();
-
-			arrowLinkPopup.add(new GotoLinkNodeAction(this, link.getSource()));
-			arrowLinkPopup.add(new GotoLinkNodeAction(this, link.getTarget()));
-
-			arrowLinkPopup.addSeparator();
-			// add all links from target and from source:
-			HashSet NodeAlreadyVisited = new HashSet();
-			NodeAlreadyVisited.add(link.getSource());
-			NodeAlreadyVisited.add(link.getTarget());
-			Vector links = getMindMapMapModel().getLinkRegistry().getAllLinks(
-					link.getSource());
-			links.addAll(getMindMapMapModel().getLinkRegistry().getAllLinks(
-					link.getTarget()));
-			for (int i = 0; i < links.size(); ++i) {
-				MindMapArrowLinkModel foreign_link = (MindMapArrowLinkModel) links
-						.get(i);
-				if (NodeAlreadyVisited.add(foreign_link.getTarget())) {
-					arrowLinkPopup.add(new GotoLinkNodeAction(this,
-							foreign_link.getTarget()));
-				}
-				if (NodeAlreadyVisited.add(foreign_link.getSource())) {
-					arrowLinkPopup.add(new GotoLinkNodeAction(this,
-							foreign_link.getSource()));
-				}
-			}
-			return arrowLinkPopup;
-		}
 		return null;
 	}
 
@@ -1080,7 +981,6 @@ public class MindMapController extends ControllerAdapter implements
 		editLong.setEnabled(enabled);
 		newSibling.setEnabled(enabled);
 		newPreviousSibling.setEnabled(enabled);
-		setLinkByFileChooser.setEnabled(enabled);
 		setImageByFileChooser.setEnabled(enabled);
 		followLink.setEnabled(enabled);
 		for (int i = 0; i < iconActions.size(); ++i) {
@@ -1109,13 +1009,10 @@ public class MindMapController extends ControllerAdapter implements
 		newChild.setEnabled(enabled);
 		toggleFolded.setEnabled(enabled);
 		toggleChildrenFolded.setEnabled(enabled);
-		setLinkByTextField.setEnabled(enabled);
 		italic.setEnabled(enabled);
 		bold.setEnabled(enabled);
 		find.setEnabled(enabled);
 		findNext.setEnabled(enabled);
-		addArrowLinkAction.setEnabled(enabled);
-		addLocalLinkAction.setEnabled(enabled);
 		nodeColorBlend.setEnabled(enabled);
 		nodeUp.setEnabled(enabled);
 		nodeBackgroundColor.setEnabled(enabled);
@@ -1124,8 +1021,6 @@ public class MindMapController extends ControllerAdapter implements
 		importFolderStructure.setEnabled(enabled);
 		joinNodes.setEnabled(enabled);
 		deleteChild.setEnabled(enabled);
-		cloud.setEnabled(enabled);
-		cloudColor.setEnabled(enabled);
 		// normalFont.setEnabled(enabled);
 		nodeColor.setEnabled(enabled);
 		edgeColor.setEnabled(enabled);
@@ -1374,14 +1269,6 @@ public class MindMapController extends ControllerAdapter implements
 		italic.setItalic(node, isItalic);
 	}
 
-	public void setCloud(MindMapNode node, boolean enable) {
-		cloud.setCloud(node, enable);
-	}
-
-	public void setCloudColor(MindMapNode node, Color color) {
-		cloudColor.setCloudColor(node, color);
-	}
-
 	// Node editing
 	public void setFontSize(MindMapNode node, String fontSizeValue) {
 		fontSize.setFontSize(node, fontSizeValue);
@@ -1456,42 +1343,6 @@ public class MindMapController extends ControllerAdapter implements
 
 	public int removeLastIcon(MindMapNode node) {
 		return removeLastIconAction.removeLastIcon(node);
-	}
-
-	/**
-     *
-     */
-
-	public void addLink(MindMapNode source, MindMapNode target) {
-		addArrowLinkAction.addLink(source, target);
-	}
-
-	public void removeReference(MindMapLink arrowLink) {
-		removeArrowLinkAction.removeReference(arrowLink);
-	}
-
-	public void setArrowLinkColor(MindMapLink arrowLink, Color color) {
-		colorArrowLinkAction.setArrowLinkColor(arrowLink, color);
-	}
-
-	/**
-     *
-     */
-
-	public void changeArrowsOfArrowLink(MindMapArrowLinkModel arrowLink,
-			boolean hasStartArrow, boolean hasEndArrow) {
-		changeArrowsInArrowLinkAction.changeArrowsOfArrowLink(arrowLink,
-				hasStartArrow, hasEndArrow);
-	}
-
-	public void setArrowLinkEndPoints(MindMapArrowLink link, Point startPoint,
-			Point endPoint) {
-		changeArrowLinkEndPoints.setArrowLinkEndPoints(link, startPoint,
-				endPoint);
-	}
-
-	public void setLink(MindMapNode node, String link) {
-		setLinkByTextField.setLink(node, link);
 	}
 
 	// edit begins with home/end or typing (PN 6.2)
@@ -1601,12 +1452,6 @@ public class MindMapController extends ControllerAdapter implements
 		joinNodes.joinNodes(selectedNode, selectedNodes);
 	}
 
-	protected void setLinkByFileChooser() {
-		String relative = getLinkByFileChooser(null);
-		if (relative != null)
-			setLink((NodeAdapter) getSelected(), relative);
-	}
-
 	protected void setImageByFileChooser() {
 		ExampleFileFilter filter = new ExampleFileFilter();
 		filter.addExtension("jpg");
@@ -1665,16 +1510,6 @@ public class MindMapController extends ControllerAdapter implements
 
 	public void removeHook(MindMapNode focussed, List selecteds, String hookName) {
 		nodeHookAction.removeHook(focussed, selecteds, hookName);
-	}
-
-	protected class SetLinkByFileChooserAction extends AbstractAction {
-		public SetLinkByFileChooserAction() {
-			super("");
-		}
-
-		public void actionPerformed(ActionEvent e) {
-			setLinkByFileChooser();
-		}
 	}
 
 	protected class SetImageByFileChooserAction extends AbstractAction {

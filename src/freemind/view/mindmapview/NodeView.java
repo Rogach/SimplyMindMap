@@ -58,7 +58,6 @@ import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.MindIcon;
-import freemind.modes.MindMapCloud;
 import freemind.modes.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.NodeAdapter;
@@ -284,13 +283,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 			return;
 
 		if (isContentVisible()) {
-			MindMapCloud cloud = getModel().getCloud();
-
-			// consider existing clouds of children
-			if (byChildren && cloud != null) {
-				additionalDistanceForConvexHull += CloudView
-						.getAdditionalHeigth(cloud, this) / 5;
-			}
 			final int x = transX + getContent().getX() - getDeltaX();
 			final int y = transY + getContent().getY() - getDeltaY();
 			final int width = getMainViewWidthWithFoldingMark();
@@ -361,16 +353,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 	 * Calculates the tree height increment because of the clouds.
 	 */
 	public int getAdditionalCloudHeigth() {
-		if (!isContentVisible()) {
-			return 0;
-		}
-
-		MindMapCloud cloud = getModel().getCloud();
-		if (cloud != null) {
-			return CloudView.getAdditionalHeigth(cloud, this);
-		} else {
-			return 0;
-		}
+    return 0;
 	}
 
 	public boolean isSelected() {
@@ -1547,10 +1530,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 	}
 
 	private void paintCloud(Graphics g) {
-		if (isContentVisible() && model.getCloud() != null) {
-			CloudView cloud = new CloudView(model.getCloud(), this);
-			cloud.paint(g);
-		}
 	}
 
 	/*
@@ -1584,10 +1563,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 	}
 
 	private Color getBackgroundColor() {
-		final MindMapCloud cloud = getModel().getCloud();
-		if (cloud != null) {
-			return cloud.getColor();
-		}
 		if (isRoot()) {
 			return getMap().getBackground();
 		}

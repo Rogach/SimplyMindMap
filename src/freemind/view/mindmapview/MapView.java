@@ -75,8 +75,6 @@ import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.Tools.Pair;
 import freemind.modes.MindMap;
-import freemind.modes.MindMapArrowLink;
-import freemind.modes.MindMapLink;
 import freemind.modes.MindMapNode;
 import freemind.modes.common.CommonNodeKeyListener;
 import freemind.modes.common.listeners.CommonNodeMouseMotionListener;
@@ -1348,59 +1346,9 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 
 	protected void paintLinks(NodeView source, Graphics2D graphics,
 			HashMap labels, HashSet /* MindMapLink s */LinkAlreadyVisited) {
-		// check for existing registry:
-		if (getModel().getLinkRegistry() == null)
-			return;
-		if (LinkAlreadyVisited == null)
-			LinkAlreadyVisited = new HashSet();
-		// references first
-		// logger.fine("Searching for links of " +
-		// source.getModel().toString());
-		// paint own labels:
-		Vector vec = getModel().getLinkRegistry()
-				.getAllLinks(source.getModel());
-		for (int i = 0; i < vec.size(); ++i) {
-			MindMapLink ref = (MindMapLink) vec.get(i);
-			if (LinkAlreadyVisited.add(ref)) {
-				// determine type of link
-				if (ref instanceof MindMapArrowLink) {
-					ArrowLinkView arrowLink = new ArrowLinkView(
-							(MindMapArrowLink) ref,
-							getNodeView(ref.getSource()),
-							getNodeView(ref.getTarget()));
-					arrowLink.paint(graphics);
-					mArrowLinkViews.add(arrowLink);
-					// resize map?
-					// adjust container size
-					// Rectangle rec = arrowLink.getBounds();
-					// the following does not work correctly. fc, 23.10.2003:
-					// if (rec.x < 0) {
-					// getMindMapLayout().resizeMap(rec.x);
-					// } else if (rec.x+rec.width > getSize().width) {
-					// getMindMapLayout().resizeMap(rec.x+rec.width);
-					// }
-
-				}
-			}
-		}
-		for (ListIterator e = source.getChildrenViews().listIterator(); e
-				.hasNext();) {
-			NodeView target = (NodeView) e.next();
-			paintLinks(target, graphics, labels, LinkAlreadyVisited);
-		}
-	}
-
-	public MindMapArrowLink detectCollision(Point p) {
-		if (mArrowLinkViews == null)
-			return null;
-		for (int i = 0; i < mArrowLinkViews.size(); ++i) {
-			ArrowLinkView arrowView = (ArrowLinkView) mArrowLinkViews.get(i);
-			if (arrowView.detectCollision(p))
-				return arrowView.getModel();
-		}
-		return null;
-	}
-
+		
+	};
+  
 	/**
 	 * Call preparePrinting() before printing and endPrinting() after printing
 	 * to minimize calculation efforts
@@ -1559,19 +1507,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 		innerBounds.x += getRoot().getX();
 		innerBounds.y += getRoot().getY();
 		final Rectangle maxBounds = new Rectangle(0, 0, getWidth(), getHeight());
-		for (int i = 0; i < mArrowLinkViews.size(); ++i) {
-			ArrowLinkView arrowView = (ArrowLinkView) mArrowLinkViews.get(i);
-			final CubicCurve2D arrowLinkCurve = arrowView.arrowLinkCurve;
-			if (arrowLinkCurve == null) {
-				continue;
-			}
-			Rectangle arrowViewBigBounds = arrowLinkCurve.getBounds();
-			if (!innerBounds.contains(arrowViewBigBounds)) {
-				Rectangle arrowViewBounds = PathBBox.getBBox(arrowLinkCurve)
-						.getBounds();
-				innerBounds.add(arrowViewBounds);
-			}
-		}
 		return innerBounds.intersection(maxBounds);
 	}
 

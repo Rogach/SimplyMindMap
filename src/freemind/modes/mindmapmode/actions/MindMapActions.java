@@ -34,12 +34,9 @@ import freemind.extensions.ModeControllerHook;
 import freemind.extensions.NodeHook;
 import freemind.modes.MindIcon;
 import freemind.modes.MindMap;
-import freemind.modes.MindMapArrowLink;
-import freemind.modes.MindMapLink;
 import freemind.modes.MindMapNode;
 import freemind.modes.NodeAdapter;
 import freemind.modes.attributes.Attribute;
-import freemind.modes.mindmapmode.MindMapArrowLinkModel;
 import freemind.modes.mindmapmode.actions.xml.ActionFactory;
 
 /**
@@ -172,35 +169,6 @@ public interface MindMapActions {
 
 	public void setEdgeStyle(MindMapNode node, String style);
 
-	public void setCloud(MindMapNode node, boolean enable);
-
-	public void setCloudColor(MindMapNode node, Color color);
-
-	// public void setCloudWidth(MindMapNode node, int width);
-	// public void setCloudStyle(MindMapNode node, String style);
-	/**
-	 * Source holds the MindMapArrowLinkModel and points to the id placed in
-	 * target.
-	 */
-	public void addLink(MindMapNode source, MindMapNode target);
-
-	public void removeReference(MindMapLink arrowLink);
-
-	public void changeArrowsOfArrowLink(MindMapArrowLinkModel arrowLink,
-			boolean hasStartArrow, boolean hasEndArrow);
-
-	public void setArrowLinkColor(MindMapLink arrowLink, Color color);
-
-	public void setArrowLinkEndPoints(MindMapArrowLink link, Point startPoint,
-			Point endPoint);
-
-	/**
-	 * Adds a textual hyperlink to a node (e.g. http:/freemind.sourceforge.net)
-	 */
-	public void setLink(MindMapNode node, String link);
-
-	// public void setUnderlined(MindMapNode node);
-	// public void setNormalFont(MindMapNode node);
 	public void increaseFontSize(MindMapNode node, int increment);
 
 	public void splitNode(MindMapNode node, int caretPosition, String newText);

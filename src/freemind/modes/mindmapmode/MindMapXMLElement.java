@@ -26,9 +26,6 @@ import java.util.Vector;
 
 import freemind.main.FreeMindMain;
 import freemind.main.XMLElement;
-import freemind.modes.ArrowLinkAdapter;
-import freemind.modes.ArrowLinkTarget;
-import freemind.modes.CloudAdapter;
 import freemind.modes.EdgeAdapter;
 import freemind.modes.MindMap;
 import freemind.modes.ModeController;
@@ -98,21 +95,6 @@ public class MindMapXMLElement extends XMLElementAdapter {
 		return new MindMapEdgeModel(node);
 	}
 
-	protected CloudAdapter createCloudAdapter(NodeAdapter node,
-			FreeMindMain frame) {
-		return new MindMapCloudModel(node, frame);
-	}
-
-	protected ArrowLinkAdapter createArrowLinkAdapter(NodeAdapter source,
-			NodeAdapter target, FreeMindMain frame) {
-		return new MindMapArrowLinkModel(source, target, frame);
-	}
-
-	protected ArrowLinkTarget createArrowLinkTarget(NodeAdapter source,
-			NodeAdapter target, FreeMindMain frame) {
-		return new ArrowLinkTarget(source, target, frame);
-	}
-	
 	protected NodeAdapter createEncryptedNode(String additionalInfo) {
 		NodeAdapter node = createNodeAdapter(EncryptedMindMapNode.class.getName());
 		setUserObject(node);

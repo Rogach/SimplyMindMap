@@ -180,10 +180,6 @@ public class MindMapNodeDropListener implements DropTargetListener {
 							.getSelecteds().listIterator(); it.hasNext();) {
 						MindMapNodeModel selectedNodeModel = (MindMapNodeModel) ((NodeView) it
 								.next()).getModel();
-						// mindMapMapModel.setNodeColor(selectedNodeModel,targetNode.getColor());
-						// mindMapMapModel.setNodeFont(selectedNodeModel,targetNode.getFont());
-						mMindMapController.addLink(selectedNodeModel,
-								targetNodeModel);
 					}
 				}
 			} else {
