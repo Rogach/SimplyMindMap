@@ -34,6 +34,7 @@ import javax.swing.ImageIcon;
 
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.MindMapNode;
 import freemind.modes.NodeAdapter;
@@ -42,6 +43,9 @@ import freemind.modes.mindmapmode.MindMapMapModel;
 import freemind.modes.mindmapmode.MindMapNodeModel;
 import freemind.modes.mindmapmode.actions.xml.AbstractXmlAction;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.logging.Level;
 
 public class NodeGeneralAction extends AbstractXmlAction {
 	protected final MindMapController modeController;
@@ -51,7 +55,7 @@ public class NodeGeneralAction extends AbstractXmlAction {
 	SingleNodeOperation singleNodeOperation;
 
 	protected static Logger logger;
-
+  
 	/**
 	 * null if you cannot provide a title that is present in the resources. Use
 	 * the setName method to set your not translateble title after that. give a
@@ -59,7 +63,7 @@ public class NodeGeneralAction extends AbstractXmlAction {
 	 */
 	protected NodeGeneralAction(MindMapController modeController,
 			final String textID, String iconPath) {
-		super(null, null, modeController);
+		super(null, iconPath == null ? null : new ImageIcon(Resources.getInstance().getResource(iconPath)), modeController);
 		this.modeController = modeController;
 		if (textID != null) {
 			setName("");
