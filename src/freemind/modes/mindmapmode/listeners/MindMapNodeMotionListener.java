@@ -37,6 +37,7 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeMotionListenerView;
 import freemind.view.mindmapview.NodeView;
+import java.util.logging.Logger;
 
 /**
  * The MouseMotionListener which belongs to every NodeView
@@ -51,7 +52,7 @@ public class MindMapNodeMotionListener extends NodeMotionAdapter {
 	public MindMapNodeMotionListener(MindMapController controller) {
 		c = controller;
 		if (logger == null)
-			logger = c.getFrame().getLogger(this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 	}
 
 	public void mouseMoved(MouseEvent e) {

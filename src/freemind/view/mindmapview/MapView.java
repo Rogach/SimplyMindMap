@@ -292,6 +292,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
   private NodeDragListener nodeDragListener;
   private NodeDropListener nodeDropListener;
   private NodeMouseMotionListener nodeMouseMotionListener;
+  private NodeMotionListener nodeMotionListener;
 
 	/** Used to identify a right click onto a link curve. */
 	private Vector/* of ArrowLinkViews */mArrowLinkViews = new Vector();
@@ -466,6 +467,9 @@ public class MapView extends JPanel implements Printable, Autoscroll {
     
     nodeDropListener = new NodeDropListener();
     nodeDropListener.register(new MindMapNodeDropListener(controller));
+    
+    nodeMotionListener = new NodeMotionListener();
+    nodeMotionListener.register(new MindMapNodeMotionListener(controller));
     
     nodeMouseMotionListener = new NodeMouseMotionListener();
     nodeMouseMotionListener.register(new CommonNodeMouseMotionListener(controller));
@@ -1040,7 +1044,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 		return nodeMouseMotionListener;
 	}
 
-  private NodeMotionListener nodeMotionListener = new NodeMotionListener();
+  
 	NodeMotionListener getNodeMotionListener() {
 		return nodeMotionListener;
 	}
