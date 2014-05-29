@@ -1,9 +1,6 @@
 package freemind.main;
 
-import accessories.plugins.util.window.WindowClosingAdapter;
-import freemind.controller.Controller;
 import freemind.modes.MindMap;
-import freemind.modes.ModeController;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapMapModel;
 import freemind.modes.mindmapmode.MindMapMode;
