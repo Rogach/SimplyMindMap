@@ -1,5 +1,6 @@
 package freemind.main;
 
+import accessories.plugins.util.window.WindowClosingAdapter;
 import freemind.controller.Controller;
 import freemind.modes.MindMap;
 import freemind.modes.ModeController;
@@ -8,6 +9,8 @@ import freemind.modes.mindmapmode.MindMapMapModel;
 import freemind.modes.mindmapmode.MindMapMode;
 import freemind.view.mindmapview.MapView;
 import java.awt.BorderLayout;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
@@ -44,7 +47,33 @@ public class StandaloneTree {
     
     frame.setSize(500, 500);
     frame.setVisible(true);
-    mapView.requestFocus();
+    
+    frame.addWindowListener(new WindowListener() {
+
+      @Override
+      public void windowOpened(WindowEvent e) {}
+
+      @Override
+      public void windowClosing(WindowEvent e) {
+        System.exit(0);
+      }
+
+      @Override
+      public void windowClosed(WindowEvent e) {}
+
+      @Override
+      public void windowIconified(WindowEvent e) {}
+
+      @Override
+      public void windowDeiconified(WindowEvent e) {}
+
+      @Override
+      public void windowActivated(WindowEvent e) {}
+
+      @Override
+      public void windowDeactivated(WindowEvent e) {}
+    });
+    
   }
   
   public static Properties readDefaultPreferences() {
