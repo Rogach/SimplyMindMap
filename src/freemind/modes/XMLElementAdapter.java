@@ -29,9 +29,6 @@ import freemind.extensions.PermanentNodeHookSubstituteUnknown;
 import freemind.main.FreeMindMain;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
-import freemind.modes.attributes.Attribute;
-import freemind.modes.attributes.AttributeRegistry;
-import freemind.modes.attributes.AttributeTableLayoutModel;
 import java.util.logging.Logger;
 
 public abstract class XMLElementAdapter extends XMLElement {
@@ -78,10 +75,6 @@ public abstract class XMLElementAdapter extends XMLElement {
 	private String attributeName;
 
 	private String attributeValue;
-
-	private int attributeNameWidth = AttributeTableLayoutModel.DEFAULT_COLUMN_WIDTH;
-
-	private int attributeValueWidth = AttributeTableLayoutModel.DEFAULT_COLUMN_WIDTH;
 
 	protected final ModeController mModeController;
 
@@ -183,18 +176,6 @@ public abstract class XMLElementAdapter extends XMLElement {
 				node.setEdge(edge);
 			} else if (child.getName().equals("font")) {
 				node.setFont((Font) child.getUserObject());
-			} else if (child.getName().equals(XML_NODE_ATTRIBUTE)) {
-				node.createAttributeTableModel();
-				node.getAttributes().addRowNoUndo(
-						(Attribute) child.getUserObject());
-			} else if (child.getName().equals(XML_NODE_ATTRIBUTE_LAYOUT)) {
-				node.createAttributeTableModel();
-				AttributeTableLayoutModel layout = node.getAttributes()
-						.getLayout();
-				layout.setColumnWidth(0,
-						((XMLElementAdapter) child).attributeNameWidth);
-				layout.setColumnWidth(1,
-						((XMLElementAdapter) child).attributeValueWidth);
 			} else if (child.getName().equals("icon")) {
 				node.addIcon((MindIcon) child.getUserObject(), MindIcon.LAST);
 			} else if (child.getName().equals(XML_NODE_XHTML_CONTENT_TAG)) {
@@ -233,14 +214,6 @@ public abstract class XMLElementAdapter extends XMLElement {
 				node.addHook(hook);
 			}
 			return;
-		}
-		if (child instanceof XMLElementAdapter
-				&& getName().equals(XML_NODE_REGISTERED_ATTRIBUTE_NAME)
-				&& child.getName().equals(XML_NODE_REGISTERED_ATTRIBUTE_VALUE)) {
-			Attribute attribute = new Attribute(attributeName,
-					((XMLElementAdapter) child).attributeValue);
-			AttributeRegistry r = getMap().getRegistry().getAttributes();
-			r.registry(attribute);
 		}
 	}
 
@@ -301,46 +274,6 @@ public abstract class XMLElementAdapter extends XMLElement {
 		if (getName().equals("icon")) {
 			if (name.equals("BUILTIN")) {
 				iconName = sValue;
-			}
-		}
-		/* attributes */
-		else if (getName().equals(XML_NODE_ATTRIBUTE)) {
-			if (name.equals("NAME")) {
-				attributeName = sValue;
-			} else if (name.equals("VALUE")) {
-				attributeValue = sValue;
-			}
-		} else if (getName().equals(XML_NODE_ATTRIBUTE_LAYOUT)) {
-			if (name.equals("NAME_WIDTH")) {
-				attributeNameWidth = Integer.parseInt(sValue);
-			} else if (name.equals("VALUE_WIDTH")) {
-				attributeValueWidth = Integer.parseInt(sValue);
-			}
-		} else if (getName().equals(XML_NODE_ATTRIBUTE_REGISTRY)) {
-			if (name.equals("RESTRICTED")) {
-				getMap().getRegistry().getAttributes().setRestricted(true);
-			}
-			if (name.equals("SHOW_ATTRIBUTES")) {
-				mModeController.getController().setAttributeViewType(getMap(),
-						sValue);
-			}
-			if (name.equals("FONT_SIZE")) {
-				try {
-					int size = Integer.parseInt(sValue);
-					getMap().getRegistry().getAttributes().setFontSize(size);
-				} catch (NumberFormatException ex) {
-				}
-			}
-		} else if (getName().equals(XML_NODE_REGISTERED_ATTRIBUTE_NAME)) {
-			if (name.equals("NAME")) {
-				attributeName = sValue;
-				getMap().getRegistry().getAttributes().registry(attributeName);
-			} else {
-				super.setAttribute(name, sValue);
-			}
-		} else if (getName().equals(XML_NODE_REGISTERED_ATTRIBUTE_VALUE)) {
-			if (name.equals("VALUE")) {
-				attributeValue = sValue;
 			}
 		}
 	}
@@ -427,22 +360,6 @@ public abstract class XMLElementAdapter extends XMLElement {
 		/* icons */
 		if (getName().equals("icon")) {
 			userObject = MindIcon.factory(iconName);
-			return;
-		}
-		/* attributes */
-		if (getName().equals(XML_NODE_ATTRIBUTE)) {
-			userObject = new Attribute(attributeName, attributeValue);
-			return;
-		}
-		if (getName().equals(XML_NODE_REGISTERED_ATTRIBUTE_NAME)) {
-			if (null != getAttribute("VISIBLE")) {
-				getMap().getRegistry().getAttributes()
-						.getElement(attributeName).setVisibility(true);
-			}
-			if (null != getAttribute("RESTRICTED")) {
-				getMap().getRegistry().getAttributes()
-						.getElement(attributeName).setRestriction(true);
-			}
 			return;
 		}
 	}

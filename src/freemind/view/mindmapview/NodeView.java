@@ -62,7 +62,6 @@ import freemind.modes.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.NodeAdapter;
 import freemind.preferences.FreemindPropertyListener;
-import freemind.view.mindmapview.attributeview.AttributeView;
 import java.awt.RenderingHints;
 
 /**
@@ -80,7 +79,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 	protected MindMapNode model;
 	protected MapView map;
 	private MainView mainView;
-	private AttributeView attributeView;
 	protected final static Color dragColor = Color.lightGray; // the Color of
 																// appearing
 																// GradientBox
@@ -144,7 +142,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 		this.map = map;
 		final TreeNode parentNode = model.getParent();
 		final int index = parentNode == null ? 0 : parentNode.getIndex(model);
-		createAttributeView();
 
 		parent.add(this, index);
 
@@ -820,9 +817,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 		}
 		getModeController().onViewRemovedHook(this);
 		removeFromMap();
-		if (attributeView != null) {
-			attributeView.viewRemoved();
-		}
 		getModel().removeViewer(this); // Let the model know he is invisible
 	}
 
@@ -838,10 +832,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 		updateTextColor();
 		updateFont();
 		updateIcons();
-		createAttributeView();
-		if (attributeView != null) {
-			attributeView.update();
-		}
 		// visible. has it still visible children?
 		if(getModel().hasVisibleChilds()) {
 			addFoldingListener();
@@ -851,12 +841,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 		updateText();
 		updateToolTip();
 		revalidate(); // Because of zoom?
-	}
-
-	public void createAttributeView() {
-		if (attributeView == null && model.getAttributes().getNode() != null) {
-			attributeView = new AttributeView(this);
-		}
 	}
 
 	void repaintSelected() {
@@ -1213,12 +1197,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 		return mainView;
 	}
 
-	void syncronizeAttributeView() {
-		if (attributeView != null) {
-			attributeView.syncronizeAttributeView();
-		}
-	}
-
 	public Font getTextFont() {
 		return getMainView().getFont();
 	}
@@ -1230,17 +1208,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 		}
 		return color;
 
-	}
-
-	/**
-     */
-	public AttributeView getAttributeView() {
-		if (attributeView == null) {
-			model.createAttributeTableModel();
-			attributeView = new AttributeView(this);
-		}
-
-		return attributeView;
 	}
 
 	public NodeView getPreferredVisibleChild(boolean left) { // mind preferred

@@ -134,9 +134,6 @@ import freemind.modes.ModeController;
 import freemind.modes.NodeAdapter;
 import freemind.modes.NodeDownAction;
 import freemind.modes.StylePatternFactory;
-import freemind.modes.attributes.Attribute;
-import freemind.modes.attributes.AttributeController;
-import freemind.modes.attributes.NodeAttributeTableModel;
 import freemind.modes.common.CommonNodeKeyListener;
 import freemind.modes.common.CommonNodeKeyListener.EditHandler;
 import freemind.modes.common.GotoLinkNodeAction;
@@ -197,8 +194,6 @@ import freemind.modes.mindmapmode.actions.UseRichFormattingAction;
 import freemind.modes.mindmapmode.actions.xml.ActionFactory;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.UndoActionHandler;
-import freemind.modes.mindmapmode.attributeactors.AssignAttributeDialog;
-import freemind.modes.mindmapmode.attributeactors.MindMapModeAttributeController;
 import freemind.modes.mindmapmode.hooks.MindMapHookFactory;
 import freemind.modes.mindmapmode.listeners.MindMapMouseMotionManager;
 import freemind.modes.mindmapmode.listeners.MindMapNodeDropListener;
@@ -207,7 +202,6 @@ import freemind.view.MapModule;
 import freemind.view.mindmapview.MainView;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
-import freemind.view.mindmapview.attributeview.AttributePopupMenu;
 
 public class MindMapController extends ControllerAdapter implements
 		MindMapActions, MapSourceChangedObserver {
@@ -257,19 +251,6 @@ public class MindMapController extends ControllerAdapter implements
 		}
 	}
 
-	protected class AssignAttributesAction extends AbstractAction {
-		public AssignAttributesAction() {
-			super("");
-		}
-
-		public void actionPerformed(ActionEvent e) {
-			if (assignAttributeDialog == null) {
-				assignAttributeDialog = new AssignAttributeDialog(getView());
-			}
-			assignAttributeDialog.show();
-		}
-	}
-
 	public interface MindMapControllerPlugin {
 
 	}
@@ -308,9 +289,6 @@ public class MindMapController extends ControllerAdapter implements
 	public Action exportBranchToHTML = new ExportBranchToHTMLAction(this);
 
 	public Action editLong = new EditLongAction();
-	public Action editAttributes = new EditAttributesAction();
-	protected AssignAttributeDialog assignAttributeDialog = null;
-	public Action assignAttributes = new AssignAttributesAction();
 	public Action newSibling = new NewSiblingAction(this);
 	public Action newPreviousSibling = new NewPreviousSiblingAction(this);
 	public Action setImageByFileChooser = new SetImageByFileChooserAction();
@@ -447,8 +425,6 @@ public class MindMapController extends ControllerAdapter implements
 		addAsChildMode = Resources.getInstance()
 				.getBoolProperty("add_as_child");
 		mRegistrations = new Vector();
-
-		attributeController = new MindMapModeAttributeController(this);
 	}
 
 	private void createStandardActions() {
@@ -770,7 +746,6 @@ public class MindMapController extends ControllerAdapter implements
 
 	// fc, 14.12.2004: changes, such that different models can be used:
 	private NewNodeCreator myNewNodeCreator = null;
-	private MindMapModeAttributeController attributeController;
 	/**
 	 * A general list of MindMapControllerPlugin s. Members need to be tested
 	 * for the right class and casted to be applied.
@@ -1044,8 +1019,6 @@ public class MindMapController extends ControllerAdapter implements
 		}
 		useRichFormatting.setEnabled(enabled);
 		usePlainText.setEnabled(enabled);
-		editAttributes.setEnabled(enabled);
-		assignAttributes.setEnabled(enabled);
 	}
 
 	//
@@ -1904,61 +1877,9 @@ public class MindMapController extends ControllerAdapter implements
 		return XmlBindingTools.getInstance().decorateDialog(getController(),
 				dialog, window_preference_storage_property);
 	}
-
-	public AttributeController getAttributeController() {
-		return attributeController;
-	}
-
-	public AttributePopupMenu getAttributeTablePopupMenu() {
-		return new AttributePopupMenu();
-	}
-
+  
 	public XMLElement createXMLElement() {
 		return new MindMapXMLElement(this);
-	}
-
-	public void setAttribute(MindMapNode pNode, int pPosition,
-			Attribute pAttribute) {
-		pNode.createAttributeTableModel();
-		pNode.getAttributes().setValueAt(pAttribute.getName(), pPosition, 0);
-		pNode.getAttributes().setValueAt(pAttribute.getValue(), pPosition, 1);
-	}
-
-	public void removeAttribute(MindMapNode pNode, int pPosition) {
-		pNode.createAttributeTableModel();
-		pNode.getAttributes().getAttributeController()
-				.performRemoveRow(pNode.getAttributes(), pPosition);
-	}
-
-	public int addAttribute(MindMapNode node, Attribute pAttribute) {
-		node.createAttributeTableModel();
-		NodeAttributeTableModel attributes = node.getAttributes();
-		int rowCount = attributes.getRowCount();
-		attributes.getAttributeController().performInsertRow(attributes,
-				rowCount, pAttribute.getName(), pAttribute.getValue());
-		return rowCount;
-	}
-
-	public int editAttribute(MindMapNode pNode, String pName, String pNewValue) {
-		pNode.createAttributeTableModel();
-		Attribute newAttribute = new Attribute(pName, pNewValue);
-		NodeAttributeTableModel attributes = pNode.getAttributes();
-		for (int i = 0; i < attributes.getRowCount(); i++) {
-			if (pName.equals(attributes.getAttribute(i).getName())) {
-				if (pNewValue != null) {
-					setAttribute(pNode, i, newAttribute);
-				} else {
-					// remove the attribute:
-					removeAttribute(pNode, i);
-				}
-				return i;
-			}
-		}
-		if (pNewValue == null) {
-			// nothing to remove found.
-			return -1;
-		}
-		return addAttribute(pNode, newAttribute);
 	}
 
 	public void insertNodeInto(MindMapNode newNode, MindMapNode parent,
@@ -2006,13 +1927,6 @@ public class MindMapController extends ControllerAdapter implements
 		erasePattern.setPatternNodeStyle(new PatternNodeStyle());
 		erasePattern.setPatternNodeText(new PatternNodeText());
 		applyPattern(pNode, erasePattern);
-		List attributeKeyList = pNode.getAttributeKeyList();
-		for (Iterator iterator = attributeKeyList.iterator(); iterator
-				.hasNext();) {
-			String key = (String) iterator.next();
-			this.getAttributeController().performRemoveAttribute(key);
-
-		}
 		setNoteText(pNode, null);
 	}
 

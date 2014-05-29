@@ -330,7 +330,6 @@ public class MindMapMapModel extends MapAdapter {
 		fileout.write("version=\"" + FreeMind.XML_VERSION + "\"");
 		fileout.write(">\n");
 		fileout.write("<!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->\n");
-		getRegistry().save(fileout);
 		pRootNode.save(fileout, this.getLinkRegistry(), saveInvisible, true);
 		fileout.write("</map>\n");
 		fileout.close();

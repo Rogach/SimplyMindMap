@@ -60,8 +60,6 @@ import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
-import freemind.modes.attributes.Attribute;
-import freemind.modes.attributes.NodeAttributeTableModel;
 import freemind.preferences.FreemindPropertyListener;
 import freemind.view.mindmapview.NodeView;
 import freemind.view.mindmapview.NodeViewVisitor;
@@ -132,29 +130,11 @@ public abstract class NodeAdapter implements MindMapNode {
 	private FreeMindMain frame;
 	private static final boolean ALLOWSCHILDREN = true;
 	private static final boolean ISLEAF = false; // all nodes may have children
-	/** read only empty attribute class */
-	private static final NodeAttributeTableModel EMTPY_ATTRIBUTES = new NodeAttributeTableModel(
-			null) {
-		public void insertRow(int index, String name, String value) {
-			throw new IllegalArgumentException(
-					"Can't set attributes in the EMTPY_ATTRIBUTES table.");
-		};
-
-		public void addRowNoUndo(Attribute newAttribute) {
-			throw new IllegalArgumentException(
-					"Can't set attributes in the EMTPY_ATTRIBUTES table.");
-		};
-
-		public Vector getAttributes() {
-			return new Vector();
-		};
-	};
 
 	private HistoryInformation historyInformation = null;
 	// Logging:
 	static protected java.util.logging.Logger logger;
 	private MindMap map = null;
-	private NodeAttributeTableModel attributes;
 	private String noteText;
 	private String xmlNoteText;
 	private static FreemindPropertyListener sSaveIdPropertyChangeListener;
@@ -177,7 +157,6 @@ public abstract class NodeAdapter implements MindMapNode {
 		// create creation time:
 		setHistoryInformation(new HistoryInformation());
 		this.map = map;
-		this.attributes = EMTPY_ATTRIBUTES;
 		if (sSaveIdPropertyChangeListener == null) {
 			sSaveIdPropertyChangeListener = new FreemindPropertyListener() {
 
@@ -1218,7 +1197,6 @@ public abstract class NodeAdapter implements MindMapNode {
 			node.addChild(hookElement);
 		}
 
-		attributes.save(node);
 		if (saveChildren && childrenUnfolded().hasNext()) {
 			node.writeWithoutClosingTag(writer);
 			// recursive
@@ -1350,74 +1328,6 @@ public abstract class NodeAdapter implements MindMapNode {
 	public boolean isVisible() {
 		Filter filter = getMap().getFilter();
 		return filter == null || filter.isVisible(this);
-	}
-
-	public NodeAttributeTableModel getAttributes() {
-		return attributes;
-	}
-
-	public void createAttributeTableModel() {
-		if (attributes == EMTPY_ATTRIBUTES) {
-			attributes = new NodeAttributeTableModel(this);
-			if (views == null) {
-				return;
-			}
-			final Iterator iterator = views.iterator();
-			while (iterator.hasNext()) {
-				NodeView view = (NodeView) iterator.next();
-				view.createAttributeView();
-			}
-		}
-
-	}
-
-	public int getAttributeTableLength() {
-		return attributes.getRowCount();
-	}
-
-	public Attribute getAttribute(int pPosition) {
-		return new Attribute(attributes.getAttribute(pPosition));
-	}
-
-	public List getAttributeKeyList() {
-		Vector returnValue = new Vector();
-		if (attributes != null) {
-			for (Iterator iter = attributes.getAttributes().iterator(); iter
-					.hasNext();) {
-				Attribute attr = (Attribute) iter.next();
-				returnValue.add(attr.getName());
-			}
-		}
-		return returnValue;
-	}
-
-	public int getAttributePosition(String pKey) {
-		if (pKey == null)
-			return -1;
-		int pos = 0;
-		for (Iterator iter = attributes.getAttributes().iterator(); iter
-				.hasNext();) {
-			Attribute attr = (Attribute) iter.next();
-			if (pKey.equals(attr.getName())) {
-				return pos;
-			}
-			pos++;
-		}
-		return -1;
-	}
-
-	public String getAttribute(String pKey) {
-		int attributePosition = getAttributePosition(pKey);
-		if (attributePosition < 0) {
-			return null;
-		}
-		return getAttribute(attributePosition).getValue();
-	}
-
-	public void setAttribute(int pPosition, Attribute pAttribute) {
-		createAttributeTableModel();
-		attributes.setName(pPosition, pAttribute.getName());
-		attributes.setValue(pPosition, pAttribute.getValue());
 	}
 
 	EventListenerList listenerList = new EventListenerList();

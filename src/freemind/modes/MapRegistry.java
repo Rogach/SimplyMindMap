@@ -30,15 +30,12 @@ import java.util.List;
 import java.util.ListIterator;
 
 import freemind.controller.filter.util.SortedMapListModel;
-import freemind.modes.attributes.AttributeRegistry;
-import freemind.modes.attributes.NodeAttributeTableModel;
 
 /**
  * @author dimitri 26.05.2005
  */
 public class MapRegistry {
 	private SortedMapListModel mapIcons;
-	private AttributeRegistry attributes;
 	private MindMap map;
 	private ModeController modeController;
 
@@ -47,7 +44,6 @@ public class MapRegistry {
 		this.map = map;
 		this.modeController = modeController;
 		mapIcons = new SortedMapListModel();
-		attributes = new AttributeRegistry(this);
 	}
 
 	public void addIcon(MindIcon icon) {
@@ -60,29 +56,14 @@ public class MapRegistry {
 		return mapIcons;
 	}
 
-	public AttributeRegistry getAttributes() {
-		return attributes;
-	}
-
 	public void registrySubtree(MindMapNode root, boolean registerMyself) {
 		if (registerMyself) {
 			registryNodeIcons(root);
-			registryAttributes(root);
 		}
 		ListIterator iterator = root.childrenUnfolded();
 		while (iterator.hasNext()) {
 			MindMapNode node = (MindMapNode) iterator.next();
 			registrySubtree(node, true);
-		}
-	}
-
-	private void registryAttributes(MindMapNode node) {
-		NodeAttributeTableModel model = node.getAttributes();
-		if (model == null) {
-			return;
-		}
-		for (int i = 0; i < model.getRowCount(); i++) {
-			attributes.registry(model.getAttribute(i));
 		}
 	}
 
@@ -103,10 +84,4 @@ public class MapRegistry {
 		return modeController;
 	}
 
-	/**
-	 * @throws IOException
-	 */
-	public void save(Writer fileout) throws IOException {
-		getAttributes().save(fileout);
-	}
 }

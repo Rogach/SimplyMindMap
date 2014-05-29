@@ -40,8 +40,6 @@ import freemind.controller.filter.FilterInfo;
 import freemind.extensions.NodeHook;
 import freemind.extensions.PermanentNodeHook;
 import freemind.main.XMLElement;
-import freemind.modes.attributes.Attribute;
-import freemind.modes.attributes.NodeAttributeTableModel;
 import freemind.view.mindmapview.NodeView;
 import freemind.view.mindmapview.NodeViewVisitor;
 
@@ -365,60 +363,6 @@ public interface MindMapNode extends MutableTreeNode {
 	boolean hasVisibleChilds();
 	
 	MindMap getMap();
-
-	/**
-	 * use getAttributeKeyList, getAttribute, isAttributeExisting and
-	 * setAttribute instead, if you want to access the attributes like a
-	 * dictionary. If you want to put several Attribute elements with the samw
-	 * name, you have to use this method.
-	 */
-	NodeAttributeTableModel getAttributes();
-
-	void createAttributeTableModel();
-
-	// fc, 8.1.2007, Redundancy to faciliate the NodeAttributeTableModel.
-
-	/**
-	 * @return an unmodifiable list of all attribute keys as String. There can
-	 *         be double entries.
-	 */
-	List getAttributeKeyList();
-
-	/**
-	 * @return the amount of attributes.
-	 */
-	int getAttributeTableLength();
-
-	/**
-	 * @param pPosition
-	 *            the null based position.
-	 * @return a copy of the node's attribute.
-	 */
-	Attribute getAttribute(int pPosition);
-
-	/**
-	 * Searches for the first attribute with the given key. This is a
-	 * convenience function. see MindMapActions.editAttribute to set the value
-	 * to a different one.
-	 * 
-	 * @param pKey
-	 *            is the name of the attribute
-	 * @return the value of the attribute or null, if not found.
-	 */
-	String getAttribute(String pKey);
-
-	/**
-	 * @param key
-	 *            the name of the attribute
-	 * @return the index of the first occurence of an attribute with this key,
-	 *         or -1 if not found.
-	 */
-	int getAttributePosition(String key);
-
-	/**
-	 * Sets the attribute to the given value.
-	 */
-	void setAttribute(int pPosition, Attribute pAttribute);
 
 	public void addTreeModelListener(TreeModelListener l);
 

@@ -87,13 +87,10 @@ import freemind.main.Tools;
 import freemind.main.XMLElement;
 import freemind.main.XMLParseException;
 import freemind.modes.FreeMindFileDialog.DirectoryResultListener;
-import freemind.modes.attributes.AttributeController;
 import freemind.modes.common.listeners.MindMapMouseWheelEventHandler;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
-import freemind.view.mindmapview.attributeview.AttributeTable;
-import freemind.view.mindmapview.attributeview.AttributeView;
 import java.util.logging.Logger;
 
 /**
@@ -1281,26 +1278,6 @@ public abstract class ControllerAdapter implements ModeController,
 		}
 	}
 
-	protected class EditAttributesAction extends AbstractAction {
-		public EditAttributesAction() {
-			super("");
-		};
-
-		public void actionPerformed(ActionEvent e) {
-			final Component focusOwner = KeyboardFocusManager
-					.getCurrentKeyboardFocusManager().getFocusOwner();
-			final AttributeView attributeView = getView().getSelected()
-					.getAttributeView();
-			boolean attributesClosed = null == SwingUtilities
-					.getAncestorOfClass(AttributeTable.class, focusOwner);
-			if (attributesClosed) {
-				attributeView.startEditing();
-			} else {
-				attributeView.stopEditing();
-			}
-		}
-	}
-
 	protected class FileOpener implements DropTargetListener {
 		private boolean isDragAcceptable(DropTargetDragEvent event) {
 			// check if there is at least one File Type in the list
@@ -1560,10 +1537,6 @@ public abstract class ControllerAdapter implements ModeController,
 			view = getController().getView().getNodeView(node);
 		}
 		centerNode(view);
-	}
-
-	public AttributeController getAttributeController() {
-		return null;
 	}
 
 	public NodeView getNodeView(MindMapNode node) {
