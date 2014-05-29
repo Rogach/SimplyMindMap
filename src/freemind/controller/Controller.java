@@ -100,7 +100,6 @@ import freemind.modes.ModeController;
 import freemind.modes.ModesCreator;
 import freemind.modes.attributes.AttributeRegistry;
 import freemind.modes.attributes.AttributeTableLayoutModel;
-import freemind.modes.browsemode.BrowseMode;
 import freemind.modes.mindmapmode.attributeactors.AttributeManagerDialog;
 import freemind.preferences.FreemindPropertyListener;
 import freemind.preferences.layout.OptionPanel;
@@ -179,7 +178,6 @@ public class Controller implements MapModuleChangeObserver {
 	public Action faq;
 	public Action keyDocumentation;
 	public Action webDocu;
-	public Action documentation;
 	public Action license;
 	public Action showFilterToolbarAction;
 	public Action showAttributeManagerAction;
@@ -248,7 +246,6 @@ public class Controller implements MapModuleChangeObserver {
 		keyDocumentation = new KeyDocumentationAction(this);
 		webDocu = new OpenURLAction(this, getResourceString("webDocu"),
 				getProperty("webDocuLocation"));
-		documentation = new DocumentationAction(this);
 		license = new LicenseAction(this);
 		navigationPreviousMap = new NavigationPreviousMapAction(this);
 		navigationNextMap = new NavigationNextMapAction(this);
@@ -1294,49 +1291,6 @@ public class Controller implements MapModuleChangeObserver {
 	//
 	// Help
 	//
-
-	private class DocumentationAction extends AbstractAction {
-		Controller controller;
-
-		DocumentationAction(Controller controller) {
-			super(controller.getResourceString("documentation"));
-			this.controller = controller;
-		}
-
-		public void actionPerformed(ActionEvent e) {
-			try {
-				String map = controller.getFrame().getResourceString(
-						"browsemode_initial_map");
-				// if the current language does not provide its own translation,
-				// POSTFIX_TRANSLATE_ME is appended:
-				map = Tools.removeTranslateComment(map);
-				URL url = null;
-				if (map != null && map.startsWith(".")) {
-					url = localDocumentationLinkConverter.convertLocalLink(map);
-				} else {
-					url = Tools.fileToUrl(new File(map));
-				}
-				final URL endUrl = url;
-				// invokeLater is necessary, as the mode changing removes
-				// all
-				// menus (inclusive this action!).
-				SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							createNewMode(BrowseMode.MODENAME);
-							controller.getModeController().load(endUrl);
-						} catch (Exception e1) {
-							freemind.main.Resources.getInstance().logException(
-									e1);
-						}
-					}
-				});
-			} catch (MalformedURLException e1) {
-				// TODO Auto-generated catch block
-				freemind.main.Resources.getInstance().logException(e1);
-			}
-		}
-	}
 
 	private class KeyDocumentationAction extends AbstractAction {
 		Controller controller;

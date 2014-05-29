@@ -180,7 +180,6 @@ public class MenuBar extends JMenuBar {
 
 		menuHolder.addMenu(new JMenu(c.getResourceString("help")), HELP_MENU
 				+ ".");
-		menuHolder.addAction(c.documentation, HELP_MENU + "doc/documentation");
 		menuHolder.addAction(c.freemindUrl, HELP_MENU + "doc/freemind");
 		menuHolder.addAction(c.faq, HELP_MENU + "doc/faq");
 		menuHolder.addAction(c.keyDocumentation, HELP_MENU
