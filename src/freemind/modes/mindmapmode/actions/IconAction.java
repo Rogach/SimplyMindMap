@@ -33,6 +33,7 @@ import javax.swing.KeyStroke;
 import freemind.controller.actions.generated.instance.AddIconAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.controller.filter.condition.IconContainedCondition;
+import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.IconInformation;
 import freemind.modes.MindIcon;
@@ -216,7 +217,7 @@ public class IconAction extends FreemindAction implements ActorXml,
 
 	public KeyStroke getKeyStroke() {
 		final String keystrokeResourceName = icon.getKeystrokeResourceName();
-		final String keyStrokeDescription = getMindMapController().getFrame()
+		final String keyStrokeDescription = Resources.getInstance().common
 				.getAdjustableProperty(keystrokeResourceName);
 		return Tools.getKeyStroke(keyStrokeDescription);
 	}

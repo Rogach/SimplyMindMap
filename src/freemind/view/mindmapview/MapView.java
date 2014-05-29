@@ -77,6 +77,7 @@ import freemind.main.Tools.Pair;
 import freemind.modes.MindMap;
 import freemind.modes.MindMapNode;
 import freemind.modes.common.CommonNodeKeyListener;
+import freemind.modes.common.dialogs.IconSelectionPopupDialog;
 import freemind.modes.common.listeners.CommonNodeMouseMotionListener;
 import freemind.modes.common.listeners.MindMapMouseWheelEventHandler;
 import freemind.modes.mindmapmode.MindMapController;
@@ -87,9 +88,14 @@ import freemind.modes.mindmapmode.listeners.MindMapMouseMotionManager;
 import freemind.modes.mindmapmode.listeners.MindMapNodeDropListener;
 import freemind.modes.mindmapmode.listeners.MindMapNodeMotionListener;
 import java.awt.dnd.DragGestureEvent;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyListener;
+import java.beans.PropertyChangeListener;
 import java.util.Properties;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JFrame;
 
 /**
  * This class represents the view of a whole MindMap (in analogy to class
@@ -421,6 +427,49 @@ public class MapView extends JPanel implements Printable, Autoscroll {
     NewPreviousSiblingAction newPreviousSiblingAction = new NewPreviousSiblingAction(controller);
     this.getActionMap().put("new_previous_sibling_action", newPreviousSiblingAction);
     this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("shift ENTER"), "new_previous_sibling_action");
+    
+    Action iconSelection = new AbstractAction() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        		// we dont need node.
+        NodeView focussed = MapView.this.controller.getSelectedView();
+        Vector actions = new Vector();
+        MindMapController controller = MapView.this.controller;
+        Vector iconActions = controller.iconActions;
+        actions.addAll(iconActions);
+        actions.add(controller.removeLastIconAction);
+        actions.add(controller.removeAllIconsAction);
+
+        Component c = MapView.this;
+        while (!(c instanceof JFrame) && c != null) {
+          c = c.getParent();
+        }
+        if (c == null) {
+          throw new RuntimeException("No parent frame found!");
+        }
+        JFrame frame = (JFrame) c;
+        
+        IconSelectionPopupDialog selectionDialog = new IconSelectionPopupDialog(
+            frame, actions);
+
+        final MapView mapView = controller.getView();
+        mapView.scrollNodeToVisible(focussed, 0);
+        selectionDialog.pack();
+        Tools.setDialogLocationRelativeTo(selectionDialog, focussed);
+        selectionDialog.setModal(true);
+        selectionDialog.show();
+        // process result:
+        int result = selectionDialog.getResult();
+        if (result >= 0) {
+          Action action = (Action) actions.get(result);
+          action.actionPerformed(new ActionEvent(action, 0, "icon",
+					selectionDialog.getModifiers()));
+        }
+      }
+    };
+    this.getActionMap().put("icon_selection", iconSelection);
+    this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("alt I"), "icon_selection");
     
 		// fc, 20.6.2004: to enable tab for insert.
 		setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,

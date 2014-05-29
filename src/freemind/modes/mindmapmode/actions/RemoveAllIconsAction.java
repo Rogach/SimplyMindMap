@@ -32,6 +32,7 @@ import javax.swing.KeyStroke;
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.RemoveAllIconsXmlAction;
 import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.IconInformation;
 import freemind.modes.MindIcon;
@@ -106,7 +107,7 @@ public class RemoveAllIconsAction extends NodeGeneralAction implements
 	}
 
 	public KeyStroke getKeyStroke() {
-		return Tools.getKeyStroke(getMindMapController().getFrame()
+		return Tools.getKeyStroke(Resources.getInstance().common
 				.getAdjustableProperty(getKeystrokeResourceName()));
 	}
 

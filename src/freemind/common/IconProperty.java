@@ -98,7 +98,7 @@ public class IconProperty extends PropertyBean implements PropertyControl,
 
   public void actionPerformed(ActionEvent arg0) {
     IconSelectionPopupDialog dialog = new IconSelectionPopupDialog(
-        mFreeMindMain.getJFrame(), mIcons, mFreeMindMain);
+        mFreeMindMain.getJFrame(), mIcons);
     dialog.setLocationRelativeTo(mFreeMindMain.getJFrame());
     dialog.setModal(true);
     dialog.setVisible(true);

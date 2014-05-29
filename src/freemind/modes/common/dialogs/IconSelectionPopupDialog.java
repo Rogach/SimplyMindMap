@@ -44,7 +44,9 @@ import javax.swing.KeyStroke;
 import javax.swing.border.BevelBorder;
 
 import freemind.main.FreeMindMain;
+import freemind.main.Resources;
 import freemind.modes.IconInformation;
+import freemind.view.mindmapview.NodeView;
 
 public class IconSelectionPopupDialog extends JDialog implements KeyListener,
 		MouseListener {
@@ -58,15 +60,12 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
 	private int yDimension;
 	private Position selected = new Position(0, 0);
 	private static Position lastPosition = new Position(0, 0);
-	private FreeMindMain freeMindMain;
 	private int mModifiers;
 
-	public IconSelectionPopupDialog(JFrame caller, Vector icons,
-			FreeMindMain freeMindMain) {
+	public IconSelectionPopupDialog(JFrame caller, Vector icons) {
 
-		super(caller, freeMindMain.getResourceString("select_icon"));
+		super(caller, Resources.getInstance().getResourceString("select_icon"));
 		getContentPane().setLayout(new BorderLayout());
-		this.freeMindMain = freeMindMain;
 		this.icons = icons;
 
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -110,6 +109,7 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
 
 		getContentPane().add(iconPanel, BorderLayout.CENTER);
 		descriptionLabel = new JLabel(" ");
+    descriptionLabel.setFont(NodeView.getDefaultFont());
 		// descriptionLabel.setEnabled(false);
 		getContentPane().add(descriptionLabel, BorderLayout.SOUTH);
 		setSelectedPosition(lastPosition);
@@ -156,7 +156,7 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
 		final int index = calculateIndex(position);
 		final IconInformation iconInformation = (IconInformation) icons
 				.get(index);
-		final String keyStroke = freeMindMain
+		final String keyStroke = Resources.getInstance().common
 				.getAdjustableProperty(iconInformation
 						.getKeystrokeResourceName());
 		if (keyStroke != null) {
