@@ -101,8 +101,6 @@ public abstract class XMLElementAdapter extends XMLElement {
 
 	abstract protected EdgeAdapter createEdgeAdapter(NodeAdapter node);
 
-	abstract protected NodeAdapter createEncryptedNode(String additionalInfo);
-
 	protected FreeMindMain getFrame() {
 		return frame;
 	}
@@ -283,9 +281,6 @@ public abstract class XMLElementAdapter extends XMLElement {
 		if (name.equals(XML_NODE_TEXT)) {
 			logger.finest("Setting node text content to:" + sValue);
 			node.setUserObject(sValue);
-		} else if (name.equals(XML_NODE_ENCRYPTED_CONTENT)) {
-			// we change the node implementation to EncryptedMindMapNode.
-			node = createEncryptedNode(sValue);
 		} else if (name.equals(XML_NODE_HISTORY_CREATED_AT)) {
 			if (node.getHistoryInformation() == null) {
 				node.setHistoryInformation(new HistoryInformation());

@@ -95,12 +95,4 @@ public class MindMapXMLElement extends XMLElementAdapter {
 		return new MindMapEdgeModel(node);
 	}
 
-	protected NodeAdapter createEncryptedNode(String additionalInfo) {
-		NodeAdapter node = createNodeAdapter(EncryptedMindMapNode.class.getName());
-		setUserObject(node);
-		copyAttributesToNode(node);
-		node.setAdditionalInfo(additionalInfo);
-		return node;
-	}
-
 }
