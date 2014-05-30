@@ -64,7 +64,6 @@ import freemind.modes.common.actions.FindAction.FindNextAction;
 import freemind.modes.mindmapmode.actions.BoldAction;
 import freemind.modes.mindmapmode.actions.CompoundActionHandler;
 import freemind.modes.mindmapmode.actions.CopyAction;
-import freemind.modes.mindmapmode.actions.CopySingleAction;
 import freemind.modes.mindmapmode.actions.CutAction;
 import freemind.modes.mindmapmode.actions.DeleteChildAction;
 import freemind.modes.mindmapmode.actions.EditAction;
@@ -293,7 +292,6 @@ public class MindMapController extends ControllerAdapter implements
 		paste = new PasteAction(this);
 		pasteAsPlainText = new PasteAsPlainTextAction(this);
 		copy = new CopyAction(this);
-		copySingle = new CopySingleAction(this);
 		bold = new BoldAction(this);
 		italic = new ItalicAction(this);
 		underlined = new UnderlinedAction(this);
