@@ -6,6 +6,9 @@ import freemind.modes.MindMapNode;
 import freemind.modes.common.dialogs.IconSelectionPopupDialog;
 import freemind.modes.mindmapmode.MindMapController;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Rectangle;
 import java.awt.Window;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
@@ -16,6 +19,8 @@ import java.util.Vector;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
+import javax.swing.JScrollPane;
+import javax.swing.JViewport;
 import javax.swing.KeyStroke;
 
 public class KeymapConfigurator {
@@ -30,6 +35,7 @@ public class KeymapConfigurator {
     putAction(view, "icon_selection", "alt I", new IconSelectionAction(view, controller));
     putAction(view, "change_node_level_left", "control LEFT", new ChangeNodeLevelAction("left", controller, view));
     putAction(view, "change_node_level_right", "control RIGHT", new ChangeNodeLevelAction("right", controller, view));
+    putAction(view, "fit_to_page", "alt EQUALS", new FitToPage(view));
   }
   
   private static void putAction(MapView view, String actionKey, String keyStroke, Action action) {
@@ -212,5 +218,49 @@ public class KeymapConfigurator {
       }
       controller.select(newInstanceOfSelectedNode, newSelecteds);
     }
+  }
+  
+  public static class FitToPage extends AbstractAction {
+    private MapView view;
+    public FitToPage(MapView view) {
+      this.view = view;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+      zoom();
+      EventQueue.invokeLater(new Runnable() {
+        public void run() {
+          scroll();
+        }
+      });
+    }
+    
+    private int shift(int coord1, int size1, int coord2, int size2) {
+      return coord1 - coord2 + (size1 - size2) / 2;
+    }
+
+    private void scroll() {
+      Rectangle rect = view.getInnerBounds();
+      Rectangle viewer = view.getVisibleRect();
+      view.scrollBy(shift(rect.x, rect.width, viewer.x, viewer.width),
+          shift(rect.y, rect.height, viewer.y, viewer.height));
+    }
+
+    private void zoom() {
+      Rectangle rect = view.getInnerBounds();
+      // calculate the zoom:
+      double oldZoom = view.getZoom();
+      JViewport viewPort = (JViewport) view.getParent();
+      JScrollPane pane = (JScrollPane) viewPort.getParent();
+      Dimension viewer = viewPort.getExtentSize();
+      double newZoom = viewer.width * oldZoom / (rect.width + 0.0);
+      double heightZoom = viewer.height * oldZoom / (rect.height + 0.0);
+      if (heightZoom < newZoom) {
+        newZoom = heightZoom;
+      }
+      view.setZoom((float) (newZoom));
+    }
+
   }
 }
