@@ -24,7 +24,6 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import freemind.controller.MenuItemSelectedListener;
 import freemind.controller.actions.generated.instance.NodeStyleFormatAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Tools;
@@ -35,8 +34,7 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import javax.swing.Action;
 import javax.swing.JMenuItem;
 
-public class NodeStyleAction extends NodeGeneralAction implements NodeActorXml,
-		MenuItemSelectedListener {
+public class NodeStyleAction extends NodeGeneralAction implements NodeActorXml {
 	private final String mStyle;
 
 	public NodeStyleAction(MindMapController controller, String style) {

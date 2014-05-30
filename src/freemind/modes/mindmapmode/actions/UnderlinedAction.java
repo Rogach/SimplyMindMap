@@ -23,7 +23,6 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import freemind.controller.MenuItemSelectedListener;
 import freemind.controller.actions.generated.instance.UnderlinedNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.modes.MindMap;
@@ -35,7 +34,7 @@ import javax.swing.Action;
 import javax.swing.JMenuItem;
 
 public class UnderlinedAction extends NodeGeneralAction implements
-		NodeActorXml, MenuItemSelectedListener {
+		NodeActorXml {
 	private final MindMapController modeController;
 
 	/**

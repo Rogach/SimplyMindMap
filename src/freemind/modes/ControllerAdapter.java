@@ -19,7 +19,6 @@
 
 package freemind.modes;
 
-import freemind.controller.LastStateStorageManagement;
 import freemind.controller.MindMapNodesSelection;
 import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
 import freemind.controller.actions.generated.instance.NodeListMember;
@@ -377,41 +376,6 @@ public abstract class ControllerAdapter implements ModeController,
 		} catch (URISyntaxException e) {
 			freemind.main.Resources.getInstance().logException(e);
 			throw new RuntimeException(e);
-		}
-	}
-
-	protected void restoreMapsLastState(final ModeController newModeController,
-			final MapAdapter model) {
-		// restore zoom, etc.
-		String lastStateMapXml = Resources.getInstance().getProperty(
-				FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE);
-		LastStateStorageManagement management = new LastStateStorageManagement(
-				lastStateMapXml);
-		MindmapLastStateStorage store = management.getStorage(model
-				.getRestorable());
-		if (store != null) {
-			ModeController modeController = newModeController;
-			// Zoom must be set on combo box, too.
-			MindMapNode sel = null;
-			try {
-				// Selected:
-				sel = modeController.getNodeFromID(store.getLastSelected());
-				modeController.centerNode(sel);
-				List selected = new Vector();
-				for (Iterator iter = store.getListNodeListMemberList()
-						.iterator(); iter.hasNext();) {
-					NodeListMember member = (NodeListMember) iter.next();
-					NodeAdapter selNode = modeController.getNodeFromID(member
-							.getNode());
-					selected.add(selNode);
-				}
-				modeController.select(sel, selected);
-			} catch (Exception e) {
-				freemind.main.Resources.getInstance().logException(e);
-				newModeController.getView().moveToRoot();
-			}
-		} else {
-			newModeController.getView().moveToRoot();
 		}
 	}
 

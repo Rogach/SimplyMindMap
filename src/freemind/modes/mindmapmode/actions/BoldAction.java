@@ -25,7 +25,6 @@
  */
 package freemind.modes.mindmapmode.actions;
 
-import freemind.controller.MenuItemSelectedListener;
 import freemind.controller.actions.generated.instance.BoldNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.modes.MindMap;
@@ -36,8 +35,7 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import javax.swing.Action;
 import javax.swing.JMenuItem;
 
-public class BoldAction extends NodeGeneralAction implements NodeActorXml,
-		MenuItemSelectedListener {
+public class BoldAction extends NodeGeneralAction implements NodeActorXml {
 	/**
 	 */
 	public BoldAction(MindMapController modeController) {
