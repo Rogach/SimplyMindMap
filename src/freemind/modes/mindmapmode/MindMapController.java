@@ -58,7 +58,6 @@ import freemind.modes.MindMapNode;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
 import freemind.modes.NodeDownAction;
-import freemind.modes.common.GotoLinkNodeAction;
 import freemind.modes.common.actions.FindAction;
 import freemind.modes.common.actions.FindAction.FindNextAction;
 import freemind.modes.mindmapmode.actions.BoldAction;
@@ -215,7 +214,6 @@ public class MindMapController extends ControllerAdapter implements
 	public IconAction unknownIconAction = null;
 	public RemoveIconAction removeLastIconAction = null;
 	public RemoveAllIconsAction removeAllIconsAction = null;
-	public GotoLinkNodeAction gotoLinkNodeAction = null;
 	public JoinNodesAction joinNodes = null;
 	public MoveNodeAction moveNodeAction = null;
 	
@@ -318,7 +316,6 @@ public class MindMapController extends ControllerAdapter implements
 		removeAllIconsAction = new RemoveAllIconsAction(this, unknownIconAction);
 		// load pattern actions:
 		loadPatternActions();
-		gotoLinkNodeAction = new GotoLinkNodeAction(this, null);
 		moveNodeAction = new MoveNodeAction(this);
 		joinNodes = new JoinNodesAction(this);
 		find = new FindAction(this);
