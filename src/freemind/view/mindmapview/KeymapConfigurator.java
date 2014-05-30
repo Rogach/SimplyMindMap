@@ -5,6 +5,7 @@ import freemind.main.Tools;
 import freemind.modes.MindMapNode;
 import freemind.modes.common.dialogs.IconSelectionPopupDialog;
 import freemind.modes.mindmapmode.MindMapController;
+import freemind.modes.mindmapmode.actions.ToggleFoldedAction;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -36,6 +37,8 @@ public class KeymapConfigurator {
     putAction(view, "change_node_level_left", "control LEFT", new ChangeNodeLevelAction("left", controller, view));
     putAction(view, "change_node_level_right", "control RIGHT", new ChangeNodeLevelAction("right", controller, view));
     putAction(view, "fit_to_page", "alt EQUALS", new FitToPage(view));
+    putAction(view, "toggle_folded", "SPACE", controller.toggleFolded);
+    putAction(view, "toggle_children_folded", "control SPACE", controller.toggleChildrenFolded);
   }
   
   private static void putAction(MapView view, String actionKey, String keyStroke, Action action) {
