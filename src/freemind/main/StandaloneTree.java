@@ -13,9 +13,12 @@ import java.net.URL;
 import java.util.Properties;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.UIManager;
 
 public class StandaloneTree {
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception {
+    UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+    
     Properties defaultPreferences = readDefaultPreferences();
     
     MindMapMode mindMapMode = new MindMapMode();
