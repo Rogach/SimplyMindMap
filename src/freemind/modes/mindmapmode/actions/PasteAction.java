@@ -265,60 +265,6 @@ public class PasteAction extends AbstractAction implements ActorXml {
 		}
 	}
 
-	private class DirectHtmlFlavorHandler implements DataFlavorHandler {
-
-		public void paste(Object transferData, MindMapNode target,
-				boolean asSibling, boolean isLeft, Transferable t)
-				throws UnsupportedFlavorException, IOException {
-			String textFromClipboard = (String) transferData;
-			// workaround for java decoding bug
-			// http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6740877
-			if (textFromClipboard.charAt(0) == 65533) {
-				throw new UnsupportedFlavorException(
-						MindMapNodesSelection.htmlFlavor);
-			}
-			// ^ This outputs transfer data to standard output. I don't know
-			// why.
-			// { Alternative pasting of HTML
-			textFromClipboard = textFromClipboard
-					.replaceFirst("(?i)(?s)<head>.*</head>", "")
-					.replaceFirst("(?i)(?s)^.*<html[^>]*>", "<html>")
-					.replaceFirst("(?i)(?s)<body [^>]*>", "<body>")
-					.replaceAll("(?i)(?s)<script.*?>.*?</script>", "")
-					.replaceAll("(?i)(?s)</?tbody.*?>", ""). // Java HTML Editor
-					// does not like
-					// the tag.
-					replaceAll("(?i)(?s)<!--.*?-->", ""). // Java HTML Editor
-					// shows comments in
-					// not very nice
-					// manner.
-					replaceAll("(?i)(?s)</?o[^>]*>", ""); // Java HTML Editor
-			// does not like
-			// Microsoft Word's
-			// <o> tag.
-
-			if (Tools.safeEquals(
-					Resources.getInstance().getProperty(
-							"cut_out_pictures_when_pasting_html"), "true")) {
-				textFromClipboard = textFromClipboard.replaceAll(
-						"(?i)(?s)<img[^>]*>", "");
-			} // Cut out images.
-
-			textFromClipboard = HtmlTools
-					.unescapeHTMLUnicodeEntity(textFromClipboard);
-
-			MindMapNode node = mMindMapController.newNode(textFromClipboard,
-					mMindMapController.getMap());
-
-			insertNodeInto(node, target);
-			// addUndoAction(node);
-		}
-
-		public DataFlavor getDataFlavor() {
-			return MindMapNodesSelection.htmlFlavor;
-		}
-	}
-
 	private class StringFlavorHandler implements DataFlavorHandler {
 
 		public void paste(Object TransferData, MindMapNode target,
@@ -333,42 +279,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 		}
 	}
 
-	private class ImageFlavorHandler implements DataFlavorHandler {
-
-		public void paste(Object transferData, MindMapNode target,
-				boolean asSibling, boolean isLeft, Transferable t)
-				throws UnsupportedFlavorException, IOException {
-			logger.info("imageFlavor");
-
-
-			/*
-			 * BufferedImage img = null; try { img = ImageIO.read(new
-			 * File("image.jpg")); } catch (IOException e) { }
-			 */
-
-			String imgfile = "" + transferData;
-
-			String strText = "<html><body><img src=\"" + imgfile
-					+ "\"/></body></html>";
-
-			MindMapNode node = mMindMapController.newNode(strText,
-					mMindMapController.getMap());
-			// if only one <a>...</a> element found, set link
-
-			insertNodeInto(node, target);
-			// addUndoAction(node);
-
-		}
-
-		public DataFlavor getDataFlavor() {
-			return DataFlavor.imageFlavor;
-		}
-	}
-
-	/*
-     *
-     */
-	private void _paste(Transferable t, MindMapNode target, boolean asSibling,
+  private void _paste(Transferable t, MindMapNode target, boolean asSibling,
 			boolean isLeft) {
 		if (t == null) {
 			return;
@@ -402,8 +313,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 	private DataFlavorHandler[] getFlavorHandlers() {
 		DataFlavorHandler[] dataFlavorHandlerList = new DataFlavorHandler[] {
 				new MindMapNodesFlavorHandler(),
-				new DirectHtmlFlavorHandler(), new StringFlavorHandler(),
-				new ImageFlavorHandler() };
+				new StringFlavorHandler()  };
 		// %%% Make dependent on an option?: new HtmlFlavorHandler(),
 		return dataFlavorHandlerList;
 	}
