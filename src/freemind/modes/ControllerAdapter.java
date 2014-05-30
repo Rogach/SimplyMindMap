@@ -21,13 +21,10 @@ package freemind.modes;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.KeyboardFocusManager;
-import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.DnDConstants;
-import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
@@ -57,7 +54,6 @@ import java.util.logging.Level;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
@@ -67,7 +63,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.filechooser.FileFilter;
@@ -78,15 +73,12 @@ import freemind.controller.MindMapNodesSelection;
 import freemind.controller.StructuredMenuHolder;
 import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
 import freemind.controller.actions.generated.instance.NodeListMember;
-import freemind.extensions.PermanentNodeHook;
 import freemind.main.FreeMindCommon;
-import freemind.main.FreeMindMain;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
 import freemind.main.XMLParseException;
 import freemind.modes.FreeMindFileDialog.DirectoryResultListener;
-import freemind.modes.common.listeners.MindMapMouseWheelEventHandler;
 import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
@@ -235,11 +227,6 @@ public abstract class ControllerAdapter implements ModeController,
 						.next();
 				listener.onLostFocusNode(node);
 			}
-			for (Iterator i = node.getModel().getActivatedHooks().iterator(); i
-					.hasNext();) {
-				PermanentNodeHook hook = (PermanentNodeHook) i.next();
-				hook.onLostFocusNode(node);
-			}
 		} catch (RuntimeException e) {
 			logger.log(Level.SEVERE, "Error in node selection listeners", e);
 		}
@@ -257,11 +244,6 @@ public abstract class ControllerAdapter implements ModeController,
 						.next();
 				listener.onFocusNode(node);
       }
-			for (Iterator i = node.getModel().getActivatedHooks().iterator(); i
-					.hasNext();) {
-				PermanentNodeHook hook = (PermanentNodeHook) i.next();
-				hook.onFocusNode(node);
-			}
 		} catch (RuntimeException e) {
 			logger.log(Level.SEVERE, "Error in node selection listeners", e);
 		}
@@ -280,22 +262,6 @@ public abstract class ControllerAdapter implements ModeController,
 			logger.log(Level.SEVERE, "Error in node selection listeners", e);
 		}
 
-	}
-
-	public void onViewCreatedHook(NodeView node) {
-		for (Iterator i = node.getModel().getActivatedHooks().iterator(); i
-				.hasNext();) {
-			PermanentNodeHook hook = (PermanentNodeHook) i.next();
-			hook.onViewCreatedHook(node);
-		}
-	}
-
-	public void onViewRemovedHook(NodeView node) {
-		for (Iterator i = node.getModel().getActivatedHooks().iterator(); i
-				.hasNext();) {
-			PermanentNodeHook hook = (PermanentNodeHook) i.next();
-			hook.onViewRemovedHook(node);
-		}
 	}
 
 	public void registerNodeSelectionListener(NodeSelectionListener listener,
@@ -571,36 +537,6 @@ public abstract class ControllerAdapter implements ModeController,
 		element.processUnfinishedLinks(getModel().getLinkRegistry());
 		MindMapNode node = element.getMapChild();
 		return node;
-	}
-
-	/**
-     *
-     */
-	public void invokeHooksRecursively(NodeAdapter node, MindMap map) {
-		for (Iterator i = node.childrenUnfolded(); i.hasNext();) {
-			NodeAdapter child = (NodeAdapter) i.next();
-			invokeHooksRecursively(child, map);
-		}
-		for (Iterator i = node.getHooks().iterator(); i.hasNext();) {
-			PermanentNodeHook hook = (PermanentNodeHook) i.next();
-			hook.setController(this);
-			hook.setMap(map);
-			node.invokeHook(hook);
-		}
-	}
-
-	/**
-	 *
-	 */
-	public void processUnfinishedLinksInHooks(NodeAdapter node) {
-		for (Iterator i = node.childrenUnfolded(); i.hasNext();) {
-			NodeAdapter child = (NodeAdapter) i.next();
-			processUnfinishedLinksInHooks(child);
-		}
-		for (Iterator i = node.getHooks().iterator(); i.hasNext();) {
-			PermanentNodeHook hook = (PermanentNodeHook) i.next();
-			hook.processUnfinishedLinks();
-		}
 	}
 
 	/**

@@ -134,7 +134,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 	/**
 	 */
 	private void removeNodes(MindMapNode node) {
-		node.removeAllHooks();
 		mModeController.fireNodePreDeleteEvent(node);
 		// and all children:
 		for (Iterator i = node.childrenUnfolded(); i.hasNext();) {

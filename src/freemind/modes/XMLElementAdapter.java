@@ -24,8 +24,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
-import freemind.extensions.PermanentNodeHook;
-import freemind.extensions.PermanentNodeHookSubstituteUnknown;
 import freemind.main.FreeMindMain;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
@@ -189,27 +187,6 @@ public abstract class XMLElementAdapter extends XMLElement {
 					logger.finest("Setting note html content to:" + xmlText);
 					node.setXmlNoteText(xmlText);
 				}
-			} else if (child.getName().equals("hook")) {
-				XMLElement xml = (XMLElement) child/* .getUserObject() */;
-				String loadName = (String) xml.getAttribute("NAME");
-				PermanentNodeHook hook = null;
-				try {
-					// loadName=loadName.replace('/', File.separatorChar);
-					/*
-					 * The next code snippet is an exception. Normally, hooks
-					 * have to be created via the ModeController. DO NOT COPY.
-					 */
-					hook = (PermanentNodeHook) mModeController.getHookFactory()
-							.createNodeHook(loadName);
-					// this is a bad hack. Don't make use of this data unless
-					// you know exactly what you are doing.
-					hook.setNode(node);
-				} catch (Exception e) {
-					freemind.main.Resources.getInstance().logException(e);
-					hook = new PermanentNodeHookSubstituteUnknown(loadName);
-				}
-				hook.loadFrom(xml);
-				node.addHook(hook);
 			}
 			return;
 		}

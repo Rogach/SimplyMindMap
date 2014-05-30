@@ -47,9 +47,6 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import freemind.extensions.DontSaveMarker;
-import freemind.extensions.NodeHook;
-import freemind.extensions.PermanentNodeHook;
 import freemind.main.FreeMind;
 import freemind.main.FreeMindCommon;
 import freemind.main.FreeMindMain;
@@ -785,17 +782,6 @@ public abstract class NodeAdapter implements MindMapNode {
 
 	private void recursiveCallAddChildren(MindMapNode node,
 			MindMapNode addedChild) {
-		// Tell any node hooks that the node is added:
-		if (node instanceof MindMapNode) {
-			for (Iterator i = ((MindMapNode) node).getActivatedHooks()
-					.iterator(); i.hasNext();) {
-				PermanentNodeHook hook = (PermanentNodeHook) i.next();
-				if (addedChild.getParentNode() == node) {
-					hook.onAddChild(addedChild);
-				}
-				hook.onAddChildren(addedChild);
-			}
-		}
 		if (!node.isRoot() && node.getParentNode() != null)
 			recursiveCallAddChildren(node.getParentNode(), addedChild);
 	}
@@ -806,13 +792,6 @@ public abstract class NodeAdapter implements MindMapNode {
 	 */
 	private void recursiveCallRemoveChildren(MindMapNode node,
 			MindMapNode removedChild, MindMapNode oldDad) {
-		for (Iterator i = node.getActivatedHooks().iterator(); i.hasNext();) {
-			PermanentNodeHook hook = (PermanentNodeHook) i.next();
-			if (removedChild.getParentNode() == node) {
-				hook.onRemoveChild(removedChild);
-			}
-			hook.onRemoveChildren(removedChild, oldDad);
-		}
 		if (!node.isRoot() && node.getParentNode() != null)
 			recursiveCallRemoveChildren(node.getParentNode(), removedChild,
 					oldDad);
@@ -857,58 +836,9 @@ public abstract class NodeAdapter implements MindMapNode {
 		return level;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.MindMapNode#addHook(freemind.modes.NodeHook)
-	 */
-	public PermanentNodeHook addHook(PermanentNodeHook hook) {
-		// add then
-		if (hook == null)
-			throw new IllegalArgumentException("Added null hook.");
-		createHooks();
-		hooks.add(hook);
-		return hook;
-	}
-
-	public void invokeHook(NodeHook hook) {
-		// initialize:
-		hook.startupMapHook();
-		// the main invocation:
-		hook.setNode(this);
-		try {
-			hook.invoke(this);
-		} catch (Exception e) {
-			// FIXME: Do something special here, but in any case, do not add the
-			// hook
-			// to the activatedHooks:
-			freemind.main.Resources.getInstance().logException(e);
-			return;
-		}
-		if (hook instanceof PermanentNodeHook) {
-			createActivatedHooks();
-			activatedHooks.add(hook);
-		} else {
-			// end of its short life:
-			hook.shutdownMapHook();
-		}
-	}
-
-	private void createActivatedHooks() {
-		if (activatedHooks == null) {
-			activatedHooks = new HashSet();
-		}
-	}
-
 	private void createToolTip() {
 		if (toolTip == null) {
 			toolTip = new TreeMap();
-		}
-	}
-
-	private void createHooks() {
-		if (hooks == null) {
-			hooks = new Vector();
 		}
 	}
 
@@ -921,67 +851,6 @@ public abstract class NodeAdapter implements MindMapNode {
 	private void createIcons() {
 		if (icons == null) {
 			icons = new Vector();
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.MindMapNode#getHooks()
-	 */
-	public List getHooks() {
-		if (hooks == null)
-			return Collections.EMPTY_LIST;
-		return Collections.unmodifiableList(hooks);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.MindMapNode#getActivatedHooks()
-	 */
-	public Collection getActivatedHooks() {
-		if (activatedHooks == null) {
-			return Collections.EMPTY_LIST;
-		}
-		return Collections.unmodifiableCollection(activatedHooks);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.MindMapNode#removeHook(freemind.modes.NodeHook)
-	 */
-	public void removeHook(PermanentNodeHook hook) {
-		// the order is crucial here: the shutdown method should be able to
-		// perform "nodeChanged"
-		// calls without having its own updateNodeHook method to be called
-		// again.
-		String name = hook.getName();
-		createActivatedHooks();
-		if (activatedHooks.contains(hook)) {
-			activatedHooks.remove(hook);
-			if (activatedHooks.size() == 0) {
-				activatedHooks = null;
-			}
-			hook.shutdownMapHook();
-		}
-		createHooks();
-		hooks.remove(hook);
-		if (hooks.size() == 0)
-			hooks = null;
-		logger.fine("Removed hook " + name + " at " + hook + ".");
-	}
-
-	public void removeAllHooks() {
-		int timeout = getHooks().size() * 2;
-		while (getHooks().size() > 0 && timeout-- > 0) {
-			PermanentNodeHook hook = (PermanentNodeHook) getHooks().get(0);
-			try {
-				removeHook(hook);
-			} catch (Exception e) {
-				freemind.main.Resources.getInstance().logException(e);
-			}
 		}
 	}
 
@@ -1156,17 +1025,6 @@ public abstract class NodeAdapter implements MindMapNode {
 			iconElement.setAttribute("BUILTIN",
 					((MindIcon) getIcons().get(i)).getName());
 			node.addChild(iconElement);
-		}
-
-		for (Iterator i = getActivatedHooks().iterator(); i.hasNext();) {
-			PermanentNodeHook permHook = (PermanentNodeHook) i.next();
-			if (permHook instanceof DontSaveMarker) {
-				continue;
-			}
-			XMLElement hookElement = new XMLElement();
-			hookElement.setName("hook");
-			permHook.save(hookElement);
-			node.addChild(hookElement);
 		}
 
 		if (saveChildren && childrenUnfolded().hasNext()) {

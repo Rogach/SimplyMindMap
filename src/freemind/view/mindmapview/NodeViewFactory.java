@@ -195,8 +195,6 @@ class NodeViewFactory {
 	}
 
 	private void fireNodeViewCreated(NodeView newView) {
-		newView.getMap().getModel().getModeController()
-				.onViewCreatedHook(newView);
 	}
 
 	JComponent newContentPane(NodeView view) {

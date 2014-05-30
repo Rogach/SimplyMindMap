@@ -10,7 +10,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import freemind.extensions.PermanentNodeHook;
 import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;
@@ -455,11 +454,6 @@ class MindMapHTMLWriter {
 			writeFoldingButtons(localParentID);
 		}
 
-		for (Iterator it = model.getActivatedHooks().iterator(); it.hasNext();) {
-			PermanentNodeHook hook = (PermanentNodeHook) it.next();
-			hook.saveHtml(fileout);
-		}
-		
 		String link = model.getLink();
 		if (link != null) {
 			if (link.endsWith(".mm")) {

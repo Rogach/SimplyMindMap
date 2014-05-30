@@ -22,7 +22,6 @@ package freemind.modes.mindmapmode;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.Transferable;
@@ -31,22 +30,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Constructor;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -60,15 +52,11 @@ import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JToolBar;
-import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
@@ -103,26 +91,14 @@ import freemind.controller.actions.generated.instance.PatternNodeFontName;
 import freemind.controller.actions.generated.instance.PatternNodeFontSize;
 import freemind.controller.actions.generated.instance.PatternNodeStyle;
 import freemind.controller.actions.generated.instance.PatternNodeText;
-import freemind.controller.actions.generated.instance.WindowConfigurationStorage;
 import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.extensions.HookFactory;
-import freemind.extensions.HookFactory.RegistrationContainer;
-import freemind.extensions.HookRegistration;
-import freemind.extensions.ModeControllerHook;
-import freemind.extensions.NodeHook;
-import freemind.extensions.PermanentNodeHook;
-import freemind.extensions.UndoEventReceiver;
-import freemind.main.ExampleFileFilter;
 import freemind.main.FixedHTMLWriter;
-import freemind.main.FreeMind;
 import freemind.main.FreeMindCommon;
 import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
 import freemind.modes.ControllerAdapter;
-import freemind.modes.EdgeAdapter;
-import freemind.modes.FreeMindFileDialog;
 import freemind.modes.MapAdapter;
 import freemind.modes.MindIcon;
 import freemind.modes.MindMap;
@@ -131,14 +107,10 @@ import freemind.modes.Mode;
 import freemind.modes.ModeController;
 import freemind.modes.NodeAdapter;
 import freemind.modes.NodeDownAction;
-import freemind.modes.StylePatternFactory;
-import freemind.modes.common.CommonNodeKeyListener;
-import freemind.modes.common.CommonNodeKeyListener.EditHandler;
 import freemind.modes.common.GotoLinkNodeAction;
 import freemind.modes.common.actions.FindAction;
 import freemind.modes.common.actions.FindAction.FindNextAction;
 import freemind.modes.common.actions.NewMapAction;
-import freemind.modes.common.listeners.CommonNodeMouseMotionListener;
 import freemind.modes.mindmapmode.actions.BoldAction;
 import freemind.modes.mindmapmode.actions.CompoundActionHandler;
 import freemind.modes.mindmapmode.actions.CopyAction;
@@ -154,7 +126,6 @@ import freemind.modes.mindmapmode.actions.IconAction;
 import freemind.modes.mindmapmode.actions.ItalicAction;
 import freemind.modes.mindmapmode.actions.JoinNodesAction;
 import freemind.modes.mindmapmode.actions.MindMapActions;
-import freemind.modes.mindmapmode.actions.MindMapControllerHookAction;
 import freemind.modes.mindmapmode.actions.ModeControllerActionHandler;
 import freemind.modes.mindmapmode.actions.MoveNodeAction;
 import freemind.modes.mindmapmode.actions.NewChildAction;
@@ -163,7 +134,6 @@ import freemind.modes.mindmapmode.actions.NewSiblingAction;
 import freemind.modes.mindmapmode.actions.NodeColorAction;
 import freemind.modes.mindmapmode.actions.NodeColorBlendAction;
 import freemind.modes.mindmapmode.actions.NodeGeneralAction;
-import freemind.modes.mindmapmode.actions.NodeHookAction;
 import freemind.modes.mindmapmode.actions.NodeStyleAction;
 import freemind.modes.mindmapmode.actions.NodeUpAction;
 import freemind.modes.mindmapmode.actions.PasteAction;
@@ -184,11 +154,6 @@ import freemind.modes.mindmapmode.actions.UseRichFormattingAction;
 import freemind.modes.mindmapmode.actions.xml.ActionFactory;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.UndoActionHandler;
-import freemind.modes.mindmapmode.hooks.MindMapHookFactory;
-import freemind.modes.mindmapmode.listeners.MindMapMouseMotionManager;
-import freemind.modes.mindmapmode.listeners.MindMapNodeDropListener;
-import freemind.modes.mindmapmode.listeners.MindMapNodeMotionListener;
-import freemind.view.MapModule;
 import freemind.view.mindmapview.MainView;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
@@ -208,7 +173,6 @@ public class MindMapController extends ControllerAdapter implements
 	private HashSet mRegisteredMouseWheelEventHandler = new HashSet();
 
 	private ActionFactory actionFactory;
-	private Vector hookActions;
 	// Mode mode;
 	private MindMapPopupMenu popupmenu;
 	// private JToolBar toolbar;
@@ -216,8 +180,6 @@ public class MindMapController extends ControllerAdapter implements
 	private boolean addAsChildMode = false;
 	private Clipboard clipboard = null;
 	private Clipboard selection = null;
-
-	private HookFactory nodeHookFactory;
 
 	/**
 	 * This handler evaluates the compound xml actions. Don't delete it!
@@ -287,7 +249,6 @@ public class MindMapController extends ControllerAdapter implements
 	
 	public FindAction find = null;
 	public FindNextAction findNext = null;
-	public NodeHookAction nodeHookAction = null;
 	public RevertAction revertAction = null;
 	public SelectBranchAction selectBranchAction = null;
 	public SelectAllAction selectAllAction = null;
@@ -322,8 +283,6 @@ public class MindMapController extends ControllerAdapter implements
 		// icon actions:
 		createIconActions();
 		logger.info("createNodeHookActions");
-		// node hook actions:
-		createNodeHookActions();
 
 		logger.info("mindmap_menus");
 		// load menus:
@@ -401,7 +360,6 @@ public class MindMapController extends ControllerAdapter implements
 		joinNodes = new JoinNodesAction(this);
 		find = new FindAction(this);
 		findNext = new FindNextAction(this, find);
-		nodeHookAction = new NodeHookAction("no_title", this);
 		revertAction = new RevertAction(this);
 		selectBranchAction = new SelectBranchAction(this);
 		selectAllAction = new SelectAllAction(this);
@@ -429,32 +387,6 @@ public class MindMapController extends ControllerAdapter implements
 	public void startupController() {
 		super.startupController();
 		getToolBar().startup();
-		HookFactory hookFactory = getHookFactory();
-		List pluginRegistrations = hookFactory.getRegistrations();
-		logger.fine("mScheduledActions are executed: "
-				+ pluginRegistrations.size());
-		for (Iterator i = pluginRegistrations.iterator(); i.hasNext();) {
-			// call constructor:
-			try {
-				RegistrationContainer container = (RegistrationContainer) i
-						.next();
-				Class registrationClass = container.hookRegistrationClass;
-				Constructor hookConstructor = registrationClass
-						.getConstructor(new Class[] { ModeController.class,
-								MindMap.class });
-				HookRegistration registrationInstance = (HookRegistration) hookConstructor
-						.newInstance(new Object[] { this, getMap() });
-				// register the instance to enable basePlugins.
-				hookFactory.registerRegistrationContainer(container,
-						registrationInstance);
-				registrationInstance.register();
-				mRegistrations.add(registrationInstance);
-			} catch (Exception e) {
-				freemind.main.Resources.getInstance().logException(e);
-			}
-		}
-		invokeHooksRecursively((NodeAdapter) getRootNode(), getMap());
-
 	}
 
 	public void shutdownController() {
@@ -490,33 +422,6 @@ public class MindMapController extends ControllerAdapter implements
 			IconAction myAction = new IconAction(this, myIcon,
 					removeLastIconAction);
 			iconActions.add(myAction);
-		}
-	}
-
-	/**
-	 *
-	 */
-	protected void createNodeHookActions() {
-		if (hookActions == null) {
-			hookActions = new Vector();
-			// HOOK TEST
-			MindMapHookFactory factory = (MindMapHookFactory) getHookFactory();
-			List nodeHookNames = factory.getPossibleNodeHooks();
-			for (Iterator i = nodeHookNames.iterator(); i.hasNext();) {
-				String hookName = (String) i.next();
-				// create hook action.
-				NodeHookAction action = new NodeHookAction(hookName, this);
-				hookActions.add(action);
-			}
-			List modeControllerHookNames = factory
-					.getPossibleModeControllerHooks();
-			for (Iterator i = modeControllerHookNames.iterator(); i.hasNext();) {
-				String hookName = (String) i.next();
-				MindMapControllerHookAction action = new MindMapControllerHookAction(
-						hookName, this);
-				hookActions.add(action);
-			}
-			// HOOK TEST END
 		}
 	}
 
@@ -586,28 +491,10 @@ public class MindMapController extends ControllerAdapter implements
 																			 * .
 																			 * MENU_BAR_PREFIX
 																			 */
-		// add hook actions to this holder.
-		// hooks, fc, 1.3.2004:
-		MindMapHookFactory hookFactory = (MindMapHookFactory) getHookFactory();
-		for (int i = 0; i < hookActions.size(); ++i) {
-			AbstractAction hookAction = (AbstractAction) hookActions.get(i);
-			String hookName = ((HookAction) hookAction).getHookName();
-			hookFactory.decorateAction(hookName, hookAction);
-			List hookMenuPositions = hookFactory.getHookMenuPositions(hookName);
-			for (Iterator j = hookMenuPositions.iterator(); j.hasNext();) {
-				String pos = (String) j.next();
-				holder.addMenuItem(
-						hookFactory.getMenuItem(hookName, hookAction), pos);
-			}
-		}
 		// update popup and toolbar:
 		popupmenu.update(holder);
 		toolbar.update(holder);
 
-		// editMenu.add(getExtensionMenu());
-		String formatMenuString = MenuBar.FORMAT_MENU;
-
-		// editMenu.add(getIconMenu());
 		addIconsToMenu(holder, MenuBar.INSERT_MENU + "icons");
 
 	}
@@ -746,10 +633,6 @@ public class MindMapController extends ControllerAdapter implements
 		saveAs.setEnabled(enabled);
 		getToolBar().setAllActions(enabled);
 		exportBranch.setEnabled(enabled);
-		// hooks:
-		for (int i = 0; i < hookActions.size(); ++i) {
-			((Action) hookActions.get(i)).setEnabled(enabled);
-		}
 		cut.setEnabled(enabled);
 		copy.setEnabled(enabled);
 		copySingle.setEnabled(enabled);
@@ -950,14 +833,6 @@ public class MindMapController extends ControllerAdapter implements
 		joinNodes.joinNodes(selectedNode, selectedNodes);
 	}
 
-	public void addHook(MindMapNode focussed, List selecteds, String hookName, Properties pHookProperties) {
-		nodeHookAction.addHook(focussed, selecteds, hookName, pHookProperties);
-	}
-
-	public void removeHook(MindMapNode focussed, List selecteds, String hookName) {
-		nodeHookAction.removeHook(focussed, selecteds, hookName);
-	}
-
 	protected abstract class LinkActionBase extends AbstractAction implements
 			MenuItemEnabledListener {
 		public LinkActionBase(String pText) {
@@ -1041,48 +916,6 @@ public class MindMapController extends ControllerAdapter implements
 				return;
 			}
 			toggleFolded();
-		}
-	}
-
-	public HookFactory getHookFactory() {
-		// lazy creation.
-		if (nodeHookFactory == null) {
-			nodeHookFactory = new MindMapHookFactory();
-		}
-		return nodeHookFactory;
-	}
-
-	public NodeHook createNodeHook(String hookName, MindMapNode node,
-			MindMap map) {
-		HookFactory hookFactory = getHookFactory();
-		NodeHook hook = (NodeHook) hookFactory.createNodeHook(hookName);
-		hook.setController(this);
-		hook.setMap(map);
-		if (hook instanceof PermanentNodeHook) {
-			PermanentNodeHook permHook = (PermanentNodeHook) hook;
-			if (hookFactory.getInstanciationMethod(hookName).isSingleton()) {
-				// search for already instanciated hooks of this type:
-				PermanentNodeHook otherHook = hookFactory.getHookInNode(node,
-						hookName);
-				if (otherHook != null) {
-					return otherHook;
-				}
-			}
-			node.addHook(permHook);
-		}
-		return hook;
-	}
-
-	public void invokeHook(ModeControllerHook hook) {
-		try {
-			hook.setController(this);
-			// initialize:
-			// the main invocation:
-			hook.startupMapHook();
-			// and good bye.
-			hook.shutdownMapHook();
-		} catch (Exception e) {
-			freemind.main.Resources.getInstance().logException(e);
 		}
 	}
 
@@ -1201,35 +1034,6 @@ public class MindMapController extends ControllerAdapter implements
 			strings[1] = text.substring(pos);
 		}
 		return strings;
-	}
-
-	protected void updateNode(MindMapNode node) {
-		super.updateNode(node);
-		recursiveCallUpdateHooks((MindMapNode) node, (MindMapNode) node /*
-																		 * self
-																		 * update
-																		 */);
-	}
-
-	/**
-     */
-	private void recursiveCallUpdateHooks(MindMapNode node,
-			MindMapNode changedNode) {
-		// Tell any node hooks that the node is changed:
-		if (node instanceof MindMapNode) {
-			for (Iterator i = ((MindMapNode) node).getActivatedHooks()
-					.iterator(); i.hasNext();) {
-				PermanentNodeHook hook = (PermanentNodeHook) i.next();
-				if ((!isUndoAction()) || hook instanceof UndoEventReceiver) {
-					if (node == changedNode)
-						hook.onUpdateNodeHook();
-					else
-						hook.onUpdateChildrenHook(changedNode);
-				}
-			}
-		}
-		if (!node.isRoot() && node.getParentNode() != null)
-			recursiveCallUpdateHooks(node.getParentNode(), changedNode);
 	}
 
 	public void doubleClick(MouseEvent e) {
@@ -1443,26 +1247,6 @@ public class MindMapController extends ControllerAdapter implements
 		if (selection != null) {
 			selection.setContents(t, null);
 		}
-	}
-
-	public void setNodeHookFactory(HookFactory pNodeHookFactory) {
-		nodeHookFactory = pNodeHookFactory;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.modes.mindmapmode.actions.MindMapActions#createModeControllerHook
-	 * (java.lang.String)
-	 */
-	public void createModeControllerHook(String pHookName) {
-		HookFactory hookFactory = getHookFactory();
-		// two different invocation methods:single or selecteds
-		ModeControllerHook hook = hookFactory
-				.createModeControllerHook(pHookName);
-		hook.setController(this);
-		invokeHook(hook);
 	}
 
 	/**

@@ -34,7 +34,6 @@ import javax.swing.ImageIcon;
 import freemind.controller.actions.generated.instance.DeleteNodeAction;
 import freemind.controller.actions.generated.instance.NewNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.extensions.PermanentNodeHook;
 import freemind.main.Resources;
 import freemind.modes.MindMapNode;
 import freemind.modes.NodeAdapter;
@@ -84,12 +83,6 @@ public class NewChildAction extends AbstractAction implements ActorXml {
 					+ "'.");
 		}
 		c.insertNodeInto(newNode, parent, index);
-		// call hooks:
-		for (Iterator i = parent.getActivatedHooks().iterator(); i.hasNext();) {
-			PermanentNodeHook hook = (PermanentNodeHook) i.next();
-			hook.onNewChild(newNode);
-		}
-		// done.
 	}
 
 	/*

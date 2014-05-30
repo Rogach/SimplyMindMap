@@ -35,7 +35,6 @@ import freemind.controller.actions.generated.instance.DeleteNodeAction;
 import freemind.controller.actions.generated.instance.PasteNodeAction;
 import freemind.controller.actions.generated.instance.UndoPasteNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.extensions.PermanentNodeHook;
 import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.modes.MindMapNode;
@@ -90,8 +89,6 @@ public class DeleteChildAction extends AbstractAction implements ActorXml {
 	/**
      */
 	public void deleteWithoutUndo(MindMapNode selectedNode) {
-		// remove hooks:
-		removeHooks(selectedNode);
 		MindMapNode parent = selectedNode.getParentNode();
 		mMindMapController.fireNodePreDeleteEvent(selectedNode);
 
@@ -121,25 +118,6 @@ public class DeleteChildAction extends AbstractAction implements ActorXml {
 		mMindMapController.removeNodeFromParent(selectedNode);
 		// post event
 		mMindMapController.fireNodePostDeleteEvent(selectedNode, parent);
-	}
-
-	private void removeHooks(MindMapNode selectedNode) {
-		for (Iterator it = selectedNode.childrenUnfolded(); it.hasNext();) {
-			MindMapNode child = (MindMapNode) it.next();
-			removeHooks(child);
-		}
-		long currentRun = 0;
-		// determine timeout:
-		long timeout = selectedNode.getActivatedHooks().size() * 2 + 2;
-		while (selectedNode.getActivatedHooks().size() > 0) {
-			PermanentNodeHook hook = (PermanentNodeHook) selectedNode
-					.getActivatedHooks().iterator().next();
-			selectedNode.removeHook(hook);
-			if (currentRun++ > timeout) {
-				throw new IllegalStateException(
-						"Timeout reached shutting down the hooks.");
-			}
-		}
 	}
 
 	/*

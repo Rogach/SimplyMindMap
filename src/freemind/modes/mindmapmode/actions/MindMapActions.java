@@ -30,8 +30,6 @@ import java.util.Properties;
 
 import freemind.controller.actions.generated.instance.Pattern;
 import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.extensions.ModeControllerHook;
-import freemind.extensions.NodeHook;
 import freemind.modes.MindIcon;
 import freemind.modes.MindMap;
 import freemind.modes.MindMapNode;
@@ -169,32 +167,6 @@ public interface MindMapActions {
 			boolean isLeft);
 
 	public void paste(MindMapNode node, MindMapNode parent);
-
-	// hooks, fc 28.2.2004:
-	public void addHook(MindMapNode focussed, List selecteds, String hookName, Properties pHookProperties);
-
-	public void removeHook(MindMapNode focussed, List selecteds, String hookName);
-
-	/**
-	 * This is the only way to instanciate new Hooks. THEY HAVE TO BE INVOKED
-	 * AFTERWARDS! The hook is equipped with the map and controller information.
-	 * Furthermore, the hook is added to the node, if it is an instance of the
-	 * PermanentNodeHook. If the hook policy specifies, that only one instance
-	 * may exist per node, it returns this instance if it already exists.
-	 * 
-	 * @param map
-	 *            may be null if not known. But it has to be set afterwards!
-	 * */
-	NodeHook createNodeHook(String hookName, MindMapNode node, MindMap map);
-	
-	/** Creates and invokes a ModeControllerHook.*/
-	void createModeControllerHook(String hookName);
-
-	void invokeHook(ModeControllerHook hook);
-
-	void invokeHooksRecursively(NodeAdapter node, MindMap map);
-
-	// end hooks
 
 	ActionFactory getActionFactory();
 
