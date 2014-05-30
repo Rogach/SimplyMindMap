@@ -39,6 +39,8 @@ public class KeymapConfigurator {
     putAction(view, "fit_to_page", "alt EQUALS", new FitToPage(view));
     putAction(view, "toggle_folded", "SPACE", controller.toggleFolded);
     putAction(view, "toggle_children_folded", "control SPACE", controller.toggleChildrenFolded);
+    putAction(view, "node_up", "control UP", controller.nodeUp);
+    putAction(view, "node_down", "control DOWN", controller.nodeDown);
   }
   
   private static void putAction(MapView view, String actionKey, String keyStroke, Action action) {
