@@ -66,7 +66,6 @@ public class StylePattern {
 	private MindIcon nodeIcon;
 
 	private Color edgeColor;
-	private String edgeStyle;
 	private Integer edgeWidth;
 
 	/** Inhertitable patterns, fc, 3.12.2003. */
@@ -102,7 +101,6 @@ public class StylePattern {
 		// (node.getIcons().size()==0?null:node.getIcons().get(0));
 
 		edgeColor = node.getEdge().getColor();
-		edgeStyle = node.getEdge().getStyle();
 		edgeWidth = new Integer(node.getEdge().getWidth());
 
 	}
@@ -111,11 +109,11 @@ public class StylePattern {
 		return "node: " + nodeColor + ", " + nodeBackgroundColor + ", "
 				+ nodeStyle + ", " + nodeFontFamily + ", " + nodeFontSize
 				+ ", " + nodeIcon + ", " + text + ", " + "\nedge: " + edgeColor
-				+ ", " + edgeStyle + ", " + edgeWidth;
+				+ ", " + edgeWidth;
 	}
 
 	public boolean getAppliesToEdge() {
-		return edgeColor != null || edgeStyle != null || edgeWidth != null;
+		return edgeColor != null || edgeWidth != null;
 	}
 
 	public boolean getAppliesToNode() {
@@ -309,25 +307,6 @@ public class StylePattern {
 	}
 
 	/**
-	 * Get the value of edgeStyle.
-	 * 
-	 * @return Value of edgeStyle.
-	 */
-	public String getEdgeStyle() {
-		return edgeStyle;
-	}
-
-	/**
-	 * Set the value of edgeStyle.
-	 * 
-	 * @param edgeStyle
-	 *            Value to assign to edgeStyle.
-	 */
-	public void setEdgeStyle(String edgeStyle) {
-		this.edgeStyle = edgeStyle;
-	}
-
-	/**
 	 * Get the value of edgeWidth.
 	 * 
 	 * @return Value of edgeWidth.
@@ -445,9 +424,6 @@ public class StylePattern {
 
 			// EDGE
 			if (child.getName().equals("edge")) {
-				if (child.getStringAttribute("style") != null) {
-					setEdgeStyle(child.getStringAttribute("style"));
-				}
 				if (child.getStringAttribute("color") != null) {
 					setEdgeColor(Tools.xmlToColor(child
 							.getStringAttribute("color")));

@@ -29,22 +29,10 @@ public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {
 
 	public static final String EDGE_WIDTH_THIN_STRING = "thin";
 	private static Color standardColor = null;
-	private static String standardStyle = null;
   
 	public static final int WIDTH_PARENT = -1;
 
 	public static final int WIDTH_THIN = 0;
-
-	public final static String EDGESTYLE_LINEAR = "linear";
-	public final static String EDGESTYLE_BEZIER = "bezier";
-	public final static String EDGESTYLE_SHARP_LINEAR = "sharp_linear";
-	public final static String EDGESTYLE_SHARP_BEZIER = "sharp_bezier";
-	public final static int INT_EDGESTYLE_LINEAR = 0;
-	public final static int INT_EDGESTYLE_BEZIER = 1;
-	public final static int INT_EDGESTYLE_SHARP_LINEAR = 2;
-	public final static int INT_EDGESTYLE_SHARP_BEZIER = 3;
-
-	// private static Color standardEdgeColor = new Color(0);
 
 	public EdgeAdapter(MindMapNode target) {
 		super(target);
@@ -87,20 +75,6 @@ public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {
 		this.width = width;
 	}
 
-	public String getStyle() {
-		if (style == null) {
-			if (getTarget().isRoot()) {
-				return Resources.getInstance().getProperty(getStandardStylePropertyString());
-			}
-			return getSource().getEdge().getStyle();
-		}
-		return style;
-	}
-
-	public boolean hasStyle() {
-		return style != null;
-	}
-
 	// /////////
 	// Private Methods
 	// ///////
@@ -114,9 +88,6 @@ public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {
 			XMLElement edge = new XMLElement();
 			edge.setName("edge");
 
-			if (style != null) {
-				edge.setAttribute("STYLE", style);
-			}
 			if (color != null) {
 				edge.setAttribute("COLOR", Tools.colorToXml(color));
 			}
@@ -138,39 +109,9 @@ public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {
 	protected void setStandardColor(Color standardColor) {
 		EdgeAdapter.standardColor = standardColor;
 	}
-
-	protected String getStandardStyle() {
-		return standardStyle;
-	}
-
-	protected void setStandardStyle(String standardStyle) {
-		EdgeAdapter.standardStyle = standardStyle;
-	}
-
+  
 	protected String getStandardColorPropertyString() {
 		return "standardedgecolor";
 	}
-
-	protected String getStandardStylePropertyString() {
-		return "standardedgestyle";
-	}
-
-	/* (non-Javadoc)
-	 * @see freemind.modes.MindMapEdge#getStyleAsInt()
-	 */
-	public int getStyleAsInt() {
-		final String edgeStyle = getStyle();
-		if (Tools.safeEquals(edgeStyle, EDGESTYLE_LINEAR)) {
-			return INT_EDGESTYLE_LINEAR;
-		} else if (Tools.safeEquals(edgeStyle, EDGESTYLE_BEZIER)) {
-			return INT_EDGESTYLE_BEZIER;
-		} else if (Tools.safeEquals(edgeStyle, EDGESTYLE_SHARP_LINEAR)) {
-			return INT_EDGESTYLE_SHARP_LINEAR;
-		} else if (Tools.safeEquals(edgeStyle, EDGESTYLE_SHARP_BEZIER)) {
-			return INT_EDGESTYLE_SHARP_BEZIER;
-		} else {
-			throw new IllegalArgumentException("Unknown Edge Style "+edgeStyle);
-		}
-	}
-	
+  
 }

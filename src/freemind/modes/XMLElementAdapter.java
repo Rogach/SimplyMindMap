@@ -208,9 +208,7 @@ public abstract class XMLElementAdapter extends XMLElement {
 
 		if (userObject instanceof EdgeAdapter) {
 			EdgeAdapter edge = (EdgeAdapter) userObject;
-			if (name.equals("STYLE")) {
-				edge.setStyle(sValue);
-			} else if (name.equals("COLOR")) {
+			if (name.equals("COLOR")) {
 				edge.setColor(Tools.xmlToColor(sValue));
 			} else if (name.equals("WIDTH")) {
 				if (sValue.equals(EdgeAdapter.EDGE_WIDTH_THIN_STRING)) {

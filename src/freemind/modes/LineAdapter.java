@@ -62,15 +62,6 @@ public abstract class LineAdapter implements MindMapLine {
 				setStandardColor(Color.RED);
 			}
 		}
-		if (getStandardStyle() == null) {
-			String stdStyle = Resources.getInstance().getProperty(
-					getStandardStylePropertyString());
-			if (stdStyle != null) {
-				setStandardStyle(stdStyle);
-			} else {
-				// setStandardStyle(Style.RED);
-			}
-		}
 	}
 
 	public Color getColor() {
@@ -99,17 +90,6 @@ public abstract class LineAdapter implements MindMapLine {
 
 	public void setWidth(int width) {
 		this.width = width;
-	}
-
-	public String getStyle() {
-		if (style == null) {
-			return getStandardStyle();
-		}
-		return style;
-	}
-
-	public void setStyle(String style) {
-		this.style = style;
 	}
 
 	public String toString() {
@@ -153,12 +133,6 @@ public abstract class LineAdapter implements MindMapLine {
 	 * See {@link LineAdapter.setStandardColor}
 	 */
 	protected abstract Color getStandardColor();
-
-	protected abstract void setStandardStyle(String standardStyle);
-
-	protected abstract String getStandardStyle();
-
-	protected abstract String getStandardStylePropertyString();
 
 	protected abstract String getStandardColorPropertyString();
 

@@ -915,7 +915,7 @@ public class MindMapController extends ControllerAdapter implements
 		final ListIterator childrenFolded = node.childrenFolded();
 		while (childrenFolded.hasNext()) {
 			MindMapNode child = (MindMapNode) childrenFolded.next();
-			if (!(child.hasStyle() && child.getEdge().hasStyle())) {
+			if (!(child.hasStyle())) {
 				nodeStyleChanged(child);
 			}
 		}

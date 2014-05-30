@@ -108,33 +108,7 @@ class NodeViewFactory {
 	}
 
 	EdgeView getEdge(NodeView newView) {
-		final int edgeStyle = newView.getModel().getEdge().getStyleAsInt();
-		switch(edgeStyle) {
-		case EdgeAdapter.INT_EDGESTYLE_LINEAR:
-			return getLinearEdgeView();
-		case EdgeAdapter.INT_EDGESTYLE_BEZIER:
-			return getBezierEdgeView();
-		case EdgeAdapter.INT_EDGESTYLE_SHARP_LINEAR:
-			return getSharpLinearEdgeView();
-		case EdgeAdapter.INT_EDGESTYLE_SHARP_BEZIER:
-			return getSharpBezierEdgeView();
-		default:
-			return getLinearEdgeView();
-		}
-	}
-
-	private EdgeView getSharpBezierEdgeView() {
-		if (sharpBezierEdgeView == null) {
-			sharpBezierEdgeView = new SharpBezierEdgeView();
-		}
-		return sharpBezierEdgeView;
-	}
-
-	private EdgeView getSharpLinearEdgeView() {
-		if (sharpLinearEdgeView == null) {
-			sharpLinearEdgeView = new SharpLinearEdgeView();
-		}
-		return sharpLinearEdgeView;
+    return getBezierEdgeView();
 	}
 
 	private EdgeView getBezierEdgeView() {
@@ -144,14 +118,7 @@ class NodeViewFactory {
 		return bezierEdgeView;
 	}
 
-	private EdgeView getLinearEdgeView() {
-		if (linearEdgeView == null) {
-			linearEdgeView = new LinearEdgeView();
-		}
-		return linearEdgeView;
-	}
-
-	/**
+  /**
 	 * Factory method which creates the right NodeView for the model.
 	 */
 	NodeView newNodeView(MindMapNode model, int position, MapView map,

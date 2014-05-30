@@ -183,11 +183,6 @@ public class StylePatternFactory {
 			subPattern.setValue(Tools.colorToXml(node.getEdge().getColor()));
 			pattern.setPatternEdgeColor(subPattern);
 		}
-		if (node.getEdge().getStyle() != null) {
-			PatternEdgeStyle subPattern = new PatternEdgeStyle();
-			subPattern.setValue(node.getEdge().getStyle());
-			pattern.setPatternEdgeStyle(subPattern);
-		}
 		if (node.getEdge().getWidth() != EdgeAdapter.DEFAULT_WIDTH) {
 			PatternEdgeWidth subPattern = new PatternEdgeWidth();
 			subPattern.setValue("" + node.getEdge().getWidth());

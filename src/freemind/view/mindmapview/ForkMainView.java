@@ -111,17 +111,6 @@ class ForkMainView extends MainView {
 		if (edgeWidth == 0) {
 			edgeWidth = 1;
 		}
-		switch(edge.getStyleAsInt()) {
-		case EdgeAdapter.INT_EDGESTYLE_SHARP_BEZIER:
-			// intentionally fall through
-		case EdgeAdapter.INT_EDGESTYLE_SHARP_LINEAR:
-			// here, we take the maximum of width of children:
-			edgeWidth = 1;
-			for (Iterator it = nodeModel.childrenUnfolded(); it.hasNext();) {
-				MindMapNode child = (MindMapNode) it.next();
-				edgeWidth = Math.max(edgeWidth, child.getEdge().getWidth());
-			}
-		}
 		return edgeWidth;
 	}
 

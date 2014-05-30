@@ -26,8 +26,6 @@ public interface MindMapLine extends Cloneable {
 
 	public Color getColor();
 
-	public String getStyle();
-
 	public int getWidth();
 
 	public int getRealWidth();
