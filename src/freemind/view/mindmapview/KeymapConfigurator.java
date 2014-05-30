@@ -28,8 +28,8 @@ public class KeymapConfigurator {
     putAction(view, "cut_action", "control X", controller.cut);
     putAction(view, "edit_action", "F2", controller.edit);
     putAction(view, "icon_selection", "alt I", new IconSelectionAction(view, controller));
-    putAction(view, "change_node_level_left", "control LEFT", new ChangeNodeLevelAction("left", controller));
-    putAction(view, "change_node_level_right", "control RIGHT", new ChangeNodeLevelAction("right", controller));
+    putAction(view, "change_node_level_left", "control LEFT", new ChangeNodeLevelAction("left", controller, view));
+    putAction(view, "change_node_level_right", "control RIGHT", new ChangeNodeLevelAction("right", controller, view));
   }
   
   private static void putAction(MapView view, String actionKey, String keyStroke, Action action) {
@@ -88,22 +88,18 @@ public class KeymapConfigurator {
   public static class ChangeNodeLevelAction extends AbstractAction {
     private String direction;
     private MindMapController controller;
-    public ChangeNodeLevelAction(String direction, MindMapController controller) {
+    private MapView view;
+    public ChangeNodeLevelAction(String direction, MindMapController controller, MapView view) {
       super();
       this.direction = direction;
       this.controller = controller;
+      this.view = view;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-      MindMapNode selectedNode;
-      List selectedNodes;
-      {
-        MindMapNode focussed = controller.getSelected();
-        List selecteds = controller.getSelecteds();
-        selectedNode = focussed;
-        selectedNodes = selecteds;
-      }
+      MindMapNode selectedNode = controller.getSelected();
+      List selectedNodes = controller.getSelecteds();
 
       // bug fix: sort to make independent by user's selection:
       controller.sortNodesByDepth(selectedNodes);

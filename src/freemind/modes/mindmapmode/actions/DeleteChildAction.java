@@ -94,6 +94,11 @@ public class DeleteChildAction extends AbstractAction implements ActorXml {
 		removeHooks(selectedNode);
 		MindMapNode parent = selectedNode.getParentNode();
 		mMindMapController.fireNodePreDeleteEvent(selectedNode);
+
+    // deregister node:
+		mMindMapController.getModel().getLinkRegistry()
+				.deregisterLinkTarget(selectedNode);
+
 		// deselect
 		MapView view = mMindMapController.getView();
 		NodeView nodeView = view.getNodeView(selectedNode);

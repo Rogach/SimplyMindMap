@@ -34,35 +34,6 @@ import freemind.main.Tools;
  * maps have a different registry.
  */
 public class MindMapLinkRegistry {
-	/**
-	 * All elements put into this sort of vectors are put into the
-	 * SourceToLinks, too. This structure is kept synchronous to the IDToLinks
-	 * structure, but reversed.
-	 * 
-	 * @author foltin
-	 * @date 23.01.2012
-	 */
-	private class SynchronousVector extends Vector {
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see java.util.Vector#add(java.lang.Object)
-		 */
-		public synchronized boolean add(Object pE) {
-			boolean add = super.add(pE);
-			return add;
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see java.util.Vector#removeElementAt(int)
-		 */
-		public synchronized void removeElementAt(int pIndex) {
-			super.removeElementAt(pIndex);
-		}
-
-	}
 
 	/** source -> vector of links with same source */
 	protected HashMap mSourceToLinks = new HashMap();
@@ -203,4 +174,21 @@ public class MindMapLinkRegistry {
 	public boolean isTargetOfLocalHyperlinks(String pTargetId) {
 		return mLocallyLinkedIds.contains(pTargetId);
 	}
+  
+  public void deregisterLinkTarget(MindMapNode target)
+			throws java.lang.IllegalArgumentException {
+		// and process my sons:
+		for (ListIterator e = target.childrenUnfolded(); e.hasNext();) {
+			MindMapNode child = (MindMapNode) e.next();
+			deregisterLinkTarget(child);
+		}
+		String id = getState(target);
+		if (id != null) {
+			// logger.fine("Deregister target node:"+target);
+			mTargetToId.remove(target);
+			mIdToTarget.remove(id);
+			mIdToLinks.remove(id);
+		}
+	}
+
 }
