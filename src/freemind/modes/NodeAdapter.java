@@ -250,53 +250,9 @@ public abstract class NodeAdapter implements MindMapNode {
 		this.edge = edge;
 	}
 
-	/** A Node-Style like MindMapNode.STYLE_FORK or MindMapNode.STYLE_BUBBLE */
-	public String getStyle() {
-		String returnedString = style; /* Style string returned */
-		if (style == null) {
-			if (this.isRoot()) {
-				returnedString = Resources.getInstance().getProperty("standardrootnodestyle");
-			} else {
-				String stdstyle = Resources.getInstance().getProperty("standardnodestyle");
-				if (stdstyle.equals(MindMapNode.STYLE_AS_PARENT)) {
-					returnedString = getParentNode().getStyle();
-				} else {
-					returnedString = stdstyle;
-				}
-			}
-		} else if (this.isRoot() && style.equals(MindMapNode.STYLE_AS_PARENT)) {
-			returnedString = Resources.getInstance().getProperty("standardrootnodestyle");
-		} else if (style.equals(MindMapNode.STYLE_AS_PARENT)) {
-			returnedString = getParentNode().getStyle();
-		}
-
-		// Handle the combined node style
-		if (returnedString.equals(MindMapNode.STYLE_COMBINED)) {
-			if (this.isFolded()) {
-				return MindMapNode.STYLE_BUBBLE;
-			} else {
-				return MindMapNode.STYLE_FORK;
-			}
-		}
-		return returnedString;
-	}
-
-	public boolean hasStyle() {
-		return style != null;
-	}
-
 	/** The Foreground/Font Color */
 	public Color getColor() {
 		return color;
-	}
-
-	// ////
-	// The set methods. I'm not sure if they should be here or in the
-	// implementing class.
-	// ///
-
-	public void setStyle(String style) {
-		this.style = style;
 	}
 
 	public void setColor(Color color) {
@@ -923,9 +879,6 @@ public abstract class NodeAdapter implements MindMapNode {
 					Tools.colorToXml(getBackgroundColor()));
 		}
 
-		if (style != null) {
-			node.setAttribute("STYLE", this.getStyle());
-		}
 		// ^ Here cannot be just getStyle() without super. This is because
 		// getStyle's style depends on folded / unfolded. For example, when
 		// real style is fork and node is folded, getStyle returns

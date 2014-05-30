@@ -26,6 +26,7 @@ import freemind.main.Tools;
 import freemind.modes.MindIcon;
 import freemind.modes.MindMapNode;
 import freemind.modes.ModeController;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -35,6 +36,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.Stroke;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragGestureListener;
 import java.awt.dnd.DragSource;
@@ -67,7 +69,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 	}
 
 	static private int FOLDING_SYMBOL_WIDTH = -1;
-
+  final static Stroke DEF_STROKE = new BasicStroke();
 	protected MindMapNode model;
 	protected MapView map;
 	private MainView mainView;
@@ -787,7 +789,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 	}
 
 	void update() {
-		updateStyle();
 		if (!isContentVisible()) {
 			// not visible at all
 			removeFoldingListener();
@@ -973,18 +974,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 	boolean useSelectionColors() {
 		return isSelected() && !MapView.standardDrawRectangleForSelection
 				&& !map.isCurrentlyPrinting();
-	}
-
-	void updateStyle() {
-		if (mainView != null
-				&& (mainView.getStyle().equals(model.getStyle()) || model
-						.isRoot())) {
-			return;
-		}
-		final MainView newMainView = NodeViewFactory.getInstance().newMainView(
-				model);
-		setMainView(newMainView);
-
 	}
 
 	/**
@@ -1433,7 +1422,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 			paintCloudsAndEdges(g2d);
 			super.paint(g);
 			// return to std stroke
-			g2d.setStroke(BubbleMainView.DEF_STROKE);
+			g2d.setStroke(NodeView.DEF_STROKE);
 		} else {
 			super.paint(g);
 		}

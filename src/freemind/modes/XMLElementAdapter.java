@@ -275,8 +275,6 @@ public abstract class XMLElementAdapter extends XMLElement {
 			if (sValue.length() == 7) {
 				node.setBackgroundColor(Tools.xmlToColor(sValue));
 			}
-		} else if (name.equals("STYLE")) {
-			node.setStyle(sValue);
 		} else if (name.equals("ID")) {
 			// do not set label but annotate in list:
 			// System.out.println("(sValue, node) = " + sValue + ", "+ node);

@@ -19,7 +19,6 @@
 
 package freemind.view.mindmapview;
 
-import freemind.modes.EdgeAdapter;
 import freemind.modes.MindMapNode;
 import java.awt.Component;
 import java.awt.Container;
@@ -148,15 +147,9 @@ class NodeViewFactory {
 	MainView newMainView(MindMapNode model) {
 		if (model.isRoot()) {
 			return new RootMainView();
-		}
-		if (model.getStyle().equals(MindMapNode.STYLE_FORK)) {
-			return new ForkMainView();
-		} else if (model.getStyle().equals(MindMapNode.STYLE_BUBBLE)) {
-			return new BubbleMainView();
 		} else {
-			System.err.println("Tried to create a NodeView of unknown Style.");
-			return new ForkMainView();
-		}
+      return new ForkMainView();
+    }
 	}
 
 	private void fireNodeViewCreated(NodeView newView) {

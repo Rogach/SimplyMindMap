@@ -82,7 +82,6 @@ import freemind.modes.mindmapmode.actions.NewSiblingAction;
 import freemind.modes.mindmapmode.actions.NodeColorAction;
 import freemind.modes.mindmapmode.actions.NodeColorBlendAction;
 import freemind.modes.mindmapmode.actions.NodeGeneralAction;
-import freemind.modes.mindmapmode.actions.NodeStyleAction;
 import freemind.modes.mindmapmode.actions.NodeUpAction;
 import freemind.modes.mindmapmode.actions.PasteAction;
 import freemind.modes.mindmapmode.actions.PasteAsPlainTextAction;
@@ -213,8 +212,6 @@ public class MindMapController extends ControllerAdapter implements
 	public NodeUpAction nodeUp = null;
 	public NodeDownAction nodeDown = null;
 	public NodeColorBlendAction nodeColorBlend = null;
-	public NodeStyleAction fork = null;
-	public NodeStyleAction bubble = null;
   
 	public IconAction unknownIconAction = null;
 	public RemoveIconAction removeLastIconAction = null;
@@ -313,8 +310,6 @@ public class MindMapController extends ControllerAdapter implements
 		nodeDown = new NodeDownAction(this);
 		nodeColor = new NodeColorAction(this);
 		nodeColorBlend = new NodeColorBlendAction(this);
-		fork = new NodeStyleAction(this, MindMapNode.STYLE_FORK);
-		bubble = new NodeStyleAction(this, MindMapNode.STYLE_BUBBLE);
 		// this is an unknown icon and thus corrected by mindicon:
 		removeLastIconAction = new RemoveIconAction(this);
 		// this action handles the xml stuff: (undo etc.)
@@ -489,8 +484,6 @@ public class MindMapController extends ControllerAdapter implements
 		selectAllAction.setEnabled(enabled);
 		selectBranchAction.setEnabled(enabled);
 		moveNodeAction.setEnabled(enabled);
-		fork.setEnabled(enabled);
-		bubble.setEnabled(enabled);
 		useRichFormatting.setEnabled(enabled);
 		usePlainText.setEnabled(enabled);
 	}
@@ -581,10 +574,6 @@ public class MindMapController extends ControllerAdapter implements
 
 	public void setNodeText(MindMapNode selected, String newText) {
 		edit.setNodeText(selected, newText);
-	}
-
-	public void setNodeStyle(MindMapNode node, String style) {
-		fork.setStyle(node, style);
 	}
 
 	public Transferable copy(MindMapNode node, boolean saveInvisible) {
@@ -908,17 +897,6 @@ public class MindMapController extends ControllerAdapter implements
 		NodeView nodeView = getView().getNodeView(selectedNode);
 		getView().deselect(nodeView);
 		getModel().removeNodeFromParent(selectedNode);
-	}
-
-	public void nodeStyleChanged(MindMapNode node) {
-		nodeChanged(node);
-		final ListIterator childrenFolded = node.childrenFolded();
-		while (childrenFolded.hasNext()) {
-			MindMapNode child = (MindMapNode) childrenFolded.next();
-			if (!(child.hasStyle())) {
-				nodeStyleChanged(child);
-			}
-		}
 	}
 
 	public void repaintMap() {

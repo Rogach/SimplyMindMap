@@ -142,17 +142,6 @@ public interface MindMapNode extends MutableTreeNode {
 
 	Color getColor();
 
-	String getStyle();
-
-	/**
-	 * currently the style may be one of MindMapNode.STYLE_BUBBLE or
-	 * MindMapNode.STYLE_FORK.
-	 */
-	void setStyle(String style);
-
-	// returns false if and only if the style is inherited from parent
-	boolean hasStyle();
-
 	MindMapNode getParentNode();
 
 	boolean isBold();

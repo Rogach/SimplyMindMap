@@ -137,9 +137,7 @@ public interface MindMapActions {
 	public int removeLastIcon(MindMapNode node);
 
 	public void removeAllIcons(MindMapNode node);
-
-	public void setNodeStyle(MindMapNode node, String style);
-
+  
 	public void increaseFontSize(MindMapNode node, int increment);
 
 	public void splitNode(MindMapNode node, int caretPosition, String newText);
