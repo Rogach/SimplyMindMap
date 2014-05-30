@@ -419,69 +419,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 					}
 		}));
     
-    this.getActionMap().put("new_child_action", controller.newChild);
-    this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("INSERT"), "new_child_action");
-    
-    this.getActionMap().put("new_sibling_action", controller.newSibling);
-    this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("ENTER"), "new_sibling_action");
-    
-    this.getActionMap().put("new_previous_sibling_action", controller.newPreviousSibling);
-    this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("shift ENTER"), "new_previous_sibling_action");
-    
-    this.getActionMap().put("copy_action", controller.copy);
-    this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("control C"), "copy_action");
-    
-    this.getActionMap().put("paste_action", controller.paste);
-    this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("control V"), "paste_action");
-    
-    this.getActionMap().put("cut_action", controller.cut);
-    this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("control X"), "cut_action");
-    
-    this.getActionMap().put("edit_action", controller.edit);
-    this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("F2"), "edit_action");
-    
-    Action iconSelection = new AbstractAction() {
-
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        		// we dont need node.
-        NodeView focussed = MapView.this.controller.getSelectedView();
-        Vector actions = new Vector();
-        MindMapController controller = MapView.this.controller;
-        Vector iconActions = controller.iconActions;
-        actions.addAll(iconActions);
-        actions.add(controller.removeLastIconAction);
-        actions.add(controller.removeAllIconsAction);
-
-        Component c = MapView.this;
-        while (!(c instanceof Window) && c != null) {
-          c = c.getParent();
-        }
-        if (c == null) {
-          throw new RuntimeException("No parent frame found!");
-        }
-        Window frame = (Window) c;
-        
-        IconSelectionPopupDialog selectionDialog = new IconSelectionPopupDialog(
-            frame, actions);
-
-        final MapView mapView = controller.getView();
-        mapView.scrollNodeToVisible(focussed, 0);
-        selectionDialog.pack();
-        Tools.setDialogLocationRelativeTo(selectionDialog, focussed);
-        selectionDialog.setModal(true);
-        selectionDialog.show();
-        // process result:
-        int result = selectionDialog.getResult();
-        if (result >= 0) {
-          Action action = (Action) actions.get(result);
-          action.actionPerformed(new ActionEvent(action, 0, "icon",
-					selectionDialog.getModifiers()));
-        }
-      }
-    };
-    this.getActionMap().put("icon_selection", iconSelection);
-    this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke("alt I"), "icon_selection");
+    KeymapConfigurator.configureKeymap(this, controller);
     
 		// fc, 20.6.2004: to enable tab for insert.
 		setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
