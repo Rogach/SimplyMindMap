@@ -36,7 +36,6 @@ import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.CutNodeAction;
 import freemind.controller.actions.generated.instance.UndoPasteNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;

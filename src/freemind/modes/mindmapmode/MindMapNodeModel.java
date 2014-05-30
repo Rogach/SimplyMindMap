@@ -27,7 +27,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-import freemind.main.FreeMindMain;
 import freemind.main.HtmlTools;
 import freemind.modes.MindMap;
 import freemind.modes.NodeAdapter;
@@ -68,15 +67,7 @@ public class MindMapNodeModel extends NodeAdapter {
 		if (plainTextContent.matches(" *")) {
 			fileout.write("o");
 		} else {
-			if (getLink() != null) {
-				String link = getLink();
-				if (!link.equals(plainTextContent)) {
-					fileout.write(plainTextContent + " ");
-				}
-				fileout.write("<" + link + ">");
-			} else {
-				fileout.write(plainTextContent);
-			}
+      fileout.write(plainTextContent);
 		}
 
 		fileout.write("\n");
@@ -185,17 +176,7 @@ public class MindMapNodeModel extends NodeAdapter {
 		} else {
 			String text = saveRFT_escapeUnicodeAndSpecialCharacters(this
 					.getPlainTextContent());
-			if (getLink() != null) {
-				String link = saveRFT_escapeUnicodeAndSpecialCharacters(getLink());
-				if (link.equals(this.toString())) {
-					fileout.write(pre + "<{\\ul\\cf1 " + link + "}>" + "}");
-				} else {
-					fileout.write("{" + fontsize + pre + text + "} ");
-					fileout.write("<{\\ul\\cf1 " + link + "}}>");
-				}
-			} else {
-				fileout.write(pre + text + "}");
-			}
+      fileout.write(pre + text + "}");
 		}
 
 		fileout.write("\\par");

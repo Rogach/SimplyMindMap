@@ -454,15 +454,6 @@ class MindMapHTMLWriter {
 			writeFoldingButtons(localParentID);
 		}
 
-		String link = model.getLink();
-		if (link != null) {
-			if (link.endsWith(".mm")) {
-				link += ".html";
-			}
-			fileout.write("<a href=\"" + HtmlTools.unicodeToHTMLUnicodeEntity(link, false)
-					+ "\" target=\"_blank\"><span class=l>~</span>&nbsp;");
-		}
-
 		String fontStyle = fontStyle(model);
 		if (!fontStyle.equals("")) {
 			fileout.write("<span style=\"" + fontStyle + "\">");
@@ -480,9 +471,6 @@ class MindMapHTMLWriter {
 
 		fileout.write(el);
 
-		if (link != null) {
-			fileout.write("</a>" + el);
-		}
 		if (heading) {
 			fileout.write("</h" + depth + ">" + el);
 		}

@@ -27,7 +27,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import java.awt.RenderingHints;
@@ -123,8 +122,7 @@ class RootMainView extends MainView {
 	 * @see freemind.view.mindmapview.NodeView#getStyle()
 	 */
 	String getStyle() {
-		return Resources.getInstance().getProperty(
-				FreeMind.RESOURCES_ROOT_NODE_STYLE);
+		return Resources.getInstance().getProperty("standardrootnodestyle");
 	}
 
 	/**

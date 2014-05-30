@@ -20,6 +20,7 @@
 
 package freemind.modes;
 
+import freemind.main.Resources;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -41,25 +42,14 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 
-import freemind.main.FreeMindMain;
 import freemind.main.Tools;
 import freemind.main.XMLParseException;
 
 public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 
-	private static final int INTERVAL_BETWEEN_FILE_MODIFICATION_TIME_CHECKS = 5000;
-	/**
-	 * denotes the amount of changes since the last save. The initial value is
-	 * zero, such that new models are not to be saved.
-	 */
-	protected int changesPerformedSinceLastSave = 0;
 	protected boolean readOnly = true;
-	private File file;
-	private long mFileTime = 0;
 	static protected Logger logger;
 	protected final ModeController mModeController;
-	private HashSet mMapSourceChangedObserverSet = new HashSet();
-	private Timer mTimerForFileChangeObservation;
 
 	public MapAdapter(ModeController modeController) {
 		super(null);
@@ -72,26 +62,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 
 	public ModeController getModeController() {
 		return mModeController;
-	}
-
-	/**
-	 * Instantiations of this class must call this, when a map was loaded or
-	 * saved.
-	 */
-	protected void setFileTime() {
-		mFileTime = getFileTime();
-	}
-
-	private long getFileTime() {
-		long lastModified;
-		File fileName;
-		fileName = getFile();
-		if (fileName != null) {
-			lastModified = fileName.lastModified();
-		} else {
-			lastModified = 0;
-		}
-		return lastModified;
 	}
 
 	public void load(File file) throws FileNotFoundException, IOException {
@@ -116,16 +86,12 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 	}
 
 	public void destroy() {
-		cancelFileChangeObservationTimer();
 		// Do all the necessary destructions in your model,
 		// e.g. remove file locks.
 		// and remove all hooks:
 		removeNodes(getRootNode());
 	}
 
-	protected void cancelFileChangeObservationTimer() {
-		mTimerForFileChangeObservation.cancel();
-	}
 
 	// (PN)
 	// public void close() {
@@ -142,46 +108,8 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 		}
 	}
 
-	public FreeMindMain getFrame() {
-		return null;
-	}
-
-	//
-	// Attributes
-	//
-
-	public boolean isSaved() {
-		return (changesPerformedSinceLastSave == 0);
-	}
-
 	public boolean isReadOnly() {
 		return readOnly;
-	}
-
-	/**
-	 * Counts the amount of actions performed.
-	 * 
-	 * @param saved
-	 *            true if the file was saved recently. False otherwise.
-	 */
-	public void setSaved(boolean saved) {
-		boolean setTitle = false;
-		if (saved) {
-			changesPerformedSinceLastSave = 0;
-			setTitle = true;
-		} else {
-			if (changesPerformedSinceLastSave == 0) {
-				setTitle = true;
-			}
-			++changesPerformedSinceLastSave;
-		}
-//		if (setTitle) {
-//			getModeController().getController().setTitle();
-//		}
-	}
-
-	protected int getNumberOfChangesSinceLastSave() {
-		return changesPerformedSinceLastSave;
 	}
 
 	public MindMapNode getRootNode() {
@@ -232,26 +160,8 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 		setRoot(newRoot);
 	}
 
-	/**
-	 * Change this to always return null if your model doesn't support files.
-	 */
-	public File getFile() {
-		return file;
-	}
-
-	/**
-	 * Return URL of the map (whether as local file or a web location)
-	 */
-	public URL getURL() throws MalformedURLException {
-		return getFile() != null ? Tools.fileToUrl(getFile()) : null;
-	}
-
-	protected void setFile(File file) {
-		this.file = file;
-	}
-
 	protected String getText(String textId) {
-		return getFrame().getResourceString(textId);
+		return Resources.getInstance().getResourceString(textId);
 	}
 
 	//

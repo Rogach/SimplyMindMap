@@ -31,9 +31,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import freemind.common.NamedObject;
 import freemind.common.TextTranslator;
-import freemind.main.FreeMindMain.VersionInformation;
 import java.io.InputStream;
 
 /**
@@ -96,10 +94,6 @@ public class Resources implements TextTranslator {
 	}
 
 	public String getFreemindDirectory() {
-		return null;
-	}
-
-	public VersionInformation getFreemindVersion() {
 		return null;
 	}
 
@@ -176,11 +170,6 @@ public class Resources implements TextTranslator {
 			new MessageFormat(getResourceString(resourceKey));
 		String stringResult = formatter.format(messageArguments);
 		return stringResult;
-	}
-
-	public NamedObject createTranslatedString(String key) {
-		String fs = getResourceString(key);
-		return new NamedObject(key, fs);
 	}
 
 	public String getText(String pKey) {

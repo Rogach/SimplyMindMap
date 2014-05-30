@@ -114,10 +114,6 @@ public abstract class ViewControllerAdapter extends ControllerAdapter {
 
 		if (retValue) {
 			e.consume();
-
-			// Display link in status line
-			String link = newlySelectedNodeView.getModel().getLink();
-			link = (link != null ? link : " ");
 		}
 		return retValue;
 	}

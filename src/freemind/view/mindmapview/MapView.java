@@ -69,7 +69,6 @@ import freemind.controller.NodeDropListener;
 import freemind.controller.NodeKeyListener;
 import freemind.controller.NodeMotionListener;
 import freemind.controller.NodeMouseMotionListener;
-import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.Tools.Pair;
@@ -325,16 +324,14 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 		// initialize the standard colors.
 		if (standardNodeTextColor == null) {
 			try {
-				String stdcolor = Resources.getInstance().getProperty(
-						FreeMind.RESOURCES_BACKGROUND_COLOR);
+				String stdcolor = Resources.getInstance().getProperty("standardbackgroundcolor");
 				standardMapBackgroundColor = Tools.xmlToColor(stdcolor);
 			} catch (Exception ex) {
 				freemind.main.Resources.getInstance().logException(ex);
 				standardMapBackgroundColor = Color.WHITE;
 			}
 			try {
-				String stdcolor = Resources.getInstance().getProperty(
-						FreeMind.RESOURCES_NODE_TEXT_COLOR);
+				String stdcolor = Resources.getInstance().getProperty("standardnodetextcolor");
 				standardNodeTextColor = Tools.xmlToColor(stdcolor);
 			} catch (Exception ex) {
 				freemind.main.Resources.getInstance().logException(ex);
@@ -342,8 +339,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 			}
 			// initialize the selectedColor:
 			try {
-				String stdcolor = Resources.getInstance().getProperty(
-						FreeMind.RESOURCES_SELECTED_NODE_COLOR);
+				String stdcolor = Resources.getInstance().getProperty("standardselectednodecolor");
 				standardSelectColor = Tools.xmlToColor(stdcolor);
 			} catch (Exception ex) {
 				freemind.main.Resources.getInstance().logException(ex);
@@ -352,16 +348,14 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 
 			// initialize the selectedTextColor:
 			try {
-				String stdtextcolor = Resources.getInstance().getProperty(
-						FreeMind.RESOURCES_SELECTED_NODE_RECTANGLE_COLOR);
+				String stdtextcolor = Resources.getInstance().getProperty("standardselectednoderectanglecolor");
 				standardSelectRectangleColor = Tools.xmlToColor(stdtextcolor);
 			} catch (Exception ex) {
 				freemind.main.Resources.getInstance().logException(ex);
 				standardSelectRectangleColor = Color.WHITE;
 			}
 			try {
-				String drawCircle = Resources.getInstance().getProperty(
-						FreeMind.RESOURCE_DRAW_RECTANGLE_FOR_SELECTION);
+				String drawCircle = Resources.getInstance().getProperty("standarddrawrectangleforselection");
 				standardDrawRectangleForSelection = Tools
 						.xmlToBoolean(drawCircle);
 			} catch (Exception ex) {
@@ -370,8 +364,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 			}
 
 			try {
-				String printOnWhite = Resources.getInstance().getProperty(
-						FreeMind.RESOURCE_PRINT_ON_WHITE_BACKGROUND);
+				String printOnWhite = Resources.getInstance().getProperty("printonwhitebackground");
 				printOnWhiteBackground = Tools.xmlToBoolean(printOnWhite);
 			} catch (Exception ex) {
 				freemind.main.Resources.getInstance().logException(ex);
@@ -1229,9 +1222,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 		long localTime = System.currentTimeMillis() - startMilli;
 		mPaintingAmount++;
 		mPaintingTime += localTime;
-		logger.fine("End paint of " + getModel().getRestorable() + " in "
-				+ localTime + ". Mean time:"
-				+ (mPaintingTime / mPaintingAmount));
 	}
 
 	public void paintChildren(Graphics graphics) {

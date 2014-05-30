@@ -47,9 +47,6 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import freemind.main.FreeMind;
-import freemind.main.FreeMindCommon;
-import freemind.main.FreeMindMain;
 import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;
@@ -74,12 +71,8 @@ public abstract class NodeAdapter implements MindMapNode {
 	public final static int RIGHT_POSITION = 1;
 	public final static int UNKNOWN_POSITION = 0;
 
-	private HashSet activatedHooks;
-	private List hooks;
 	protected Object userObject = "no text";
 	private String xmlText = "no text";
-	private String link = null; // Change this to vector in future for full
-								// graph support
 	private TreeMap toolTip = null; // lazy, fc, 30.6.2005
 
 	// these Attributes have default values, so it can be useful to directly
@@ -118,9 +111,7 @@ public abstract class NodeAdapter implements MindMapNode {
 	 */
 	private MindMapEdge edge;
 	private Collection views = null;
-	private FreeMindMain frame;
 	private static final boolean ALLOWSCHILDREN = true;
-	private static final boolean ISLEAF = false; // all nodes may have children
 
 	private HistoryInformation historyInformation = null;
 	// Logging:
@@ -140,8 +131,6 @@ public abstract class NodeAdapter implements MindMapNode {
 
 	protected NodeAdapter(Object userObject, MindMap map) {
 		setText((String) userObject);
-		hooks = null; // lazy, fc, 30.6.2005.
-		activatedHooks = null; // lazy, fc, 30.6.2005
 		if (logger == null)
 			logger = Logger.getLogger(this.getClass().getName());
 		// create creation time:
@@ -222,10 +211,6 @@ public abstract class NodeAdapter implements MindMapNode {
 		return toString();
 	}
 
-	public String getLink() {
-		return link;
-	}
-
 	public String getShortText(ModeController controller) {
 		String adaptedText = getPlainTextContent();
 		// adaptedText = adaptedText.replaceAll("<html>", "");
@@ -233,27 +218,7 @@ public abstract class NodeAdapter implements MindMapNode {
 			adaptedText = adaptedText.substring(0, 40) + " ...";
 		return adaptedText;
 	}
-
-	public void setLink(String link) {
-		if (link != null && link.startsWith("#")) {
-			getMap().getLinkRegistry().registerLocalHyperlinkId(
-					link.substring(1));
-		}
-		this.link = link;
-	}
-
-	public FreeMindMain getFrame() {
-		return null;
-	}
-
-	//
-	// Interface MindMapNode
-	//
-
-	//
-	// get/set methods
-	//
-
+  
 	public Collection getViewers() {
 		if (views == null) {
 			views = new LinkedList();
@@ -293,11 +258,9 @@ public abstract class NodeAdapter implements MindMapNode {
 		String returnedString = style; /* Style string returned */
 		if (style == null) {
 			if (this.isRoot()) {
-				returnedString = Resources.getInstance().getProperty(
-						FreeMind.RESOURCES_ROOT_NODE_STYLE);
+				returnedString = Resources.getInstance().getProperty("standardrootnodestyle");
 			} else {
-				String stdstyle = Resources.getInstance().getProperty(
-						FreeMind.RESOURCES_NODE_STYLE);
+				String stdstyle = Resources.getInstance().getProperty("standardnodestyle");
 				if (stdstyle.equals(MindMapNode.STYLE_AS_PARENT)) {
 					returnedString = getParentNode().getStyle();
 				} else {
@@ -305,8 +268,7 @@ public abstract class NodeAdapter implements MindMapNode {
 				}
 			}
 		} else if (this.isRoot() && style.equals(MindMapNode.STYLE_AS_PARENT)) {
-			returnedString = Resources.getInstance().getProperty(
-					FreeMind.RESOURCES_ROOT_NODE_STYLE);
+			returnedString = Resources.getInstance().getProperty("standardrootnodestyle");
 		} else if (style.equals(MindMapNode.STYLE_AS_PARENT)) {
 			returnedString = getParentNode().getStyle();
 		}
@@ -982,11 +944,7 @@ public abstract class NodeAdapter implements MindMapNode {
 		if (shiftY != 0) {
 			node.setAttribute("VSHIFT", Integer.toString(shiftY));
 		}
-		// link
-		if (getLink() != null) {
-			node.setAttribute("LINK", getLink());
-		}
-
+    
 		// history information, fc, 11.4.2005
 		if (historyInformation != null) {
 			node.setAttribute(XMLElementAdapter.XML_NODE_HISTORY_CREATED_AT,

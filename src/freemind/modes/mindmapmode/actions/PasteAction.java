@@ -53,7 +53,6 @@ import freemind.controller.actions.generated.instance.TransferableFile;
 import freemind.controller.actions.generated.instance.TransferableImage;
 import freemind.controller.actions.generated.instance.UndoPasteNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.main.FreeMind;
 import freemind.main.FreeMindCommon;
 import freemind.main.HtmlTools;
 import freemind.main.Resources;
@@ -240,30 +239,6 @@ public class PasteAction extends AbstractAction implements ActorXml {
 		DataFlavor getDataFlavor();
 	}
 
-	private class FileListFlavorHandler implements DataFlavorHandler {
-
-		public void paste(Object TransferData, MindMapNode target,
-				boolean asSibling, boolean isLeft, Transferable t) {
-			// TODO: Does not correctly interpret asSibling.
-			List fileList = (List) TransferData;
-			for (ListIterator it = fileList.listIterator(); it.hasNext();) {
-				File file = (File) it.next();
-				MindMapNode node = mMindMapController.newNode(file.getName(),
-						target.getMap());
-				node.setLeft(isLeft);
-				node.setLink(Tools.fileToRelativeUrlString(file,
-						mMindMapController.getModel().getFile()));
-				insertNodeInto((MindMapNodeModel) node, target, asSibling,
-						isLeft, false);
-				// addUndoAction(node);
-			}
-		}
-
-		public DataFlavor getDataFlavor() {
-			return MindMapNodesSelection.fileListFlavor;
-		}
-	}
-
 	private class MindMapNodesFlavorHandler implements DataFlavorHandler {
 
 		public void paste(Object TransferData, MindMapNode target,
@@ -274,7 +249,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 						.split(ModeController.NODESEPARATOR);
 				// and now? paste it:
 				String mapContent = MindMapMapModel.MAP_INITIAL_START
-						+ FreeMind.XML_VERSION + "\"><node TEXT=\"DUMMY\">";
+						+ "1.0.1" + "\"><node TEXT=\"DUMMY\">";
 				for (int j = 0; j < textLines.length; j++) {
 					mapContent += textLines[j];
 				}
@@ -302,9 +277,6 @@ public class PasteAction extends AbstractAction implements ActorXml {
 			return MindMapNodesSelection.mindMapNodesFlavor;
 		}
 	}
-
-	private static final Pattern HREF_PATTERN = Pattern
-			.compile("<html>\\s*<body>\\s*<a\\s+href=\"([^>]+)\">(.*)</a>\\s*</body>\\s*</html>");
 
 	private class DirectHtmlFlavorHandler implements DataFlavorHandler {
 
@@ -350,107 +322,9 @@ public class PasteAction extends AbstractAction implements ActorXml {
 
 			MindMapNode node = mMindMapController.newNode(textFromClipboard,
 					mMindMapController.getMap());
-			// if only one <a>...</a> element found, set link
-			Matcher m = HREF_PATTERN.matcher(textFromClipboard);
-			if (m.matches()) {
-				final String body = m.group(2);
-				if (!body.matches(".*<\\s*a.*")) {
-					final String href = m.group(1);
-					node.setLink(href);
-				}
-			}
 
 			insertNodeInto(node, target);
 			// addUndoAction(node);
-		}
-
-		public DataFlavor getDataFlavor() {
-			return MindMapNodesSelection.htmlFlavor;
-		}
-	}
-
-	private class HtmlFlavorHandler implements DataFlavorHandler {
-
-		public void paste(Object TransferData, MindMapNode target,
-				boolean asSibling, boolean isLeft, Transferable t)
-				throws UnsupportedFlavorException, IOException {
-			// System.err.println("htmlFlavor");
-			String textFromClipboard = (String) TransferData;
-			// ^ This outputs transfer data to standard output. I don't know
-			// why.
-			MindMapNode pastedNode = pasteStringWithoutRedisplay(t, target,
-					asSibling, isLeft);
-
-			textFromClipboard = textFromClipboard.replaceAll("<!--.*?-->", ""); // remove
-			// HTML
-			// comment
-			String[] links = textFromClipboard
-					.split("<[aA][^>]*[hH][rR][eE][fF]=\"");
-
-			MindMapNode linkParentNode = null;
-			URL referenceURL = null;
-			boolean baseUrlCanceled = false;
-
-			for (int i = 1; i < links.length; i++) {
-				String link = links[i].substring(0, links[i].indexOf("\""));
-				String textWithHtml = links[i].replaceAll("^[^>]*>", "")
-						.replaceAll("</[aA]>[\\s\\S]*", "");
-				String text = HtmlTools
-						.toXMLUnescapedText(textWithHtml.replaceAll("\\n", "")
-								.replaceAll("<[^>]*>", "").trim());
-				if (text.equals("")) {
-					text = link;
-				}
-				URL linkURL = null;
-				try {
-					linkURL = new URL(link);
-				} catch (MalformedURLException ex) {
-					try {
-						// Either invalid URL or relative URL
-						if (referenceURL == null && !baseUrlCanceled) {
-							String referenceURLString = JOptionPane
-									.showInputDialog(mMindMapController
-											.getView().getSelected(),
-											mMindMapController
-													.getText("enter_base_url"));
-							if (referenceURLString == null) {
-								baseUrlCanceled = true;
-							} else {
-								referenceURL = new URL(referenceURLString);
-							}
-						}
-						linkURL = new URL(referenceURL, link);
-					} catch (MalformedURLException ex2) {
-					}
-				}
-				if (linkURL != null) {
-					if (links.length == 2 & pastedNode != null) {
-						// pastedNode != null iff the number of pasted lines is
-						// one
-						// The firts element in links[] array is never a link,
-						// therefore
-						// the condition links.length == 2 actually says
-						// "there is one link".
-						// Set link directly into node
-						((MindMapNodeModel) pastedNode).setLink(linkURL
-								.toString());
-						break;
-					}
-					if (linkParentNode == null) {
-						linkParentNode = mMindMapController.newNode("Links",
-								target.getMap());
-						linkParentNode.setLeft(target.isNewChildLeft());
-						// Here we cannot set bold, because linkParentNode.font
-						// is null
-						insertNodeInto(linkParentNode, target);
-						((NodeAdapter) linkParentNode).setBold(true);
-					}
-					MindMapNode linkNode = mMindMapController.newNode(text,
-							target.getMap());
-					linkNode.setLink(linkURL.toString());
-					insertNodeInto(linkNode, linkParentNode);
-				}
-			}
 		}
 
 		public DataFlavor getDataFlavor() {
@@ -540,7 +414,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
      */
 	private DataFlavorHandler[] getFlavorHandlers() {
 		DataFlavorHandler[] dataFlavorHandlerList = new DataFlavorHandler[] {
-				new FileListFlavorHandler(), new MindMapNodesFlavorHandler(),
+				new MindMapNodesFlavorHandler(),
 				new DirectHtmlFlavorHandler(), new StringFlavorHandler(),
 				new ImageFlavorHandler() };
 		// %%% Make dependent on an option?: new HtmlFlavorHandler(),
@@ -673,31 +547,6 @@ public class PasteAction extends AbstractAction implements ActorXml {
 				pastedNode = node;
 			}
 
-			// Heuristically determine, if there is a mail.
-
-			Matcher mailMatcher = mailPattern.matcher(visibleText);
-			if (mailMatcher.find()) {
-				node.setLink("mailto:" + mailMatcher.group());
-			}
-
-			// Heuristically determine, if there is a link. Because this is
-			// heuristic, it is probable that it can be improved to include
-			// some matches or exclude some matches.
-
-			for (int j = 0; j < linkPrefixes.length; j++) {
-				int linkStart = text.indexOf(linkPrefixes[j]);
-				if (linkStart != -1) {
-					int linkEnd = linkStart;
-					while (linkEnd < text.length()
-							&& !nonLinkCharacter.matcher(
-									text.substring(linkEnd, linkEnd + 1))
-									.matches()) {
-						linkEnd++;
-					}
-					node.setLink(text.substring(linkStart, linkEnd));
-				}
-			}
-
 			// Determine parent among candidate parents
 			// Change the array of candidate parents accordingly
 
@@ -796,80 +645,6 @@ public class PasteAction extends AbstractAction implements ActorXml {
 					}
 					amountAlreadySet = true;
 				}
-			}
-			if (t.isDataFlavorSupported(MindMapNodesSelection.fileListFlavor)) {
-				/*
-				 * Since the JAXB-generated interface TransferableContent
-				 * doesn't supply a setTranserableAsFileList method, we have to
-				 * get the fileList, clear it, and then set it to the new value.
-				 */
-				List fileList = (List) t
-						.getTransferData(MindMapNodesSelection.fileListFlavor);
-				for (Iterator iter = fileList.iterator(); iter.hasNext();) {
-					File fileName = (File) iter.next();
-					TransferableFile transferableFile = new TransferableFile();
-					transferableFile.setFileName(fileName.getAbsolutePath());
-					trans.addTransferableFile(transferableFile);
-				}
-				if (pUndoAction != null && !amountAlreadySet) {
-					pUndoAction.setNodeAmount(fileList.size());
-					amountAlreadySet = true;
-				}
-			}
-			if (t.isDataFlavorSupported(DataFlavor.imageFlavor)) {
-				logger.info("image...");
-
-				try {
-					// Get data from clipboard and assign it to an image.
-					// clipboard.getData() returns an object, so we need to cast
-					// it to a BufferdImage.
-					BufferedImage image = (BufferedImage) t
-							.getTransferData(DataFlavor.imageFlavor);
-
-					TransferableImage timg = new TransferableImage();
-
-					File mindmapFile = mMindMapController.getMap().getFile();
-					if (mindmapFile == null) {
-						JOptionPane.showMessageDialog(
-								mMindMapController.getView(),
-								mMindMapController.getText("map_not_saved"),
-								"FreeMind", JOptionPane.ERROR_MESSAGE);
-						return null;
-					}
-					File tempFile = File
-							.createTempFile(
-									mindmapFile
-											.getName()
-											.replace(
-													FreeMindCommon.FREEMIND_FILE_EXTENSION,
-													"_"), ".jpeg", mindmapFile
-											.getParentFile());
-
-					String imgfilepath = tempFile.getName();
-					timg.setImage(imgfilepath);
-
-					trans.addTransferableImage(timg);
-
-					// class to write image to disk. You specify the image to be
-					// saved, its type,
-					// and then the file in which to write the image data.
-					logger.info("Starting to write clipboard image " + image
-							+ " to " + tempFile);
-					ImageIO.write(image, "jpg", tempFile);
-
-					trans.setTransferableAsImage(imgfilepath);
-
-					if (pUndoAction != null && !amountAlreadySet) {
-						pUndoAction.setNodeAmount(1);
-						amountAlreadySet = true;
-					}
-				} // getData throws this.
-				catch (UnsupportedFlavorException ufe) {
-					freemind.main.Resources.getInstance().logException(ufe);
-				} catch (IOException ioe) {
-					freemind.main.Resources.getInstance().logException(ioe);
-				}
-
 			}
 			return trans;
 		} catch (UnsupportedFlavorException e) {

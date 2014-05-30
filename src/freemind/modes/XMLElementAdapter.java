@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
-import freemind.main.FreeMindMain;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
 import java.util.logging.Logger;
@@ -35,7 +34,6 @@ public abstract class XMLElementAdapter extends XMLElement {
 	protected static java.util.logging.Logger logger;
 
 	private Object userObject = null;
-	protected FreeMindMain frame;
 	private NodeAdapter mapChild = null;
 	private HashMap nodeAttributes = new HashMap();
 
@@ -98,10 +96,6 @@ public abstract class XMLElementAdapter extends XMLElement {
 	abstract protected NodeAdapter createNodeAdapter(String nodeClass);
 
 	abstract protected EdgeAdapter createEdgeAdapter(NodeAdapter node);
-
-	protected FreeMindMain getFrame() {
-		return frame;
-	}
 
 	public Object getUserObject() {
 		return userObject;
@@ -284,8 +278,6 @@ public abstract class XMLElementAdapter extends XMLElement {
 			if (sValue.length() == 7) {
 				node.setBackgroundColor(Tools.xmlToColor(sValue));
 			}
-		} else if (name.equals("LINK")) {
-			node.setLink(sValue);
 		} else if (name.equals("STYLE")) {
 			node.setStyle(sValue);
 		} else if (name.equals("ID")) {

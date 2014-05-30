@@ -22,8 +22,6 @@ package freemind.modes;
 
 import java.awt.Color;
 
-import freemind.main.FreeMind;
-import freemind.main.FreeMindMain;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
@@ -151,11 +149,11 @@ public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {
 	}
 
 	protected String getStandardColorPropertyString() {
-		return FreeMind.RESOURCES_EDGE_COLOR;
+		return "standardedgecolor";
 	}
 
 	protected String getStandardStylePropertyString() {
-		return FreeMind.RESOURCES_EDGE_STYLE;
+		return "standardedgestyle";
 	}
 
 	/* (non-Javadoc)

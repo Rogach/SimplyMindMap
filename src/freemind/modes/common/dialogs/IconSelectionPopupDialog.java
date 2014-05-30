@@ -43,7 +43,6 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.border.BevelBorder;
 
-import freemind.main.FreeMindMain;
 import freemind.main.Resources;
 import freemind.modes.IconInformation;
 import freemind.view.mindmapview.NodeView;

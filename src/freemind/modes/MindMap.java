@@ -55,24 +55,8 @@ public interface MindMap extends TreeModel {
 
 	String getAsHTML(List mindMapNodes);
 
-	/**
-	 * Returns the file name of the map edited or null if not possible.
-	 */
-	File getFile();
-
-	//
-	// Abstract methods that _must_ be implemented.
-	//
-
-	public boolean save(File file);
-
 	public void load(URL file) throws FileNotFoundException, IOException,
 			XMLParseException, URISyntaxException;
-
-	/**
-	 * Return URL of the map (whether as local file or a web location)
-	 */
-	URL getURL() throws MalformedURLException;
 
 	/**
 	 * writes the content of the map to a writer.
@@ -87,13 +71,6 @@ public interface MindMap extends TreeModel {
 	 * @throws IOException
 	 */
 	void getFilteredXml(Writer fileout) throws IOException;
-
-	/**
-	 * Returns a string that may be given to the modes restore() to get this map
-	 * again. The Mode must take care that two different maps don't give the
-	 * same restoreable key.
-	 */
-	String getRestorable();
 
 	TreeNode[] getPathToRoot(TreeNode node);
 
@@ -110,19 +87,7 @@ public interface MindMap extends TreeModel {
 
 	boolean isReadOnly();
 
-	/**
-	 * @return true if map is clean (saved), false if it is dirty.
-	 */
-	boolean isSaved();
-  
 	void nodeStructureChanged(TreeNode node);
-
-	/**
-	 * Use this method to make the map dirty/clean.
-	 * 
-	 * @param isSaved
-	 */
-	void setSaved(boolean isSaved);
 
 	/**
 	 * @param newRoot

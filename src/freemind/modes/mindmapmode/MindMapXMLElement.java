@@ -24,7 +24,6 @@ import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Vector;
 
-import freemind.main.FreeMindMain;
 import freemind.main.XMLElement;
 import freemind.modes.EdgeAdapter;
 import freemind.modes.MindMap;
@@ -75,8 +74,7 @@ public class MindMapXMLElement extends XMLElementAdapter {
 			ClassLoader loader = this.getClass().getClassLoader();
 			// constructed.
 			Class nodeJavaClass = Class.forName(nodeClass, true, loader);
-			Class[] constrArgs = new Class[] { Object.class,
-					FreeMindMain.class, MindMap.class };
+			Class[] constrArgs = new Class[] { Object.class, MindMap.class };
 			Object[] constrObjs = new Object[] { null, getMap() };
 			Constructor constructor = nodeJavaClass.getConstructor(constrArgs);
 			NodeAdapter nodeImplementor = (NodeAdapter) constructor

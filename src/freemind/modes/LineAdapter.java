@@ -22,13 +22,11 @@ package freemind.modes;
 
 import java.awt.Color;
 
-import freemind.main.FreeMindMain;
 import freemind.main.Resources;
 import freemind.main.Tools;
 
 public abstract class LineAdapter implements MindMapLine {
 
-	protected FreeMindMain frame;
 	protected MindMapNode target;
 
 	public static final int DEFAULT_WIDTH = -1;

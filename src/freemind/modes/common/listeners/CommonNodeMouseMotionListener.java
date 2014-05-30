@@ -102,7 +102,6 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
 		// Invoked when the mouse button has been moved on a component (with no
 		// buttons down).
 		MainView node = ((MainView) e.getComponent());
-		boolean isLink = (node).updateCursor(e.getX());
 		// test if still in selection region:
 		if (controlRegionForDelayedSelection != null
 				&& delayedSelectionEnabled.getValue()) {

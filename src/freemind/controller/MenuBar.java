@@ -40,7 +40,6 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
-import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.modes.ModeController;
 import freemind.view.MapModule;

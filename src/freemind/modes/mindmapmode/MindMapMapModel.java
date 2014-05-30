@@ -51,9 +51,7 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 
 import freemind.common.UnicodeReader;
-import freemind.main.FreeMind;
 import freemind.main.FreeMindCommon;
-import freemind.main.FreeMindMain;
 import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;
@@ -79,7 +77,7 @@ public class MindMapMapModel extends MapAdapter {
 	 * sure.
 	 */
 	public static final String EXPECTED_START_STRINGS[] = {
-			MAP_INITIAL_START + FreeMind.XML_VERSION + "\"",
+			MAP_INITIAL_START + "1.0.1" + "\"",
 			MAP_INITIAL_START + "0.7.1\"" };
 
 	//
@@ -120,11 +118,6 @@ public class MindMapMapModel extends MapAdapter {
 		return linkRegistry;
 	}
 
-	public String getRestorable() {
-		return getFile() == null ? null : RESTORE_MODE_MIND_MAP
-				+ getFile().getAbsolutePath();
-	}
-
 	public void changeNode(MindMapNode node, String newText) {
 		if (node.toString().startsWith("<html>")) {
 			node.setUserObject(HtmlTools.unescapeHTMLUnicodeEntity(newText));
@@ -133,15 +126,7 @@ public class MindMapMapModel extends MapAdapter {
 		}
 		nodeChanged(node);
 	}
-
-	//
-	// Other methods
-	//
-
-	public String toString() {
-		return getFile() == null ? null : getFile().getName();
-	}
-
+  
 	//
 	// Export and saving
 	//
@@ -255,29 +240,6 @@ public class MindMapMapModel extends MapAdapter {
 	}
 
 	/**
-	 * Return the success of saving
-	 */
-	public boolean save(File file) {
-		boolean result;
-		synchronized (this) {
-			result = saveInternal(file, false);
-			// TODO: Set only, when ok?
-			if (result) {
-				setFileTime();
-			}
-		}
-		return result;
-	}
-
-	/**
-	 * This method is intended to provide both normal save routines and saving
-	 * of temporary (internal) files.
-	 */
-	private boolean saveInternal(File file, boolean isInternal) {
-    throw new UnsupportedOperationException();
-	}
-
-	/**
 	 * writes the content of the map to a writer.
 	 * 
 	 * @throws IOException
@@ -295,7 +257,7 @@ public class MindMapMapModel extends MapAdapter {
 	public void getXml(Writer fileout, boolean saveInvisible,
 			MindMapNode pRootNode) throws IOException {
 		fileout.write("<map ");
-		fileout.write("version=\"" + FreeMind.XML_VERSION + "\"");
+		fileout.write("version=\"" + "1.0.1" + "\"");
 		fileout.write(">\n");
 		fileout.write("<!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->\n");
 		pRootNode.save(fileout, this.getLinkRegistry(), saveInvisible, true);
@@ -414,13 +376,9 @@ public class MindMapMapModel extends MapAdapter {
 				break;
 			}
 		}
-		if (reader == null) {
-			reader = Tools.getUpdateReader(pReaderCreator.createReader(),
-					FREEMIND_VERSION_UPDATER_XSLT, getFrame());
-			if (reader == null) {
-				reader = Tools.getActualReader(pReaderCreator.createReader());
-			}
-		}
+    if (reader == null) {
+      reader = Tools.getActualReader(pReaderCreator.createReader());
+    }
 		try {
 			HashMap IDToTarget = new HashMap();
 			return (MindMapNodeModel) mModeController.createNodeTreeFromXml(
@@ -501,10 +459,6 @@ public class MindMapMapModel extends MapAdapter {
 				return;
 			}
 		}
-		timerForAutomaticSaving = new Timer();
-		timerForAutomaticSaving.schedule(new DoAutomaticSave(
-				MindMapMapModel.this, numberOfTempFiles,
-				filesShouldBeDeletedAfterShutdown, dirToStore), delay, delay);
 	}
 
 	private class LockManager extends TimerTask {
@@ -651,88 +605,4 @@ public class MindMapMapModel extends MapAdapter {
 		}
 	}
 
-	static private class DoAutomaticSave extends TimerTask {
-		private MindMapMapModel model;
-		private Vector tempFileStack;
-		private int numberOfFiles;
-		private boolean filesShouldBeDeletedAfterShutdown;
-		private File pathToStore;
-		/**
-		 * This value is compared with the result of
-		 * getNumberOfChangesSinceLastSave(). If the values coincide, no further
-		 * automatic saving is performed until the value changes again.
-		 */
-		private int changeState;
-
-		DoAutomaticSave(MindMapMapModel model, int numberOfTempFiles,
-				boolean filesShouldBeDeletedAfterShutdown, File pathToStore) {
-			this.model = model;
-			tempFileStack = new Vector();
-			numberOfFiles = ((numberOfTempFiles > 0) ? numberOfTempFiles : 1);
-			this.filesShouldBeDeletedAfterShutdown = filesShouldBeDeletedAfterShutdown;
-			this.pathToStore = pathToStore;
-			changeState = model.getNumberOfChangesSinceLastSave();
-		}
-
-		public void run() {
-			/* Map is dirty enough? */
-			if (model.getNumberOfChangesSinceLastSave() == changeState)
-				return;
-			changeState = model.getNumberOfChangesSinceLastSave();
-			if (changeState == 0) {
-				/* map was recently saved. */
-				return;
-			}
-			try {
-				cancel();
-				EventQueue.invokeAndWait(new Runnable() {
-					public void run() {
-						/* Now, it is dirty, we save it. */
-						File tempFile;
-						if (tempFileStack.size() >= numberOfFiles)
-							tempFile = (File) tempFileStack.remove(0); // pop
-						else {
-							try {
-								tempFile = File.createTempFile(
-										"FM_"
-												+ ((model.toString() == null) ? "unnamed"
-														: model.toString()),
-										freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION,
-										pathToStore);
-								if (filesShouldBeDeletedAfterShutdown)
-									tempFile.deleteOnExit();
-							} catch (Exception e) {
-								System.err
-										.println("Error in automatic MindMapMapModel.save(): "
-												+ e.getMessage());
-								freemind.main.Resources.getInstance()
-										.logException(e);
-								return;
-							}
-						}
-						try {
-							model.saveInternal(tempFile, true /* =internal call */);
-							model.getFrame()
-									.out(Resources
-											.getInstance()
-											.format("automatically_save_message",
-													new Object[] { tempFile
-															.toString() }));
-						} catch (Exception e) {
-							System.err
-									.println("Error in automatic MindMapMapModel.save(): "
-											+ e.getMessage());
-							freemind.main.Resources.getInstance().logException(
-									e);
-						}
-						tempFileStack.add(tempFile); // add at the back.
-					}
-				});
-			} catch (InterruptedException e) {
-				freemind.main.Resources.getInstance().logException(e);
-			} catch (InvocationTargetException e) {
-				freemind.main.Resources.getInstance().logException(e);
-			}
-		}
-	}
 }

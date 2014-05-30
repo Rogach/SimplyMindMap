@@ -331,25 +331,4 @@ public abstract class MainView extends JLabel {
 		return getNodeView().getMap().getZoomed(icon.getIconWidth());
 	}
 
-	public boolean isInFollowLinkRegion(double xCoord) {
-		final MindMapNode model = getNodeView().getModel();
-		return model.getLink() != null
-				&& (model.isRoot() || !model.hasChildren() || isInVerticalRegion(
-						xCoord, 1. / 2));
-	}
-
-	/**
-	 * @return true if a link is to be displayed and the cursor is the hand now.
-	 */
-	public boolean updateCursor(double xCoord) {
-		boolean followLink = isInFollowLinkRegion(xCoord);
-		int requiredCursor = followLink ? Cursor.HAND_CURSOR
-				: Cursor.DEFAULT_CURSOR;
-		if (getCursor().getType() != requiredCursor) {
-			setCursor(requiredCursor != Cursor.DEFAULT_CURSOR ? new Cursor(
-					requiredCursor) : null);
-		}
-		return followLink;
-	}
-
 }

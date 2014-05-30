@@ -134,8 +134,6 @@ public interface MindMapNode extends MutableTreeNode {
 
 	int getNodeLevel();
 
-	String getLink();
-
 	/**
 	 * returns a short textual description of the text contained in the node.
 	 * Html is filtered out.
@@ -226,8 +224,6 @@ public interface MindMapNode extends MutableTreeNode {
 	void setHGap(int i);
 
 	int getHGap();
-
-	void setLink(String link);
 
 	void setFontSize(int fontSize);
 

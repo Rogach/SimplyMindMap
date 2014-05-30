@@ -118,7 +118,6 @@ import freemind.modes.mindmapmode.actions.CopySingleAction;
 import freemind.modes.mindmapmode.actions.CutAction;
 import freemind.modes.mindmapmode.actions.DeleteChildAction;
 import freemind.modes.mindmapmode.actions.EditAction;
-import freemind.modes.mindmapmode.actions.ExportBranchAction;
 import freemind.modes.mindmapmode.actions.FontFamilyAction;
 import freemind.modes.mindmapmode.actions.FontSizeAction;
 import freemind.modes.mindmapmode.actions.HookAction;
@@ -141,7 +140,6 @@ import freemind.modes.mindmapmode.actions.PasteAsPlainTextAction;
 import freemind.modes.mindmapmode.actions.RedoAction;
 import freemind.modes.mindmapmode.actions.RemoveAllIconsAction;
 import freemind.modes.mindmapmode.actions.RemoveIconAction;
-import freemind.modes.mindmapmode.actions.RevertAction;
 import freemind.modes.mindmapmode.actions.SelectAllAction;
 import freemind.modes.mindmapmode.actions.SelectBranchAction;
 import freemind.modes.mindmapmode.actions.SingleNodeOperation;
@@ -187,16 +185,10 @@ public class MindMapController extends ControllerAdapter implements
 	private CompoundActionHandler compound = null;
 
 	public Action newMap = new NewMapAction(this);
-	public Action open = new OpenAction(this);
-	public Action save = new SaveAction(this);
-	public Action saveAs = new SaveAsAction(this);
 
 	public Action editLong = new EditLongAction();
 	public Action newSibling = new NewSiblingAction(this);
 	public Action newPreviousSibling = new NewPreviousSiblingAction(this);
-	public Action followLink = new FollowLinkAction();
-	public Action openLinkDirectory = new OpenLinkDirectoryAction();
-	public Action exportBranch = new ExportBranchAction(this);
 
 	public Action showAttributeManagerAction = null;
 	public Action propertyAction = null;
@@ -249,7 +241,6 @@ public class MindMapController extends ControllerAdapter implements
 	
 	public FindAction find = null;
 	public FindNextAction findNext = null;
-	public RevertAction revertAction = null;
 	public SelectBranchAction selectBranchAction = null;
 	public SelectAllAction selectAllAction = null;
 
@@ -360,7 +351,6 @@ public class MindMapController extends ControllerAdapter implements
 		joinNodes = new JoinNodesAction(this);
 		find = new FindAction(this);
 		findNext = new FindNextAction(this, find);
-		revertAction = new RevertAction(this);
 		selectBranchAction = new SelectBranchAction(this);
 		selectAllAction = new SelectAllAction(this);
 
@@ -621,18 +611,13 @@ public class MindMapController extends ControllerAdapter implements
 		// own actions
 		increaseNodeFont.setEnabled(enabled);
 		decreaseNodeFont.setEnabled(enabled);
-		exportBranch.setEnabled(enabled);
 		editLong.setEnabled(enabled);
 		newSibling.setEnabled(enabled);
 		newPreviousSibling.setEnabled(enabled);
-		followLink.setEnabled(enabled);
 		for (int i = 0; i < iconActions.size(); ++i) {
 			((Action) iconActions.get(i)).setEnabled(enabled);
 		}
-		save.setEnabled(enabled);
-		saveAs.setEnabled(enabled);
 		getToolBar().setAllActions(enabled);
-		exportBranch.setEnabled(enabled);
 		cut.setEnabled(enabled);
 		copy.setEnabled(enabled);
 		copySingle.setEnabled(enabled);
@@ -660,7 +645,6 @@ public class MindMapController extends ControllerAdapter implements
 		selectAllAction.setEnabled(enabled);
 		selectBranchAction.setEnabled(enabled);
 		moveNodeAction.setEnabled(enabled);
-		revertAction.setEnabled(enabled);
 		fork.setEnabled(enabled);
 		bubble.setEnabled(enabled);
 		useRichFormatting.setEnabled(enabled);
@@ -833,64 +817,6 @@ public class MindMapController extends ControllerAdapter implements
 		joinNodes.joinNodes(selectedNode, selectedNodes);
 	}
 
-	protected abstract class LinkActionBase extends AbstractAction implements
-			MenuItemEnabledListener {
-		public LinkActionBase(String pText) {
-			super(pText);
-		}
-
-		public boolean isEnabled(JMenuItem pItem, Action pAction) {
-			for (Iterator iterator = getSelecteds().iterator(); iterator
-					.hasNext();) {
-				MindMapNode selNode = (MindMapNode) iterator.next();
-				if (selNode.getLink() != null)
-					return true;
-			}
-			return false;
-		}
-
-	}
-
-	protected class FollowLinkAction extends LinkActionBase {
-		public FollowLinkAction() {
-			super("");
-		}
-
-		public void actionPerformed(ActionEvent e) {
-			for (Iterator iterator = getSelecteds().iterator(); iterator
-					.hasNext();) {
-				MindMapNode selNode = (MindMapNode) iterator.next();
-				if (selNode.getLink() != null) {
-					loadURL(selNode.getLink());
-				}
-			}
-		}
-	}
-
-	protected class OpenLinkDirectoryAction extends LinkActionBase {
-		public OpenLinkDirectoryAction() {
-			super("");
-		}
-
-		public void actionPerformed(ActionEvent event) {
-			String link = "";
-			for (Iterator iterator = getSelecteds().iterator(); iterator
-					.hasNext();) {
-				MindMapNode selNode = (MindMapNode) iterator.next();
-				link = selNode.getLink();
-				if (link != null) {
-					// as link is an URL, '/' is the only correct one.
-					final int i = link.lastIndexOf('/');
-					if (i >= 0) {
-						link = link.substring(0, i + 1);
-					}
-					logger.info("Opening link for directory " + link);
-					loadURL(link);
-				}
-			}
-		}
-	}
-
 	public void moveNodePosition(MindMapNode node, int parentVGap, int hGap,
 			int shiftY) {
 		moveNodeAction.moveNodeTo(node, parentVGap, hGap, shiftY);
@@ -906,17 +832,13 @@ public class MindMapController extends ControllerAdapter implements
 		if (getSelecteds().size() != 1)
 			return;
 		final MainView component = (MainView) e.getComponent();
-		if (component.isInFollowLinkRegion(e.getX())) {
-			loadURL();
-		} else {
-			MindMapNode node = (component).getNodeView().getModel();
-			if (!node.hasChildren()) {
-				// then emulate the plain click.
-				doubleClick(e);
-				return;
-			}
-			toggleFolded();
-		}
+    MindMapNode node = (component).getNodeView().getModel();
+    if (!node.hasChildren()) {
+      // then emulate the plain click.
+      doubleClick(e);
+      return;
+    }
+    toggleFolded();
 	}
 
 	public ActionFactory getActionFactory() {
@@ -1040,13 +962,10 @@ public class MindMapController extends ControllerAdapter implements
 		/* perform action only if one selected node. */
 		if (getSelecteds().size() != 1)
 			return;
-		MindMapNode node = ((MainView) e.getComponent()).getNodeView()
-				.getModel();
 		// edit the node only if the node is a leaf (fc 0.7.1), or the root node
 		// (fc 0.9.0)
 		if (!e.isAltDown() && !e.isControlDown() && !e.isShiftDown()
-				&& !e.isPopupTrigger() && e.getButton() == MouseEvent.BUTTON1
-				&& (node.getLink() == null)) {
+				&& !e.isPopupTrigger() && e.getButton() == MouseEvent.BUTTON1) {
 			edit(null, false, false);
 		}
 	}
@@ -1137,12 +1056,10 @@ public class MindMapController extends ControllerAdapter implements
 
 	public void insertNodeInto(MindMapNode newNode, MindMapNode parent,
 			int index) {
-		getModel().setSaved(false);
 		super.insertNodeInto(newNode, parent, index);
 	}
 
 	public void removeNodeFromParent(MindMapNode selectedNode) {
-		getModel().setSaved(false);
 		// first deselect, and then remove. 
 		NodeView nodeView = getView().getNodeView(selectedNode);
 		getView().deselect(nodeView);

@@ -68,7 +68,6 @@ import javax.swing.event.PopupMenuListener;
 import javax.swing.filechooser.FileFilter;
 
 import freemind.controller.LastStateStorageManagement;
-import freemind.controller.MapModuleManager;
 import freemind.controller.MindMapNodesSelection;
 import freemind.controller.StructuredMenuHolder;
 import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
@@ -160,7 +159,6 @@ public abstract class ControllerAdapter implements ModeController,
 	 * to be changed.
 	 */
 	public void nodeChanged(MindMapNode node) {
-		getMap().setSaved(false);
 		nodeRefresh(node, true);
 	}
 
@@ -425,110 +423,6 @@ public abstract class ControllerAdapter implements ModeController,
 		}
 	}
 
-	public boolean save() {
-		if (getModel().isSaved())
-			return true;
-		if (getModel().getFile() == null || getModel().isReadOnly()) {
-			return saveAs();
-		} else {
-			return save(getModel().getFile());
-		}
-	}
-
-	public void loadURL(String relative) {
-		try {
-			logger.info("Trying to open " + relative);
-			URL absolute = null;
-			if (Tools.isAbsolutePath(relative)) {
-				// Protocol can be identified by rexep pattern "[a-zA-Z]://.*".
-				// This should distinguish a protocol path from a file path on
-				// most platforms.
-				// 1) UNIX / Linux - obviously
-				// 2) Windows - relative path does not contain :, in absolute
-				// path is : followed by \.
-				// 3) Mac - cannot remember
-
-				// If relative is an absolute path, then it cannot be a
-				// protocol.
-				// At least on Unix and Windows. But this is not true for Mac!!
-
-				// Here is hidden an assumption that the existence of protocol
-				// implies !Tools.isAbsolutePath(relative).
-				// The code should probably be rewritten to convey more logical
-				// meaning, on the other hand
-				// it works on Windows and Linux.
-
-				// absolute = new URL("file://"+relative); }
-				absolute = Tools.fileToUrl(new File(relative));
-			} else if (relative.startsWith("#")) {
-				// inner map link, fc, 12.10.2004
-				logger.finest("found relative link to " + relative);
-				String target = relative.substring(1);
-				try {
-					centerNode(getNodeFromID(target));
-				} catch (Exception e) {
-					freemind.main.Resources.getInstance().logException(e);
-					// give "not found" message
-				}
-				return;
-
-			} else {
-				/*
-				 * Remark: getMap().getURL() returns URLs like file:/C:/... It
-				 * seems, that it does not cause any problems.
-				 */
-				absolute = new URL(getMap().getURL(), relative);
-			}
-			// look for reference part in URL:
-			URL originalURL = absolute;
-			String ref = absolute.getRef();
-			if (ref != null) {
-				// remove ref from absolute:
-				absolute = Tools.getURLWithoutReference(absolute);
-			}
-			String extension = Tools.getExtension(absolute.toString());
-			if ((extension != null)
-					&& extension
-							.equals(freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION_WITHOUT_DOT)) { // ----
-																											// Open
-																											// Mind
-																											// Map
-				logger.info("Trying to open mind map " + absolute);
-				MapModuleManager mapModuleManager = null;
-				/*
-				 * this can lead to confusion if the user handles multiple maps
-				 * with the same name. Obviously, this is wrong. Get a better
-				 * check whether or not the file is already opened.
-				 */
-				String mapExtensionKey = mapModuleManager
-						.checkIfFileIsAlreadyOpened(absolute);
-				if (mapExtensionKey == null) {
-					load(absolute);
-				} else {
-					mapModuleManager.tryToChangeToMapModule(mapExtensionKey);
-				}
-				if (ref != null) {
-					try {
-						ModeController newModeController = null;
-						// jump to link:
-						newModeController.centerNode(newModeController
-								.getNodeFromID(ref));
-					} catch (Exception e) {
-						freemind.main.Resources.getInstance().logException(e);
-						return;
-					}
-				}
-			} else {
-				// ---- Open URL in browser
-			}
-		} catch (MalformedURLException ex) {
-			freemind.main.Resources.getInstance().logException(ex);
-			return;
-		} catch (Exception e) {
-			freemind.main.Resources.getInstance().logException(e);
-		}
-	}
-
 	public MindMapNode createNodeTreeFromXml(Reader pReader, HashMap pIDToTarget)
 			throws XMLParseException, IOException {
 		XMLElementAdapter element = (XMLElementAdapter) createXMLElement();
@@ -639,14 +533,6 @@ public abstract class ControllerAdapter implements ModeController,
 		logger.finest("Sort result: " + inPlaceList);
 	}
 
-	/**
-	 * Return false is the action was cancelled, e.g. when it has to lead to
-	 * saving as.
-	 */
-	public boolean save(File file) {
-		return getModel().save(file);
-	}
-
 	/** @return returns the new JMenuItem. */
 	protected JMenuItem add(JMenu menu, Action action, String keystroke) {
 		JMenuItem item = menu.add(action);
@@ -703,36 +589,6 @@ public abstract class ControllerAdapter implements ModeController,
 		menu.add(action);
 	}
 
-	//
-	// Dialogs with user
-	//
-
-	public void open() {
-		FreeMindFileDialog chooser = getFileChooser();
-		// fc, 24.4.2008: multi selection has problems as setTitle in Controller
-		// doesn't works
-		// chooser.setMultiSelectionEnabled(true);
-		int returnVal = chooser.showOpenDialog(getView());
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			File[] selectedFiles;
-			if (chooser.isMultiSelectionEnabled()) {
-				selectedFiles = chooser.getSelectedFiles();
-			} else {
-				selectedFiles = new File[] { chooser.getSelectedFile() };
-			}
-			for (int i = 0; i < selectedFiles.length; i++) {
-				File theFile = selectedFiles[i];
-				try {
-					lastCurrentDir = theFile.getParentFile();
-					ModeController newMC = load(theFile);
-				} catch (Exception ex) {
-					handleLoadingException(ex);
-					break;
-				}
-			}
-		}
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -742,44 +598,6 @@ public abstract class ControllerAdapter implements ModeController,
 	 */
 	public void setChosenDirectory(File pDir) {
 		lastCurrentDir = pDir;
-	}
-
-	/**
-	 * Creates a file chooser with the last selected directory as default.
-	 */
-	public FreeMindFileDialog getFileChooser(FileFilter filter) {
-		FreeMindFileDialog chooser;
-		if (!Tools.isMacOsX()) {
-			chooser = new FreeMindJFileDialog();
-		} else {
-			// only for mac
-			chooser = new FreeMindAwtFileDialog();
-		}
-		chooser.registerDirectoryResultListener(this);
-		File parentFile = getMapsParentFile();
-		// choose new lastCurrentDir only, if not previously set.
-		if (parentFile != null && lastCurrentDir == null) {
-			lastCurrentDir = parentFile;
-		}
-		if (lastCurrentDir != null) {
-			chooser.setCurrentDirectory(lastCurrentDir);
-		}
-		if (filter != null) {
-			chooser.addChoosableFileFilterAsDefault(filter);
-		}
-		return chooser;
-	}
-
-	public FreeMindFileDialog getFileChooser() {
-		return getFileChooser(getFileFilter());
-	}
-
-	private File getMapsParentFile() {
-		if ((getMap() != null) && (getMap().getFile() != null)
-				&& (getMap().getFile().getParentFile() != null)) {
-			return getMap().getFile().getParentFile();
-		}
-		return null;
 	}
 
 	public void handleLoadingException(Exception ex) {
@@ -794,86 +612,6 @@ public abstract class ControllerAdapter implements ModeController,
 		} else {
 			freemind.main.Resources.getInstance().logException(ex);
 		}
-	}
-
-	/**
-	 * Save as; return false is the action was cancelled
-	 */
-	public boolean saveAs() {
-		File f;
-		FreeMindFileDialog chooser = getFileChooser();
-		if (getMapsParentFile() == null) {
-			chooser.setSelectedFile(new File(getFileNameProposal()
-					+ freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION));
-		}
-		chooser.setDialogTitle(getText("save_as"));
-		boolean repeatSaveAsQuestion;
-		do {
-			repeatSaveAsQuestion = false;
-			int returnVal = chooser.showSaveDialog(getView());
-			if (returnVal != JFileChooser.APPROVE_OPTION) {// not ok pressed
-				return false;
-			}
-
-			// |= Pressed O.K.
-			f = chooser.getSelectedFile();
-			lastCurrentDir = f.getParentFile();
-			// Force the extension to be .mm
-			String ext = Tools.getExtension(f.getName());
-			if (!ext.equals(freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION_WITHOUT_DOT)) {
-				f = new File(f.getParent(), f.getName()
-						+ freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION);
-			}
-
-			if (f.exists()) { // If file exists, ask before overwriting.
-				int overwriteMap = JOptionPane.showConfirmDialog(getView(),
-						getText("map_already_exists"), "FreeMind",
-						JOptionPane.YES_NO_OPTION);
-				if (overwriteMap != JOptionPane.YES_OPTION) {
-					// repeat the save as dialog.
-					repeatSaveAsQuestion = true;
-				}
-			}
-		} while (repeatSaveAsQuestion);
-		try { // We have to lock the file of the map even when it does not exist
-				// yet
-			String lockingUser = getModel().tryToLock(f);
-			if (lockingUser != null) {
-				return false;
-			}
-		} catch (Exception e) { // Throwed by tryToLock
-			return false;
-		}
-
-		save(f);
-		// Update the name of the map
-		return true;
-	}
-
-	/**
-	 * Creates a proposal for a file name to save the map. Removes all illegal
-	 * characters.
-	 * 
-	 * Fixed: When creating file names based on the text of the root node, now
-	 * all the extra unicode characters are replaced with _. This is not very
-	 * good. For chinese content, you would only get a list of ______ as a file
-	 * name. Only characters special for building file paths shall be removed
-	 * (rather than replaced with _), like : or /. The exact list of dangeous
-	 * characters needs to be investigated. 0.8.0RC3.
-	 * 
-	 * 
-	 * Keywords: suggest file name.
-	 * 
-	 */
-	private String getFileNameProposal() {
-		return Tools.getFileNameProposal(getMap().getRootNode());
-	}
-
-	/**
-	 * Return false if user has canceled.
-	 */
-	public boolean close(boolean force, MapModuleManager mapModuleManager) {
-		return false;
 	}
 
 	/*
@@ -1034,7 +772,7 @@ public abstract class ControllerAdapter implements ModeController,
 				.getTargetForId(nodeID);
 		if (node == null) {
 			throw new IllegalArgumentException("Node belonging to the node id "
-					+ nodeID + " not found in map " + getMap().getFile());
+					+ nodeID + " not found in map");
 		}
 		return node;
 	}
@@ -1054,49 +792,6 @@ public abstract class ControllerAdapter implements ModeController,
 		if (getView() != null)
 			return getView().getSelected();
 		return null;
-	}
-
-	public class OpenAction extends AbstractAction {
-		ControllerAdapter mc;
-
-		public OpenAction(ControllerAdapter modeController) {
-			super("", null);
-			mc = modeController;
-		}
-
-		public void actionPerformed(ActionEvent e) {
-			mc.open();
-		}
-	}
-
-	public class SaveAction extends AbstractAction {
-		ControllerAdapter mc;
-
-		public SaveAction(ControllerAdapter modeController) {
-			super("", null);
-			mc = modeController;
-		}
-
-		public void actionPerformed(ActionEvent e) {
-			boolean success = mc.save();
-			if (success) {
-			} else {
-				String message = "Saving failed.";
-			}
-		}
-	}
-
-	public class SaveAsAction extends AbstractAction {
-		ControllerAdapter mc;
-
-		public SaveAsAction(ControllerAdapter modeController) {
-			super("", null);
-			mc = modeController;
-		}
-
-		public void actionPerformed(ActionEvent e) {
-			mc.saveAs();
-		}
 	}
 
 	protected class FileOpener implements DropTargetListener {
@@ -1292,21 +987,6 @@ public abstract class ControllerAdapter implements ModeController,
 		}
 	}
 
-	public String getLinkShortText(MindMapNode node) {
-		String adaptedText = node.getLink();
-		if (adaptedText == null)
-			return null;
-		if (adaptedText.startsWith("#")) {
-			try {
-				MindMapNode dest = getNodeFromID(adaptedText.substring(1));
-				return dest.getShortText(this);
-			} catch (Exception e) {
-				return getText("link_not_available_any_more");
-			}
-		}
-		return adaptedText;
-	}
-
 	public void displayNode(MindMapNode node) {
 		displayNode(node, null);
 	}
@@ -1371,13 +1051,6 @@ public abstract class ControllerAdapter implements ModeController,
 	 */
 	public void insertNodeInto(MindMapNode newChild, MindMapNode parent) {
 		insertNodeInto(newChild, parent, parent.getChildCount());
-	}
-
-	public void loadURL() {
-		String link = getSelected().getLink();
-		if (link != null) {
-			loadURL(link);
-		}
 	}
 
 	public Set getRegisteredMouseWheelEventHandler() {

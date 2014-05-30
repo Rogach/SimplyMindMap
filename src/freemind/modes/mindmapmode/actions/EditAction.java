@@ -31,11 +31,9 @@ import java.util.Vector;
 import java.util.regex.Pattern;
 
 import javax.swing.AbstractAction;
-import javax.swing.JOptionPane;
 
 import freemind.controller.actions.generated.instance.EditNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.main.FreeMind;
 import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;

@@ -51,15 +51,12 @@ import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeNode;
 
-import freemind.main.FreeMind;
-import freemind.main.FreeMindMain;
 import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.MindIcon;
 import freemind.modes.MindMapNode;
 import freemind.modes.ModeController;
-import freemind.modes.NodeAdapter;
 import java.awt.RenderingHints;
 
 /**
@@ -185,7 +182,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 		mainView.addMouseMotionListener(this.map.getNodeMouseMotionListener());
 		addDragListener(map.getNodeDragListener());
 		addDropListener(map.getNodeDropListener());
-		if (!model.isRoot() && "true".equals(Resources.getInstance().getProperty(FreeMindMain.ENABLE_NODE_MOVEMENT))) {
+		if (!model.isRoot() && "true".equals(Resources.getInstance().getProperty("enable_node_movement"))) {
 			motionListenerView = new NodeMotionListenerView(this);
 			add(motionListenerView);
 		}
@@ -848,15 +845,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 		}
 
 		if (isHtml) {
-			// Make it possible to use relative img references in HTML using tag
-			// <base>.
-			if (nodeText.indexOf("<img") >= 0 && nodeText.indexOf("<base ") < 0) {
-				try {
-					nodeText = "<html><base href=\"" + map.getModel().getURL()
-							+ "\">" + nodeText.substring(6);
-				} catch (MalformedURLException e) {
-				}
-			}
 			// If user does not want us to set the width automatically, he'll
 			// use <body width="">,
 			// <body width="800">, or avoid the <body> tag altogether.
@@ -958,20 +946,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 			iconPresent = true;
 			// System.out.println("print the icon " + myicon.toString());
 			iconImages.addImage(myIcon.getIcon());
-		}
-		String link = ((NodeAdapter) getModel()).getLink();
-		if (link != null) {
-			iconPresent = true;
-			String iconPath = "images/Link.png";
-			if (link.startsWith("#")) {
-				iconPath = "images/LinkLocal.png";
-			} else if (link.startsWith("mailto:")) {
-				iconPath = "images/Mail.png";
-			} else if (Tools.executableByExtension(link)) {
-				iconPath = "images/Executable.png";
-			}
-			ImageIcon icon = new ImageIcon(Resources.getInstance().getResource(iconPath));
-			iconImages.addImage(icon);
 		}
 		// /* Folded icon by Matthias Schade (mascha2), fc, 20.12.2003*/
 		// if (((NodeAdapter)getModel()).isFolded()) {

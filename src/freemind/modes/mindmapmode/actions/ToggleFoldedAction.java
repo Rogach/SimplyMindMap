@@ -32,7 +32,6 @@ import javax.swing.AbstractAction;
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.FoldAction;
 import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.MindMapNode;
@@ -129,8 +128,7 @@ public class ToggleFoldedAction extends AbstractAction implements ActorXml {
 					.getNode());
 			boolean fold = foldAction.getFolded();
 			modeController._setFolded(node, fold);
-			if (Resources.getInstance().getBoolProperty(
-					FreeMind.RESOURCES_SAVE_FOLDING_STATE)) {
+			if (Resources.getInstance().getBoolProperty("resources_save_folding_state")) {
 				modeController.nodeChanged(node);
 			}
 		}

@@ -28,14 +28,11 @@ import java.awt.event.ActionEvent;
 import java.util.Iterator;
 
 import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 import freemind.controller.actions.generated.instance.DeleteNodeAction;
 import freemind.controller.actions.generated.instance.PasteNodeAction;
 import freemind.controller.actions.generated.instance.UndoPasteNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;

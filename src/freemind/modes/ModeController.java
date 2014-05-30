@@ -38,7 +38,6 @@ import javax.swing.JToolBar;
 import javax.swing.filechooser.FileFilter;
 
 import freemind.common.TextTranslator;
-import freemind.controller.MapModuleManager;
 import freemind.controller.StructuredMenuHolder;
 import freemind.main.XMLParseException;
 import freemind.view.MapModule;
@@ -68,25 +67,7 @@ public interface ModeController extends TextTranslator {
 	 */
 	ModeController load(File file) throws FileNotFoundException, IOException;
 
-	/**
-	 * Opens a link in * the opened map * another map * another file.
-	 */
-	void loadURL(String relative);
-
-	boolean save(File file);
-
 	MindMap newMap();
-
-	/**
-	 * @return true, if successfully saved. False, if canceled or exception.
-	 */
-	boolean save();
-
-	boolean saveAs();
-
-	void open();
-
-	boolean close(boolean force, MapModuleManager mapModuleManager);
 
 	/**
 	 * Given a valid Xml parameterization of a node (tree), this method returns
@@ -296,8 +277,6 @@ public interface ModeController extends TextTranslator {
 	 */
 	void centerNode(MindMapNode node);
 
-	String getLinkShortText(MindMapNode node);
-
 	public JToolBar getModeToolBar();
 
 	/** For the toolbar on the left hand side of the window. */
@@ -351,8 +330,6 @@ public interface ModeController extends TextTranslator {
 	Transferable copySingle();
 
 	public Transferable copy(List selectedNodes, boolean copyInvisible);
-
-	FreeMindFileDialog getFileChooser(FileFilter filter);
 
 	void setView(MapView pView);
 
