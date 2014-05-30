@@ -23,13 +23,11 @@
 
 package freemind.modes.mindmapmode.actions.xml;
 
-import java.awt.event.ActionEvent;
-
-import javax.swing.Action;
-import javax.swing.Icon;
-
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.FreemindAction;
+import java.awt.event.ActionEvent;
+import javax.swing.Action;
+import javax.swing.Icon;
 
 /**
  * @author foltin

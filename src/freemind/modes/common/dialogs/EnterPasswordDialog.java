@@ -20,12 +20,13 @@
 
 package freemind.modes.common.dialogs;
 
+import freemind.common.TextTranslator;
+import freemind.main.Tools;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -33,9 +34,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
-
-import freemind.common.TextTranslator;
-import freemind.main.Tools;
 
 /** */
 public class EnterPasswordDialog extends JDialog {

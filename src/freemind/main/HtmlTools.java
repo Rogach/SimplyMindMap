@@ -30,10 +30,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.swing.text.BadLocationException;
 import javax.xml.parsers.SAXParserFactory;
-
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;

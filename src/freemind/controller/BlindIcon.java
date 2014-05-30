@@ -25,7 +25,6 @@ package freemind.controller;
 
 import java.awt.Component;
 import java.awt.Graphics;
-
 import javax.swing.Icon;
 
 /**

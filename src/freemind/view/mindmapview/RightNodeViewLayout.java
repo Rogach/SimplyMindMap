@@ -23,12 +23,10 @@
  */
 package freemind.view.mindmapview;
 
+import freemind.main.Tools;
 import java.awt.Dimension;
 import java.awt.Point;
-
 import javax.swing.JComponent;
-
-import freemind.main.Tools;
 
 /**
  * @author dimitri 05.06.2005

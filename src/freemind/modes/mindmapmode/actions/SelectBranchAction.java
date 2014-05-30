@@ -20,9 +20,8 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import java.awt.event.ActionEvent;
-
 import freemind.modes.mindmapmode.MindMapController;
+import java.awt.event.ActionEvent;
 
 /** */
 public class SelectBranchAction extends FreemindAction {

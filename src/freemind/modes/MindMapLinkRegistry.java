@@ -20,13 +20,11 @@
 
 package freemind.modes;
 
-import java.util.Collection;
+import freemind.main.Tools;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ListIterator;
 import java.util.Vector;
-
-import freemind.main.Tools;
 
 /**
  * Interface for the registry, which manages the ids of nodes and the existing

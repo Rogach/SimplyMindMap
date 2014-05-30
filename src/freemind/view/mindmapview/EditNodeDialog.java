@@ -23,6 +23,10 @@
 
 package freemind.view.mindmapview;
 
+import com.inet.jortho.SpellChecker;
+import freemind.main.Resources;
+import freemind.main.Tools;
+import freemind.modes.ModeController;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -34,7 +38,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -42,12 +45,6 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-
-import com.inet.jortho.SpellChecker;
-import freemind.main.Resources;
-
-import freemind.main.Tools;
-import freemind.modes.ModeController;
 
 /**
  * @author foltin

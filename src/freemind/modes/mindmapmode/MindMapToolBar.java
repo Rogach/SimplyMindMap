@@ -20,20 +20,18 @@
 
 package freemind.modes.mindmapmode;
 
-import java.awt.Component;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.util.Vector;
-
-import javax.swing.Action;
-import javax.swing.JComboBox;
-import javax.swing.JToolBar;
-
 import freemind.controller.FreeMindToolBar;
 import freemind.controller.StructuredMenuHolder;
 import freemind.controller.ZoomListener;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import java.awt.Component;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.Vector;
+import javax.swing.Action;
+import javax.swing.JComboBox;
+import javax.swing.JToolBar;
 
 public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 

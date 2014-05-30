@@ -5,7 +5,6 @@ import freemind.main.Tools;
 import freemind.modes.MindMapNode;
 import freemind.modes.common.dialogs.IconSelectionPopupDialog;
 import freemind.modes.mindmapmode.MindMapController;
-import freemind.modes.mindmapmode.actions.ToggleFoldedAction;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;

@@ -20,18 +20,16 @@
 
 package freemind.modes.mindmapmode.actions;
 
+import freemind.main.HtmlTools;
+import freemind.modes.MindMapNode;
+import freemind.modes.mindmapmode.MindMapController;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.logging.Logger;
-
 import javax.swing.AbstractAction;
-
-import freemind.main.HtmlTools;
-import freemind.modes.MindMapNode;
-import freemind.modes.mindmapmode.MindMapController;
 
 /**
  * @author foltin

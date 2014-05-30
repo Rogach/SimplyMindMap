@@ -20,16 +20,15 @@
 
 package freemind.modes.mindmapmode;
 
-import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.Vector;
-
 import freemind.main.XMLElement;
 import freemind.modes.EdgeAdapter;
 import freemind.modes.MindMap;
 import freemind.modes.ModeController;
 import freemind.modes.NodeAdapter;
 import freemind.modes.XMLElementAdapter;
+import java.lang.reflect.Constructor;
+import java.util.HashMap;
+import java.util.Vector;
 import java.util.logging.Logger;
 
 public class MindMapXMLElement extends XMLElementAdapter {

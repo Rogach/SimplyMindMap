@@ -19,16 +19,6 @@
 
 package freemind.modes.mindmapmode.listeners;
 
-import java.awt.AWTException;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.event.InputEvent;
-import java.awt.event.MouseEvent;
-
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-
 import freemind.controller.NodeMotionListener.NodeMotionAdapter;
 import freemind.main.Tools;
 import freemind.modes.MindMapNode;
@@ -37,7 +27,15 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeMotionListenerView;
 import freemind.view.mindmapview.NodeView;
+import java.awt.AWTException;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 
 /**
  * The MouseMotionListener which belongs to every NodeView

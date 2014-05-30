@@ -22,12 +22,10 @@
 
 package freemind.modes.viewmodes;
 
+import freemind.view.mindmapview.NodeView;
 import java.awt.event.ActionEvent;
 import java.util.logging.Logger;
-
 import javax.swing.AbstractAction;
-
-import freemind.view.mindmapview.NodeView;
 
 /**
  * @author foltin

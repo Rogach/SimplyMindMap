@@ -23,13 +23,6 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import java.awt.event.ActionEvent;
-import java.util.ListIterator;
-
-import javax.swing.Action;
-import javax.swing.ImageIcon;
-import javax.swing.KeyStroke;
-
 import freemind.controller.actions.generated.instance.AddIconAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Resources;
@@ -41,7 +34,12 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapNodeModel;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
+import java.awt.event.ActionEvent;
 import java.util.List;
+import java.util.ListIterator;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.KeyStroke;
 
 public class IconAction extends FreemindAction implements ActorXml,
 		IconInformation {

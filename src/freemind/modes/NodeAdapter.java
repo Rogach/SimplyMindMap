@@ -19,6 +19,12 @@
 
 package freemind.modes;
 
+import freemind.main.HtmlTools;
+import freemind.main.Resources;
+import freemind.main.Tools;
+import freemind.main.XMLElement;
+import freemind.view.mindmapview.NodeView;
+import freemind.view.mindmapview.NodeViewVisitor;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
@@ -30,7 +36,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -39,21 +44,13 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.Vector;
-
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
-
-import freemind.main.HtmlTools;
-import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.main.XMLElement;
-import freemind.view.mindmapview.NodeView;
-import freemind.view.mindmapview.NodeViewVisitor;
-import java.util.logging.Logger;
 
 /**
  * This class represents a single Node of a Tree. It contains direct handles to

@@ -1,7 +1,6 @@
 package freemind.controller.actions.generated.instance;
 /* TransferableContent...*/
 import java.util.ArrayList;
-import java.util.ArrayList;
 public class TransferableContent {
   protected String transferable;
 

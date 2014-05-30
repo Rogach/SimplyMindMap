@@ -22,17 +22,6 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import java.awt.event.ActionEvent;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.TreeSet;
-import java.util.Vector;
-import java.util.logging.Logger;
-
-import javax.swing.AbstractAction;
-
 import freemind.controller.actions.generated.instance.MoveNodesAction;
 import freemind.controller.actions.generated.instance.NodeListMember;
 import freemind.controller.actions.generated.instance.XmlAction;
@@ -41,6 +30,15 @@ import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
+import java.awt.event.ActionEvent;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.TreeSet;
+import java.util.Vector;
+import java.util.logging.Logger;
+import javax.swing.AbstractAction;
 
 public class NodeUpAction extends AbstractAction implements ActorXml {
 	private final MindMapController modeController;

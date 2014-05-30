@@ -23,13 +23,11 @@
  */
 package freemind.controller;
 
+import freemind.main.Tools;
 import java.awt.Insets;
-
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
-
-import freemind.main.Tools;
 
 /**
  * @author Stefan Zechmeister

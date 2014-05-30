@@ -15,7 +15,6 @@ import java.io.FilterWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.html.HTMLDocument;

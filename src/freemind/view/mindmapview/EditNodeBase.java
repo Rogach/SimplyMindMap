@@ -23,9 +23,15 @@
 
 package freemind.view.mindmapview;
 
+import freemind.main.FreeMindCommon;
+import freemind.main.Resources;
+import freemind.main.Tools;
+import freemind.modes.ModeController;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
+import java.awt.Window;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
@@ -36,19 +42,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Iterator;
 import java.util.LinkedList;
-
 import javax.swing.AbstractAction;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.text.JTextComponent;
-
-import freemind.main.FreeMindCommon;
-import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.modes.ModeController;
-import java.awt.Component;
-import java.awt.Window;
 
 /**
  * @author foltin

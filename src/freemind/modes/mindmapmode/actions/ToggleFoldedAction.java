@@ -23,12 +23,6 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import java.awt.event.ActionEvent;
-import java.util.ListIterator;
-import java.util.logging.Logger;
-
-import javax.swing.AbstractAction;
-
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.FoldAction;
 import freemind.controller.actions.generated.instance.XmlAction;
@@ -39,6 +33,10 @@ import freemind.modes.common.CommonToggleFoldedAction;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
+import java.awt.event.ActionEvent;
+import java.util.ListIterator;
+import java.util.logging.Logger;
+import javax.swing.AbstractAction;
 
 public class ToggleFoldedAction extends AbstractAction implements ActorXml {
 	private final MindMapController modeController;

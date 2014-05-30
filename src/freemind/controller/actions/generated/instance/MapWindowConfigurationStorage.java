@@ -1,7 +1,6 @@
 package freemind.controller.actions.generated.instance;
 /* MapWindowConfigurationStorage...*/
 import java.util.ArrayList;
-import java.util.ArrayList;
 public class MapWindowConfigurationStorage extends WindowConfigurationStorage {
   protected double mapCenterLongitude;
   protected double mapCenterLatitude;

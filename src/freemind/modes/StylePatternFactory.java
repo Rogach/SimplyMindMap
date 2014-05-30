@@ -20,15 +20,6 @@
 
 package freemind.modes;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.Reader;
-import java.io.Writer;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-
 import freemind.common.TextTranslator;
 import freemind.common.XmlBindingTools;
 import freemind.controller.actions.generated.instance.Pattern;
@@ -48,6 +39,14 @@ import freemind.controller.actions.generated.instance.PatternPropertyBase;
 import freemind.controller.actions.generated.instance.Patterns;
 import freemind.main.Resources;
 import freemind.main.Tools;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.Reader;
+import java.io.Writer;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * This class constructs patterns from files or from nodes and saves them back.

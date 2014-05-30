@@ -25,13 +25,6 @@
  */
 package freemind.modes.mindmapmode.actions;
 
-import java.awt.event.ActionEvent;
-import java.util.ListIterator;
-import java.util.logging.Logger;
-
-import javax.swing.Action;
-import javax.swing.ImageIcon;
-
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Resources;
@@ -43,9 +36,11 @@ import freemind.modes.mindmapmode.MindMapMapModel;
 import freemind.modes.mindmapmode.MindMapNodeModel;
 import freemind.modes.mindmapmode.actions.xml.AbstractXmlAction;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.logging.Level;
+import java.awt.event.ActionEvent;
+import java.util.ListIterator;
+import java.util.logging.Logger;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
 
 public class NodeGeneralAction extends AbstractXmlAction {
 	protected final MindMapController modeController;

@@ -23,6 +23,12 @@
 
 package freemind.view.mindmapview;
 
+import com.inet.jortho.SpellChecker;
+import freemind.main.FreeMindCommon;
+import freemind.main.Resources;
+import freemind.main.Tools;
+import freemind.modes.MindMapNode;
+import freemind.modes.ModeController;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -38,7 +44,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
@@ -47,14 +52,6 @@ import javax.swing.KeyStroke;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
-
-import com.inet.jortho.SpellChecker;
-
-import freemind.main.FreeMindCommon;
-import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.modes.MindMapNode;
-import freemind.modes.ModeController;
 
 /**
  * @author foltin

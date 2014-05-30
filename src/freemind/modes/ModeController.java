@@ -20,6 +20,11 @@
 
 package freemind.modes;
 
+import freemind.common.TextTranslator;
+import freemind.controller.StructuredMenuHolder;
+import freemind.main.XMLParseException;
+import freemind.view.mindmapview.MapView;
+import freemind.view.mindmapview.NodeView;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.datatransfer.Transferable;
@@ -32,16 +37,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
-
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
-import javax.swing.filechooser.FileFilter;
-
-import freemind.common.TextTranslator;
-import freemind.controller.StructuredMenuHolder;
-import freemind.main.XMLParseException;
-import freemind.view.mindmapview.MapView;
-import freemind.view.mindmapview.NodeView;
 
 public interface ModeController extends TextTranslator {
 

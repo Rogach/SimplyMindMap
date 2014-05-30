@@ -20,19 +20,17 @@
 
 package freemind.modes;
 
+import freemind.main.Resources;
+import freemind.main.Tools;
 import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 import java.util.Vector;
-
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.KeyStroke;
-
-import freemind.main.Resources;
-import freemind.main.Tools;
 
 /**
  * This class represents a MindIcon than can be applied to a node or a whole

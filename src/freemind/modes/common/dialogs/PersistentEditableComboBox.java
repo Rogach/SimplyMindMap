@@ -23,12 +23,10 @@
 package freemind.modes.common.dialogs;
 
 import freemind.main.Resources;
+import freemind.modes.ModeController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JComboBox;
-
-import freemind.modes.ModeController;
 
 public class PersistentEditableComboBox extends JComboBox {
 	private ActionListener actionListener = null;

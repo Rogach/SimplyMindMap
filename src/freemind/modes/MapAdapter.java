@@ -21,29 +21,21 @@
 package freemind.modes;
 
 import freemind.main.Resources;
+import freemind.main.Tools;
+import freemind.main.XMLParseException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.Vector;
 import java.util.logging.Logger;
-
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
-
-import freemind.main.Tools;
-import freemind.main.XMLParseException;
 
 public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 

@@ -22,22 +22,16 @@
 
 package freemind.modes.viewmodes;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-
 import freemind.main.XMLElement;
 import freemind.modes.ControllerAdapter;
 import freemind.modes.MindMapNode;
 import freemind.modes.Mode;
-import freemind.modes.common.CommonNodeKeyListener;
-import freemind.modes.common.CommonNodeKeyListener.EditHandler;
 import freemind.modes.common.CommonToggleFoldedAction;
 import freemind.modes.common.actions.FindAction;
 import freemind.modes.common.actions.FindAction.FindNextAction;
-import freemind.modes.common.listeners.CommonMouseMotionManager;
-import freemind.modes.common.listeners.CommonNodeMouseMotionListener;
 import freemind.view.mindmapview.MainView;
 import freemind.view.mindmapview.NodeView;
+import java.awt.event.MouseEvent;
 
 /**
  * @author foltin

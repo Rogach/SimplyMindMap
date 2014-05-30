@@ -23,8 +23,6 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import java.awt.Font;
-
 import freemind.controller.actions.generated.instance.FontNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Tools;
@@ -33,6 +31,7 @@ import freemind.modes.MindMapNode;
 import freemind.modes.NodeAdapter;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
+import java.awt.Font;
 
 /**
  * @author foltin

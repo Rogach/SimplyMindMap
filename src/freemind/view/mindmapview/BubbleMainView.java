@@ -19,17 +19,16 @@
 
 package freemind.view.mindmapview;
 
+import freemind.main.Tools;
+import freemind.modes.MindMapNode;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Stroke;
-
-import freemind.main.Tools;
-import freemind.modes.MindMapNode;
 import java.awt.RenderingHints;
+import java.awt.Stroke;
 
 class BubbleMainView extends MainView {
 	private final static Stroke BOLD_STROKE = new BasicStroke(2.0f,

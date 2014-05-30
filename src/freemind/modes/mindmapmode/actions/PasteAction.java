@@ -22,38 +22,12 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.StringReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.imageio.ImageIO;
-import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-
 import freemind.controller.MindMapNodesSelection;
 import freemind.controller.actions.generated.instance.PasteNodeAction;
 import freemind.controller.actions.generated.instance.TransferableContent;
 import freemind.controller.actions.generated.instance.TransferableFile;
-import freemind.controller.actions.generated.instance.TransferableImage;
 import freemind.controller.actions.generated.instance.UndoPasteNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.main.FreeMindCommon;
 import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;
@@ -61,13 +35,26 @@ import freemind.main.XMLParseException;
 import freemind.modes.ControllerAdapter;
 import freemind.modes.MindMapNode;
 import freemind.modes.ModeController;
-import freemind.modes.NodeAdapter;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapMapModel;
 import freemind.modes.mindmapmode.MindMapNodeModel;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.ListIterator;
+import java.util.Vector;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
+import javax.swing.AbstractAction;
 
 public class PasteAction extends AbstractAction implements ActorXml {
 

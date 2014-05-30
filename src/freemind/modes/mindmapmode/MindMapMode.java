@@ -20,16 +20,15 @@
 
 package freemind.modes.mindmapmode;
 
+import freemind.main.XMLParseException;
+import freemind.modes.Mode;
+import freemind.modes.ModeController;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.logging.Logger;
-
-import freemind.main.XMLParseException;
-import freemind.modes.Mode;
-import freemind.modes.ModeController;
 
 public class MindMapMode extends Mode {
 

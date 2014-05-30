@@ -19,13 +19,12 @@
 
 package freemind.modes;
 
+import freemind.main.Tools;
+import freemind.main.XMLElement;
 import java.awt.Font;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
-
-import freemind.main.Tools;
-import freemind.main.XMLElement;
 import java.util.logging.Logger;
 
 public abstract class XMLElementAdapter extends XMLElement {

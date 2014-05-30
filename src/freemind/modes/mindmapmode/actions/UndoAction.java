@@ -23,15 +23,6 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.util.Iterator;
-import java.util.Vector;
-import java.util.logging.Logger;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Resources;
@@ -39,6 +30,12 @@ import freemind.main.Tools;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.AbstractXmlAction;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.util.Iterator;
+import java.util.Vector;
+import java.util.logging.Logger;
+import javax.swing.Icon;
 
 public class UndoAction extends AbstractXmlAction {
 

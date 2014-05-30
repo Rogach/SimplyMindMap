@@ -20,6 +20,12 @@
 
 package freemind.view.mindmapview;
 
+import freemind.main.HtmlTools;
+import freemind.main.Resources;
+import freemind.main.Tools;
+import freemind.modes.MindIcon;
+import freemind.modes.MindMapNode;
+import freemind.modes.ModeController;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -28,6 +34,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragGestureListener;
 import java.awt.dnd.DragSource;
@@ -35,14 +42,12 @@ import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.MalformedURLException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.logging.Logger;
-
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.SwingConstants;
@@ -50,14 +55,6 @@ import javax.swing.ToolTipManager;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeNode;
-
-import freemind.main.HtmlTools;
-import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.modes.MindIcon;
-import freemind.modes.MindMapNode;
-import freemind.modes.ModeController;
-import java.awt.RenderingHints;
 
 /**
  * This class represents a single Node of a MindMap (in analogy to

@@ -25,12 +25,9 @@
  */
 package freemind.modes.common.actions;
 
-import java.awt.event.ActionEvent;
-
-import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-
 import freemind.modes.ModeController;
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
 
 // //////////
 // Actions

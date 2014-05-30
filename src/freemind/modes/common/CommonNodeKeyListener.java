@@ -20,14 +20,12 @@
 
 package freemind.modes.common;
 
+import freemind.main.Resources;
+import freemind.modes.ModeController;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.logging.Logger;
-
 import javax.swing.KeyStroke;
-
-import freemind.main.Resources;
-import freemind.modes.ModeController;
 
 /**
  * The KeyListener which belongs to the node and cares for Events like C-D

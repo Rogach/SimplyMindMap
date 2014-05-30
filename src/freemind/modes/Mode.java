@@ -21,12 +21,11 @@
 package freemind.modes;
 
 import freemind.main.Resources;
+import freemind.main.XMLParseException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-
-import freemind.main.XMLParseException;
 
 public abstract class Mode {
 

@@ -19,6 +19,9 @@
 /*$Id: NodeMotionListenerView.java,v 1.1.4.4.4.9 2009/03/29 19:37:23 christianfoltin Exp $*/
 package freemind.view.mindmapview;
 
+import freemind.main.Resources;
+import freemind.main.Tools;
+import freemind.modes.MindMapNode;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -27,13 +30,13 @@ import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
-
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultButtonModel;
@@ -42,11 +45,6 @@ import javax.swing.JComponent;
 import javax.swing.Timer;
 import javax.swing.plaf.basic.BasicButtonListener;
 import javax.swing.plaf.basic.BasicButtonUI;
-
-import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.modes.MindMapNode;
-import java.awt.RenderingHints;
 
 /**
  * @author Foltin

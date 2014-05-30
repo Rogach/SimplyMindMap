@@ -20,11 +20,10 @@
 
 package freemind.modes;
 
-import java.awt.Color;
-
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
+import java.awt.Color;
 
 public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {
 

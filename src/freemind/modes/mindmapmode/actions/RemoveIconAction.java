@@ -23,12 +23,6 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import java.util.List;
-
-import javax.swing.Action;
-import javax.swing.ImageIcon;
-import javax.swing.KeyStroke;
-
 import freemind.controller.actions.generated.instance.AddIconAction;
 import freemind.controller.actions.generated.instance.RemoveIconXmlAction;
 import freemind.controller.actions.generated.instance.XmlAction;
@@ -40,6 +34,10 @@ import freemind.modes.MindMap;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
+import java.util.List;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.KeyStroke;
 
 /**
  * @author foltin

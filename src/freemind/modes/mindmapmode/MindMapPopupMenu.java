@@ -23,10 +23,9 @@
 
 package freemind.modes.mindmapmode;
 
-import java.util.logging.Logger;
-
 import freemind.controller.FreeMindPopupMenu;
 import freemind.controller.StructuredMenuHolder;
+import java.util.logging.Logger;
 
 public class MindMapPopupMenu extends FreeMindPopupMenu {
 

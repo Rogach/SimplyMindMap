@@ -23,25 +23,22 @@
 
 package freemind.common;
 
+import freemind.controller.actions.generated.instance.WindowConfigurationStorage;
+import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.main.Resources;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Toolkit;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
-
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-
 import org.jibx.runtime.BindingDirectory;
 import org.jibx.runtime.IBindingFactory;
 import org.jibx.runtime.IMarshallingContext;
 import org.jibx.runtime.IUnmarshallingContext;
 import org.jibx.runtime.JiBXException;
-
-import freemind.controller.actions.generated.instance.WindowConfigurationStorage;
-import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.main.Resources;
 
 /**
  * @author foltin Singleton

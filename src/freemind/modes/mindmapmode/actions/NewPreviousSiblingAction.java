@@ -22,11 +22,9 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import java.awt.event.ActionEvent;
-
-import javax.swing.AbstractAction;
-
 import freemind.modes.mindmapmode.MindMapController;
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
 
 public class NewPreviousSiblingAction extends AbstractAction {
 	private final MindMapController controller;

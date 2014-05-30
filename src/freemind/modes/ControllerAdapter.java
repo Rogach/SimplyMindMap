@@ -19,6 +19,19 @@
 
 package freemind.modes;
 
+import freemind.controller.LastStateStorageManagement;
+import freemind.controller.MindMapNodesSelection;
+import freemind.controller.StructuredMenuHolder;
+import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
+import freemind.controller.actions.generated.instance.NodeListMember;
+import freemind.main.FreeMindCommon;
+import freemind.main.Resources;
+import freemind.main.Tools;
+import freemind.main.XMLElement;
+import freemind.main.XMLParseException;
+import freemind.modes.FreeMindFileDialog.DirectoryResultListener;
+import freemind.view.mindmapview.MapView;
+import freemind.view.mindmapview.NodeView;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.datatransfer.DataFlavor;
@@ -29,13 +42,11 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -51,11 +62,9 @@ import java.util.ListIterator;
 import java.util.Set;
 import java.util.Vector;
 import java.util.logging.Level;
-
-import javax.swing.AbstractAction;
+import java.util.logging.Logger;
 import javax.swing.Action;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -66,21 +75,6 @@ import javax.swing.KeyStroke;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.filechooser.FileFilter;
-
-import freemind.controller.LastStateStorageManagement;
-import freemind.controller.MindMapNodesSelection;
-import freemind.controller.StructuredMenuHolder;
-import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
-import freemind.controller.actions.generated.instance.NodeListMember;
-import freemind.main.FreeMindCommon;
-import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.main.XMLElement;
-import freemind.main.XMLParseException;
-import freemind.modes.FreeMindFileDialog.DirectoryResultListener;
-import freemind.view.mindmapview.MapView;
-import freemind.view.mindmapview.NodeView;
-import java.util.logging.Logger;
 
 /**
  * Derive from this class to implement the Controller for your mode. Overload

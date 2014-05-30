@@ -1,7 +1,6 @@
 package freemind.controller.actions.generated.instance;
 /* HookNodeAction...*/
 import java.util.ArrayList;
-import java.util.ArrayList;
 public class HookNodeAction extends NodeAction {
   protected String hookName;
   public String getHookName(){

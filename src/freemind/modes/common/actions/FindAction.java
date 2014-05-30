@@ -19,8 +19,14 @@
  */
 package freemind.modes.common.actions;
 
+import freemind.main.HtmlTools;
+import freemind.main.Resources;
+import freemind.main.Tools;
+import freemind.modes.ControllerAdapter;
+import freemind.modes.MindMapNode;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -32,7 +38,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
-
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -41,13 +46,6 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-
-import freemind.main.HtmlTools;
-import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.modes.ControllerAdapter;
-import freemind.modes.MindMapNode;
-import java.awt.Frame;
 
 public class FindAction extends AbstractAction {
 	private final ControllerAdapter controller;

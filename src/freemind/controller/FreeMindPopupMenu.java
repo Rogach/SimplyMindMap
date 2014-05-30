@@ -25,7 +25,6 @@ package freemind.controller;
 
 import java.util.HashSet;
 import java.util.Iterator;
-
 import javax.swing.JPopupMenu;
 import javax.swing.event.MenuListener;
 

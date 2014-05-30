@@ -20,21 +20,15 @@
 
 package freemind.modes.mindmapmode.actions;
 
+import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.modes.MindIcon;
+import freemind.modes.MindMapNode;
+import freemind.modes.mindmapmode.actions.xml.ActionFactory;
 import java.awt.Color;
-import java.awt.Point;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseWheelEvent;
 import java.util.List;
-import java.util.Properties;
-
-import freemind.controller.actions.generated.instance.Pattern;
-import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.modes.MindIcon;
-import freemind.modes.MindMap;
-import freemind.modes.MindMapNode;
-import freemind.modes.NodeAdapter;
-import freemind.modes.mindmapmode.actions.xml.ActionFactory;
 
 /**
  * This is the central method interface of actions that can be undertaken on

@@ -28,7 +28,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.Vector;
-
 import javax.swing.ImageIcon;
 
 public class MultipleImage extends ImageIcon {

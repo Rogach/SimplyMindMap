@@ -23,12 +23,14 @@
 
 package freemind.controller;
 
+import freemind.main.HtmlTools;
+import freemind.main.Resources;
+import freemind.main.Tools;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
-
 import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -41,10 +43,6 @@ import javax.swing.JSeparator;
 import javax.swing.JToolBar;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
-
-import freemind.main.HtmlTools;
-import freemind.main.Resources;
-import freemind.main.Tools;
 
 /**
  * @author foltin

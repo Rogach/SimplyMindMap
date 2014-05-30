@@ -20,6 +20,9 @@
 
 package freemind.modes;
 
+import freemind.main.XMLElement;
+import freemind.view.mindmapview.NodeView;
+import freemind.view.mindmapview.NodeViewVisitor;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
@@ -29,16 +32,11 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.SortedMap;
-
 import javax.swing.ImageIcon;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
-
-import freemind.main.XMLElement;
-import freemind.view.mindmapview.NodeView;
-import freemind.view.mindmapview.NodeViewVisitor;
 
 public interface MindMapNode extends MutableTreeNode {
 

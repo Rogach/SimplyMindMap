@@ -20,6 +20,17 @@
 
 package freemind.modes.mindmapmode;
 
+import freemind.common.UnicodeReader;
+import freemind.main.FreeMindCommon;
+import freemind.main.HtmlTools;
+import freemind.main.Resources;
+import freemind.main.Tools;
+import freemind.main.XMLParseException;
+import freemind.modes.MapAdapter;
+import freemind.modes.MindMapLinkRegistry;
+import freemind.modes.MindMapNode;
+import freemind.modes.ModeController;
+import freemind.modes.NodeAdapter;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.io.BufferedReader;
@@ -35,7 +46,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.channels.FileLock;
@@ -46,23 +56,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.Vector;
-
-import javax.swing.JOptionPane;
-
-import freemind.common.UnicodeReader;
-import freemind.main.FreeMindCommon;
-import freemind.main.HtmlTools;
-import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.main.XMLParseException;
-import freemind.modes.MapAdapter;
-import freemind.modes.MindMapLinkRegistry;
-import freemind.modes.MindMapNode;
-import freemind.modes.ModeController;
-import freemind.modes.NodeAdapter;
-import java.io.UnsupportedEncodingException;
-import java.util.Properties;
 
 public class MindMapMapModel extends MapAdapter {
 

@@ -23,11 +23,10 @@
  */
 package freemind.view.mindmapview;
 
-import java.awt.Dimension;
-import java.awt.Point;
-
 import freemind.main.Resources;
 import freemind.main.Tools;
+import java.awt.Dimension;
+import java.awt.Point;
 
 /**
  * Root layout.

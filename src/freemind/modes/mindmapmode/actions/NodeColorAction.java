@@ -24,10 +24,6 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.util.ListIterator;
-
 import freemind.controller.actions.generated.instance.NodeColorFormatAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Tools;
@@ -36,6 +32,9 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapNodeModel;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.util.ListIterator;
 
 public class NodeColorAction extends FreemindAction implements ActorXml {
 	private final MindMapController controller;

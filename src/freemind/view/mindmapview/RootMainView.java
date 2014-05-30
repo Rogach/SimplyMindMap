@@ -19,6 +19,8 @@
 
 package freemind.view.mindmapview;
 
+import freemind.main.Resources;
+import freemind.main.Tools;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -26,9 +28,6 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-
-import freemind.main.Resources;
-import freemind.main.Tools;
 import java.awt.RenderingHints;
 
 class RootMainView extends MainView {

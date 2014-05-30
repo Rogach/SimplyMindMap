@@ -20,19 +20,15 @@
 
 package freemind.modes;
 
-import java.io.File;
+import freemind.main.XMLParseException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Writer;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
-
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
-
-import freemind.main.XMLParseException;
 
 public interface MindMap extends TreeModel {
 

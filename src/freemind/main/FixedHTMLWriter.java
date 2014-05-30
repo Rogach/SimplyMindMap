@@ -12,7 +12,6 @@ package freemind.main;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Enumeration;
-
 import javax.swing.text.AttributeSet;
 import javax.swing.text.Element;
 import javax.swing.text.MutableAttributeSet;

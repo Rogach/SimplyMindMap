@@ -20,12 +20,10 @@
 
 package freemind.modes.mindmapmode.listeners;
 
-import java.awt.Point;
-import java.awt.event.MouseEvent;
-
 import freemind.controller.MapMouseMotionListener.MapMouseMotionReceiver;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.MapView;
+import java.awt.event.MouseEvent;
 
 /** */
 public class MindMapMouseMotionManager implements MapMouseMotionReceiver {

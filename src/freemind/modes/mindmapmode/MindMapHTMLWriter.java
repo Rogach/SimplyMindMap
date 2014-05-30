@@ -4,16 +4,15 @@
  */
 package freemind.modes.mindmapmode;
 
+import freemind.main.HtmlTools;
+import freemind.main.Resources;
+import freemind.main.Tools;
+import freemind.modes.MindIcon;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-
-import freemind.main.HtmlTools;
-import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.modes.MindIcon;
 
 class MindMapHTMLWriter {
 	private Writer fileout;

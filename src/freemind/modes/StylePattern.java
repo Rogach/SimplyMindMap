@@ -20,6 +20,8 @@
 
 package freemind.modes;
 
+import freemind.main.Tools;
+import freemind.main.XMLElement;
 import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,9 +32,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
-
-import freemind.main.Tools;
-import freemind.main.XMLElement;
 
 // Daniel: this seems like a description of what pattern should do rather
 // than of that what it actually does.

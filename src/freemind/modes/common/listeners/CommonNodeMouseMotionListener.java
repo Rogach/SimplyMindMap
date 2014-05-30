@@ -20,22 +20,20 @@
 
 package freemind.modes.common.listeners;
 
-import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-
 import freemind.controller.NodeMouseMotionListener.NodeMouseMotionObserver;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.ModeController;
 import freemind.view.mindmapview.MainView;
 import freemind.view.mindmapview.NodeView;
+import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  * The MouseMotionListener which belongs to every NodeView.

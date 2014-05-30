@@ -20,9 +20,11 @@
 
 package freemind.controller;
 
+import freemind.main.Resources;
+import freemind.modes.ModeController;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
-
+import java.util.logging.Logger;
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
@@ -30,10 +32,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
-
-import freemind.main.Resources;
-import freemind.modes.ModeController;
-import java.util.logging.Logger;
 
 /**
  * This is the menu bar for FreeMind. Actions are defined in MenuListener.

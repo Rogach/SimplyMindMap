@@ -23,15 +23,6 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import java.awt.datatransfer.Transferable;
-import java.awt.event.ActionEvent;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.CutNodeAction;
 import freemind.controller.actions.generated.instance.UndoPasteNodeAction;
@@ -42,7 +33,12 @@ import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.PasteAction.NodeCoordinate;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
+import java.awt.datatransfer.Transferable;
+import java.awt.event.ActionEvent;
+import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
 
 public class CutAction extends AbstractAction implements ActorXml {
 	private String text;

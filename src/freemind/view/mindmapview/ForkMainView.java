@@ -19,18 +19,17 @@
 
 package freemind.view.mindmapview;
 
+import freemind.main.Tools;
+import freemind.modes.EdgeAdapter;
+import freemind.modes.MindMapEdge;
+import freemind.modes.MindMapNode;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.util.Iterator;
-
-import freemind.main.Tools;
-import freemind.modes.EdgeAdapter;
-import freemind.modes.MindMapEdge;
-import freemind.modes.MindMapNode;
 import java.awt.RenderingHints;
+import java.util.Iterator;
 
 class ForkMainView extends MainView {
 	public void paint(Graphics graphics) {

@@ -23,12 +23,6 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import java.awt.datatransfer.Transferable;
-import java.awt.event.ActionEvent;
-import java.util.Iterator;
-
-import javax.swing.AbstractAction;
-
 import freemind.controller.actions.generated.instance.DeleteNodeAction;
 import freemind.controller.actions.generated.instance.PasteNodeAction;
 import freemind.controller.actions.generated.instance.UndoPasteNodeAction;
@@ -41,6 +35,10 @@ import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
+import java.awt.datatransfer.Transferable;
+import java.awt.event.ActionEvent;
+import java.util.Iterator;
+import javax.swing.AbstractAction;
 
 public class DeleteChildAction extends AbstractAction implements ActorXml {
 	private final MindMapController mMindMapController;

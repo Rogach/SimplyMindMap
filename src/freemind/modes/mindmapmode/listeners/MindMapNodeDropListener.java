@@ -19,6 +19,13 @@
 
 package freemind.modes.mindmapmode.listeners;
 
+import freemind.controller.MindMapNodesSelection;
+import freemind.main.Resources;
+import freemind.modes.MindMapNode;
+import freemind.modes.mindmapmode.MindMapController;
+import freemind.modes.mindmapmode.MindMapNodeModel;
+import freemind.view.mindmapview.MainView;
+import freemind.view.mindmapview.NodeView;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
@@ -27,18 +34,6 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.util.List;
-import java.util.ListIterator;
-
-import javax.swing.JOptionPane;
-
-import freemind.controller.MindMapNodesSelection;
-import freemind.main.Resources;
-import freemind.modes.MindMapNode;
-import freemind.modes.mindmapmode.MindMapController;
-import freemind.modes.mindmapmode.MindMapMapModel;
-import freemind.modes.mindmapmode.MindMapNodeModel;
-import freemind.view.mindmapview.MainView;
-import freemind.view.mindmapview.NodeView;
 
 // import ublic class MindMapNodesSelection implements Transferable,
 // ClipboardOwner {

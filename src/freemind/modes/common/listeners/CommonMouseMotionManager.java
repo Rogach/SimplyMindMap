@@ -22,12 +22,11 @@
 
 package freemind.modes.common.listeners;
 
-import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
-
 import freemind.controller.MapMouseMotionListener.MapMouseMotionReceiver;
 import freemind.modes.ModeController;
 import freemind.view.mindmapview.MapView;
+import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
 
 /**
  * @author foltin

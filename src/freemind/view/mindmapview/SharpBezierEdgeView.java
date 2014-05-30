@@ -20,13 +20,12 @@
 
 package freemind.view.mindmapview;
 
+import freemind.main.Tools;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.CubicCurve2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
-
-import freemind.main.Tools;
 
 /**
  * This class represents a sharp Edge of a MindMap.

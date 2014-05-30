@@ -23,7 +23,6 @@ package freemind.modes;
 import java.awt.Component;
 import java.awt.HeadlessException;
 import java.io.File;
-
 import javax.swing.filechooser.FileFilter;
 
 /**

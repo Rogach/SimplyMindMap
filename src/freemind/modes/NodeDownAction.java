@@ -22,12 +22,10 @@
 
 package freemind.modes;
 
+import freemind.modes.mindmapmode.MindMapController;
 import java.awt.event.ActionEvent;
 import java.util.List;
-
 import javax.swing.AbstractAction;
-
-import freemind.modes.mindmapmode.MindMapController;
 
 public class NodeDownAction extends AbstractAction {
 	private final MindMapController modeController;

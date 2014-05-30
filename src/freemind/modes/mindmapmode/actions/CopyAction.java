@@ -23,13 +23,10 @@
 
 package freemind.modes.mindmapmode.actions;
 
+import freemind.modes.mindmapmode.MindMapController;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-
-import freemind.modes.mindmapmode.MindMapController;
 
 public class CopyAction extends AbstractAction {
 	private final MindMapController controller;
