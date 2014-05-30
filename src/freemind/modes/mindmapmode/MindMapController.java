@@ -21,9 +21,7 @@
 package freemind.modes.mindmapmode;
 
 import freemind.common.XmlBindingTools;
-import freemind.controller.MenuBar;
 import freemind.controller.MindMapNodesSelection;
-import freemind.controller.StructuredMenuHolder;
 import freemind.controller.actions.generated.instance.EditNoteToNodeAction;
 import freemind.controller.actions.generated.instance.MenuActionBase;
 import freemind.controller.actions.generated.instance.MenuCategoryBase;
@@ -63,7 +61,6 @@ import freemind.modes.NodeDownAction;
 import freemind.modes.common.GotoLinkNodeAction;
 import freemind.modes.common.actions.FindAction;
 import freemind.modes.common.actions.FindAction.FindNextAction;
-import freemind.modes.common.actions.NewMapAction;
 import freemind.modes.mindmapmode.actions.BoldAction;
 import freemind.modes.mindmapmode.actions.CompoundActionHandler;
 import freemind.modes.mindmapmode.actions.CopyAction;
@@ -164,10 +161,6 @@ public class MindMapController extends ControllerAdapter implements
 	private HashSet mRegisteredMouseWheelEventHandler = new HashSet();
 
 	private ActionFactory actionFactory;
-	// Mode mode;
-	private MindMapPopupMenu popupmenu;
-	// private JToolBar toolbar;
-	private MindMapToolBar toolbar;
 	private boolean addAsChildMode = false;
 	private Clipboard clipboard = null;
 	private Clipboard selection = null;
@@ -176,8 +169,6 @@ public class MindMapController extends ControllerAdapter implements
 	 * This handler evaluates the compound xml actions. Don't delete it!
 	 */
 	private CompoundActionHandler compound = null;
-
-	public Action newMap = new NewMapAction(this);
 
 	public Action editLong = new EditLongAction();
 	public Action newSibling = new NewSiblingAction(this);
@@ -279,11 +270,6 @@ public class MindMapController extends ControllerAdapter implements
 			freemind.main.Resources.getInstance().logException(e);
 		}
 
-		logger.info("MindMapPopupMenu");
-		popupmenu = new MindMapPopupMenu(this);
-		logger.info("MindMapToolBar");
-		toolbar = new MindMapToolBar(this);
-
 		// addAsChildMode (use old model of handling CtrN) (PN)
 		addAsChildMode = Resources.getInstance()
 				.getBoolProperty("add_as_child");
@@ -362,16 +348,6 @@ public class MindMapController extends ControllerAdapter implements
 		return undo.isUndoAction() || redo.isUndoAction();
 	}
 
-	/**
-	 * This method is called after and before a change of the map module. Use it
-	 * to perform the actions that cannot be performed at creation time.
-	 * 
-	 */
-	public void startupController() {
-		super.startupController();
-		getToolBar().startup();
-	}
-
 	public void shutdownController() {
 	}
 
@@ -416,19 +392,6 @@ public class MindMapController extends ControllerAdapter implements
 		super.nodeChanged(n);
 	}
 
-	/* (non-Javadoc)
-	 * @see freemind.modes.ControllerAdapter#onFocusNode(freemind.view.mindmapview.NodeView)
-	 */
-	public void onFocusNode(NodeView pNode) {
-		super.onFocusNode(pNode);
-		updateToolbar(pNode.getModel());
-	}
-
-	private void updateToolbar(MindMapNode n) {
-		toolbar.selectFontSize(n.getFontSize());
-		toolbar.selectFontName(n.getFontFamilyName());
-	}
-
 	// fc, 14.12.2004: changes, such that different models can be used:
 	private NewNodeCreator myNewNodeCreator = null;
 	/**
@@ -463,40 +426,6 @@ public class MindMapController extends ControllerAdapter implements
 
 	// fc, 14.12.2004: end "different models" change
 
-	// get/set methods
-
-	/**
-	 */
-	public void updateMenus(StructuredMenuHolder holder) {
-
-		processMenuCategory(holder, mMenuStructure.getListChoiceList(), ""); /*
-																			 * MenuBar
-																			 * .
-																			 * MENU_BAR_PREFIX
-																			 */
-		// update popup and toolbar:
-		popupmenu.update(holder);
-		toolbar.update(holder);
-
-		addIconsToMenu(holder, MenuBar.INSERT_MENU + "icons");
-
-	}
-
-	public void addIconsToMenu(StructuredMenuHolder holder,
-			String iconMenuString) {
-		JMenu iconMenu = holder.addMenu(new JMenu(getText("icon_menu")),
-				iconMenuString + "/.");
-		holder.addAction(removeLastIconAction, iconMenuString
-				+ "/removeLastIcon");
-		holder.addAction(removeAllIconsAction, iconMenuString
-				+ "/removeAllIcons");
-		holder.addSeparator(iconMenuString);
-		for (int i = 0; i < iconActions.size(); ++i) {
-			JMenuItem item = holder.addAction((Action) iconActions.get(i),
-					iconMenuString + "/" + i);
-		}
-	}
-
 	public MenuStructure updateMenusFromXml(InputStream in) {
 		// get from resources:
 		try {
@@ -512,86 +441,9 @@ public class MindMapController extends ControllerAdapter implements
 		}
 	}
 
-	/**
-     */
-	public void processMenuCategory(StructuredMenuHolder holder, List list,
-			String category) {
-		String categoryCopy = category;
-		ButtonGroup buttonGroup = null;
-		for (Iterator i = list.iterator(); i.hasNext();) {
-			Object obj = (Object) i.next();
-			if (obj instanceof MenuCategoryBase) {
-				MenuCategoryBase cat = (MenuCategoryBase) obj;
-				String newCategory = categoryCopy + "/" + cat.getName();
-				holder.addCategory(newCategory);
-				if (cat instanceof MenuSubmenu) {
-					MenuSubmenu submenu = (MenuSubmenu) cat;
-					holder.addMenu(new JMenu(getText(submenu.getNameRef())),
-							newCategory + "/.");
-				}
-				processMenuCategory(holder, cat.getListChoiceList(),
-						newCategory);
-			} else if (obj instanceof MenuActionBase) {
-				MenuActionBase action = (MenuActionBase) obj;
-				String field = action.getField();
-				String name = action.getName();
-				if (name == null) {
-					name = field;
-				}
-				String keystroke = action.getKeyRef();
-				try {
-					Action theAction = (Action) Tools.getField(new Object[] {
-							this }, field);
-					String theCategory = categoryCopy + "/" + name;
-					if (obj instanceof MenuCheckedAction) {
-						addCheckBox(holder, theCategory, theAction, keystroke);
-					} else if (obj instanceof MenuRadioAction) {
-						final JRadioButtonMenuItem item = (JRadioButtonMenuItem) addRadioItem(
-								holder, theCategory, theAction, keystroke,
-								((MenuRadioAction) obj).getSelected());
-						if (buttonGroup == null)
-							buttonGroup = new ButtonGroup();
-						buttonGroup.add(item);
-
-					} else {
-						add(holder, theCategory, theAction, keystroke);
-					}
-				} catch (Exception e1) {
-					freemind.main.Resources.getInstance().logException(e1);
-				}
-			} else if (obj instanceof MenuSeparator) {
-				holder.addSeparator(categoryCopy);
-			} /* else exception */
-		}
-	}
-
-	public JPopupMenu getPopupMenu() {
-		return popupmenu;
-	}
-
-	/**
-	 * Link implementation: If this is a link, we want to make a popup with at
-	 * least removelink available.
-	 */
-	public JPopupMenu getPopupForModel(java.lang.Object obj) {
-		return null;
-	}
-
 	// convenience methods
 	public MindMapMapModel getMindMapMapModel() {
 		return (MindMapMapModel) getMap();
-	}
-
-	public JToolBar getModeToolBar() {
-		return getToolBar();
-	}
-
-	MindMapToolBar getToolBar() {
-		return toolbar;
-	}
-
-	public Component getLeftToolBar() {
-		return toolbar.getLeftToolBar();
 	}
 
 	/**
@@ -610,7 +462,6 @@ public class MindMapController extends ControllerAdapter implements
 		for (int i = 0; i < iconActions.size(); ++i) {
 			((Action) iconActions.get(i)).setEnabled(enabled);
 		}
-		getToolBar().setAllActions(enabled);
 		cut.setEnabled(enabled);
 		copy.setEnabled(enabled);
 		copySingle.setEnabled(enabled);

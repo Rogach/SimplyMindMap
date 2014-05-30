@@ -21,7 +21,6 @@ package freemind.modes;
 
 import freemind.controller.LastStateStorageManagement;
 import freemind.controller.MindMapNodesSelection;
-import freemind.controller.StructuredMenuHolder;
 import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
 import freemind.controller.actions.generated.instance.NodeListMember;
 import freemind.main.FreeMindCommon;
@@ -526,62 +525,6 @@ public abstract class ControllerAdapter implements ModeController,
 		logger.finest("Sort result: " + inPlaceList);
 	}
 
-	/** @return returns the new JMenuItem. */
-	protected JMenuItem add(JMenu menu, Action action, String keystroke) {
-		JMenuItem item = menu.add(action);
-		item.setAccelerator(KeyStroke.getKeyStroke(Resources.getInstance().common
-				.getAdjustableProperty(keystroke)));
-		return item;
-	}
-
-	/**
-	 * @return returns the new JMenuItem.
-	 * @param keystroke
-	 *            can be null, if no keystroke should be assigned.
-	 */
-	protected JMenuItem add(StructuredMenuHolder holder, String category,
-			Action action, String keystroke) {
-		JMenuItem item = holder.addAction(action, category);
-		if (keystroke != null) {
-			String keyProperty = Resources.getInstance().common.getAdjustableProperty(keystroke);
-			logger.finest("Found key stroke: " + keyProperty);
-			item.setAccelerator(KeyStroke.getKeyStroke(keyProperty));
-		}
-		return item;
-	}
-
-	/**
-	 * @return returns the new JCheckBoxMenuItem.
-	 * @param keystroke
-	 *            can be null, if no keystroke should be assigned.
-	 */
-	protected JMenuItem addCheckBox(StructuredMenuHolder holder,
-			String category, Action action, String keystroke) {
-		JCheckBoxMenuItem item = (JCheckBoxMenuItem) holder.addMenuItem(
-				new JCheckBoxMenuItem(action), category);
-		if (keystroke != null) {
-			item.setAccelerator(KeyStroke.getKeyStroke(Resources.getInstance().common
-					.getAdjustableProperty(keystroke)));
-		}
-		return item;
-	}
-
-	protected JMenuItem addRadioItem(StructuredMenuHolder holder,
-			String category, Action action, String keystroke, boolean isSelected) {
-		JRadioButtonMenuItem item = (JRadioButtonMenuItem) holder.addMenuItem(
-				new JRadioButtonMenuItem(action), category);
-		if (keystroke != null) {
-			item.setAccelerator(KeyStroke.getKeyStroke(Resources.getInstance().common
-					.getAdjustableProperty(keystroke)));
-		}
-		item.setSelected(isSelected);
-		return item;
-	}
-
-	protected void add(JMenu menu, Action action) {
-		menu.add(action);
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -654,43 +597,6 @@ public abstract class ControllerAdapter implements ModeController,
 			setBlocked(false); // unblock controller
 		}
 
-	}
-
-	/**
-	 * Take care! This listener is also used for modelpopups (as for graphical
-	 * links).
-	 */
-	protected final ControllerPopupMenuListener popupListenerSingleton = new ControllerPopupMenuListener();
-
-	public void showPopupMenu(MouseEvent e) {
-		if (e.isPopupTrigger()) {
-			JPopupMenu popupmenu = getPopupMenu();
-			if (popupmenu != null) {
-				// adding listener could be optimized but without much profit...
-				popupmenu.addPopupMenuListener(this.popupListenerSingleton);
-				popupmenu.show(e.getComponent(), e.getX(), e.getY());
-				e.consume();
-			}
-		}
-	}
-
-	/** Default implementation: no context menu. */
-	public JPopupMenu getPopupForModel(java.lang.Object obj) {
-		return null;
-	}
-
-	/**
-	 * Overwrite this, if you have one.
-	 */
-	public Component getLeftToolBar() {
-		return null;
-	}
-
-	/**
-	 * Overwrite this, if you have one.
-	 */
-	public JToolBar getModeToolBar() {
-		return null;
 	}
 
 	// status, currently: default, blocked (PN)
@@ -936,20 +842,6 @@ public abstract class ControllerAdapter implements ModeController,
 	public Color getSelectionColor() {
 		return selectionColor;
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.modes.ModeController#updatePopupMenu(freemind.controller.
-	 * StructuredMenuHolder)
-	 */
-	public void updatePopupMenu(StructuredMenuHolder holder) {
-
-	}
-
-	/**
-     *
-     */
 
 	public void shutdownController() {
 		setAllActions(false);

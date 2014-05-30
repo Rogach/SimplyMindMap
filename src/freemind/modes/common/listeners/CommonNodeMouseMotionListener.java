@@ -188,7 +188,10 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
 		// Only Right mouse release is a popup trigger!
 		// OK, but Right mouse <i>press</i> <i>is</i> a popup trigger on Linux.
 		logger.fine("Looking for popup for " +e);
-		c.showPopupMenu(e);
+    
+		//c.showPopupMenu(e);
+    //popupmenu.show(e.getComponent(), e.getX(), e.getY());
+    //e.consume();
 	}
 
 	protected Rectangle getControlRegion(Point2D p) {

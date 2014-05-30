@@ -21,7 +21,6 @@
 package freemind.modes;
 
 import freemind.common.TextTranslator;
-import freemind.controller.StructuredMenuHolder;
 import freemind.main.XMLParseException;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
@@ -272,23 +271,6 @@ public interface ModeController extends TextTranslator {
 	 * the center of the screen.
 	 */
 	void centerNode(MindMapNode node);
-
-	public JToolBar getModeToolBar();
-
-	/** For the toolbar on the left hand side of the window. */
-	public Component getLeftToolBar();
-
-	/** Use this method to get menus to the screen. */
-	public void updateMenus(StructuredMenuHolder holder);
-
-	public void updatePopupMenu(StructuredMenuHolder holder);
-
-	JPopupMenu getPopupMenu();
-
-	void showPopupMenu(MouseEvent e);
-
-	/** This returns a context menu for an object placed in the background pane. */
-	JPopupMenu getPopupForModel(java.lang.Object obj);
 
 	MapView getView();
 
