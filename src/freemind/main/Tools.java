@@ -680,50 +680,6 @@ public class Tools {
 
 	/**
      */
-	public static String toBase64(byte[] byteBuffer) {
-		return new String(Base64Coding.encode64(byteBuffer));
-	}
-
-	/**
-	 * @throws IOException
-	 */
-	public static byte[] fromBase64(String base64String) {
-		return Base64Coding.decode64(base64String);
-	}
-
-	public static String decompress(String compressedMessage) {
-		byte[] compressedData = fromBase64(compressedMessage);
-		// Create the decompressor and give it the data to compress
-		Inflater decompressor = new Inflater();
-		decompressor.setInput(compressedData);
-
-		// Create an expandable byte array to hold the decompressed data
-		ByteArrayOutputStream bos = new ByteArrayOutputStream(
-				compressedData.length);
-
-		// Decompress the data
-		byte[] buf = new byte[1024];
-		boolean errorOccured = false;
-		while (!decompressor.finished() && !errorOccured) {
-			try {
-				int count = decompressor.inflate(buf);
-				bos.write(buf, 0, count);
-			} catch (DataFormatException e) {
-				errorOccured = true;
-			}
-		}
-		try {
-			bos.close();
-		} catch (IOException e) {
-		}
-
-		// Get the decompressed data
-		byte[] decompressedData = bos.toByteArray();
-		return byteArrayToUTF8String(decompressedData);
-	}
-
-	/**
-     */
 	public static String byteArrayToUTF8String(byte[] compressedData) {
 		// Decode using utf-8
 		try {
