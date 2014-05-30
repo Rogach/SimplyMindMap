@@ -27,7 +27,6 @@ import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
 import freemind.main.XMLParseException;
-import freemind.modes.FreeMindFileDialog.DirectoryResultListener;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
 import java.awt.Color;
@@ -80,8 +79,7 @@ import javax.swing.filechooser.FileFilter;
  * default Actions you may want to use for easy editing of your model. Take
  * MindMapController as a sample.
  */
-public abstract class ControllerAdapter implements ModeController,
-		DirectoryResultListener {
+public abstract class ControllerAdapter implements ModeController {
 
 	// Logging:
 	private static java.util.logging.Logger logger;
