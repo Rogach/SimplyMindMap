@@ -40,7 +40,6 @@ import javax.swing.filechooser.FileFilter;
 import freemind.common.TextTranslator;
 import freemind.controller.StructuredMenuHolder;
 import freemind.main.XMLParseException;
-import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
 
@@ -305,8 +304,6 @@ public interface ModeController extends TextTranslator {
 	void setModel(MapAdapter model);
 
 	Mode getMode();
-
-	MapModule getMapModule();
 
 	Color getSelectionColor();
 

@@ -78,7 +78,6 @@ import freemind.main.Tools;
 import freemind.main.XMLElement;
 import freemind.main.XMLParseException;
 import freemind.modes.FreeMindFileDialog.DirectoryResultListener;
-import freemind.view.MapModule;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
 import java.util.logging.Logger;
@@ -1056,14 +1055,6 @@ public abstract class ControllerAdapter implements ModeController,
 	public Set getRegisteredMouseWheelEventHandler() {
 		return Collections.EMPTY_SET;
 	}
-
-	public MapModule getMapModule() {
-    return null;
-	}
-
-	/**
-    *
-    */
 
 	public void setToolTip(MindMapNode node, String key, String value) {
 		node.setToolTip(key, value);
