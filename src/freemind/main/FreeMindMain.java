@@ -35,7 +35,6 @@ import javax.swing.JLayeredPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
-import freemind.controller.Controller;
 import freemind.controller.MenuBar;
 import freemind.view.mindmapview.MapView;
 
@@ -48,11 +47,7 @@ public interface FreeMindMain {
 
 	public boolean isApplet();
 
-	public MapView getView();
-
 	public void setView(MapView view);
-
-	public Controller getController();
 
 	public void setWaitingCursor(boolean waiting);
 

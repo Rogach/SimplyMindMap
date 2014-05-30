@@ -72,7 +72,6 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.filechooser.FileFilter;
 
-import freemind.controller.Controller;
 import freemind.controller.LastStateStorageManagement;
 import freemind.controller.MapModuleManager;
 import freemind.controller.MindMapNodesSelection;
@@ -397,9 +396,6 @@ public abstract class ControllerAdapter implements ModeController,
 	}
 
 	public void newMap(final MindMap mapModel) {
-		getController().getMapModuleManager().newMapModule(mapModel,
-				mapModel.getModeController());
-		mapModel.setSaved(false);
 	}
 
 	/**
@@ -408,23 +404,7 @@ public abstract class ControllerAdapter implements ModeController,
 	 */
 	public ModeController load(URL file) throws FileNotFoundException,
 			IOException, XMLParseException, URISyntaxException {
-		String mapDisplayName = getController().getMapModuleManager()
-				.checkIfFileIsAlreadyOpened(file);
-		if (null != mapDisplayName) {
-			getController().getMapModuleManager().changeToMapModule(
-					mapDisplayName);
-			return getController().getModeController();
-		} else {
-			final ModeController newModeController = getMode()
-
-			.createModeController();
-			final MapAdapter model = newModel(newModeController);
-			model.load(file);
-			newMap(model);
-			model.setSaved(true);
-			restoreMapsLastState(newModeController, model);
-			return newModeController;
-		}
+    return null;
 	}
 
 	/**
@@ -447,7 +427,7 @@ public abstract class ControllerAdapter implements ModeController,
 	protected void restoreMapsLastState(final ModeController newModeController,
 			final MapAdapter model) {
 		// restore zoom, etc.
-		String lastStateMapXml = getFrame().getProperty(
+		String lastStateMapXml = Resources.getInstance().getProperty(
 				FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE);
 		LastStateStorageManagement management = new LastStateStorageManagement(
 				lastStateMapXml);
@@ -456,7 +436,6 @@ public abstract class ControllerAdapter implements ModeController,
 		if (store != null) {
 			ModeController modeController = newModeController;
 			// Zoom must be set on combo box, too.
-			getController().setZoom(store.getLastZoom());
 			MindMapNode sel = null;
 			try {
 				// Selected:
@@ -524,9 +503,6 @@ public abstract class ControllerAdapter implements ModeController,
 				} catch (Exception e) {
 					freemind.main.Resources.getInstance().logException(e);
 					// give "not found" message
-					getFrame().out(
-							Tools.expandPlaceholders(getText("link_not_found"),
-									target));
 				}
 				return;
 
@@ -552,8 +528,7 @@ public abstract class ControllerAdapter implements ModeController,
 																											// Mind
 																											// Map
 				logger.info("Trying to open mind map " + absolute);
-				MapModuleManager mapModuleManager = getController()
-						.getMapModuleManager();
+				MapModuleManager mapModuleManager = null;
 				/*
 				 * this can lead to confusion if the user handles multiple maps
 				 * with the same name. Obviously, this is wrong. Get a better
@@ -562,38 +537,29 @@ public abstract class ControllerAdapter implements ModeController,
 				String mapExtensionKey = mapModuleManager
 						.checkIfFileIsAlreadyOpened(absolute);
 				if (mapExtensionKey == null) {
-					getFrame().setWaitingCursor(true);
 					load(absolute);
 				} else {
 					mapModuleManager.tryToChangeToMapModule(mapExtensionKey);
 				}
 				if (ref != null) {
 					try {
-						ModeController newModeController = getController()
-								.getModeController();
+						ModeController newModeController = null;
 						// jump to link:
 						newModeController.centerNode(newModeController
 								.getNodeFromID(ref));
 					} catch (Exception e) {
 						freemind.main.Resources.getInstance().logException(e);
-						getFrame().out(
-								Tools.expandPlaceholders(
-										getText("link_not_found"), ref));
 						return;
 					}
 				}
 			} else {
 				// ---- Open URL in browser
-				getFrame().openDocument(originalURL);
 			}
 		} catch (MalformedURLException ex) {
 			freemind.main.Resources.getInstance().logException(ex);
-			getController().errorMessage(getText("url_error") + "\n" + ex);
 			return;
 		} catch (Exception e) {
 			freemind.main.Resources.getInstance().logException(e);
-		} finally {
-			getFrame().setWaitingCursor(false);
 		}
 	}
 
@@ -685,13 +651,15 @@ public abstract class ControllerAdapter implements ModeController,
 				}
 			}
 		}
-		getController().obtainFocusForSelected();
+		obtainFocusForSelected();
 	}
 
 	public void selectBranch(NodeView selected, boolean extend) {
 		displayNode(selected.getModel());
 		getView().selectBranch(selected, extend);
 	}
+
+  public abstract void obtainFocusForSelected();
 
 	/**
 	 * This class sortes nodes by ascending depth of their paths to root. This
@@ -746,7 +714,7 @@ public abstract class ControllerAdapter implements ModeController,
 	/** @return returns the new JMenuItem. */
 	protected JMenuItem add(JMenu menu, Action action, String keystroke) {
 		JMenuItem item = menu.add(action);
-		item.setAccelerator(KeyStroke.getKeyStroke(getFrame()
+		item.setAccelerator(KeyStroke.getKeyStroke(Resources.getInstance().common
 				.getAdjustableProperty(keystroke)));
 		return item;
 	}
@@ -760,7 +728,7 @@ public abstract class ControllerAdapter implements ModeController,
 			Action action, String keystroke) {
 		JMenuItem item = holder.addAction(action, category);
 		if (keystroke != null) {
-			String keyProperty = getFrame().getAdjustableProperty(keystroke);
+			String keyProperty = Resources.getInstance().common.getAdjustableProperty(keystroke);
 			logger.finest("Found key stroke: " + keyProperty);
 			item.setAccelerator(KeyStroke.getKeyStroke(keyProperty));
 		}
@@ -777,7 +745,7 @@ public abstract class ControllerAdapter implements ModeController,
 		JCheckBoxMenuItem item = (JCheckBoxMenuItem) holder.addMenuItem(
 				new JCheckBoxMenuItem(action), category);
 		if (keystroke != null) {
-			item.setAccelerator(KeyStroke.getKeyStroke(getFrame()
+			item.setAccelerator(KeyStroke.getKeyStroke(Resources.getInstance().common
 					.getAdjustableProperty(keystroke)));
 		}
 		return item;
@@ -788,7 +756,7 @@ public abstract class ControllerAdapter implements ModeController,
 		JRadioButtonMenuItem item = (JRadioButtonMenuItem) holder.addMenuItem(
 				new JRadioButtonMenuItem(action), category);
 		if (keystroke != null) {
-			item.setAccelerator(KeyStroke.getKeyStroke(getFrame()
+			item.setAccelerator(KeyStroke.getKeyStroke(Resources.getInstance().common
 					.getAdjustableProperty(keystroke)));
 		}
 		item.setSelected(isSelected);
@@ -827,7 +795,6 @@ public abstract class ControllerAdapter implements ModeController,
 				}
 			}
 		}
-		getController().setTitle();
 	}
 
 	/*
@@ -886,13 +853,10 @@ public abstract class ControllerAdapter implements ModeController,
 					getText("map_corrupted"), "FreeMind",
 					JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
 			if (showDetail == JOptionPane.YES_OPTION) {
-				getController().errorMessage(ex);
 			}
 		} else if (exceptionType.equals("java.io.FileNotFoundException")) {
-			getController().errorMessage(ex.getMessage());
 		} else {
 			freemind.main.Resources.getInstance().logException(ex);
-			getController().errorMessage(ex);
 		}
 	}
 
@@ -939,22 +903,14 @@ public abstract class ControllerAdapter implements ModeController,
 				// yet
 			String lockingUser = getModel().tryToLock(f);
 			if (lockingUser != null) {
-				getFrame().getController().informationMessage(
-						Tools.expandPlaceholders(
-								getText("map_locked_by_save_as"), f.getName(),
-								lockingUser));
 				return false;
 			}
 		} catch (Exception e) { // Throwed by tryToLock
-			getFrame().getController().informationMessage(
-					Tools.expandPlaceholders(
-							getText("locking_failed_by_save_as"), f.getName()));
 			return false;
 		}
 
 		save(f);
 		// Update the name of the map
-		getController().getMapModuleManager().updateMapModuleName();
 		return true;
 	}
 
@@ -981,60 +937,7 @@ public abstract class ControllerAdapter implements ModeController,
 	 * Return false if user has canceled.
 	 */
 	public boolean close(boolean force, MapModuleManager mapModuleManager) {
-		// remove old messages.
-		getFrame().out("");
-		if (!force && !getModel().isSaved()) {
-			String text = getText("save_unsaved") + "\n"
-					+ mapModuleManager.getMapModule().toString();
-			String title = Tools.removeMnemonic(getText("save"));
-			int returnVal = JOptionPane.showOptionDialog(getFrame()
-					.getContentPane(), text, title,
-					JOptionPane.YES_NO_CANCEL_OPTION,
-					JOptionPane.QUESTION_MESSAGE, null, null, null);
-			if (returnVal == JOptionPane.YES_OPTION) {
-				boolean savingNotCancelled = save();
-				if (!savingNotCancelled) {
-					return false;
-				}
-			} else if ((returnVal == JOptionPane.CANCEL_OPTION)
-					|| (returnVal == JOptionPane.CLOSED_OPTION)) {
-				return false;
-			}
-		}
-		LastStateStorageManagement management = new LastStateStorageManagement(
-				getFrame().getProperty(
-						FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE));
-		String restorable = getModel().getRestorable();
-		if (restorable != null) {
-			MindmapLastStateStorage store = management.getStorage(restorable);
-			if (store == null) {
-				store = new MindmapLastStateStorage();
-			}
-			store.setRestorableName(restorable);
-			store.setLastZoom(getView().getZoom());
-			Point viewLocation = getView().getViewPosition();
-			if (viewLocation != null) {
-				store.setX(viewLocation.x);
-				store.setY(viewLocation.y);
-			}
-			String lastSelected = this.getNodeID(this.getSelected());
-			store.setLastSelected(lastSelected);
-			store.clearNodeListMemberList();
-			List selecteds = this.getSelecteds();
-			for (Iterator iter = selecteds.iterator(); iter.hasNext();) {
-				MindMapNode node = (MindMapNode) iter.next();
-				NodeListMember member = new NodeListMember();
-				member.setNode(this.getNodeID(node));
-				store.addNodeListMember(member);
-			}
-			management.changeOrAdd(store);
-			getFrame().setProperty(
-					FreeMindCommon.MINDMAP_LAST_STATE_MAP_STORAGE,
-					management.getXml());
-		}
-
-		getModel().destroy();
-		return true;
+		return false;
 	}
 
 	/*
@@ -1061,9 +964,6 @@ public abstract class ControllerAdapter implements ModeController,
 	 */
 	protected void setAllActions(boolean enabled) {
 		// controller actions:
-		getController().zoomIn.setEnabled(enabled);
-		getController().zoomOut.setEnabled(enabled);
-		getController().showFilterToolbarAction.setEnabled(enabled);
 	}
 
 	//
@@ -1161,15 +1061,7 @@ public abstract class ControllerAdapter implements ModeController,
 	}
 
 	public URL getResource(String name) {
-		return getFrame().getResource(name);
-	}
-
-	public Controller getController() {
-		return getMode().getController();
-	}
-
-	public FreeMindMain getFrame() {
-		return getController().getFrame();
+		return Resources.getInstance().getResource(name);
 	}
 
 	/**
@@ -1196,7 +1088,6 @@ public abstract class ControllerAdapter implements ModeController,
 	}
 
 	protected void updateMapModuleName() {
-		getController().getMapModuleManager().updateMapModuleName();
 	}
 
 	/**
@@ -1239,7 +1130,6 @@ public abstract class ControllerAdapter implements ModeController,
 
 		public void actionPerformed(ActionEvent e) {
 			mc.open();
-			getController().setTitle(); // Possible update of read-only
 		}
 	}
 
@@ -1254,13 +1144,9 @@ public abstract class ControllerAdapter implements ModeController,
 		public void actionPerformed(ActionEvent e) {
 			boolean success = mc.save();
 			if (success) {
-				getFrame().out(getText("saved")); // perhaps... (PN)
 			} else {
 				String message = "Saving failed.";
-				getFrame().out(message);
-				getController().errorMessage(message);
 			}
-			getController().setTitle(); // Possible update of read-only
 		}
 	}
 
@@ -1274,7 +1160,6 @@ public abstract class ControllerAdapter implements ModeController,
 
 		public void actionPerformed(ActionEvent e) {
 			mc.saveAs();
-			getController().setTitle(); // Possible update of read-only
 		}
 	}
 
@@ -1444,7 +1329,6 @@ public abstract class ControllerAdapter implements ModeController,
 
 	public void shutdownController() {
 		setAllActions(false);
-		getController().getMapMouseWheelListener().deregister();
 	}
 
 	/**
@@ -1453,14 +1337,6 @@ public abstract class ControllerAdapter implements ModeController,
 	 * 
 	 */
 	public void startupController() {
-		setAllActions(true);
-		if (getFrame().getView() != null) {
-			FileOpener fileOpener = new FileOpener();
-			DropTarget dropTarget = new DropTarget(getFrame().getView(),
-					fileOpener);
-		}
-		getController().getMapMouseWheelListener().register(
-				new MindMapMouseWheelEventHandler());
 	}
 
 	/**
@@ -1528,13 +1404,13 @@ public abstract class ControllerAdapter implements ModeController,
 	public void centerNode(MindMapNode node) {
 		NodeView view = null;
 		if (node != null) {
-			view = getController().getView().getNodeView(node);
+			view = getView().getNodeView(node);
 		} else {
 			return;
 		}
 		if (view == null) {
 			displayNode(node);
-			view = getController().getView().getNodeView(node);
+			view = getView().getNodeView(node);
 		}
 		centerNode(view);
 	}
@@ -1573,8 +1449,7 @@ public abstract class ControllerAdapter implements ModeController,
 	}
 
 	public MapModule getMapModule() {
-		return getController().getMapModuleManager()
-				.getModuleGivenModeController(this);
+    return null;
 	}
 
 	/**

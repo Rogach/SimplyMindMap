@@ -42,7 +42,7 @@ public class CommonToggleChildrenFoldedAction extends AbstractAction {
 	public CommonToggleChildrenFoldedAction(ViewControllerAdapter controller) {
 		super(controller.getText("toggle_children_folded"));
 		this.modeController = controller;
-		logger = modeController.getFrame().getLogger(this.getClass().getName());
+		logger = Logger.getLogger(this.getClass().getName());
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -50,7 +50,7 @@ public class CommonToggleChildrenFoldedAction extends AbstractAction {
 		modeController.toggleFolded.toggleFolded(selected.getModel()
 				.childrenUnfolded());
 		modeController.getView().selectAsTheOnlyOneSelected(selected);
-		modeController.getController().obtainFocusForSelected();
+		modeController.obtainFocusForSelected();
 	}
 
 }

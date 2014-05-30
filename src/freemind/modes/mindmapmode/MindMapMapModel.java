@@ -50,7 +50,6 @@ import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
-import freemind.common.OptionalDontShowMeAgainDialog;
 import freemind.common.UnicodeReader;
 import freemind.main.FreeMind;
 import freemind.main.FreeMindCommon;
@@ -64,6 +63,7 @@ import freemind.modes.MindMapLinkRegistry;
 import freemind.modes.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.NodeAdapter;
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 public class MindMapMapModel extends MapAdapter {
@@ -274,39 +274,7 @@ public class MindMapMapModel extends MapAdapter {
 	 * of temporary (internal) files.
 	 */
 	private boolean saveInternal(File file, boolean isInternal) {
-		if (!isInternal && readOnly) { // unexpected situation, yet it's better
-										// to back it up
-			System.err.println("Attempt to save read-only map.");
-			return false;
-		}
-		try {
-			// Generating output Stream
-			if (timerForAutomaticSaving != null) {
-				timerForAutomaticSaving.cancel();
-			}
-			BufferedWriter fileout = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(file)));
-			getXml(fileout);
-
-			if (!isInternal) {
-				setFile(file);
-				setSaved(true);
-			}
-			scheduleTimerForAutomaticSaving();
-			return true;
-		} catch (FileNotFoundException e) {
-			String message = Tools.expandPlaceholders(getText("save_failed"),
-					file.getName());
-			if (!isInternal)
-				getFrame().getController().errorMessage(message);
-			else
-				getFrame().out(message);
-		} catch (Exception e) {
-			logger.severe("Error in MindMapMapModel.save(): ");
-			freemind.main.Resources.getInstance().logException(e);
-		}
-		scheduleTimerForAutomaticSaving();
-		return false;
+    throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -353,18 +321,7 @@ public class MindMapMapModel extends MapAdapter {
 	 *             file is being edited.
 	 */
 	public String tryToLock(File file) throws Exception {
-		String lockingUser = lockManager.tryToLock(file);
-		String lockingUserOfOldLock = lockManager.popLockingUserOfOldLock();
-		if (lockingUserOfOldLock != null) {
-			getFrame().getController().informationMessage(
-					Tools.expandPlaceholders(
-							getText("locking_old_lock_removed"),
-							file.getName(), lockingUserOfOldLock));
-		}
-		if (lockingUser == null) {
-			readOnly = false;
-		} // The map sure is not read only when the locking suceeded.
-		return lockingUser;
+    throw new UnsupportedOperationException();
 	}
 
 	public void load(URL url) throws FileNotFoundException, IOException,
@@ -375,43 +332,7 @@ public class MindMapMapModel extends MapAdapter {
 	}
 
 	public void load(File file) throws FileNotFoundException, IOException {
-		if (!file.exists()) {
-			throw new FileNotFoundException(Tools.expandPlaceholders(
-					getText("file_not_found"), file.getPath()));
-		}
-		if (!file.canWrite()) {
-			readOnly = true;
-		} else {
-			// try to lock the map
-			try {
-				String lockingUser = tryToLock(file);
-				if (lockingUser != null) {
-					getFrame().getController().informationMessage(
-							Tools.expandPlaceholders(
-									getText("map_locked_by_open"),
-									file.getName(), lockingUser));
-					readOnly = true;
-				} else {
-					readOnly = false;
-				}
-			} catch (Exception e) { // Thrown by tryToLock
-				freemind.main.Resources.getInstance().logException(e);
-				getFrame().getController().informationMessage(
-						Tools.expandPlaceholders(
-								getText("locking_failed_by_open"),
-								file.getName()));
-				readOnly = true;
-			}
-		}
-
-		synchronized (this) {
-			MindMapNodeModel root = loadTree(file);
-			if (root != null) {
-				setRoot(root);
-			}
-			setFile(file);
-			setFileTime();
-		}
+    throw new UnsupportedOperationException();
 	}
 
 	/** When a map is closed, this method is called. */
@@ -494,31 +415,9 @@ public class MindMapMapModel extends MapAdapter {
 			}
 		}
 		if (reader == null) {
-			if (pAskUserBeforeUpdate && !Tools.isHeadless()) {
-				int showResult = new OptionalDontShowMeAgainDialog(
-						mModeController.getFrame().getJFrame(),
-						mModeController.getSelectedView(),
-						"really_convert_to_current_version2",
-						"confirmation",
-						mModeController,
-						new OptionalDontShowMeAgainDialog.StandardPropertyHandler(
-								mModeController.getController(),
-								FreeMind.RESOURCES_CONVERT_TO_CURRENT_VERSION),
-						OptionalDontShowMeAgainDialog.ONLY_OK_SELECTION_IS_STORED)
-						.show().getResult();
-				if (showResult != JOptionPane.OK_OPTION) {
-					throw new IllegalArgumentException(
-							"We should not open the reader " + pReaderCreator);
-				}
-			}
 			reader = Tools.getUpdateReader(pReaderCreator.createReader(),
 					FREEMIND_VERSION_UPDATER_XSLT, getFrame());
 			if (reader == null) {
-				// something went wrong on update:
-				// FIXME: Translate me.
-				this.getModeController()
-						.getFrame()
-						.out("Error on conversion. Continue without conversion. Some elements may be lost!");
 				reader = Tools.getActualReader(pReaderCreator.createReader());
 			}
 		}

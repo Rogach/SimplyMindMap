@@ -22,6 +22,7 @@
 
 package freemind.modes.common.dialogs;
 
+import freemind.main.Resources;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -45,7 +46,7 @@ public class PersistentEditableComboBox extends JComboBox {
 		setEditable(true);
 
 		addUrl("", false);
-		String storedUrls = mModeController.getFrame().getProperty(pStorageKey);
+		String storedUrls = Resources.getInstance().getProperty(pStorageKey);
 		if (storedUrls != null) {
 			String[] array = storedUrls.split("\t");
 			for (int i = 0; i < array.length; i++) {
@@ -89,8 +90,6 @@ public class PersistentEditableComboBox extends JComboBox {
 				resultBuffer.append(element);
 				resultBuffer.append("\t");
 			}
-			mModeController.getFrame().setProperty(pStorageKey,
-					resultBuffer.toString());
 		}
 		return true;
 	};

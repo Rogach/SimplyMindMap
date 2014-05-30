@@ -47,7 +47,6 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import freemind.controller.Controller;
 import freemind.extensions.DontSaveMarker;
 import freemind.extensions.NodeHook;
 import freemind.extensions.PermanentNodeHook;
@@ -370,7 +369,7 @@ public abstract class NodeAdapter implements MindMapNode {
 	// Node holds font only in the case that the font is not default.
 
 	public void establishOwnFont() {
-		font = (font != null) ? font : getFrame().getController()
+		font = (font != null) ? font : NodeView
 				.getDefaultFont();
 	}
 
@@ -382,9 +381,9 @@ public abstract class NodeAdapter implements MindMapNode {
 
 	public void toggleBold() {
 		establishOwnFont();
-		setFont(getFrame().getController().getFontThroughMap(
+		setFont(
 				new Font(font.getFamily(), font.getStyle() ^ Font.BOLD, font
-						.getSize())));
+						.getSize()));
 	}
 
 	public void setItalic(boolean italic) {
@@ -395,9 +394,9 @@ public abstract class NodeAdapter implements MindMapNode {
 
 	public void toggleItalic() {
 		establishOwnFont();
-		setFont(getFrame().getController().getFontThroughMap(
+		setFont(
 				new Font(font.getFamily(), font.getStyle() ^ Font.ITALIC, font
-						.getSize())));
+						.getSize()));
 	}
 
 	public void setUnderlined(boolean underlined) {
@@ -414,8 +413,8 @@ public abstract class NodeAdapter implements MindMapNode {
 
 	public void setFontSize(int fontSize) {
 		establishOwnFont();
-		setFont(getFrame().getController().getFontThroughMap(
-				new Font(font.getFamily(), font.getStyle(), fontSize)));
+		setFont(
+				new Font(font.getFamily(), font.getStyle(), fontSize));
 	}
 
 	public Font getFont() {

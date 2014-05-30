@@ -89,7 +89,7 @@ public class FitToPage extends ModeControllerHookAdapter {
 			newZoom = heightZoom;
 		}
 		logger.info("Calculated new zoom " + (newZoom));
-		getController().getController().setZoom((float) (newZoom));
+		//getController().getController().setZoom((float) (newZoom));
 	}
 
 }

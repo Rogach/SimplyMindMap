@@ -44,13 +44,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.text.JTextComponent;
 
-import freemind.controller.Controller;
 import freemind.main.FreeMindCommon;
 import freemind.main.FreeMindMain;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.ModeController;
 import java.awt.Component;
+import java.awt.Window;
 
 /**
  * @author foltin
@@ -122,8 +122,7 @@ public class EditNodeBase {
 		}
 
 		EditDialog(EditNodeBase base) {
-			super((JFrame) base.getFrame(), base.getText("edit_long_node"),
-					/*modal = */ true);
+      super(base.getFrame(), base.getText("edit_long_node"), ModalityType.APPLICATION_MODAL);
 			getContentPane().setLayout(new BorderLayout());
 			setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 			DialogWindowListener dfl = new DialogWindowListener();
@@ -201,23 +200,19 @@ public class EditNodeBase {
 		return controller;
 	}
 
-	protected Controller getController() {
-		return controller.getController();
-	}
-
 	protected String getText(String string) {
 		return controller.getText(string);
 	}
 
-	protected JFrame getFrame() {
+	protected Window getFrame() {
     Component c = node;
-    while (!(c instanceof JFrame) && c != null) {
+    while (!(c instanceof Window) && c != null) {
       c = c.getParent();
     }
     if (c == null) {
       throw new RuntimeException("Failed to get parent JFrame for dialog");
     }
-		return (JFrame) c;
+		return (Window) c;
 	}
 
 	protected boolean binOptionIsTrue(String option) {

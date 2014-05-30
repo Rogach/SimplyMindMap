@@ -32,6 +32,7 @@ import java.util.ListIterator;
 import javax.swing.JOptionPane;
 
 import freemind.controller.MindMapNodesSelection;
+import freemind.main.Resources;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapMapModel;
@@ -148,49 +149,6 @@ public class MindMapNodeDropListener implements DropTargetListener {
 			// to implement extra application dnd or dnd between different Java
 			// Virtual Machines.
 
-			if (dropAction == DnDConstants.ACTION_LINK) {
-				// ACTION_LINK means for us change the color, style and font.
-
-				// This is not very clean. This all should probably be
-				// implemented on the mindMapMapModel level. On the other
-				// hand, one would have to downcast to MindMapMapModel anyway.
-
-				// MindMapNode selectedNode =
-				// c.getView().getSelected().getModel();
-				MindMapMapModel mindMapMapModel = (MindMapMapModel) mMindMapController
-						.getModel();
-
-				// link feature continues here. fc, 01.11.2003:
-				// if there are more than 4 nodes, then ask the user:
-				int yesorno = JOptionPane.YES_OPTION;
-				if (mMindMapController.getView().getSelecteds().size() >= 5) {
-					yesorno = JOptionPane
-							.showConfirmDialog(
-									mMindMapController.getFrame()
-											.getContentPane(),
-									mMindMapController
-											.getText("lots_of_links_warning"),
-									Integer.toString(mMindMapController
-											.getView().getSelecteds().size())
-											+ " links to the same node",
-									JOptionPane.YES_NO_OPTION);
-				}
-				if (yesorno == JOptionPane.YES_OPTION) {
-					for (ListIterator it = mMindMapController.getView()
-							.getSelecteds().listIterator(); it.hasNext();) {
-						MindMapNodeModel selectedNodeModel = (MindMapNodeModel) ((NodeView) it
-								.next()).getModel();
-					}
-				}
-			} else {
-				if (!targetNode.isWriteable()) {
-					String message = mMindMapController
-							.getText("node_is_write_protected");
-					JOptionPane.showMessageDialog(mMindMapController.getFrame()
-							.getContentPane(), message, "Freemind",
-							JOptionPane.ERROR_MESSAGE);
-					return;
-				}
 				Transferable trans = null;
 				// if move, verify, that the target is not a son of the sources.
 				List selecteds = mMindMapController.getSelecteds();
@@ -200,11 +158,7 @@ public class MindMapNodeDropListener implements DropTargetListener {
 						if (selecteds.contains(actualNode)) {
 							String message = mMindMapController
 									.getText("cannot_move_to_child");
-							JOptionPane.showMessageDialog(mMindMapController
-									.getFrame().getContentPane(), message,
-									"Freemind", JOptionPane.WARNING_MESSAGE);
-							dtde.dropComplete(true);
-							return;
+              throw new RuntimeException(Resources.getInstance().getText(message));
 						}
 						actualNode = (actualNode.isRoot()) ? null : actualNode
 								.getParentNode();
@@ -223,7 +177,6 @@ public class MindMapNodeDropListener implements DropTargetListener {
 					// an error occured. how to react?
 
 				}
-			}
 		} catch (Exception e) {
 			System.err.println("Drop exception:" + e);
 			freemind.main.Resources.getInstance().logException(e);

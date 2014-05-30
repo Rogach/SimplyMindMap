@@ -54,13 +54,10 @@ public class ExportBranchAction extends AbstractAction {
 		// if something is wrong, abort.
 		if (mMindMapController.getMap() == null || node == null
 				|| node.isRoot()) {
-			mMindMapController.getFrame().err("Could not export branch.");
 			return;
 		}
 		// If the current map is not saved yet, save it first.
 		if (mMindMapController.getMap().getFile() == null) {
-			mMindMapController.getFrame().out(
-					"You must save the current map first!");
 			mMindMapController.save();
 		}
 

@@ -28,7 +28,6 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.ListIterator;
 
-import freemind.controller.Controller;
 import freemind.controller.actions.generated.instance.NodeColorFormatAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Tools;
@@ -48,7 +47,7 @@ public class NodeColorAction extends FreemindAction implements ActorXml {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		Color color = Controller.showCommonJColorChooserDialog(controller
+		Color color = Tools.showCommonJColorChooserDialog(controller
 				.getView().getSelected(), controller
 				.getText("choose_node_color"), controller.getSelected()
 				.getColor());

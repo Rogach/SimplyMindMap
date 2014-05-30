@@ -35,7 +35,6 @@ import javax.swing.JLabel;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
-import freemind.controller.Controller;
 import freemind.controller.MenuBar;
 import freemind.main.HtmlTools;
 import freemind.main.Tools;
@@ -137,10 +136,6 @@ public abstract class MainView extends JLabel {
 		}
 	}
 
-	Controller getController() {
-		return getNodeView().getMap().getController();
-	}
-
 	protected boolean isCurrentlyPrinting() {
 		return getNodeView().getMap().isCurrentlyPrinting();
 	}
@@ -235,12 +230,7 @@ public abstract class MainView extends JLabel {
 			int condition, boolean pressed) {
 		if (super.processKeyBinding(ks, e, condition, pressed))
 			return true;
-		// try key bindings of the menu bar even if the menu bar is not visible
-		final MenuBar freeMindMenuBar = getController().getFrame()
-				.getFreeMindMenuBar();
-		return !freeMindMenuBar.isVisible()
-				&& freeMindMenuBar.processKeyBinding(ks, e,
-						JComponent.WHEN_IN_FOCUSED_WINDOW, pressed);
+    throw new UnsupportedOperationException();
 	}
 
 	abstract Point getCenterPoint();

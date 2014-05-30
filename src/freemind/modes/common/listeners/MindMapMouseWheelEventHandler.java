@@ -28,7 +28,6 @@ import java.awt.event.MouseWheelListener;
 import java.util.Iterator;
 import java.util.Set;
 
-import freemind.controller.Controller;
 import freemind.main.FreeMind;
 import freemind.main.Resources;
 import freemind.modes.ControllerAdapter;

@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
-import freemind.controller.Controller;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.modes.mindmapmode.actions.xml.ActionFilter.FinalActionFilter;
 import freemind.modes.mindmapmode.actions.xml.ActionFilter.FirstActionFilter;
@@ -37,8 +36,7 @@ import java.util.logging.Logger;
  * 
  */
 public class ActionFactory {
-
-	private Controller controller;
+  
 	/**
 	 * This Vector denotes all handler of the action to be called for each
 	 * action.
@@ -54,9 +52,8 @@ public class ActionFactory {
 	/**
 	 *
 	 */
-	public ActionFactory(Controller c) {
+	public ActionFactory() {
 		super();
-		this.controller = c;
 		if (logger == null) {
 			logger = Logger.getLogger(this.getClass().getName());
 		}
@@ -176,12 +173,6 @@ public class ActionFactory {
 			}
 		}
 		return returnValue;
-	}
-
-	/**
-	 */
-	public Controller getController() {
-		return controller;
 	}
 
 	/**

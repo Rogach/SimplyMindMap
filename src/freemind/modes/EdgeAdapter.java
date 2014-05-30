@@ -22,7 +22,6 @@ package freemind.modes;
 
 import java.awt.Color;
 
-import freemind.controller.Controller;
 import freemind.main.FreeMind;
 import freemind.main.FreeMindMain;
 import freemind.main.Resources;

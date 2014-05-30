@@ -48,6 +48,7 @@ import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.ControllerAdapter;
 import freemind.modes.MindMapNode;
+import java.awt.Frame;
 
 public class FindAction extends AbstractAction {
 	private final ControllerAdapter controller;
@@ -116,10 +117,11 @@ public class FindAction extends AbstractAction {
 		if (!found) {
 			String messageText = controller.getText("no_found_from");
 			String searchTerm = getSearchTermAsEscapedString(messageText);
-			controller.getController().informationMessage(
-					messageText.replaceAll("\\$1", searchTerm).replaceAll(
-							"\\$2", getFindFromText()),
-					controller.getView().getSelected());
+      // temp
+//			controller.getController().informationMessage(
+//					messageText.replaceAll("\\$1", searchTerm).replaceAll(
+//							"\\$2", getFindFromText()),
+//					controller.getView().getSelected());
 		}
 	}
 
@@ -140,7 +142,7 @@ public class FindAction extends AbstractAction {
 
 	void displayDialog() {
 		mDialog = null;
-		mDialog = new JDialog(controller.getFrame().getJFrame(),
+		mDialog = new JDialog((Frame) null,
 				controller.getText("find"));
 		mDialog.setModal(true);
 		mDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -234,9 +236,10 @@ public class FindAction extends AbstractAction {
 		public void actionPerformed(ActionEvent e) {
 			Collection subterms = find.getSubterms();
 			if (subterms == null) {
-				controller.getController().informationMessage(
-						controller.getText("no_previous_find"),
-						controller.getView().getSelected());
+        // temp
+//				controller.getController().informationMessage(
+//						controller.getText("no_previous_find"),
+//						controller.getView().getSelected());
 				return;
 			}
 			boolean found = find.findNext();
@@ -245,10 +248,11 @@ public class FindAction extends AbstractAction {
 				String messageText = controller.getText("no_more_found_from");
 				String searchTerm = find
 						.getSearchTermAsEscapedString(messageText);
-				controller.getController().informationMessage(
-						messageText.replaceAll("\\$1", searchTerm).replaceAll(
-								"\\$2", find.getFindFromText()),
-						controller.getView().getSelected());
+        // temp
+//				controller.getController().informationMessage(
+//						messageText.replaceAll("\\$1", searchTerm).replaceAll(
+//								"\\$2", find.getFindFromText()),
+//						controller.getView().getSelected());
 			}
 		}
 	}

@@ -24,14 +24,12 @@ import java.awt.Insets;
 import java.util.logging.Logger;
 
 public class MainToolBar extends FreeMindToolBar {
-	Controller controller;
 	private static Logger logger = null;
 
-	public MainToolBar(final Controller controller) {
+	public MainToolBar() {
 		super();
-		this.controller = controller;
 		if (logger == null) {
-			logger = controller.getFrame().getLogger(this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		}
 		setRollover(true);
 		setBorderPainted(false);

@@ -202,10 +202,7 @@ public class MapModuleManager {
 	 */
 	private Mode mCurrentMode = null;
 
-	private Controller mController;
-
-	MapModuleManager(Controller c) {
-		this.mController = c;
+	MapModuleManager() {
 	}
 
 	/**

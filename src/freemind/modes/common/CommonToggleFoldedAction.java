@@ -46,7 +46,7 @@ public class CommonToggleFoldedAction extends AbstractAction {
 	public CommonToggleFoldedAction(ControllerAdapter controller) {
 		super(controller.getText("toggle_folded"));
 		this.modeController = controller;
-		logger = modeController.getFrame().getLogger(this.getClass().getName());
+		logger = Logger.getLogger(this.getClass().getName());
 	}
 
 	public void actionPerformed(ActionEvent e) {

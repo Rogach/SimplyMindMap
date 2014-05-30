@@ -38,7 +38,6 @@ import javax.swing.JToolBar;
 import javax.swing.filechooser.FileFilter;
 
 import freemind.common.TextTranslator;
-import freemind.controller.Controller;
 import freemind.controller.MapModuleManager;
 import freemind.controller.StructuredMenuHolder;
 import freemind.extensions.HookFactory;
@@ -322,8 +321,6 @@ public interface ModeController extends TextTranslator {
 	/** This returns a context menu for an object placed in the background pane. */
 	JPopupMenu getPopupForModel(java.lang.Object obj);
 
-	FreeMindMain getFrame();
-
 	MapView getView();
 
 	MindMap getMap();
@@ -337,8 +334,6 @@ public interface ModeController extends TextTranslator {
 	Mode getMode();
 
 	MapModule getMapModule();
-
-	Controller getController();
 
 	HookFactory getHookFactory();
 
@@ -384,5 +379,7 @@ public interface ModeController extends TextTranslator {
 	 *            null if you want to delete this tooltip.
 	 */
 	public void setToolTip(MindMapNode node, String key, String value);
+  
+  public void obtainFocusForSelected();
 
 }

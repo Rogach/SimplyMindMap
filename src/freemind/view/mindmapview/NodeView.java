@@ -51,7 +51,6 @@ import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeNode;
 
-import freemind.controller.Controller;
 import freemind.main.FreeMind;
 import freemind.main.FreeMindMain;
 import freemind.main.HtmlTools;
@@ -320,7 +319,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 
 	public void requestFocus() {
 		// delegate to mapview:
-		getController().obtainFocusForSelected();
+		getModeController().obtainFocusForSelected();
 	}
 
 
@@ -352,16 +351,8 @@ public class NodeView extends JComponent implements TreeModelListener {
 		return map;
 	}
 
-	protected Controller getController() {
-		return map.getController();
-	}
-
 	protected ModeController getModeController() {
 		return getMap().getModel().getModeController();
-	}
-
-	protected FreeMindMain getFrame() {
-		return getController().getFrame();
 	}
 
 	boolean isParentHidden() {
@@ -872,7 +863,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 			// <body width="800">, or avoid the <body> tag altogether.
 
 			// Set user HTML head
-			String htmlLongNodeHead = getFrame()
+			String htmlLongNodeHead = Resources.getInstance()
 					.getProperty("html_long_node_head");
 			if (htmlLongNodeHead != null && !htmlLongNodeHead.equals("")) {
 				if (nodeText.matches("(?ims).*<head>.*")) {
@@ -1059,7 +1050,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 	public int getMaxToolTipWidth() {
 		if (maxToolTipWidth == 0) {
 			try {
-				maxToolTipWidth = getController().getIntProperty(
+				maxToolTipWidth = Resources.getInstance().getIntProperty(
 						"max_tooltip_width", 600);
 			} catch (NumberFormatException e) {
 				maxToolTipWidth = 600;

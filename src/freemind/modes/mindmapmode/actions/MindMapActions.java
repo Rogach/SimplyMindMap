@@ -130,8 +130,6 @@ public interface MindMapActions {
 
 	public void setNodeColor(MindMapNode node, Color color);
 
-	public void setNodeBackgroundColor(MindMapNode node, Color color);
-
 	public void blendNodeColor(MindMapNode node);
 
 	public void setFontFamily(MindMapNode node, String fontFamily);
@@ -148,25 +146,7 @@ public interface MindMapActions {
 
 	public void removeAllIcons(MindMapNode node);
 
-	/**
-	 * @param patternName
-	 *            is one of the names. They can be received using the patterns
-	 *            list of ApplyPatternActions from the MindMapController. Each
-	 *            action has a getPattern() method and the pattern has a
-	 *            getName() method ...
-	 */
-	public void applyPattern(MindMapNode node, String patternName);
-
-	public void applyPattern(MindMapNode node, Pattern pattern);
-
 	public void setNodeStyle(MindMapNode node, String style);
-
-	public void setEdgeColor(MindMapNode node, Color color);
-
-	/** The widths range from -1 (for equal to parent) to 0 (thin), 1, 2, 4, 8. */
-	public void setEdgeWidth(MindMapNode node, int width);
-
-	public void setEdgeStyle(MindMapNode node, String style);
 
 	public void increaseFontSize(MindMapNode node, int increment);
 
@@ -234,16 +214,6 @@ public interface MindMapActions {
 	public void moveNodePosition(MindMapNode node, int vGap, int hGap,
 			int shiftY);
 
-	/**
-	 * Load the given map (as String) instead of the currently opened map.
-	 * 
-	 * @param pPrefix
-	 *            is used for as the file name prefix for the temporary file
-	 *            that holds the contents.
-	 * @return false, if an exception has occured.
-	 */
-	boolean load(String xmlMapContents, String pPrefix);
-
 	public interface MouseWheelEventHandler {
 		/**
 		 * @return true if the event was sucessfully processed and false if the
@@ -261,9 +231,5 @@ public interface MindMapActions {
 	 */
 	void clearNodeContents(MindMapNode pNode);
 
-	/**
-	 * Switches the display to the map this controller belongs to.
-	 */
-	void showThisMap();
 
 }

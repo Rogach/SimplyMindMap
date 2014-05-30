@@ -112,7 +112,15 @@ import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.NodeView;
+import java.awt.HeadlessException;
+import java.awt.Window;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.Serializable;
 import java.util.logging.Logger;
+import javax.swing.JColorChooser;
 
 /**
  * @author foltin
@@ -2025,5 +2033,57 @@ public class Tools {
 		}
 		return toBeStored;
 	}
+  
+  public static Color showCommonJColorChooserDialog(Component component,
+			String title, Color initialColor) throws HeadlessException {
+
+		final JColorChooser pane = new JColorChooser();
+		pane.setColor(initialColor);
+
+		ColorTracker ok = new ColorTracker(pane);
+		JDialog dialog = JColorChooser.createDialog(component, title, true,
+				pane, ok, null);
+		dialog.addWindowListener(new Closer());
+		dialog.addComponentListener(new DisposeOnClose());
+
+		dialog.show(); // blocks until user brings dialog down...
+
+		return ok.getColor();
+	}
+    
+  private static class ColorTracker implements ActionListener, Serializable {
+		JColorChooser chooser;
+		Color color;
+
+		public ColorTracker(JColorChooser c) {
+			chooser = c;
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			color = chooser.getColor();
+		}
+
+		public Color getColor() {
+			return color;
+		}
+	}
+      
+  static class Closer extends WindowAdapter implements Serializable {
+		public void windowClosing(WindowEvent e) {
+			Window w = e.getWindow();
+			w.setVisible(false);
+		}
+	}
+
+	static class DisposeOnClose extends ComponentAdapter implements
+			Serializable {
+		public void componentHidden(ComponentEvent e) {
+			Window w = (Window) e.getComponent();
+			w.dispose();
+		}
+	}
+
+
+
 
 }

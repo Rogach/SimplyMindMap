@@ -112,7 +112,7 @@ public class ToggleFoldedAction extends AbstractAction implements ActorXml {
 				|| (!undo && (node.isFolded() != fold))) {
 			if (node.hasChildren()
 					|| Tools.safeEquals(
-							modeController.getFrame().getProperty(
+							Resources.getInstance().getProperty(
 									"enable_leaves_folding"), "true")) {
 				foldAction = new FoldAction();
 				foldAction.setFolded(fold);

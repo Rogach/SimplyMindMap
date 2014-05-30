@@ -29,7 +29,6 @@ import javax.swing.Action;
 import javax.swing.JComboBox;
 import javax.swing.JToolBar;
 
-import freemind.controller.Controller;
 import freemind.controller.FreeMindToolBar;
 import freemind.controller.StructuredMenuHolder;
 import freemind.controller.ZoomListener;
@@ -139,11 +138,6 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 		// change representation ("125" to 1.25)
 		float zoomValue = Float.parseFloat(cleaned) / 100F; // nothing to do...
 		// remove '%' sign
-		getController().setZoom(zoomValue);
-	}
-
-	protected Controller getController() {
-		return c.getController();
 	}
 	
 	public void update(StructuredMenuHolder holder) {
@@ -225,11 +219,9 @@ public class MindMapToolBar extends FreeMindToolBar implements ZoomListener {
 	}
 
 	public void startup() {
-		getController().registerZoomListener(this);
 	}
 		
 	public void shutdown() {
-		getController().deregisterZoomListener(this);
 	}
 
 }

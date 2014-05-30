@@ -20,6 +20,7 @@
 
 package freemind.modes;
 
+import freemind.main.Resources;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -27,15 +28,12 @@ import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.logging.Logger;
 
-import freemind.controller.Controller;
-
 /**
  * This class creates all the modes that are available. To add your own mode,
  * simply import it, and create it in getAllModes() (just do the same whats done
  * with MindMapMode). Thats all!
  */
 public class ModesCreator {
-	private Controller c;
 
 	/**
 	 * Contains translated mode name => Mode instances
@@ -49,18 +47,17 @@ public class ModesCreator {
 
 	private static Logger logger;
 
-	public ModesCreator(Controller c) {
-		this.c = c;
+	public ModesCreator() {
 	}
 
 	public Set getAllModes() {
 		if (logger == null) {
-			logger = c.getFrame().getLogger(this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		}
 		if (mCreatedModes == null) {
 			mCreatedModes = new TreeMap();
 			modesTranslation = new HashMap();
-			String modestring = c.getFrame().getProperty("modes_since_0_8_0");
+			String modestring = Resources.getInstance().getProperty("modes_since_0_8_0");
 
 			StringTokenizer tokens = new StringTokenizer(modestring, ",");
 
@@ -90,7 +87,6 @@ public class ModesCreator {
 				Mode mode = null;
 				mode = (Mode) Class.forName(modeName).newInstance();
 				logger.info("Initializing mode " + modeAlias);
-				mode.init(c);
 				logger.info("Done: Initializing mode " + modeAlias);
 				mCreatedModes.put(modeName, mode);
 			} catch (Exception ex) {

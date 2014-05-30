@@ -60,12 +60,7 @@ public class MapModule {
 	}
 
 	public void rename() {
-		if (getModel().toString() != null) {
-			name = getModel().toString();
-		} else {
-			name = mode.getController().getFrame().getResourceString("mindmap")
-					+ unnamedMapsNumber++;
-		}
+    
 	}
 
 	public MindMap getModel() {

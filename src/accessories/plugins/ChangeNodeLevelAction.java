@@ -68,9 +68,7 @@ public class ChangeNodeLevelAction extends MindMapNodeHookAdapter {
 		getMindMapController().sortNodesByDepth(selectedNodes);
 
 		if (selectedNode.isRoot()) {
-			getMindMapController().getController().errorMessage(
-					getResourceString("cannot_add_parent_to_root"));
-			return;
+      throw new RuntimeException(getResourceString("cannot_add_parent_to_root"));
 		}
 
 		boolean upwards = Tools.safeEquals("left",
@@ -83,14 +81,10 @@ public class ChangeNodeLevelAction extends MindMapNodeHookAdapter {
 		for (Iterator it = selectedNodes.iterator(); it.hasNext();) {
 			MindMapNode node = (MindMapNode) it.next();
 			if (node.getParentNode() != selectedParent) {
-				getMindMapController().getController().errorMessage(
-						getResourceString("cannot_add_parent_diff_parents"));
-				return;
+        throw new RuntimeException(getResourceString("cannot_add_parent_diff_parents"));
 			}
 			if (node == rootNode) {
-				getMindMapController().getController().errorMessage(
-						getResourceString("cannot_add_parent_to_root"));
-				return;
+        throw new RuntimeException(getResourceString("cannot_add_parent_to_root"));
 			}
 		}
 

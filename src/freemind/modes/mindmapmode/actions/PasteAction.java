@@ -350,7 +350,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 			// <o> tag.
 
 			if (Tools.safeEquals(
-					mMindMapController.getFrame().getProperty(
+					Resources.getInstance().getProperty(
 							"cut_out_pictures_when_pasting_html"), "true")) {
 				textFromClipboard = textFromClipboard.replaceAll(
 						"(?i)(?s)<img[^>]*>", "");
@@ -632,8 +632,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 			// node to
 			// the parent of real parent.
 			realParent = parent;
-			parent = new MindMapNodeModel(mMindMapController.getFrame(),
-					mMindMapController.getMap());
+			parent = new MindMapNodeModel(mMindMapController.getMap());
 		}
 
 		ArrayList parentNodes = new ArrayList();

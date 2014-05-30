@@ -348,8 +348,8 @@ public abstract class XMLElementAdapter extends XMLElement {
 			return;
 		}
 		if (getName().equals("font")) {
-			userObject = mModeController.getController().getFontThroughMap(
-					new Font(fontName, fontStyle, fontSize));
+			userObject =
+					new Font(fontName, fontStyle, fontSize);
 			return;
 		}
 		/* icons */

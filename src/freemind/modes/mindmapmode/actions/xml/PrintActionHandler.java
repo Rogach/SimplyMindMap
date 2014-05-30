@@ -25,6 +25,7 @@ package freemind.modes.mindmapmode.actions.xml;
 
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.modes.mindmapmode.MindMapController;
+import java.util.logging.Logger;
 
 /**
  * @author foltin
@@ -44,7 +45,7 @@ public class PrintActionHandler implements ActionHandler {
 		super();
 		this.c = c;
 		if (logger == null)
-			logger = c.getFrame().getLogger(this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 	}
 
 	/*

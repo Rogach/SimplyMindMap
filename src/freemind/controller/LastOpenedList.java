@@ -19,6 +19,7 @@
 /*$Id: LastOpenedList.java,v 1.8.18.2.2.2 2008/04/11 16:58:31 christianfoltin Exp $*/
 package freemind.controller;
 
+import freemind.main.Resources;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -40,7 +41,6 @@ import freemind.view.MapModule;
  * format:"mode\:key",ie."Mindmap\:/home/joerg/freemind.mm"
  */
 public class LastOpenedList {
-	private Controller mController;
 	private int maxEntries = 25; // is rewritten from property anyway
 	/**
 	 * Contains Restore strings.
@@ -51,10 +51,9 @@ public class LastOpenedList {
 	 */
 	private Map mRestorableToMapName = new HashMap();
 
-	public LastOpenedList(Controller c, String restored) {
-		this.mController = c;
+	public LastOpenedList(String restored) {
 		try {
-			maxEntries = new Integer(c.getFrame().getProperty(
+			maxEntries = new Integer(Resources.getInstance().getProperty(
 					"last_opened_list_length")).intValue();
 		} catch (NumberFormatException e) {
 			freemind.main.Resources.getInstance().logException(e);
@@ -116,17 +115,6 @@ public class LastOpenedList {
 	public boolean open(String restoreable) throws FileNotFoundException,
 			XMLParseException, MalformedURLException, IOException,
 			URISyntaxException {
-		boolean changedToMapModule = mController.getMapModuleManager()
-				.tryToChangeToMapModule(
-						(String) mRestorableToMapName.get(restoreable));
-		if ((restoreable != null) && !(changedToMapModule)) {
-			String mode = Tools.getModeFromRestorable(restoreable);
-			String fileName = Tools.getFileNameFromRestorable(restoreable);
-			if (mController.createNewMode(mode)) {
-				mController.getMode().restore(fileName);
-				return true;
-			}
-		}
 		return false;
 	}
 

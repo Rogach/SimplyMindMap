@@ -82,8 +82,6 @@ public class ClonePlugin extends PermanentMindMapNodeHookAdapter implements
 
 	private void disablePlugin() {
 		mDisabled = true;
-		getMindMapController().getController().errorMessage(
-				getMindMapController().getText("clone_plugin_impossible"));
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				if (getHook(getNode()) != null) {

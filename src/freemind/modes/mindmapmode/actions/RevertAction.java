@@ -149,8 +149,6 @@ public class RevertAction extends FreemindAction implements ActorXml {
 			try {
 				RevertXmlAction revertAction = (RevertXmlAction) action;
 
-				// close the old map.
-				mindMapController.getController().close(true);
 				if (revertAction.getLocalFileName() != null) {
 					mindMapController.load(new File(revertAction
 							.getLocalFileName()));
@@ -162,7 +160,6 @@ public class RevertAction extends FreemindAction implements ActorXml {
 						filePrefix = revertAction.getFilePrefix();
 					}
 					String xmlMap = revertAction.getMap();
-					mindMapController.load(xmlMap, filePrefix);
 				}
 			} catch (Exception e) {
 				freemind.main.Resources.getInstance().logException(e);

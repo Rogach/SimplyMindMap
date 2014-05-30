@@ -77,10 +77,8 @@ public class NodeHookAction extends FreemindAction implements HookAction,
 	public void actionPerformed(ActionEvent arg0) {
 		// check, which method of invocation:
 		//
-		mMindMapController.getFrame().setWaitingCursor(true);
 		invoke(mMindMapController.getSelected(),
 				mMindMapController.getSelecteds());
-		mMindMapController.getFrame().setWaitingCursor(false);
 	}
 
 	public void addHook(MindMapNode focussed, List selecteds, String hookName, Properties pHookProperties) {

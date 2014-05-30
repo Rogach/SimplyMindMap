@@ -84,7 +84,6 @@ import javax.swing.UIManager;
 
 import com.inet.jortho.SpellChecker;
 
-import freemind.controller.Controller;
 import freemind.controller.LastStateStorageManagement;
 import freemind.controller.MenuBar;
 import freemind.controller.actions.generated.instance.MindmapLastStateStorage;
@@ -242,8 +241,6 @@ public class FreeMind extends JFrame implements FreeMindMain {
 
 	private File patternsFile;
 
-	Controller controller;// the one and only controller
-
 	private FreeMindCommon mFreeMindCommon;
 
 	private static FileHandler mFileHandler;
@@ -322,8 +319,6 @@ public class FreeMind extends JFrame implements FreeMindMain {
 		// Layout everything
 		getContentPane().setLayout(new BorderLayout());
 
-		controller = new Controller(this);
-		controller.init();
 		feedback.increase("FreeMind.progress.settingPreferences", null);
 		// add a listener for the controller, resource bundle:
 		
@@ -338,7 +333,6 @@ public class FreeMind extends JFrame implements FreeMindMain {
 		// JComponents
 
 		feedback.increase("FreeMind.progress.createInitialMode", null);
-		controller.createNewMode(getProperty("initial_mode"));
 //		EventQueue eventQueue = Toolkit.getDefaultToolkit()
 //				.getSystemEventQueue();
 //		eventQueue.push(new MyEventQueue());
@@ -470,14 +464,6 @@ public class FreeMind extends JFrame implements FreeMindMain {
 		} catch (Exception ex) {
 			Resources.getInstance().logException(ex);
 		}
-	}
-
-	public MapView getView() {
-		return controller.getView();
-	}
-
-	public Controller getController() {
-		return controller;
 	}
 
 	public void setView(MapView view) {
@@ -618,11 +604,6 @@ public class FreeMind extends JFrame implements FreeMindMain {
 				// Runtime.getRuntime().exec(command);
 				execWindows(command);
 			} catch (IOException x) {
-				controller
-						.errorMessage("Could not invoke browser.\n\nFreemind excecuted the following statement on a command line:\n\""
-								+ command
-								+ "\".\n\nYou may look at the user or default property called '"
-								+ propertyString + "'.");
 				System.err.println("Caught: " + x);
 			}
 		} else if (osName.startsWith("Mac OS")) {
@@ -650,10 +631,6 @@ public class FreeMind extends JFrame implements FreeMindMain {
 					Runtime.getRuntime().exec(browser_command);
 				}
 			} catch (IOException ex2) {
-				controller
-						.errorMessage("Could not invoke browser.\n\nFreemind excecuted the following statement on a command line:\n\""
-								+ browser_command
-								+ "\".\n\nYou may look at the user or default property called 'default_browser_command_mac'.");
 				System.err.println("Caught: " + ex2);
 			}
 		} else {
@@ -673,10 +650,6 @@ public class FreeMind extends JFrame implements FreeMindMain {
 				logger.info("Starting command: " + browser_command);
 				Runtime.getRuntime().exec(browser_command);
 			} catch (IOException ex2) {
-				controller
-						.errorMessage("Could not invoke browser.\n\nFreemind excecuted the following statement on a command line:\n\""
-								+ browser_command
-								+ "\".\n\nYou may look at the user or default property called 'default_browser_command_other_os'.");
 				System.err.println("Caught: " + ex2);
 			}
 		}
@@ -897,7 +870,6 @@ public class FreeMind extends JFrame implements FreeMindMain {
 			}
 
 			public void windowGainedFocus(WindowEvent e) {
-				frame.getController().obtainFocusForSelected();
 				frame.removeWindowFocusListener(this);
 			}
 		});
@@ -965,7 +937,7 @@ public class FreeMind extends JFrame implements FreeMindMain {
 
 	private void setScreenBounds() {
 		// Create the MenuBar
-		menuBar = new MenuBar(controller);
+		menuBar = new MenuBar();
 		setJMenuBar(menuBar);
 
 		// Create the scroll pane
@@ -999,7 +971,6 @@ public class FreeMind extends JFrame implements FreeMindMain {
 			map.remove(keyStrokeCtrlUp);
 			mTabbedPane = new JTabbedPane();
 			mTabbedPane.setFocusable(false);
-			controller.addTabbedPane(mTabbedPane);
 			getContentPane().add(mTabbedPane, BorderLayout.CENTER);
 		} else {
 			// don't use tabbed panes.
@@ -1012,8 +983,6 @@ public class FreeMind extends JFrame implements FreeMindMain {
 
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				controller.quit
-						.actionPerformed(new ActionEvent(this, 0, "quit"));
 			}
 
 			/*
@@ -1029,14 +998,6 @@ public class FreeMind extends JFrame implements FreeMindMain {
 			// }
 			// }
 		});
-
-		if (Tools.safeEquals(getProperty("toolbarVisible"), "false")) {
-			controller.setToolbarVisible(false);
-		}
-
-		if (Tools.safeEquals(getProperty("leftToolbarVisible"), "false")) {
-			controller.setLeftToolbarVisible(false);
-		}
 
 		// first define the final layout of the screen:
 		setFocusTraversalKeysEnabled(false);
@@ -1075,18 +1036,7 @@ public class FreeMind extends JFrame implements FreeMindMain {
 	}
 
 	private ModeController createModeController(final String[] args) {
-		ModeController ctrl = controller.getModeController();
-		// try to load mac module:
-		try {
-			Class macClass = Class.forName("accessories.plugins.MacChanges");
-			// lazy programming. the mac class has exactly one
-			// constructor
-			// with a modeController.
-			macClass.getConstructors()[0].newInstance(new Object[] { this });
-		} catch (Exception e1) {
-			// freemind.main.Resources.getInstance().logExecption(e1);
-		}
-		return ctrl;
+    return null;
 	}
 
 	private int getMaximumNumberOfMapsToLoad(String[] args) {
@@ -1144,20 +1094,11 @@ public class FreeMind extends JFrame implements FreeMindMain {
 				pFeedBack.increase(FREE_MIND_PROGRESS_LOAD_MAPS_NAME,
 						new Object[] { restorable.replaceAll(".*/", "") });
 				try {
-					if (controller.getLastOpenedList().open(restorable)) {
-						if (index == management.getLastFocussedTab()) {
-							mapToFocus = controller.getMapModule();
-						}
-					}
 					fileLoaded = true;
 				} catch (Exception e) {
 					freemind.main.Resources.getInstance().logException(e);
 				}
 				index++;
-			}
-			if (mapToFocus != null) {
-				controller.getMapModuleManager().changeToMapModule(
-						mapToFocus.getDisplayName());
 			}
 		}
 		if (!fileLoaded) {
@@ -1168,8 +1109,6 @@ public class FreeMind extends JFrame implements FreeMindMain {
 				pFeedBack.increase(FREE_MIND_PROGRESS_LOAD_MAPS_NAME,
 						new Object[] { restoreable.replaceAll(".*/", "") });
 				try {
-					controller.getLastOpenedList().open(restoreable);
-					controller.getModeController().getView().moveToRoot();
 					fileLoaded = true;
 				} catch (Exception e) {
 					freemind.main.Resources.getInstance().logException(e);
@@ -1234,8 +1173,6 @@ public class FreeMind extends JFrame implements FreeMindMain {
 			if (logger.isLoggable(Level.INFO)) {
 				logger.info("Loading " + filename);
 			}
-			controller.getModeController().load(
-					Tools.fileToUrl(new File(filename)));
 			// remove temporary property because we do not want to store in a
 			// file and survive restart
 			getProperties().remove(propertyKey);

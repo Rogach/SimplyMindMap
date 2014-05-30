@@ -32,7 +32,6 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-import freemind.common.OptionalDontShowMeAgainDialog;
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.CutNodeAction;
 import freemind.controller.actions.generated.instance.UndoPasteNodeAction;
@@ -64,10 +63,9 @@ public class CutAction extends AbstractAction implements ActorXml {
 
 	public void actionPerformed(ActionEvent e) {
 		if (mMindMapController.getView().getRoot().isSelected()) {
-			mMindMapController.getController().errorMessage(
+      throw new RuntimeException(
 					Resources.getInstance().getResourceString(
 							"cannot_delete_root"));
-			return;
 		}
 		Transferable copy = mMindMapController.cut();
 		// and set it.

@@ -33,7 +33,6 @@ import java.util.regex.Pattern;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
-import freemind.common.OptionalDontShowMeAgainDialog;
 import freemind.controller.actions.generated.instance.EditNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.FreeMind;
@@ -143,20 +142,7 @@ public class EditAction extends AbstractAction implements ActorXml {
 		// if the node is not already html, we ask if rich text or plain text
 		// edit.
 		if (!isHtmlNode && !isLongNode && editLong) {
-			// ask user:
-			int showResult = new OptionalDontShowMeAgainDialog(
-					mMindMapController.getFrame().getJFrame(),
-					mMindMapController.getSelectedView(),
-					"edit.edit_rich_text",
-					"edit.decision",
-					mMindMapController,
-					new OptionalDontShowMeAgainDialog.StandardPropertyHandler(
-							mMindMapController.getController(),
-							FreeMind.RESOURCES_REMIND_USE_RICH_TEXT_IN_NEW_LONG_NODES),
-					OptionalDontShowMeAgainDialog.BOTH_OK_AND_CANCEL_OPTIONS_ARE_STORED)
-					.show().getResult();
-			useRichTextInNewLongNodes = (showResult == JOptionPane.OK_OPTION) ? "true"
-					: "false";
+			useRichTextInNewLongNodes = "false";
 		}
 		// useRichTextInNewLongNodes =
 		// c.getController().getProperty("use_rich_text_in_new_long_nodes");

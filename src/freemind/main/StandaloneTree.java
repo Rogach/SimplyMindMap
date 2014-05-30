@@ -6,6 +6,7 @@ import freemind.modes.mindmapmode.MindMapMapModel;
 import freemind.modes.mindmapmode.MindMapMode;
 import freemind.view.mindmapview.MapView;
 import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.InputStream;
@@ -47,30 +48,11 @@ public class StandaloneTree {
     frame.setSize(500, 500);
     frame.setVisible(true);
     
-    frame.addWindowListener(new WindowListener() {
-
-      @Override
-      public void windowOpened(WindowEvent e) {}
-
+    frame.addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent e) {
         System.exit(0);
       }
-
-      @Override
-      public void windowClosed(WindowEvent e) {}
-
-      @Override
-      public void windowIconified(WindowEvent e) {}
-
-      @Override
-      public void windowDeiconified(WindowEvent e) {}
-
-      @Override
-      public void windowActivated(WindowEvent e) {}
-
-      @Override
-      public void windowDeactivated(WindowEvent e) {}
     });
     
   }

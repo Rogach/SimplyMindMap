@@ -27,7 +27,6 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.logging.Logger;
 
-import freemind.controller.Controller;
 import freemind.main.XMLParseException;
 import freemind.modes.Mode;
 import freemind.modes.ModeController;
@@ -40,11 +39,6 @@ public class MindMapMode extends Mode {
 	private static Logger logger = null;
 
 	public MindMapMode() {
-	}
-
-	public void init(Controller c) {
-    logger = Logger.getLogger(this.getClass().getName());
-		modecontroller = (MindMapController) createModeController();
 	}
   
   public void init() {
@@ -75,10 +69,6 @@ public class MindMapMode extends Mode {
 			XMLParseException, MalformedURLException, IOException,
 			URISyntaxException {
 		getDefaultModeController().load(new File(restoreable));
-	}
-
-	public Controller getController() {
-		return null;
 	}
 
 	public ModeController getDefaultModeController() {

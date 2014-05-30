@@ -39,7 +39,6 @@ import org.jibx.runtime.IMarshallingContext;
 import org.jibx.runtime.IUnmarshallingContext;
 import org.jibx.runtime.JiBXException;
 
-import freemind.controller.Controller;
 import freemind.controller.actions.generated.instance.WindowConfigurationStorage;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Resources;
@@ -86,13 +85,6 @@ public class XmlBindingTools {
 		}
 	}
 
-	public void storeDialogPositions(Controller controller, JDialog dialog,
-			WindowConfigurationStorage storage,
-			String window_preference_storage_property) {
-		String result = storeDialogPositions(storage, dialog);
-		controller.setProperty(window_preference_storage_property, result);
-	}
-
 	protected String storeDialogPositions(WindowConfigurationStorage storage,
 			JDialog dialog) {
 		storage.setX((dialog.getX()));
@@ -101,14 +93,6 @@ public class XmlBindingTools {
 		storage.setHeight((dialog.getHeight()));
 		String marshalled = marshall(storage);
 		String result = marshalled;
-		return result;
-	}
-
-	public WindowConfigurationStorage decorateDialog(Controller controller,
-			JDialog dialog, String window_preference_storage_property) {
-		String marshalled = controller
-				.getProperty(window_preference_storage_property);
-		WindowConfigurationStorage result = decorateDialog(marshalled, dialog);
 		return result;
 	}
 

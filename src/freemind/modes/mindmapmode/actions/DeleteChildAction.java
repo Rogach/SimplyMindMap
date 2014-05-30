@@ -31,13 +31,13 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-import freemind.common.OptionalDontShowMeAgainDialog;
 import freemind.controller.actions.generated.instance.DeleteNodeAction;
 import freemind.controller.actions.generated.instance.PasteNodeAction;
 import freemind.controller.actions.generated.instance.UndoPasteNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.extensions.PermanentNodeHook;
 import freemind.main.FreeMind;
+import freemind.main.Resources;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.PasteAction.NodeCoordinate;
@@ -64,22 +64,9 @@ public class DeleteChildAction extends AbstractAction implements ActorXml {
 				.hasNext();) {
 			MindMapNode node = (MindMapNode) iterator.next();
 			if (node.isRoot()) {
-				mMindMapController.getController().errorMessage(
-						mMindMapController.getFrame().getResourceString(
+        throw new RuntimeException(Resources.getInstance().getResourceString(
 								"cannot_delete_root"));
-				return;
 			}
-		}
-		int showResult = new OptionalDontShowMeAgainDialog(mMindMapController
-				.getFrame().getJFrame(), mMindMapController.getSelectedView(),
-				"really_remove_node", "confirmation", mMindMapController,
-				new OptionalDontShowMeAgainDialog.StandardPropertyHandler(
-						mMindMapController.getController(),
-						FreeMind.RESOURCES_DELETE_NODES_WITHOUT_QUESTION),
-				OptionalDontShowMeAgainDialog.ONLY_OK_SELECTION_IS_STORED)
-				.show().getResult();
-		if (showResult != JOptionPane.OK_OPTION) {
-			return;
 		}
 		// because of multiple selection, cut is better.
 		mMindMapController.cut();

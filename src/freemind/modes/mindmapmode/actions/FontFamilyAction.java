@@ -99,9 +99,9 @@ public class FontFamilyAction extends NodeGeneralAction implements NodeActorXml 
 			String fontFamily = fontFamilyAction.getFont();
 			if (!Tools.safeEquals(node.getFontFamilyName(), fontFamily)) {
 				((NodeAdapter) node).establishOwnFont();
-				node.setFont(modeController.getController().getFontThroughMap(
+				node.setFont(
 						new Font(fontFamily, node.getFont().getStyle(), node
-								.getFont().getSize())));
+								.getFont().getSize()));
 				modeController.nodeChanged(node);
 			}
 		}

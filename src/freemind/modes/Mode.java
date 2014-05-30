@@ -20,17 +20,17 @@
 
 package freemind.modes;
 
+import freemind.main.Resources;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
-import freemind.controller.Controller;
 import freemind.main.XMLParseException;
 
 public abstract class Mode {
 
-	public abstract void init(Controller c);
+	public abstract void init();
 
 	public abstract String toString();
 
@@ -50,9 +50,7 @@ public abstract class Mode {
 	 */
 	public abstract ModeController getDefaultModeController();
 
-	public abstract Controller getController();
-
 	public String toLocalizedString() {
-		return getController().getResourceString("mode_" + toString());
+		return Resources.getInstance().getResourceString("mode_" + toString());
 	}
 }

@@ -42,7 +42,6 @@ import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import freemind.controller.Controller;
 import freemind.controller.MenuBar;
 import freemind.view.mindmapview.MapView;
 
@@ -56,7 +55,6 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
 	private JScrollPane scrollPane = new MapView.ScrollPane();
 	private MenuBar menuBar;
 	private JLabel status;
-	Controller c;// the one and only controller
 	private FreeMindCommon mFreeMindCommon;
 	private JPanel southPanel;
 	private JComponent mComponentInSplitPane;
@@ -72,14 +70,6 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
 
 	public File getPatternsFile() {
 		return null;
-	}
-
-	public Controller getController() {
-		return c;
-	}
-
-	public MapView getView() {
-		return c.getView();
 	}
 
 	public void setView(MapView view) {
@@ -191,16 +181,6 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
 	}
 
 	public void start() {
-		// Make sure the map is centered at the very beginning.
-		try {
-			if (getView() != null) {
-				getView().moveToRoot();
-			} else {
-				System.err.println("View is null.");
-			}
-		} catch (Exception e) {
-			freemind.main.Resources.getInstance().logException(e);
-		}
 	}
 
 	public void setWaitingCursor(boolean waiting) {
@@ -259,13 +239,6 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
 		// Layout everything
 		getContentPane().setLayout(new BorderLayout());
 
-		c = new Controller(this);
-		c.init();
-		// Create the MenuBar
-		menuBar = new MenuBar(c); // new MenuBar(c);
-		setJMenuBar(menuBar);
-		c.setToolbarVisible(false);
-		c.setMenubarVisible(false);
 
 		// Create the scroll pane.
 
@@ -284,7 +257,6 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
 
 		// wait until AWT thread starts
 		Tools.waitForEventQueue();
-		c.createNewMode(getProperty("initial_mode"));
 		String initialMapName = getProperty("browsemode_initial_map");
 		if (initialMapName != null && initialMapName.startsWith(".")) {
 			/* new handling for relative urls. fc, 29.10.2003. */
@@ -292,10 +264,6 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
 				URL documentBaseUrl = new URL(getDocumentBase(), initialMapName);
 				initialMapName = documentBaseUrl.toString();
 			} catch (java.net.MalformedURLException e) {
-				getController().errorMessage(
-						"Could not open relative URL " + initialMapName
-								+ ". It is malformed.");
-				System.err.println(e);
 				return;
 			}
 			/* end: new handling for relative urls. fc, 29.10.2003. */
@@ -304,7 +272,6 @@ public class FreeMindApplet extends JApplet implements FreeMindMain {
 			try {
 				// get URL:
 				URL mapUrl = new URL(initialMapName);
-				getController().getModeController().load(mapUrl);
 			} catch (Exception e) {
 				freemind.main.Resources.getInstance().logException(e);
 			}

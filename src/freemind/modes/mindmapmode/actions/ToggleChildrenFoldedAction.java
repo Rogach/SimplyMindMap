@@ -44,6 +44,6 @@ public class ToggleChildrenFoldedAction extends AbstractAction {
 		modeController.toggleFolded.toggleFolded(selected.childrenUnfolded());
 		final MapView mapView = modeController.getView();
 		mapView.selectAsTheOnlyOneSelected(mapView.getNodeView(selected));
-		modeController.getController().obtainFocusForSelected();
+		modeController.obtainFocusForSelected();
 	}
 }

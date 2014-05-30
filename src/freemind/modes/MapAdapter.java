@@ -68,52 +68,10 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 		if (logger == null) {
 			logger = Logger.getLogger(this.getClass().getName());
 		}
-		mTimerForFileChangeObservation = new Timer();
-		mTimerForFileChangeObservation.schedule(
-				new FileChangeInspectorTimerTask(),
-				INTERVAL_BETWEEN_FILE_MODIFICATION_TIME_CHECKS,
-				INTERVAL_BETWEEN_FILE_MODIFICATION_TIME_CHECKS);
 	}
 
 	public ModeController getModeController() {
 		return mModeController;
-	}
-
-	protected class FileChangeInspectorTimerTask extends TimerTask {
-
-		public void run() {
-			boolean shouldFire = false;
-			long lastModified = 0;
-			// minimal synchronized block:
-			synchronized (MapAdapter.this) {
-				lastModified = getFileTime();
-				if (lastModified > mFileTime) {
-					shouldFire = true;
-					// don't change the file time here. Only, after the user has been asked.
-				}
-			}
-			if (shouldFire) {
-				for (Iterator it = mMapSourceChangedObserverSet.iterator(); it
-						.hasNext();) {
-					logger.info("File " + getFile()
-							+ " changed on disk as it was last modified at "
-							+ new Date(lastModified));
-					MapSourceChangedObserver observer = (MapSourceChangedObserver) it
-							.next();
-					try {
-						boolean changeAccepted = observer.mapSourceChanged(MapAdapter.this);
-						if(!changeAccepted) {
-							// this is a trick: at the next save/load the correct value is set again. 
-							mFileTime = Long.MAX_VALUE;
-						} else {
-							mFileTime = lastModified;
-						}
-					} catch (Exception e) {
-						freemind.main.Resources.getInstance().logException(e);
-					}
-				}
-			}
-		}
 	}
 
 	/**
@@ -467,27 +425,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 			}
 		}
 		return e;
-	}
-
-	public void registerMapSourceChangedObserver(
-			MapSourceChangedObserver pMapSourceChangedObserver,
-			long pGetEventIfChangedAfterThisTimeInMillies) {
-		if (pGetEventIfChangedAfterThisTimeInMillies != 0
-				&& mFileTime > pGetEventIfChangedAfterThisTimeInMillies) {
-			try {
-				// Issue event here.
-				pMapSourceChangedObserver.mapSourceChanged(this);
-			} catch (Exception e) {
-				freemind.main.Resources.getInstance().logException(e);
-			}
-		}
-		mMapSourceChangedObserverSet.add(pMapSourceChangedObserver);
-	}
-
-	public long deregisterMapSourceChangedObserver(
-			MapSourceChangedObserver pMapSourceChangedObserver) {
-		mMapSourceChangedObserverSet.remove(pMapSourceChangedObserver);
-		return mFileTime;
 	}
 
 }

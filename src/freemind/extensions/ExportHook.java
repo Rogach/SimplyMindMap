@@ -65,7 +65,7 @@ public class ExportHook extends ModeControllerHookAdapter {
 	
 	public static File chooseImageFile(String type, String description,
 			String nameExtension, ModeController controller) {
-		Container component = controller.getFrame().getContentPane();
+		Container component = null;
 		final ImageFilter filter = new ImageFilter(type, description);
 		FreeMindFileDialog chooser = null;
 		chooser = controller.getFileChooser(filter);

@@ -62,7 +62,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import javax.swing.KeyStroke;
 
-import freemind.controller.Controller;
 import freemind.controller.MapMouseMotionListener;
 import freemind.controller.MapMouseWheelListener;
 import freemind.controller.NodeDragListener;
@@ -91,6 +90,7 @@ import freemind.modes.mindmapmode.actions.PasteAction;
 import freemind.modes.mindmapmode.listeners.MindMapMouseMotionManager;
 import freemind.modes.mindmapmode.listeners.MindMapNodeDropListener;
 import freemind.modes.mindmapmode.listeners.MindMapNodeMotionListener;
+import java.awt.Window;
 import java.awt.dnd.DragGestureEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyListener;
@@ -312,8 +312,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	//
 	// Constructors
 	//
-	static boolean NEED_PREF_SIZE_BUG_FIX = Controller.JAVA_VERSION
-			.compareTo("1.5.0") < 0;
+	static boolean NEED_PREF_SIZE_BUG_FIX = false;
 
 	public MapView(MindMap model, Properties properties, final MindMapController controller) {
 		super();
@@ -455,13 +454,13 @@ public class MapView extends JPanel implements Printable, Autoscroll {
         actions.add(controller.removeAllIconsAction);
 
         Component c = MapView.this;
-        while (!(c instanceof JFrame) && c != null) {
+        while (!(c instanceof Window) && c != null) {
           c = c.getParent();
         }
         if (c == null) {
           throw new RuntimeException("No parent frame found!");
         }
-        JFrame frame = (JFrame) c;
+        Window frame = (Window) c;
         
         IconSelectionPopupDialog selectionDialog = new IconSelectionPopupDialog(
             frame, actions);
@@ -1076,11 +1075,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	NodeMotionListener getNodeMotionListener() {
 		return nodeMotionListener;
 	}
-
-	NodeKeyListener getNodeKeyListener() {
-		return getController().getNodeKeyListener();
-	}
-
   
 	DragGestureListener getNodeDragListener() {
 		return nodeDragListener;
@@ -1552,10 +1546,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	 */
 	private MapView getMap() {
 		return this;
-	}
-
-	public Controller getController() {
-		return null;
 	}
 
 	// this property is used when the user navigates up/down using cursor keys

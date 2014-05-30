@@ -34,7 +34,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import freemind.common.OptionalDontShowMeAgainDialog;
 import freemind.controller.MenuItemEnabledListener;
 import freemind.controller.MindMapNodesSelection;
 import freemind.controller.actions.generated.instance.CompoundAction;
@@ -65,6 +64,7 @@ import freemind.modes.mindmapmode.actions.xml.ActionFilter;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.hooks.MindMapNodeHookAdapter;
 import freemind.view.mindmapview.NodeView;
+import java.util.logging.Logger;
 
 /**
  * This is the "paste node as clone" action from the menu.
@@ -92,17 +92,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
 			ClonePlugin clonePlugin = ClonePlugin.getHook(copiedNode);
 			// first the clone master
 			if (clonePlugin == null) {
-				int showResult = new OptionalDontShowMeAgainDialog(
-						getMindMapController().getFrame().getJFrame(),
-						getMindMapController().getSelectedView(),
-						"choose_clone_type",
-						"clone_type_question",
-						getMindMapController(),
-						new OptionalDontShowMeAgainDialog.StandardPropertyHandler(
-								getMindMapController().getController(),
-								FreeMind.RESOURCES_COMPLETE_CLONING),
-						OptionalDontShowMeAgainDialog.BOTH_OK_AND_CANCEL_OPTIONS_ARE_STORED)
-						.show().getResult();
+				int showResult = JOptionPane.OK_OPTION;
 				Properties properties = new Properties();
 				properties
 						.setProperty(
@@ -124,10 +114,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
 		String originalNodeId = getMindMapController().getNodeID(originalNode);
 		logger.info("Original node " + originalNode + ", id " + originalNodeId);
 		if (originalNode.isRoot()) {
-			getMindMapController().getController().errorMessage(
-					getMindMapController().getText(
-							"clone_plugin_no_root_cloning"));
-			return;
+      throw new RuntimeException(Resources.getInstance().getText("clone_plugin_no_root_cloning"));
 		}
 		// insert clone:
 		List listOfChilds = pDestinationNode.getChildren();
@@ -222,7 +209,7 @@ public class ClonePasteAction extends MindMapNodeHookAdapter {
 		public Registration(ModeController controller, MindMap map) {
 			this.controller = (MindMapController) controller;
 			mMap = map;
-			logger = controller.getFrame().getLogger(this.getClass().getName());
+			logger = Logger.getLogger(this.getClass().getName());
 		}
 
 		public void register() {

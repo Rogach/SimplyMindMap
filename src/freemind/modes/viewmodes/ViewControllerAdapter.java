@@ -118,7 +118,6 @@ public abstract class ViewControllerAdapter extends ControllerAdapter {
 			// Display link in status line
 			String link = newlySelectedNodeView.getModel().getLink();
 			link = (link != null ? link : " ");
-			getController().getFrame().out(link);
 		}
 		return retValue;
 	}
@@ -129,26 +128,10 @@ public abstract class ViewControllerAdapter extends ControllerAdapter {
 
 	public void startupController() {
 		super.startupController();
-		getController().getNodeMouseMotionListener().register(
-				new CommonNodeMouseMotionListener(this));
-		getController().getMapMouseMotionListener().register(
-				new CommonMouseMotionManager(this));
-		getController().getNodeKeyListener().register(
-				new CommonNodeKeyListener(this, new EditHandler() {
-
-					public void edit(KeyEvent e, boolean addNew,
-							boolean editLong) {
-						// no edit.
-					}
-				}));
-
 	}
 
 	public void shutdownController() {
 		super.shutdownController();
-		getController().getNodeMouseMotionListener().deregister();
-		getController().getMapMouseMotionListener().deregister();
-		getController().getNodeKeyListener().deregister();
 	}
 
 	protected void setAllActions(boolean enabled) {

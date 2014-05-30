@@ -47,6 +47,7 @@ import freemind.main.FreeMindMain;
 import freemind.main.Resources;
 import freemind.modes.IconInformation;
 import freemind.view.mindmapview.NodeView;
+import java.awt.Window;
 
 public class IconSelectionPopupDialog extends JDialog implements KeyListener,
 		MouseListener {
@@ -62,7 +63,7 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
 	private static Position lastPosition = new Position(0, 0);
 	private int mModifiers;
 
-	public IconSelectionPopupDialog(JFrame caller, Vector icons) {
+	public IconSelectionPopupDialog(Window caller, Vector icons) {
 
 		super(caller, Resources.getInstance().getResourceString("select_icon"));
 		getContentPane().setLayout(new BorderLayout());
