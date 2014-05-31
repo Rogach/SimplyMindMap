@@ -372,7 +372,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 
 		setBackground(standardMapBackgroundColor);
     
-    MapMouseMotionListener mapMouseMotionListener = new MapMouseMotionListener(this, controller);
+    MapMouseMotionListener mapMouseMotionListener = new MapMouseMotionListener(this);
 		addMouseListener(mapMouseMotionListener);
 		addMouseMotionListener(mapMouseMotionListener);
     mapMouseMotionListener.register(new MindMapMouseMotionManager(controller));
