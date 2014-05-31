@@ -23,7 +23,6 @@
  */
 package freemind.main;
 
-import freemind.common.TextTranslator;
 import java.io.InputStream;
 import java.net.URL;
 import java.text.MessageFormat;
@@ -36,7 +35,7 @@ import java.util.logging.Logger;
 /**
  * @author Dimitri Polivaev 12.07.2005
  */
-public class Resources implements TextTranslator {
+public class Resources {
 	static Resources resourcesInstance = null;
 	private HashMap countryMap;
 	private Logger logger = null;

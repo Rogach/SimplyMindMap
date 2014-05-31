@@ -20,7 +20,6 @@
 
 package freemind.modes;
 
-import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
 import java.awt.Color;

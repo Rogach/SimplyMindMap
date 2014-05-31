@@ -23,7 +23,6 @@
 
 package freemind.view.mindmapview;
 
-import freemind.main.FreeMindCommon;
 import freemind.main.ResourceKeys;
 import freemind.main.Resources;
 import freemind.main.Tools;
