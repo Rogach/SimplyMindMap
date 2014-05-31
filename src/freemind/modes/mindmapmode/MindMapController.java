@@ -82,7 +82,6 @@ import freemind.modes.mindmapmode.actions.SelectBranchAction;
 import freemind.modes.mindmapmode.actions.SingleNodeOperation;
 import freemind.modes.mindmapmode.actions.ToggleChildrenFoldedAction;
 import freemind.modes.mindmapmode.actions.ToggleFoldedAction;
-import freemind.modes.mindmapmode.actions.UnderlinedAction;
 import freemind.modes.mindmapmode.actions.UndoAction;
 import freemind.modes.mindmapmode.actions.UsePlainTextAction;
 import freemind.modes.mindmapmode.actions.UseRichFormattingAction;
@@ -170,7 +169,6 @@ public class MindMapController extends ControllerAdapter implements
 	public PasteAction paste = null;
 	public BoldAction bold = null;
 	public ItalicAction italic = null;
-	public UnderlinedAction underlined = null;
 	public FontSizeAction fontSize = null;
 	public FontFamilyAction fontFamily = null;
 	public NodeColorAction nodeColor = null;
@@ -241,7 +239,6 @@ public class MindMapController extends ControllerAdapter implements
 		copy = new CopyAction(this);
 		bold = new BoldAction(this);
 		italic = new ItalicAction(this);
-		underlined = new UnderlinedAction(this);
 		fontSize = new FontSizeAction(this);
 		fontFamily = new FontFamilyAction(this);
 		edit = new EditAction(this);
