@@ -47,6 +47,7 @@ import freemind.modes.MindIcon;
 import freemind.modes.MindMap;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.actions.BoldAction;
+import freemind.modes.mindmapmode.actions.CompoundActionHandler;
 import freemind.modes.mindmapmode.actions.CopyAction;
 import freemind.modes.mindmapmode.actions.CutAction;
 import freemind.modes.mindmapmode.actions.DeleteChildAction;
@@ -178,6 +179,7 @@ public class MindMapController extends ControllerAdapter implements
 		}
 		// create action factory:
 		actionFactory = new ActionFactory();
+    new CompoundActionHandler(this); // eagerly initialize compound action handler
     logger.info("createIconActions");
     createStandardActions();
     createIconActions();
