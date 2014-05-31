@@ -18,7 +18,7 @@
  */
 
 
-package freemind.modes.common;
+package freemind.modes.mindmapmode.listeners;
 
 import freemind.main.Resources;
 import freemind.modes.ModeController;

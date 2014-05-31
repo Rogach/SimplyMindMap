@@ -20,7 +20,7 @@
  * Created on 11.11.2005
  */
 
-package freemind.modes.common.listeners;
+package freemind.modes.mindmapmode.listeners;
 
 import freemind.controller.MapMouseMotionListener.MapMouseMotionReceiver;
 import freemind.modes.ModeController;

@@ -18,7 +18,7 @@
  */
 
 
-package freemind.modes.common.listeners;
+package freemind.modes.mindmapmode.listeners;
 
 import freemind.controller.NodeMouseMotionListener.NodeMouseMotionObserver;
 import freemind.main.Resources;

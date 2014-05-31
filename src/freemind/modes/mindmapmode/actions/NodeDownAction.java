@@ -20,8 +20,9 @@
  * Created on 21.08.2004
  */
 
-package freemind.modes;
+package freemind.modes.mindmapmode.actions;
 
+import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import java.awt.event.ActionEvent;
 import java.util.List;

@@ -20,7 +20,7 @@
  * Created on 09.11.2005
  */
 
-package freemind.modes.common;
+package freemind.modes.mindmapmode.actions;
 
 import freemind.main.Resources;
 import freemind.main.Tools;
