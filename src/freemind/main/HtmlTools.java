@@ -292,8 +292,6 @@ public class HtmlTools {
 		throw new IllegalArgumentException("Position " + pI + " not found.");
 	}
 
-	/**
-     */
 	public static boolean isHtmlNode(String text) {
 		for (int i = 0; i < text.length(); i++) {
 			final char ch = text.charAt(i);

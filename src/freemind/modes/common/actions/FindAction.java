@@ -341,10 +341,6 @@ public class FindAction extends AbstractAction {
 		if (nodeText == null) {
 			nodeText = "";
 		}
-		if (HtmlTools.isHtmlNode(nodeText)) {
-			nodeText = HtmlTools.removeHtmlTagsFromString(nodeText);
-			nodeText = HtmlTools.unescapeHTMLUnicodeEntity(nodeText);
-		}
 		if (!caseSensitive) {
 			nodeText = nodeText.toLowerCase();
 		}

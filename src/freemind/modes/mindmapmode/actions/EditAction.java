@@ -127,28 +127,8 @@ public class EditAction extends AbstractAction implements ActorXml {
 		mMindMapController.setBlocked(true); // locally "modal" stated
 
 		String text = node.getModel().toString();
-		String htmlEditingOption = Resources.getInstance()
-				.getProperty("html_editing_option");
 
-		boolean isHtmlNode = HtmlTools.isHtmlNode(text);
 		boolean isLongNode = node.getIsLong();
-
-		// do we need a decision if plain or HTML editing?
-		String useRichTextInNewLongNodes = (isHtmlNode) ? "true" : "false";
-		// if the node is not already html, we ask if rich text or plain text
-		// edit.
-		if (!isHtmlNode && !isLongNode && editLong) {
-			useRichTextInNewLongNodes = "false";
-		}
-		// useRichTextInNewLongNodes =
-		// c.getController().getProperty("use_rich_text_in_new_long_nodes");
-		boolean editHtml = isHtmlNode
-				|| (editLong && Tools.safeEquals(useRichTextInNewLongNodes,
-						"true"));
-
-		if (editHtml && !isHtmlNode) {
-			text = HtmlTools.plainToHTML(text);
-		}
 
 		if (isLongNode || editLong) {
 			EditNodeDialog nodeEditDialog = new EditNodeDialog(node, text,

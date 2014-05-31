@@ -82,8 +82,6 @@ import freemind.modes.mindmapmode.actions.SingleNodeOperation;
 import freemind.modes.mindmapmode.actions.ToggleChildrenFoldedAction;
 import freemind.modes.mindmapmode.actions.ToggleFoldedAction;
 import freemind.modes.mindmapmode.actions.UndoAction;
-import freemind.modes.mindmapmode.actions.UsePlainTextAction;
-import freemind.modes.mindmapmode.actions.UseRichFormattingAction;
 import freemind.modes.mindmapmode.actions.xml.ActionFactory;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.UndoActionHandler;
@@ -176,8 +174,6 @@ public class MindMapController extends ControllerAdapter implements
 	public DeleteChildAction deleteChild = null;
 	public ToggleFoldedAction toggleFolded = null;
 	public ToggleChildrenFoldedAction toggleChildrenFolded = null;
-	public UseRichFormattingAction useRichFormatting = null;
-	public UsePlainTextAction usePlainText = null;
 	public NodeUpAction nodeUp = null;
 	public NodeDownAction nodeDown = null;
   
@@ -241,8 +237,6 @@ public class MindMapController extends ControllerAdapter implements
 		fontSize = new FontSizeAction(this);
 		fontFamily = new FontFamilyAction(this);
 		edit = new EditAction(this);
-		useRichFormatting = new UseRichFormattingAction(this);
-		usePlainText = new UsePlainTextAction(this);
 		newChild = new NewChildAction(this);
 		deleteChild = new DeleteChildAction(this);
 		toggleFolded = new ToggleFoldedAction(this);
@@ -410,8 +404,6 @@ public class MindMapController extends ControllerAdapter implements
 		selectAllAction.setEnabled(enabled);
 		selectBranchAction.setEnabled(enabled);
 		moveNodeAction.setEnabled(enabled);
-		useRichFormatting.setEnabled(enabled);
-		usePlainText.setEnabled(enabled);
 	}
 
 	public void setBold(MindMapNode node, boolean bolded) {

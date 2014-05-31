@@ -655,18 +655,7 @@ public abstract class NodeAdapter implements MindMapNode {
 
 		/** fc, 12.6.2005: XML must not contain any zero characters. */
 		String text = this.toString().replace('\0', ' ');
-		if (!HtmlTools.isHtmlNode(text)) {
-			node.setAttribute(XMLElementAdapter.XML_NODE_TEXT, text);
-		} else {
-			// save <content> tag:
-			XMLElement htmlElement = new XMLElement();
-			htmlElement.setName(XMLElementAdapter.XML_NODE_XHTML_CONTENT_TAG);
-			htmlElement.setAttribute(XMLElementAdapter.XML_NODE_XHTML_TYPE_TAG,
-					XMLElementAdapter.XML_NODE_XHTML_TYPE_NODE);
-			htmlElement
-					.setEncodedContent(convertToEncodedContent(getText()));
-			node.addChild(htmlElement);
-		}
+    node.setAttribute(XMLElementAdapter.XML_NODE_TEXT, text);
     
 		XMLElement edge = (getEdge()).save();
 		if (edge != null) {

@@ -81,9 +81,7 @@ public abstract class MainView extends JLabel {
 	 */
 	public Dimension getPreferredSize() {
 		final String text = getText();
-		boolean isEmpty = text.length() == 0
-				|| (HtmlTools.isHtmlNode(text) && text.indexOf("<img") < 0 && HtmlTools
-						.htmlToPlain(text).length() == 0);
+		boolean isEmpty = text.length() == 0;
 		if (isEmpty) {
 			setText("!");
 		}
