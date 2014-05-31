@@ -21,26 +21,15 @@ package freemind.modes;
 
 import freemind.controller.MindMapNodesSelection;
 import freemind.main.Resources;
-import freemind.main.Tools;
 import freemind.main.XMLElement;
 import freemind.main.XMLParseException;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
 import java.awt.Color;
-import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.dnd.DnDConstants;
-import java.awt.dnd.DropTargetDragEvent;
-import java.awt.dnd.DropTargetDropEvent;
-import java.awt.dnd.DropTargetEvent;
-import java.awt.dnd.DropTargetListener;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -50,14 +39,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Set;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
-import javax.swing.filechooser.FileFilter;
 
 /**
  * Derive from this class to implement the Controller for your mode. Overload
@@ -547,7 +532,7 @@ public abstract class ControllerAdapter implements ModeController {
 
 			String plainText = getMap().getAsPlainText(selectedNodes);
 			return new MindMapNodesSelection(forNodesFlavor, null, plainText,
-					getMap().getAsRTF(selectedNodes), getMap().getAsHTML(
+					null, getMap().getAsHTML(
 							selectedNodes), null, null, createForNodeIdsFlavor);
 		}
 

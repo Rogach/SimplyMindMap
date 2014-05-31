@@ -20,12 +20,6 @@
 
 package freemind.modes;
 
-import freemind.main.XMLParseException;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.Writer;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.List;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
@@ -34,39 +28,15 @@ public interface MindMap extends TreeModel {
 
 	MindMapNode getRootNode();
 
-	/**
-	 * @return The mode controller, the model belongs to.
-	 */
 	ModeController getModeController();
 
-	// void changeNode(MindMapNode node, String newText);
-	// nodeChanged has moved to the modeController. (fc, 2.5.2004)
 	void nodeChanged(TreeNode node);
 
 	void nodeRefresh(TreeNode node);
 
 	String getAsPlainText(List mindMapNodes);
 
-	String getAsRTF(List mindMapNodes);
-
 	String getAsHTML(List mindMapNodes);
-
-	public void load(URL file) throws FileNotFoundException, IOException,
-			XMLParseException, URISyntaxException;
-
-	/**
-	 * writes the content of the map to a writer.
-	 * 
-	 * @throws IOException
-	 */
-	void getXml(Writer fileout) throws IOException;
-
-	/**
-	 * writes the content of the map to a writer.
-	 * 
-	 * @throws IOException
-	 */
-	void getFilteredXml(Writer fileout) throws IOException;
 
 	TreeNode[] getPathToRoot(TreeNode node);
 
@@ -76,19 +46,6 @@ public interface MindMap extends TreeModel {
 	 */
 	MindMapLinkRegistry getLinkRegistry();
 
-	/**
-	 * Destroy everything you have created upon opening.
-	 */
-	void destroy();
-
-	boolean isReadOnly();
-
 	void nodeStructureChanged(TreeNode node);
 
-	/**
-	 * @param newRoot
-	 *            one of the nodes, that is now root. The others are grouped
-	 *            around.
-	 */
-	void changeRoot(MindMapNode newRoot);
 }

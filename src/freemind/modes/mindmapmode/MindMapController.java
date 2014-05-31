@@ -191,16 +191,10 @@ public class MindMapController extends ControllerAdapter implements
 		}
 		// create action factory:
 		actionFactory = new ActionFactory();
-		init();
-	}
-
-	protected void init() {
-		logger.info("createIconActions");
-		// create standard actions:
-		createStandardActions();
-		// icon actions:
-		createIconActions();
-		logger.info("createNodeHookActions");
+    logger.info("createIconActions");
+    createStandardActions();
+    createIconActions();
+    logger.info("createNodeHookActions");
 	}
 
 	private void createStandardActions() {
@@ -237,8 +231,6 @@ public class MindMapController extends ControllerAdapter implements
 				removeLastIconAction);
 		removeLastIconAction.setIconAction(unknownIconAction);
 		removeAllIconsAction = new RemoveAllIconsAction(this, unknownIconAction);
-		// load pattern actions:
-		loadPatternActions();
 		moveNodeAction = new MoveNodeAction(this);
 		find = new FindAction(this);
 		findNext = new FindNextAction(this, find);
@@ -247,24 +239,8 @@ public class MindMapController extends ControllerAdapter implements
 
 	}
 
-	/**
-	 * Tries to load the user patterns and proposes an update to the new format,
-	 * if they are old fashioned (this is determined by having an exception
-	 * while reading the pattern file).
-	 */
-	private void loadPatternActions() {
-		
-	}
-
 	public boolean isUndoAction() {
 		return undo.isUndoAction() || redo.isUndoAction();
-	}
-
-	public void shutdownController() {
-	}
-
-	public MapAdapter newModel(ModeController modeController) {
-		return new MindMapMapModel(new FreeMindCommon(new Properties()), modeController);
 	}
 
 	private void createIconActions() {
@@ -325,23 +301,6 @@ public class MindMapController extends ControllerAdapter implements
 			myNewNodeCreator = new DefaultMindMapNodeCreator();
 		}
 		return myNewNodeCreator.createNode(userObject, map);
-	}
-
-	// fc, 14.12.2004: end "different models" change
-
-	public MenuStructure updateMenusFromXml(InputStream in) {
-		// get from resources:
-		try {
-			IUnmarshallingContext unmarshaller = XmlBindingTools.getInstance()
-					.createUnmarshaller();
-			MenuStructure menus = (MenuStructure) unmarshaller
-					.unmarshalDocument(in, null);
-			return menus;
-		} catch (JiBXException e) {
-			freemind.main.Resources.getInstance().logException(e);
-			throw new IllegalArgumentException(
-					"Menu structure could not be read.");
-		}
 	}
 
 	// convenience methods
@@ -563,14 +522,6 @@ public class MindMapController extends ControllerAdapter implements
 		public void actionPerformed(ActionEvent e) {
 			edit(null, false, true);
 		}
-	}
-
-	static public void saveHTML(MindMapNodeModel rootNodeOfBranch, File file)
-			throws IOException {
-		BufferedWriter fileout = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(file)));
-		MindMapHTMLWriter htmlWriter = new MindMapHTMLWriter(fileout);
-		htmlWriter.saveHTML(rootNodeOfBranch);
 	}
 
 	static public void saveHTML(List mindMapNodes, Writer fileout)

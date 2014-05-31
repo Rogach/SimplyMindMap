@@ -22,7 +22,6 @@ package freemind.modes.mindmapmode;
 
 import freemind.main.FreeMindCommon;
 import freemind.main.HtmlTools;
-import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLParseException;
 import freemind.modes.MapAdapter;
@@ -30,39 +29,22 @@ import freemind.modes.MindMapLinkRegistry;
 import freemind.modes.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.NodeAdapter;
-import java.awt.Color;
-import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.io.Writer;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.channels.FileLock;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MindMapMapModel extends MapAdapter {
 
 	public static final String MAP_INITIAL_START = "<map version=\"";
 	public static final String RESTORE_MODE_MIND_MAP = "MindMap:";
 	public static final String FREEMIND_VERSION_UPDATER_XSLT = "freemind/modes/mindmapmode/freemind_version_updater.xslt";
-	LockManager lockManager;
 	private MindMapLinkRegistry linkRegistry;
-	private Timer timerForAutomaticSaving;
 	/**
 	 * The current version and all other version that don't need XML update for
 	 * sure.
@@ -82,9 +64,6 @@ public class MindMapMapModel extends MapAdapter {
 	public MindMapMapModel(MindMapNodeModel root, FreeMindCommon common,
 			ModeController modeController) {
 		super(modeController);
-		lockManager = Resources.getInstance().getBoolProperty(
-				"experimental_file_locking_on") ? new LockManager()
-				: new DummyLockManager();
 
 		// register new LinkRegistryAdapter
 		linkRegistry = new MindMapLinkRegistry();
@@ -93,14 +72,6 @@ public class MindMapMapModel extends MapAdapter {
 			root = new MindMapNodeModel(common.getResourceString("new_mindmap"),
 					 this);
 		setRoot(root);
-		readOnly = false;
-		// automatic save: start timer after the map is completely loaded
-		EventQueue.invokeLater(new Runnable() {
-
-			public void run() {
-				scheduleTimerForAutomaticSaving();
-			}
-		});
 	}
 
 	//
@@ -118,11 +89,7 @@ public class MindMapMapModel extends MapAdapter {
 		nodeChanged(node);
 	}
   
-	//
-	// Export and saving
-	//
-
-	public String getAsHTML(List mindMapNodes) {
+  public String getAsHTML(List mindMapNodes) {
 		// Returns success of the operation.
 		try {
 			StringWriter stringWriter = new StringWriter();
@@ -134,75 +101,6 @@ public class MindMapMapModel extends MapAdapter {
 		} catch (Exception e) {
 			freemind.main.Resources.getInstance().logException(e);
 			return null;
-		}
-	}
-
-	/**
-	 * writes the content of the map to a writer.
-	 * 
-	 * @throws IOException
-	 */
-	public void getXml(Writer fileout, boolean saveInvisible)
-			throws IOException {
-		getXml(fileout, saveInvisible, getRootNode());
-	}
-
-	/**
-	 * writes the content of the map to a writer.
-	 * 
-	 * @throws IOException
-	 */
-	public void getXml(Writer fileout, boolean saveInvisible,
-			MindMapNode pRootNode) throws IOException {
-		fileout.write("<map ");
-		fileout.write("version=\"" + "1.0.1" + "\"");
-		fileout.write(">\n");
-		fileout.write("<!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->\n");
-		pRootNode.save(fileout, this.getLinkRegistry(), saveInvisible, true);
-		fileout.write("</map>\n");
-		fileout.close();
-	}
-
-	public void getXml(Writer fileout) throws IOException {
-		getXml(fileout, true);
-	}
-
-	public void getFilteredXml(Writer fileout) throws IOException {
-		getXml(fileout, false);
-	}
-
-	/**
-	 * Attempts to lock the map using a semaphore file
-	 * 
-	 * @return If the map is locked, return the name of the locking user,
-	 *         otherwise return null.
-	 * @throws Exception
-	 *             , when the locking failed for other reasons than that the
-	 *             file is being edited.
-	 */
-	public String tryToLock(File file) throws Exception {
-    throw new UnsupportedOperationException();
-	}
-
-	public void load(URL url) throws FileNotFoundException, IOException,
-			XMLParseException, URISyntaxException {
-		logger.info("Loading file: " + url.toString());
-		File file = Tools.urlToFile(url);
-		load(file);
-	}
-
-	public void load(File file) throws FileNotFoundException, IOException {
-    throw new UnsupportedOperationException();
-	}
-
-	/** When a map is closed, this method is called. */
-	public void destroy() {
-		super.destroy();
-		lockManager.releaseLock();
-		lockManager.releaseTimer();
-		if (timerForAutomaticSaving != null) {
-			/* cancel the timer, if map is closed. */
-			timerForAutomaticSaving.cancel();
 		}
 	}
 
@@ -307,179 +205,6 @@ public class MindMapMapModel extends MapAdapter {
 			return new StringBuffer();
 		}
 		return buffer;
-	}
-
-	private void scheduleTimerForAutomaticSaving() {
-		int numberOfTempFiles = Integer.parseInt(Resources.getInstance().getProperty(
-				"number_of_different_files_for_automatic_save"));
-		boolean filesShouldBeDeletedAfterShutdown = Resources.getInstance()
-				.getBoolProperty("delete_automatic_saves_at_exit");
-		String path = Resources.getInstance().getProperty("path_to_automatic_saves");
-		/* two standard values: */
-		if (Tools.safeEquals(path, "default")) {
-			path = null;
-		}
-		if (Tools.safeEquals(path, "freemind_home")) {
-			path = Resources.getInstance().getFreemindDirectory();
-		}
-		int delay = Integer.parseInt(Resources.getInstance().getProperty(
-				"time_for_automatic_save"));
-		File dirToStore = null;
-		if (path != null) {
-			dirToStore = new File(path);
-			/* existence? */
-			if (!dirToStore.isDirectory()) {
-				dirToStore = null;
-				System.err.println("Temporary directory " + path
-						+ " not found. Disabling automatic store.");
-				delay = Integer.MAX_VALUE;
-				return;
-			}
-		}
-	}
-
-	private class LockManager extends TimerTask {
-		File lockedSemaphoreFile = null;
-		Timer lockTimer = null;
-		final long lockUpdatePeriod = 4 * 60 * 1000; // four minutes
-		final long lockSafetyPeriod = 5 * 60 * 1000; // five minutes
-		String lockingUserOfOldLock = null;
-
-		private File getSemaphoreFile(File mapFile) {
-			return new File(mapFile.getParent()
-					+ System.getProperty("file.separator") + "$~"
-					+ mapFile.getName() + "~");
-		}
-
-		public synchronized String popLockingUserOfOldLock() {
-			String toReturn = lockingUserOfOldLock;
-			lockingUserOfOldLock = null;
-			return toReturn;
-		}
-
-		private void writeSemaphoreFile(File inSemaphoreFile) throws Exception {
-			FileOutputStream semaphoreOutputStream = new FileOutputStream(
-					inSemaphoreFile);
-			FileLock lock = null;
-			try {
-				lock = semaphoreOutputStream.getChannel().tryLock();
-				if (lock == null) {
-					semaphoreOutputStream.close();
-					System.err.println("Locking failed.");
-					throw new Exception();
-				}
-			} // locking failed
-			catch (UnsatisfiedLinkError eUle) {
-			} // This may come with Windows95. We don't insist on detailed
-				// locking in that case.
-			catch (NoClassDefFoundError eDcdf) {
-			} // ^ just like above.
-			// ^ On Windows95, the necessary libraries are missing.
-			semaphoreOutputStream.write(System.getProperty("user.name")
-					.getBytes());
-			semaphoreOutputStream.write('\n');
-			semaphoreOutputStream.write(String.valueOf(
-					System.currentTimeMillis()).getBytes());
-			semaphoreOutputStream.close();
-			semaphoreOutputStream = null;
-			Tools.setHidden(inSemaphoreFile, true, /* synchro= */false); // Exception
-																			// free
-			if (lock != null)
-				lock.release();
-		}
-
-		public synchronized String tryToLock(File file) throws Exception {
-			// Locking should work for opening as well as for saving as.
-			// We are especially carefull when it comes to exclusivity of
-			// writing.
-
-			File semaphoreFile = getSemaphoreFile(file);
-			if (semaphoreFile == lockedSemaphoreFile) {
-				return null;
-			}
-			try {
-				BufferedReader semaphoreReader = new BufferedReader(
-						new FileReader(semaphoreFile));
-				String lockingUser = semaphoreReader.readLine();
-
-				long lockTime = new Long(semaphoreReader.readLine())
-						.longValue();
-				long timeDifference = System.currentTimeMillis() - lockTime;
-				// catch (NumberFormatException enf) {} // This means that the
-				// time was not written at all - lock is corrupt
-				if (timeDifference > lockSafetyPeriod) { // the lock is old
-					semaphoreReader.close();
-					lockingUserOfOldLock = lockingUser;
-					semaphoreFile.delete();
-				} else
-					return lockingUser;
-			} catch (FileNotFoundException e) {
-			}
-
-			writeSemaphoreFile(semaphoreFile);
-
-			if (lockTimer == null) {
-				lockTimer = new Timer();
-				lockTimer.schedule(this, lockUpdatePeriod, lockUpdatePeriod);
-			}
-			releaseLock();
-			lockedSemaphoreFile = semaphoreFile;
-			return null;
-		}
-
-		public synchronized void releaseLock() {
-			if (lockedSemaphoreFile != null) {
-				lockedSemaphoreFile.delete();
-				lockedSemaphoreFile = null;
-			}
-		} // this may fail, TODO: ensure real deletion
-
-		public synchronized void releaseTimer() {
-			if (lockTimer != null) {
-				lockTimer.cancel();
-				lockTimer = null;
-			}
-		}
-
-		public synchronized void run() { // update semaphore file
-			if (lockedSemaphoreFile == null) {
-				System.err
-						.println("unexpected: lockedSemaphoreFile is null upon lock update");
-				return;
-			}
-			try {
-				Tools.setHidden(lockedSemaphoreFile, false, /* synchro= */true); // Exception
-																					// free
-				// ^ We unhide the file before overwriting because JavaRE1.4.2
-				// does
-				// not let us open hidden files for writing. This is a
-				// workaround for Java bug,
-				// I guess.
-
-				writeSemaphoreFile(lockedSemaphoreFile);
-			} catch (Exception e) {
-				freemind.main.Resources.getInstance().logException(e);
-			}
-		}
-	}
-
-	private class DummyLockManager extends LockManager {
-		public synchronized String popLockingUserOfOldLock() {
-			return null;
-		}
-
-		public synchronized String tryToLock(File file) throws Exception {
-			return null;
-		}
-
-		public synchronized void releaseLock() {
-		}
-
-		public synchronized void releaseTimer() {
-		}
-
-		public synchronized void run() {
-		}
 	}
 
 }

@@ -39,7 +39,6 @@ import javax.swing.tree.TreeNode;
 
 public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 
-	protected boolean readOnly = true;
 	static protected Logger logger;
 	protected final ModeController mModeController;
 
@@ -56,41 +55,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 		return mModeController;
 	}
 
-	public void load(File file) throws FileNotFoundException, IOException {
-		try {
-			load(Tools.fileToUrl(file));
-		} catch (XMLParseException e) {
-			freemind.main.Resources.getInstance().logException(e);
-		} catch (URISyntaxException e) {
-			freemind.main.Resources.getInstance().logException(e);
-		}
-	}
-
-	/**
-	 * Attempts to lock the map using semaphore file.
-	 * 
-	 * @return If the map is locked, return the name of the locking user, return
-	 *         null otherwise.
-	 * @throws Exception
-	 */
-	public String tryToLock(File file) throws Exception {
-		return null;
-	}
-
-	public void destroy() {
-		// Do all the necessary destructions in your model,
-		// e.g. remove file locks.
-		// and remove all hooks:
-		removeNodes(getRootNode());
-	}
-
-
-	// (PN)
-	// public void close() {
-	// }
-
-	/**
-	 */
 	private void removeNodes(MindMapNode node) {
 		mModeController.fireNodePreDeleteEvent(node);
 		// and all children:
@@ -98,10 +62,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 			MindMapNode child = (MindMapNode) i.next();
 			removeNodes(child);
 		}
-	}
-
-	public boolean isReadOnly() {
-		return readOnly;
 	}
 
 	public MindMapNode getRootNode() {
@@ -112,68 +72,12 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 		super.setRoot(root);
 	}
 
-	/**
-	 * @param newRoot
-	 *            one of the nodes, that is now root. The others are grouped
-	 *            around.
-	 */
-	public void changeRoot(MindMapNode newRoot) {
-		if (newRoot == getRootNode()) {
-			return;
-		}
-		boolean left = newRoot.isLeft();
-		MindMapNode node = newRoot;
-		// collect parents (as we remove them from their parents...)
-		Vector parents = new Vector();
-		while (node.getParentNode() != null) {
-			MindMapNode parent = node.getParentNode();
-			parents.add(0, node);
-			node = parent;
-		}
-		// bind all parents to a new chain:
-		for (Iterator it = parents.iterator(); it.hasNext();) {
-			node = (MindMapNode) it.next();
-			MindMapNode parent = node.getParentNode();
-			// remove parent
-			node.removeFromParent();
-			// special treatment for left/right
-			if (node == newRoot) {
-				for (Iterator it2 = node.getChildren().iterator(); it2
-						.hasNext();) {
-					MindMapNode child = (MindMapNode) it2.next();
-					child.setLeft(left);
-				}
-				parent.setLeft(!left);
-			}
-			// and put it as a child
-			node.insert(parent, node.getChildCount());
-		}
-		// and set root
-		setRoot(newRoot);
-	}
-
-	protected String getText(String textId) {
-		return Resources.getInstance().getResourceString(textId);
-	}
-
-	//
-	// Node editing
-	//
-
-	public String getAsPlainText(List mindMapNodes) {
-		return "";
-	}
-
-	public String getAsRTF(List mindMapNodes) {
-		return "";
-	}
-
 	public String getAsHTML(List mindMapNodes) {
 		return null;
 	}
-
-	public String getRestorable() {
-		return null;
+  
+	public String getAsPlainText(List mindMapNodes) {
+		return "";
 	}
 
 	public MindMapLinkRegistry getLinkRegistry() {
