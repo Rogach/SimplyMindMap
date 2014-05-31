@@ -23,8 +23,6 @@
 package freemind.modes.mindmapmode.actions.xml;
 
 import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.modes.mindmapmode.actions.xml.ActionFilter.FinalActionFilter;
-import freemind.modes.mindmapmode.actions.xml.ActionFilter.FirstActionFilter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
@@ -41,8 +39,6 @@ public class ActionFactory {
 	 * action.
 	 */
 	private Vector registeredHandler;
-	/** This set denotes all filters for XmlActions. */
-	private Vector registeredFilters;
 	/** HashMap of Action class -> actor instance. */
 	private HashMap registeredActors;
 	private UndoActionHandler undoActionHandler;
@@ -57,7 +53,6 @@ public class ActionFactory {
 			logger = Logger.getLogger(this.getClass().getName());
 		}
 		registeredHandler = new Vector();
-		registeredFilters = new Vector();
 		registeredActors = new HashMap();
 	}
 
@@ -74,40 +69,6 @@ public class ActionFactory {
 
 	public void deregisterHandler(ActionHandler newHandler) {
 		registeredHandler.remove(newHandler);
-	}
-
-	public void registerFilter(ActionFilter newFilter) {
-		if (!registeredFilters.contains(newFilter)) {
-			if (newFilter instanceof FinalActionFilter) {
-				/* Insert as the last one here. */
-				registeredFilters.insertElementAt(newFilter,
-						registeredFilters.size());
-			} else if (newFilter instanceof FirstActionFilter) {
-				/* Insert as the first one here. */
-				registeredFilters.insertElementAt(newFilter, 0);
-			} else {
-				/* Insert before FinalActionFilters */
-				int index = 0;
-				for (Iterator it = registeredFilters.iterator(); it.hasNext();) {
-					ActionFilter filter = (ActionFilter) it.next();
-					if (filter instanceof FinalActionFilter) {
-						break;
-					}
-					index++;
-				}
-				registeredFilters.insertElementAt(newFilter, index);
-			}
-		}
-		// int count = 0;
-		// for (Iterator it = registeredFilters.iterator(); it.hasNext();) {
-		// ActionFilter filter = (ActionFilter) it.next();
-		// logger.info("Filter " + count + ": " + filter.getClass().getName());
-		// count++;
-		// }
-	}
-
-	public void deregisterFilter(ActionFilter newFilter) {
-		registeredFilters.remove(newFilter);
 	}
 
 	private void startTransaction(String name) {
@@ -154,11 +115,6 @@ public class ActionFactory {
 		}
 
 		ActionPair filteredPair = pair;
-		// first filter:
-		for (Iterator i = registeredFilters.iterator(); i.hasNext();) {
-			ActionFilter filter = (ActionFilter) i.next();
-			filteredPair = filter.filterAction(filteredPair);
-		}
 
 		Object[] aArray = registeredHandler.toArray();
 		for (int i = 0; i < aArray.length; i++) {
