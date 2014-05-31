@@ -27,23 +27,17 @@ import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.ByteArrayInputStream;
 import java.util.List;
 
 public class MindMapNodesSelection implements Transferable, ClipboardOwner {
 
-	private String nodesContent;
-	private String stringContent;
-	private String imageContent;
-	private String rtfContent;
-	private String htmlContent;
+	private final String nodesContent;
+	private final String stringContent;
+	private final String htmlContent;
 	private String dropActionContent;
-	private final List fileList;
-	private List nodeIdsContent;
+	private final List nodeIdsContent;
 	public static DataFlavor mindMapNodesFlavor = null;
-	public static DataFlavor rtfFlavor = null;
 	public static DataFlavor htmlFlavor = null;
-	public static DataFlavor fileListFlavor = null;
 	/**
 	 * fc, 7.8.2004: This is a quite interesting flavor, but how does it
 	 * works???
@@ -59,10 +53,7 @@ public class MindMapNodesSelection implements Transferable, ClipboardOwner {
 		try {
 			mindMapNodesFlavor = new DataFlavor(
 					"text/freemind-nodes; class=java.lang.String");
-			rtfFlavor = new DataFlavor("text/rtf; class=java.io.InputStream");
 			htmlFlavor = new DataFlavor("text/html; class=java.lang.String");
-			fileListFlavor = new DataFlavor(
-					"application/x-java-file-list; class=java.util.List");
 			dropActionFlavor = new DataFlavor(
 					"text/drop-action; class=java.lang.String");
 			copyNodeIdsFlavor = new DataFlavor(
@@ -73,24 +64,18 @@ public class MindMapNodesSelection implements Transferable, ClipboardOwner {
 	}
 
 	//
-	public MindMapNodesSelection(String nodesContent, String imageContent,
-			String stringContent, String rtfContent, String htmlContent,
-			String dropActionContent, List fileList, List nodeIdsContent) {
+	public MindMapNodesSelection(String nodesContent,
+			String stringContent, String htmlContent,
+			String dropActionContent, List nodeIdsContent) {
 		this.nodesContent = nodesContent;
-		this.rtfContent = rtfContent;
-		this.imageContent = imageContent;
 		this.stringContent = stringContent;
 		this.dropActionContent = dropActionContent;
 		this.htmlContent = htmlContent;
-		this.fileList = fileList;
 		this.nodeIdsContent = nodeIdsContent;
 	}
 
 	public Object getTransferData(DataFlavor flavor)
 			throws UnsupportedFlavorException {
-		if (flavor.equals(DataFlavor.imageFlavor)) {
-			return imageContent;
-		}
 		if (flavor.equals(DataFlavor.stringFlavor)) {
 			return stringContent;
 		}
@@ -100,18 +85,8 @@ public class MindMapNodesSelection implements Transferable, ClipboardOwner {
 		if (flavor.equals(dropActionFlavor)) {
 			return dropActionContent;
 		}
-		if (flavor.equals(rtfFlavor)) {
-			byte[] byteArray = rtfContent.getBytes();
-			// for (int i = 0; i < byteArray.length; ++i) {
-			// System.out.println(byteArray[i]); }
-
-			return new ByteArrayInputStream(byteArray);
-		}
 		if (flavor.equals(htmlFlavor) && htmlContent != null) {
 			return htmlContent;
-		}
-		if (flavor.equals(fileListFlavor)) {
-			return fileList;
 		}
 		if (flavor.equals(copyNodeIdsFlavor)) {
 			return nodeIdsContent;
@@ -120,32 +95,22 @@ public class MindMapNodesSelection implements Transferable, ClipboardOwner {
 	}
 
 	public DataFlavor[] getTransferDataFlavors() {
-		return new DataFlavor[] { DataFlavor.imageFlavor,
-				DataFlavor.stringFlavor, mindMapNodesFlavor, rtfFlavor,
+		return new DataFlavor[] {
+				DataFlavor.stringFlavor, mindMapNodesFlavor,
 				htmlFlavor, dropActionFlavor, copyNodeIdsFlavor };
 	}
 
 	public boolean isDataFlavorSupported(DataFlavor flavor) {
-		if (flavor.equals(DataFlavor.imageFlavor) && imageContent != null) {
-			return true;
-		}
 		if (flavor.equals(DataFlavor.stringFlavor) && stringContent != null) {
 			return true;
 		}
 		if (flavor.equals(mindMapNodesFlavor) && nodesContent != null) {
 			return true;
 		}
-		if (flavor.equals(rtfFlavor) && rtfContent != null) {
-			return true;
-		}
 		if (flavor.equals(dropActionFlavor) && dropActionContent != null) {
 			return true;
 		}
 		if (flavor.equals(htmlFlavor) && htmlContent != null) {
-			return true;
-		}
-		if (flavor.equals(fileListFlavor) && (fileList != null)
-				&& fileList.size() > 0) {
 			return true;
 		}
 		if (flavor.equals(copyNodeIdsFlavor) && nodeIdsContent != null) {

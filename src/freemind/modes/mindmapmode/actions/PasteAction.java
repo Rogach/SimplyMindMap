@@ -516,11 +516,6 @@ public class PasteAction extends AbstractAction implements ActorXml {
 					amountAlreadySet = true;
 				}
 			}
-			if (t.isDataFlavorSupported(MindMapNodesSelection.rtfFlavor)) {
-				// byte[] textFromClipboard = (byte[])
-				// t.getTransferData(MindMapNodesSelection.rtfFlavor);
-				// trans.setTransferableAsRTF(textFromClipboard.toString());
-			}
 			if (t.isDataFlavorSupported(MindMapNodesSelection.htmlFlavor)) {
 				String textFromClipboard;
 				textFromClipboard = (String) t
@@ -565,19 +560,10 @@ public class PasteAction extends AbstractAction implements ActorXml {
 	}
 
 	private Transferable getTransferable(TransferableContent trans) {
-		// create Transferable:
-		// Add file list to this selection.
-		Vector fileList = new Vector();
-		for (Iterator iter = trans.getListTransferableFileList().iterator(); iter
-				.hasNext();) {
-			TransferableFile tFile = (TransferableFile) iter.next();
-			fileList.add(new File(tFile.getFileName()));
-		}
 		Transferable copy = new MindMapNodesSelection(trans.getTransferable(),
-				trans.getTransferableAsImage(),
 				trans.getTransferableAsPlainText(),
-				trans.getTransferableAsRTF(), trans.getTransferableAsHtml(),
-				trans.getTransferableAsDrop(), fileList, null);
+				 trans.getTransferableAsHtml(),
+				trans.getTransferableAsDrop(), null);
 		return copy;
 	}
 

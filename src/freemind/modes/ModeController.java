@@ -26,12 +26,8 @@ import freemind.view.mindmapview.NodeView;
 import java.awt.Color;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 

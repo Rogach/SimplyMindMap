@@ -19,7 +19,6 @@
 
 package freemind.view.mindmapview;
 
-import freemind.main.HtmlTools;
 import freemind.main.Tools;
 import java.awt.Color;
 import java.awt.Dimension;

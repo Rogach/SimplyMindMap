@@ -20,10 +20,8 @@
 
 package freemind.modes.mindmapmode;
 
-import freemind.common.XmlBindingTools;
 import freemind.controller.MindMapNodesSelection;
 import freemind.controller.actions.generated.instance.EditNoteToNodeAction;
-import freemind.controller.actions.generated.instance.MenuStructure;
 import freemind.controller.actions.generated.instance.Pattern;
 import freemind.controller.actions.generated.instance.PatternEdgeColor;
 import freemind.controller.actions.generated.instance.PatternEdgeStyle;
@@ -39,27 +37,22 @@ import freemind.controller.actions.generated.instance.PatternNodeStyle;
 import freemind.controller.actions.generated.instance.PatternNodeText;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.FixedHTMLWriter;
-import freemind.main.FreeMindCommon;
 import freemind.main.HtmlTools;
 import freemind.main.ResourceKeys;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
 import freemind.modes.ControllerAdapter;
-import freemind.modes.MapAdapter;
 import freemind.modes.MindIcon;
 import freemind.modes.MindMap;
 import freemind.modes.MindMapNode;
-import freemind.modes.ModeController;
-import freemind.modes.mindmapmode.actions.NodeDownAction;
-import freemind.modes.mindmapmode.actions.FindAction;
-import freemind.modes.mindmapmode.actions.FindAction.FindNextAction;
 import freemind.modes.mindmapmode.actions.BoldAction;
-import freemind.modes.mindmapmode.actions.CompoundActionHandler;
 import freemind.modes.mindmapmode.actions.CopyAction;
 import freemind.modes.mindmapmode.actions.CutAction;
 import freemind.modes.mindmapmode.actions.DeleteChildAction;
 import freemind.modes.mindmapmode.actions.EditAction;
+import freemind.modes.mindmapmode.actions.FindAction;
+import freemind.modes.mindmapmode.actions.FindAction.FindNextAction;
 import freemind.modes.mindmapmode.actions.FontFamilyAction;
 import freemind.modes.mindmapmode.actions.FontSizeAction;
 import freemind.modes.mindmapmode.actions.IconAction;
@@ -71,6 +64,7 @@ import freemind.modes.mindmapmode.actions.NewChildAction;
 import freemind.modes.mindmapmode.actions.NewPreviousSiblingAction;
 import freemind.modes.mindmapmode.actions.NewSiblingAction;
 import freemind.modes.mindmapmode.actions.NodeColorAction;
+import freemind.modes.mindmapmode.actions.NodeDownAction;
 import freemind.modes.mindmapmode.actions.NodeGeneralAction;
 import freemind.modes.mindmapmode.actions.NodeUpAction;
 import freemind.modes.mindmapmode.actions.PasteAction;
@@ -96,20 +90,15 @@ import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 import java.util.Vector;
 import java.util.logging.Logger;
@@ -118,8 +107,6 @@ import javax.swing.Action;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
-import org.jibx.runtime.IUnmarshallingContext;
-import org.jibx.runtime.JiBXException;
 
 public class MindMapController extends ControllerAdapter implements
 		MindMapActions {
@@ -424,8 +411,8 @@ public class MindMapController extends ControllerAdapter implements
 		} catch (IOException e) {
 		}
 		Vector nodeList = Tools.getVectorWithSingleElement(getNodeID(node));
-		return new MindMapNodesSelection(stringWriter.toString(), null, null,
-				null, null, null, null, nodeList);
+		return new MindMapNodesSelection(stringWriter.toString(),
+				null, null, null, nodeList);
 	}
 
 	public Transferable cut() {

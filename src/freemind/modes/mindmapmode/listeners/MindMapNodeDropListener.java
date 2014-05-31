@@ -52,9 +52,6 @@ public class MindMapNodeDropListener implements DropTargetListener {
 		if (ev.isDataFlavorSupported(DataFlavor.stringFlavor)) {
 			return true;
 		}
-		if (ev.isDataFlavorSupported(MindMapNodesSelection.fileListFlavor)) {
-			return true;
-		}
 		return false;
 	}
 

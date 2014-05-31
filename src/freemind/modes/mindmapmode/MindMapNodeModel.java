@@ -20,12 +20,8 @@
 
 package freemind.modes.mindmapmode;
 
-import freemind.main.HtmlTools;
 import freemind.modes.MindMap;
 import freemind.modes.NodeAdapter;
-import java.io.IOException;
-import java.io.Writer;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.ListIterator;

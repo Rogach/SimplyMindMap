@@ -9,8 +9,6 @@ package freemind.main;
  * This is free software. You can modify and use it at will.
  */
 
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.FilterWriter;
 import java.io.IOException;
 import java.io.Reader;

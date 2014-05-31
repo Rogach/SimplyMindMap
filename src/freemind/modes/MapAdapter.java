@@ -20,16 +20,8 @@
 
 package freemind.modes;
 
-import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.main.XMLParseException;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 import java.util.logging.Logger;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelEvent;
@@ -74,10 +66,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 
 	public String getAsHTML(List mindMapNodes) {
 		return null;
-	}
-  
-	public String getAsPlainText(List mindMapNodes) {
-		return "";
 	}
 
 	public MindMapLinkRegistry getLinkRegistry() {

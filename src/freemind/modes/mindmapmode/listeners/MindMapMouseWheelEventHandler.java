@@ -24,13 +24,10 @@ package freemind.modes.mindmapmode.listeners;
 
 import freemind.main.Resources;
 import freemind.modes.ControllerAdapter;
-import freemind.modes.mindmapmode.actions.MindMapActions.MouseWheelEventHandler;
 import freemind.view.mindmapview.MapView;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.util.Iterator;
-import java.util.Set;
 
 /**
  * @author foltin
