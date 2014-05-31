@@ -142,8 +142,6 @@ public interface MindMapActions {
 
 	public void splitNode(MindMapNode node, int caretPosition, String newText);
 
-	public void joinNodes(MindMapNode selectedNode, List selectedNodes);
-
 	public void paste(Transferable t, MindMapNode parent);
 
 	/**

@@ -70,7 +70,6 @@ import freemind.modes.mindmapmode.actions.FontFamilyAction;
 import freemind.modes.mindmapmode.actions.FontSizeAction;
 import freemind.modes.mindmapmode.actions.IconAction;
 import freemind.modes.mindmapmode.actions.ItalicAction;
-import freemind.modes.mindmapmode.actions.JoinNodesAction;
 import freemind.modes.mindmapmode.actions.MindMapActions;
 import freemind.modes.mindmapmode.actions.ModeControllerActionHandler;
 import freemind.modes.mindmapmode.actions.MoveNodeAction;
@@ -78,11 +77,9 @@ import freemind.modes.mindmapmode.actions.NewChildAction;
 import freemind.modes.mindmapmode.actions.NewPreviousSiblingAction;
 import freemind.modes.mindmapmode.actions.NewSiblingAction;
 import freemind.modes.mindmapmode.actions.NodeColorAction;
-import freemind.modes.mindmapmode.actions.NodeColorBlendAction;
 import freemind.modes.mindmapmode.actions.NodeGeneralAction;
 import freemind.modes.mindmapmode.actions.NodeUpAction;
 import freemind.modes.mindmapmode.actions.PasteAction;
-import freemind.modes.mindmapmode.actions.PasteAsPlainTextAction;
 import freemind.modes.mindmapmode.actions.RedoAction;
 import freemind.modes.mindmapmode.actions.RemoveAllIconsAction;
 import freemind.modes.mindmapmode.actions.RemoveIconAction;
@@ -193,7 +190,6 @@ public class MindMapController extends ControllerAdapter implements
 	public Action copySingle = null;
 	public CutAction cut = null;
 	public PasteAction paste = null;
-	public PasteAsPlainTextAction pasteAsPlainText = null;
 	public BoldAction bold = null;
 	public ItalicAction italic = null;
 	public UnderlinedAction underlined = null;
@@ -209,12 +205,10 @@ public class MindMapController extends ControllerAdapter implements
 	public UsePlainTextAction usePlainText = null;
 	public NodeUpAction nodeUp = null;
 	public NodeDownAction nodeDown = null;
-	public NodeColorBlendAction nodeColorBlend = null;
   
 	public IconAction unknownIconAction = null;
 	public RemoveIconAction removeLastIconAction = null;
 	public RemoveAllIconsAction removeAllIconsAction = null;
-	public JoinNodesAction joinNodes = null;
 	public MoveNodeAction moveNodeAction = null;
 	
 	public FindAction find = null;
@@ -288,7 +282,6 @@ public class MindMapController extends ControllerAdapter implements
 
 		cut = new CutAction(this);
 		paste = new PasteAction(this);
-		pasteAsPlainText = new PasteAsPlainTextAction(this);
 		copy = new CopyAction(this);
 		bold = new BoldAction(this);
 		italic = new ItalicAction(this);
@@ -305,7 +298,6 @@ public class MindMapController extends ControllerAdapter implements
 		nodeUp = new NodeUpAction(this);
 		nodeDown = new NodeDownAction(this);
 		nodeColor = new NodeColorAction(this);
-		nodeColorBlend = new NodeColorBlendAction(this);
 		// this is an unknown icon and thus corrected by mindicon:
 		removeLastIconAction = new RemoveIconAction(this);
 		// this action handles the xml stuff: (undo etc.)
@@ -317,7 +309,6 @@ public class MindMapController extends ControllerAdapter implements
 		// load pattern actions:
 		loadPatternActions();
 		moveNodeAction = new MoveNodeAction(this);
-		joinNodes = new JoinNodesAction(this);
 		find = new FindAction(this);
 		findNext = new FindNextAction(this, find);
 		selectBranchAction = new SelectBranchAction(this);
@@ -456,7 +447,6 @@ public class MindMapController extends ControllerAdapter implements
 		copy.setEnabled(enabled);
 		copySingle.setEnabled(enabled);
 		paste.setEnabled(enabled);
-		pasteAsPlainText.setEnabled(enabled);
 		undo.setEnabled(enabled);
 		redo.setEnabled(enabled);
 		edit.setEnabled(enabled);
@@ -467,10 +457,8 @@ public class MindMapController extends ControllerAdapter implements
 		bold.setEnabled(enabled);
 		find.setEnabled(enabled);
 		findNext.setEnabled(enabled);
-		nodeColorBlend.setEnabled(enabled);
 		nodeUp.setEnabled(enabled);
 		nodeDown.setEnabled(enabled);
-		joinNodes.setEnabled(enabled);
 		deleteChild.setEnabled(enabled);
 		// normalFont.setEnabled(enabled);
 		nodeColor.setEnabled(enabled);
@@ -639,10 +627,6 @@ public class MindMapController extends ControllerAdapter implements
 
 	public void moveNodes(MindMapNode selected, List selecteds, int direction) {
 		nodeUp.moveNodes(selected, selecteds, direction);
-	}
-
-	public void joinNodes(MindMapNode selectedNode, List selectedNodes) {
-		joinNodes.joinNodes(selectedNode, selectedNodes);
 	}
 
 	public void moveNodePosition(MindMapNode node, int parentVGap, int hGap,

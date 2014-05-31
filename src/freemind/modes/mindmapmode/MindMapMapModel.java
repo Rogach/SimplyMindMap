@@ -20,7 +20,6 @@
 
 package freemind.modes.mindmapmode;
 
-import freemind.common.UnicodeReader;
 import freemind.main.FreeMindCommon;
 import freemind.main.HtmlTools;
 import freemind.main.Resources;
@@ -36,7 +35,6 @@ import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -301,11 +299,6 @@ public class MindMapMapModel extends MapAdapter {
 		}
 	}
 
-	MindMapNodeModel loadTree(final File pFile) throws XMLParseException,
-			IOException {
-		return loadTree(new FileReaderCreator(pFile));
-	}
-
 	public static class StringReaderCreator implements ReaderCreator {
 
 		private final String mString;
@@ -320,22 +313,6 @@ public class MindMapMapModel extends MapAdapter {
 
 		public String toString() {
 			return mString;
-		}
-	}
-
-	private static class FileReaderCreator implements ReaderCreator {
-		private final File mFile;
-
-		public FileReaderCreator(File pFile) {
-			mFile = pFile;
-		}
-
-		public Reader createReader() throws FileNotFoundException {
-			return new UnicodeReader(new FileInputStream(mFile), "UTF-8");
-		}
-
-		public String toString() {
-			return mFile.getName();
 		}
 	}
 
