@@ -83,7 +83,6 @@ public abstract class NodeAdapter implements MindMapNode {
 	private MindMapNode preferredChild;
 
 	protected Font font;
-	protected boolean underlined = false;
 
 	private MindMapNode parent;
 	/**
@@ -225,10 +224,6 @@ public abstract class NodeAdapter implements MindMapNode {
 						.getSize()));
 	}
 
-	public void setUnderlined(boolean underlined) {
-		this.underlined = underlined;
-	}
-
 	public void setFont(Font font) {
 		this.font = font;
 	}
@@ -269,10 +264,6 @@ public abstract class NodeAdapter implements MindMapNode {
 
 	public boolean isItalic() {
 		return font != null ? font.isItalic() : false;
-	}
-
-	public boolean isUnderlined() { // not implemented
-		return underlined;
 	}
 
 	public boolean isFolded() {
@@ -743,9 +734,6 @@ public abstract class NodeAdapter implements MindMapNode {
 			}
 			if (isItalic()) {
 				fontElement.setAttribute("ITALIC", "true");
-			}
-			if (isUnderlined()) {
-				fontElement.setAttribute("UNDERLINE", "true");
 			}
 			node.addChild(fontElement);
 		}

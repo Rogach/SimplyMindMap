@@ -89,8 +89,6 @@ public interface MindMapNode extends MutableTreeNode {
 
 	boolean isItalic();
 
-	boolean isUnderlined();
-
 	Font getFont();
 
 	String getFontSize();
