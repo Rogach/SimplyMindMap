@@ -200,7 +200,7 @@ public class KeymapConfigurator {
             }
           }
         }
-        if (directSibling != null && directSibling.isWriteable()) {
+        if (directSibling != null) {
           // sibling on the same side found:
           Transferable copy = controller.cut(selectedNodes);
           controller.paste(copy, directSibling, false,

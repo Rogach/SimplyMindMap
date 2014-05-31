@@ -40,61 +40,11 @@ import javax.swing.tree.TreePath;
 
 public interface MindMapNode extends MutableTreeNode {
 
-	public static final String STYLE_BUBBLE = "bubble";
-	public static final String STYLE_FORK = "fork";
-	public static final String STYLE_COMBINED = "combined";
-	public static final String STYLE_AS_PARENT = "as_parent";
-	public static final String[] NODE_STYLES = new String[] { STYLE_FORK,
-			STYLE_BUBBLE, STYLE_AS_PARENT, STYLE_COMBINED };
-
-	/**
-	 * @return the text representation of the nodes content. HTML is represented
-	 *         as <html>....</html> see getXmlText
-	 */
 	String getText();
 
-	/**
-	 * Sets both text and xmlText.
-	 */
 	void setText(String text);
 
-	/**
-	 * @return the text representation of the nodes content as valid XML. HTML
-	 *         is represented as <html>....</html> with proper tags (like \<br/\>
-	 *         instead of \<br\>
-	 *         and so on).
-	 */
-	String getXmlText();
-
-	/**
-	 * Sets both text and xmlText.
-	 */
-	void setXmlText(String structuredText);
-
-	/**
-	 * @return the text representation of the notes content as valid XML. HTML
-	 *         is represented as <html>....</html> with proper tags (like <br/>
-	 *         instead of <br>
-	 *         and so on).
-	 */
-	String getXmlNoteText();
-
-	/**
-	 * Sets both noteText and xmlNoteText.
-	 */
-	void setXmlNoteText(String structuredNoteText);
-
-	/**
-	 * @return the text representation of the notes content as valid HTML 3.2.
-	 */
-	String getNoteText();
-
-	/**
-	 * Sets both noteText and xmlNoteText.
-	 */
-	void setNoteText(String noteText);
-
-	/**
+  /**
 	 * @return returns the unique id of the node. It is generated using the
 	 *         LinkRegistry.
 	 */
@@ -132,12 +82,6 @@ public interface MindMapNode extends MutableTreeNode {
 
 	int getNodeLevel();
 
-	/**
-	 * returns a short textual description of the text contained in the node.
-	 * Html is filtered out.
-	 */
-	String getShortText(ModeController controller);
-
 	MindMapEdge getEdge();
 
 	Color getColor();
@@ -154,6 +98,8 @@ public interface MindMapNode extends MutableTreeNode {
 
 	String getFontSize();
 
+	void setFontSize(int fontSize);
+
 	String getFontFamilyName();
 
 	/**
@@ -164,10 +110,6 @@ public interface MindMapNode extends MutableTreeNode {
 	void addViewer(NodeView viewer);
 
 	void removeViewer(NodeView viewer);
-
-	String toString();
-
-	String getPlainTextContent();
 
 	TreePath getPath();
 
@@ -212,8 +154,6 @@ public interface MindMapNode extends MutableTreeNode {
 
 	int getHGap();
 
-	void setFontSize(int fontSize);
-
 	void setColor(Color color);
 
 	// fc, 06.10.2003:
@@ -225,10 +165,6 @@ public interface MindMapNode extends MutableTreeNode {
 	/* @return returns the new amount of icons. */
 	int removeIcon(int position);
 
-	// end, fc, 24.9.2003
-
-	// end clouds.
-
 	// fc, 24.2.2004: background color:
 	Color getBackgroundColor();
 
@@ -238,21 +174,6 @@ public interface MindMapNode extends MutableTreeNode {
 	void setToolTip(String key, String tip);
 
 	SortedMap getToolTip();
-
-	// additional info, fc, 15.12.2004
-
-	/**
-	 * This method can be used to store non-visual additions to a node.
-	 * Currently, it is used for encrypted nodes to store the encrypted content.
-	 */
-	void setAdditionalInfo(String info);
-
-	/**
-	 * Is only used to store encrypted content of an encrypted mind map node.
-	 * 
-	 * @see MindMapNode.setAdditionalInfo(String)
-	 */
-	public String getAdditionalInfo();
 
 	/**
 	 * @return a flat copy of this node including all extras like notes, etc.
@@ -268,25 +189,6 @@ public interface MindMapNode extends MutableTreeNode {
 	 */
 	public XMLElement save(Writer writer, MindMapLinkRegistry registry,
 			boolean saveHidden, boolean saveChildren) throws IOException;
-
-	// fc, 10.2.2005:
-	/**
-	 * State icons are icons that are not saved. They indicate that this node is
-	 * special.
-	 */
-	Map getStateIcons();
-
-	/**
-	 * @param icon
-	 *            use null to remove the state icon. Then it is not required,
-	 *            that the key already exists.
-	 */
-	void setStateIcon(String key, ImageIcon icon);
-
-	// fc, 11.4.2005:
-	HistoryInformation getHistoryInformation();
-
-	void setHistoryInformation(HistoryInformation historyInformation);
 
 	boolean isVisible();
 
@@ -305,18 +207,10 @@ public interface MindMapNode extends MutableTreeNode {
 	public void addTreeModelListener(TreeModelListener l);
 
 	public void removeTreeModelListener(TreeModelListener l);
-
-	public void acceptViewVisitor(NodeViewVisitor visitor);
-
+  
 	EventListenerList getListeners();
 
 	boolean isNewChildLeft();
-
-	/**
-	 * Some nodes can't get new children or have other changes (encrypted nodes
-	 * for example).
-	 */
-	boolean isWriteable();
 
 	/**
 	 * @return true, if one of its parents is folded. If itself is folded, doesn't matter.

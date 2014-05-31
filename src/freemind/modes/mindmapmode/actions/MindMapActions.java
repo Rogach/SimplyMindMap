@@ -71,8 +71,6 @@ public interface MindMapActions {
 
 	public void setNodeText(MindMapNode selected, String newText);
 
-	public void setNoteText(MindMapNode selected, String newText);
-
 	public MindMapNode addNew(final MindMapNode target, final int newNodeMode,
 			final KeyEvent e);
 

@@ -495,7 +495,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 				String textFromClipboard;
 				textFromClipboard = (String) t
 						.getTransferData(MindMapNodesSelection.mindMapNodesFlavor);
-				trans.setTransferable(HtmlTools.makeValidXml(textFromClipboard));
+				trans.setTransferable(textFromClipboard.replaceAll("\u0000", "").replaceAll("&#0;", ""));
 				if (pUndoAction != null && !amountAlreadySet) {
 					pUndoAction
 							.setNodeAmount(Tools.countOccurrences(
@@ -508,8 +508,8 @@ public class PasteAction extends AbstractAction implements ActorXml {
 				String textFromClipboard;
 				textFromClipboard = (String) t
 						.getTransferData(DataFlavor.stringFlavor);
-				trans.setTransferableAsPlainText(HtmlTools
-						.makeValidXml(textFromClipboard));
+				trans.setTransferableAsPlainText(textFromClipboard.replaceAll("\u0000", "")
+						.replaceAll("&#0;", ""));
 				if (pUndoAction != null && !amountAlreadySet) {
 					// determine amount of new nodes using the algorithm:
 					final int childCount = determineAmountOfNewNodes(t);
@@ -526,8 +526,8 @@ public class PasteAction extends AbstractAction implements ActorXml {
 				String textFromClipboard;
 				textFromClipboard = (String) t
 						.getTransferData(MindMapNodesSelection.htmlFlavor);
-				trans.setTransferableAsHtml(HtmlTools
-						.makeValidXml(textFromClipboard));
+				trans.setTransferableAsHtml(textFromClipboard.replaceAll("\u0000", "")
+						.replaceAll("&#0;", ""));
 				if (pUndoAction != null && !amountAlreadySet) {
 					// on html paste, the string text is taken and "improved".
 					// Thus, we count its lines.

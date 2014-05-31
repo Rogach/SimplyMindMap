@@ -23,13 +23,7 @@ package freemind.modes.mindmapmode;
 import freemind.common.XmlBindingTools;
 import freemind.controller.MindMapNodesSelection;
 import freemind.controller.actions.generated.instance.EditNoteToNodeAction;
-import freemind.controller.actions.generated.instance.MenuActionBase;
-import freemind.controller.actions.generated.instance.MenuCategoryBase;
-import freemind.controller.actions.generated.instance.MenuCheckedAction;
-import freemind.controller.actions.generated.instance.MenuRadioAction;
-import freemind.controller.actions.generated.instance.MenuSeparator;
 import freemind.controller.actions.generated.instance.MenuStructure;
-import freemind.controller.actions.generated.instance.MenuSubmenu;
 import freemind.controller.actions.generated.instance.Pattern;
 import freemind.controller.actions.generated.instance.PatternEdgeColor;
 import freemind.controller.actions.generated.instance.PatternEdgeStyle;
@@ -99,7 +93,6 @@ import freemind.view.mindmapview.MainView;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.Transferable;
@@ -118,22 +111,13 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Properties;
 import java.util.Set;
 import java.util.Vector;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.ButtonGroup;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JToolBar;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
@@ -142,13 +126,7 @@ import org.jibx.runtime.JiBXException;
 
 public class MindMapController extends ControllerAdapter implements
 		MindMapActions {
-
-	private static final String ACCESSORIES_PLUGINS_NODE_NOTE = "accessories.plugins.NodeNote";
-
-	public interface MindMapControllerPlugin {
-
-	}
-
+  
 	private static final String RESOURCE_UNFOLD_ON_PASTE = "unfold_on_paste";
 	private static Logger logger;
 	// for MouseEventHandlers
@@ -349,12 +327,7 @@ public class MindMapController extends ControllerAdapter implements
 
 	// fc, 14.12.2004: changes, such that different models can be used:
 	private NewNodeCreator myNewNodeCreator = null;
-	/**
-	 * A general list of MindMapControllerPlugin s. Members need to be tested
-	 * for the right class and casted to be applied.
-	 */
-	private HashSet mPlugins = new HashSet();
-
+  
 	public interface NewNodeCreator {
 		MindMapNode createNode(Object userObject, MindMap map);
 	}
@@ -850,7 +823,6 @@ public class MindMapController extends ControllerAdapter implements
 		erasePattern.setPatternNodeFontSize(new PatternNodeFontSize());
 		erasePattern.setPatternNodeStyle(new PatternNodeStyle());
 		erasePattern.setPatternNodeText(new PatternNodeText());
-		setNoteText(pNode, null);
 	}
 
 	public EditNoteToNodeAction createEditNoteToNodeAction(MindMapNode node,
@@ -867,35 +839,6 @@ public class MindMapController extends ControllerAdapter implements
 		return nodeAction;
 	}
 
-	public void setNoteText(MindMapNode node, String text) {
-		String oldNoteText = node.getNoteText();
-		if (Tools.safeEquals(text, oldNoteText)) {
-			// they are equal.
-			return;
-		}
-		logger.fine("Old Note Text:'" + oldNoteText + ", new:'" + text + "'.");
-		logger.fine(Tools.compareText(oldNoteText, text));
-		EditNoteToNodeAction doAction = createEditNoteToNodeAction(node, text);
-		EditNoteToNodeAction undoAction = createEditNoteToNodeAction(node,
-				oldNoteText);
-		getActionFactory().doTransaction(ACCESSORIES_PLUGINS_NODE_NOTE,
-				new ActionPair(doAction, undoAction));
-	}
-
-	public void registerPlugin(MindMapControllerPlugin pPlugin) {
-		mPlugins.add(pPlugin);
-	}
-
-	public void deregisterPlugin(MindMapControllerPlugin pPlugin) {
-		mPlugins.remove(pPlugin);
-	}
-
-	public Set getPlugins() {
-		return Collections.unmodifiableSet(mPlugins);
-	}
-
-	/**
-	 */
 	public Transferable getClipboardContents() {
 		getClipboard();
 		return clipboard.getContents(this);

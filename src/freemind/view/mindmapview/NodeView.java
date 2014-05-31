@@ -927,16 +927,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 		updateIconPosition();
 		MultipleImage iconImages = new MultipleImage(1.0f);
 		boolean iconPresent = false;
-		/* fc, 06.10.2003: images? */
-
-		Map stateIcons = (getModel()).getStateIcons();
-		for (Iterator i = stateIcons.keySet().iterator(); i.hasNext();) {
-			String key = (String) i.next();
-			iconPresent = true;
-			ImageIcon myIcon = (ImageIcon) stateIcons.get(key);
-			iconImages.addImage(myIcon);
-
-		}
 
 		List icons = (getModel()).getIcons();
 		for (Iterator i = icons.iterator(); i.hasNext();) {
@@ -1033,34 +1023,10 @@ public class NodeView extends JComponent implements TreeModelListener {
 		}
 	}
 
-	String getStyle() {
-		return mainView.getStyle();
-	}
-
 	/**
 	 * @return returns the color that should used to select the node.
 	 */
 	protected Color getSelectedColor() {
-		// Color backgroundColor = getModel().getBackgroundColor();
-		// // if(backgroundColor != null) {
-		// // Color backBrighter = backgroundColor.brighter();
-		// // // white?
-		// // if(backBrighter.getRGB() == Color.WHITE.getRGB()) {
-		// // return standardSelectColor;
-		// // }
-		// // // == standard??
-		// // if (backBrighter.equals (standardSelectColor) ) {
-		// // return backgroundColor.darker();
-		// // }
-		// // return backBrighter;
-		// // }
-		// // == standard??
-		// if (backgroundColor != null /*&&
-		// backgroundColor.equals(standardSelectColor)*/ ) {
-		// // bad hack:
-		// return getAntiColor1(backgroundColor);
-		// // return new Color(0xFFFFFF - backgroundColor.getRGB());
-		// }
 		return MapView.standardSelectColor;
 	}
 

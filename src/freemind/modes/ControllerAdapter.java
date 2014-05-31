@@ -159,10 +159,6 @@ public abstract class ControllerAdapter implements ModeController {
 		logger.finest("nodeChanged called for node " + node + " parent="
 				+ node.getParentNode());
 		if (isUpdate) {
-			// update modification times:
-			if (node.getHistoryInformation() != null) {
-				node.getHistoryInformation().setLastModifiedAt(new Date());
-			}
 			// Tell any node hooks that the node is changed:
 			updateNode(node);
 		}

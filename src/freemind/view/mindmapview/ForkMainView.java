@@ -82,15 +82,6 @@ class ForkMainView extends MainView {
 		return super.getDeltaX();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.view.mindmapview.NodeView#getStyle()
-	 */
-	String getStyle() {
-		return MindMapNode.STYLE_FORK;
-	}
-
 	/**
 	 * Returns the relative position of the Edge
 	 */

@@ -1195,12 +1195,6 @@ public class Tools {
 		}
 	}
 
-	public static String getFileNameProposal(MindMapNode node) {
-		String rootText = node.getPlainTextContent();
-		rootText = rootText.replaceAll("[&:/\\\\\0%$#~\\?\\*]+", "");
-		return rootText;
-	}
-
 	public static void waitForEventQueue() {
 		try {
 			// wait until AWT thread starts
@@ -1446,7 +1440,7 @@ public class Tools {
 	 */
 	public static String getNodeTextHierarchy(MindMapNode pNode,
 			MindMapController pMindMapController) {
-		return pNode.getShortText(pMindMapController)
+		return pNode.getText()
 				+ ((pNode.isRoot()) ? "" : (" <- " + getNodeTextHierarchy(
 						pNode.getParentNode(), pMindMapController)));
 	}

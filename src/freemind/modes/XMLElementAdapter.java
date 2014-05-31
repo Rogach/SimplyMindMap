@@ -169,17 +169,7 @@ public abstract class XMLElementAdapter extends XMLElement {
 				node.addIcon((MindIcon) child.getUserObject(), MindIcon.LAST);
 			} else if (child.getName().equals(XML_NODE_XHTML_CONTENT_TAG)) {
 				String xmlText = ((XMLElement) child).getContent();
-				Object typeAttribute = child
-						.getAttribute(XML_NODE_XHTML_TYPE_TAG);
-				if (typeAttribute == null
-						|| XML_NODE_XHTML_TYPE_NODE.equals(typeAttribute)) {
-					// output:
-					logger.finest("Setting node html content to:" + xmlText);
-					node.setXmlText(xmlText);
-				} else {
-					logger.finest("Setting note html content to:" + xmlText);
-					node.setXmlNoteText(xmlText);
-				}
+        node.setText(xmlText);
 			}
 			return;
 		}
@@ -249,17 +239,6 @@ public abstract class XMLElementAdapter extends XMLElement {
 		if (name.equals(XML_NODE_TEXT)) {
 			logger.finest("Setting node text content to:" + sValue);
 			node.setUserObject(sValue);
-		} else if (name.equals(XML_NODE_HISTORY_CREATED_AT)) {
-			if (node.getHistoryInformation() == null) {
-				node.setHistoryInformation(new HistoryInformation());
-			}
-			node.getHistoryInformation().setCreatedAt(Tools.xmlToDate(sValue));
-		} else if (name.equals(XML_NODE_HISTORY_LAST_MODIFIED_AT)) {
-			if (node.getHistoryInformation() == null) {
-				node.setHistoryInformation(new HistoryInformation());
-			}
-			node.getHistoryInformation().setLastModifiedAt(
-					Tools.xmlToDate(sValue));
 		} else if (name.equals("FOLDED")) {
 			if (sValue.equals("true")) {
 				node.setFolded(true);

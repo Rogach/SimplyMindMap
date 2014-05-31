@@ -312,11 +312,8 @@ public class FindAction extends AbstractAction {
 			String nodeText = node.toString();
 			nodeText = prepareTextContent(caseSensitive, nodeText);
 			// End bug fix.
-			String noteText = node.getNoteText();
-			noteText = prepareTextContent(caseSensitive, noteText);
 
 			boolean found = true;
-			boolean foundInNotes = false;
 			for (Iterator i = subterms.iterator(); i.hasNext();) {
 				if (nodeText.indexOf((String) i.next()) < 0) {
 					// Subterm not found
@@ -325,24 +322,9 @@ public class FindAction extends AbstractAction {
 				}
 			}
 
-			if ((!found) && searchInNotesToo) {
-				/* now, search the notes. */
-				found = true;
-				for (Iterator i = subterms.iterator(); i.hasNext();) {
-					if (noteText.indexOf((String) i.next()) < 0) {
-						// Subterm not found
-						found = false;
-						break;
-					}
-				}
-				foundInNotes = true;
-			}
 			if (found) { // Found
 				displayNode(node, findNodesUnfoldedByLastFind);
 				centerNode(node);
-				if (foundInNotes) {
-					// TODO: Select text in notes window.
-				}
 				// Save the state for find next
 				this.subterms = subterms;
 				findCaseSensitive = caseSensitive;

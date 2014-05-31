@@ -300,8 +300,6 @@ public abstract class MainView extends JLabel {
 				: xCoord < getSize().width * p;
 	}
 
-	abstract String getStyle();
-
 	abstract int getAlignment();
 
 	public int getTextWidth() {

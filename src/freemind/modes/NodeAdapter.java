@@ -24,7 +24,6 @@ import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
 import freemind.view.mindmapview.NodeView;
-import freemind.view.mindmapview.NodeViewVisitor;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
@@ -36,7 +35,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -69,21 +67,10 @@ public abstract class NodeAdapter implements MindMapNode {
 	public final static int UNKNOWN_POSITION = 0;
 
 	protected Object userObject = "no text";
-	private String xmlText = "no text";
-	private TreeMap toolTip = null; // lazy, fc, 30.6.2005
+	private TreeMap<String, String> toolTip = null;
 
-	// these Attributes have default values, so it can be useful to directly
-	// access them in
-	// the save() method instead of using getXXX(). This way the stored file is
-	// smaller and looks better.
-	// (if the default is used, it is not stored) Look at mindmapmode for an
-	// example.
-	protected String style;
 	/** stores the icons associated with this node. */
-	protected Vector/* <MindIcon> */icons = null; // lazy, fc, 30.6.2005
-
-	protected TreeMap /* of String to MindIcon s */stateIcons = null; // lazy, fc,
-																	// 30.6.2005
+	protected Vector<MindIcon> icons = null;
 
 	protected Color color;
 	protected Color backgroundColor;
@@ -107,20 +94,12 @@ public abstract class NodeAdapter implements MindMapNode {
 	 * the MapView which contains the NodeViews
 	 */
 	private MindMapEdge edge;
-	private Collection views = null;
-	private static final boolean ALLOWSCHILDREN = true;
+	private Collection<NodeView> views = null;
 
-	private HistoryInformation historyInformation = null;
 	// Logging:
 	static protected java.util.logging.Logger logger;
 	private MindMap map = null;
-	private String noteText;
-	private String xmlNoteText;
 	private static boolean sSaveOnlyIntrinsicallyNeededIds = false;
-
-	//
-	// Constructors
-	//
 
 	protected NodeAdapter(MindMap map) {
 		this(null, map);
@@ -130,14 +109,9 @@ public abstract class NodeAdapter implements MindMapNode {
 		setText((String) userObject);
 		if (logger == null)
 			logger = Logger.getLogger(this.getClass().getName());
-		// create creation time:
-		setHistoryInformation(new HistoryInformation());
 		this.map = map;
-
 	}
 
-	/**
-     */
 	public void setMap(MindMap map) {
 		this.map = map;
 	}
@@ -153,72 +127,14 @@ public abstract class NodeAdapter implements MindMapNode {
 	public final void setText(String text) {
 		if (text == null) {
 			userObject = null;
-			xmlText = null;
 			return;
 		}
-		userObject = HtmlTools.makeValidXml(text);
-		xmlText = HtmlTools.getInstance().toXhtml((String) userObject);
+		userObject = text;
 	}
 
-	public final String getXmlText() {
-		return xmlText;
-	}
-
-	public final void setXmlText(String pXmlText) {
-		this.xmlText = HtmlTools.makeValidXml(pXmlText);
-		userObject = HtmlTools.getInstance().toHtml(xmlText);
-	}
-
-	/* ************************************************************
-	 * ******** Notes *******
-	 * ************************************************************
-	 */
-
-	public final String getXmlNoteText() {
-		return xmlNoteText;
-	}
-
-	public final String getNoteText() {
-		// logger.info("Note html: " + noteText);
-		return noteText;
-	}
-
-	public final void setXmlNoteText(String pXmlNoteText) {
-		if (pXmlNoteText == null) {
-			xmlNoteText = null;
-			noteText = null;
-			return;
-		}
-		this.xmlNoteText = HtmlTools.makeValidXml(pXmlNoteText);
-		noteText = HtmlTools.getInstance().toHtml(xmlNoteText);
-	}
-
-	public final void setNoteText(String pNoteText) {
-		if (pNoteText == null) {
-			xmlNoteText = null;
-			noteText = null;
-			return;
-		}
-		this.noteText = HtmlTools.makeValidXml(pNoteText);
-		this.xmlNoteText = HtmlTools.getInstance().toXhtml(noteText);
-	}
-
-	public String getPlainTextContent() {
-		// Redefined in MindMapNodeModel.
-		return toString();
-	}
-
-	public String getShortText(ModeController controller) {
-		String adaptedText = getPlainTextContent();
-		// adaptedText = adaptedText.replaceAll("<html>", "");
-		if (adaptedText.length() > 40)
-			adaptedText = adaptedText.substring(0, 40) + " ...";
-		return adaptedText;
-	}
-  
-	public Collection getViewers() {
+	public Collection<NodeView> getViewers() {
 		if (views == null) {
-			views = new LinkedList();
+			views = new LinkedList<>();
 		}
 		return views;
 	}
@@ -366,7 +282,7 @@ public abstract class NodeAdapter implements MindMapNode {
 	}
 
 	// fc, 24.9.2003:
-	public List getIcons() {
+	public List<MindIcon> getIcons() {
 		if (icons == null)
 			return Collections.EMPTY_LIST;
 		return icons;
@@ -398,27 +314,6 @@ public abstract class NodeAdapter implements MindMapNode {
 		}
 		return returnSize;
 	};
-
-	// end, fc, 24.9.2003
-
-	// public String getLabel() { return mLabel; }
-
-	// public void setLabel(String newLabel) { mLabel = newLabel; /* bad hack:
-	// registry fragen.*/ };
-
-	// public Vector/* of NodeLinkStruct*/ getReferences() { return
-	// mNodeLinkVector; };
-
-	// public void removeReferenceAt(int i) {
-	// if(mNodeLinkVector.size() > i) {
-	// mNodeLinkVector.removeElementAt(i);
-	// } else {
-	// /* exception. */
-	// }
-	// }
-
-	// public void addReference(MindMapLink mindMapLink) {
-	// mNodeLinkVector.add(mindMapLink); };
 
 	/**
 	 * True iff one of node's <i>strict</i> descendants is folded. A node N is
@@ -578,31 +473,16 @@ public abstract class NodeAdapter implements MindMapNode {
 	}
 
 	public boolean getAllowsChildren() {
-		return ALLOWSCHILDREN;
+		return true;
 	}
 
 	public TreeNode getChildAt(int childIndex) {
-		// fc, 11.12.2004: This is not understandable, that a child does not
-		// exist if the parent is folded.
-		// if (isFolded()) {
-		// return null;
-		// }
 		return (TreeNode) children.get(childIndex);
 	}
 
 	public int getChildCount() {
 		return children == null ? 0 : children.size();
 	}
-
-	// (PN)
-	// public int getChildCount() {
-	// if (isFolded()) {
-	// return 0;
-	// }
-	// return children.size();
-	// }
-	// // Daniel: ^ The name of this method is confusing. It does nto convey
-	// // the meaning, at least not to me.
 
 	public int getIndex(TreeNode node) {
 		return children.indexOf((MindMapNode) node); // uses equals()
@@ -671,7 +551,6 @@ public abstract class NodeAdapter implements MindMapNode {
 			preferredChild = childNode;
 		}
 		child.setParent(this);
-		recursiveCallAddChildren(this, childNode);
 	}
 
 	public void remove(int index) {
@@ -691,25 +570,6 @@ public abstract class NodeAdapter implements MindMapNode {
 		}
 		node.setParent(null);
 		children.remove(node);
-		// call remove child hook after removal.
-		recursiveCallRemoveChildren(this, (MindMapNode) node, this);
-	}
-
-	private void recursiveCallAddChildren(MindMapNode node,
-			MindMapNode addedChild) {
-		if (!node.isRoot() && node.getParentNode() != null)
-			recursiveCallAddChildren(node.getParentNode(), addedChild);
-	}
-
-	/**
-	 * @param oldDad
-	 *            the last dad node had.
-	 */
-	private void recursiveCallRemoveChildren(MindMapNode node,
-			MindMapNode removedChild, MindMapNode oldDad) {
-		if (!node.isRoot() && node.getParentNode() != null)
-			recursiveCallRemoveChildren(node.getParentNode(), removedChild,
-					oldDad);
 	}
 
 	public void removeFromParent() {
@@ -754,12 +614,6 @@ public abstract class NodeAdapter implements MindMapNode {
 	private void createToolTip() {
 		if (toolTip == null) {
 			toolTip = new TreeMap();
-		}
-	}
-
-	private void createStateIcons() {
-		if (stateIcons == null) {
-			stateIcons = new TreeMap();
 		}
 	}
 
@@ -808,12 +662,7 @@ public abstract class NodeAdapter implements MindMapNode {
 		getModeController().firePreSaveEvent(this);
 		XMLElement node = new XMLElement();
 
-		// if (!isNodeClassToBeSaved()) {
 		node.setName(XMLElementAdapter.XML_NODE);
-		// } else {
-		// node.setName(XMLElementAdapter.XML_NODE_CLASS_PREFIX
-		// + this.getClass().getName());
-		// }
 
 		/** fc, 12.6.2005: XML must not contain any zero characters. */
 		String text = this.toString().replace('\0', ' ');
@@ -826,26 +675,10 @@ public abstract class NodeAdapter implements MindMapNode {
 			htmlElement.setAttribute(XMLElementAdapter.XML_NODE_XHTML_TYPE_TAG,
 					XMLElementAdapter.XML_NODE_XHTML_TYPE_NODE);
 			htmlElement
-					.setEncodedContent(convertToEncodedContent(getXmlText()));
+					.setEncodedContent(convertToEncodedContent(getText()));
 			node.addChild(htmlElement);
 		}
-		if (getXmlNoteText() != null) {
-			XMLElement htmlElement = new XMLElement();
-			htmlElement.setName(XMLElementAdapter.XML_NODE_XHTML_CONTENT_TAG);
-			htmlElement.setAttribute(XMLElementAdapter.XML_NODE_XHTML_TYPE_TAG,
-					XMLElementAdapter.XML_NODE_XHTML_TYPE_NOTE);
-			htmlElement
-					.setEncodedContent(convertToEncodedContent(getXmlNoteText()));
-			node.addChild(htmlElement);
-
-		}
-		// save additional info:
-		if (getAdditionalInfo() != null) {
-			node.setAttribute(XMLElementAdapter.XML_NODE_ENCRYPTED_CONTENT,
-					getAdditionalInfo());
-		}
-		// ((MindMapEdgeModel)getEdge()).save(doc,node);
-
+    
 		XMLElement edge = (getEdge()).save();
 		if (edge != null) {
 			node.addChild(edge);
@@ -895,15 +728,6 @@ public abstract class NodeAdapter implements MindMapNode {
 			node.setAttribute("VSHIFT", Integer.toString(shiftY));
 		}
     
-		// history information, fc, 11.4.2005
-		if (historyInformation != null) {
-			node.setAttribute(XMLElementAdapter.XML_NODE_HISTORY_CREATED_AT,
-					Tools.dateToString(getHistoryInformation().getCreatedAt()));
-			node.setAttribute(
-					XMLElementAdapter.XML_NODE_HISTORY_LAST_MODIFIED_AT, Tools
-							.dateToString(getHistoryInformation()
-									.getLastModifiedAt()));
-		}
 		// font
 		if (font != null) {
 			XMLElement fontElement = new XMLElement();
@@ -1007,44 +831,6 @@ public abstract class NodeAdapter implements MindMapNode {
 		this.shiftY = shiftY;
 	}
 
-	/**
-     *
-     */
-
-	public void setAdditionalInfo(String info) {
-	}
-
-	public String getAdditionalInfo() {
-		return null;
-	}
-
-	/** This method must be synchronized as the TreeMap isn't. */
-	public synchronized void setStateIcon(String key, ImageIcon icon) {
-		// logger.info("Set state of key:"+key+", icon "+icon);
-		createStateIcons();
-		if (icon != null) {
-			stateIcons.put(key, icon);
-		} else if (stateIcons.containsKey(key)) {
-			stateIcons.remove(key);
-		}
-		if (stateIcons.size() == 0)
-			stateIcons = null;
-	}
-
-	public Map getStateIcons() {
-		if (stateIcons == null)
-			return Collections.EMPTY_MAP;
-		return Collections.unmodifiableSortedMap(stateIcons);
-	}
-
-	public HistoryInformation getHistoryInformation() {
-		return historyInformation;
-	}
-
-	public void setHistoryInformation(HistoryInformation historyInformation) {
-		this.historyInformation = historyInformation;
-	}
-
 	public int getHGap() {
 		return hGap;
 	}
@@ -1080,21 +866,4 @@ public abstract class NodeAdapter implements MindMapNode {
 		return listenerList;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.modes.MindMapNode#acceptViewVisitor(freemind.view.mindmapview
-	 * .NodeViewVisitor)
-	 */
-	public void acceptViewVisitor(NodeViewVisitor visitor) {
-		final Iterator iterator = views.iterator();
-		while (iterator.hasNext()) {
-			visitor.visit((NodeView) iterator.next());
-		}
-
-	}
-	//
-	// Events
-	//
 }
