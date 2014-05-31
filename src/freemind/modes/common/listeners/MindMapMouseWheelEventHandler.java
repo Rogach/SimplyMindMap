@@ -75,17 +75,6 @@ public class MindMapMouseWheelEventHandler implements MouseWheelListener {
 		if (mController.isBlocked()) {
 			return; // block the scroll during edit (PN)
 		}
-		Set registeredMouseWheelEventHandler = mController
-				.getRegisteredMouseWheelEventHandler();
-		for (Iterator i = registeredMouseWheelEventHandler.iterator(); i
-				.hasNext();) {
-			MouseWheelEventHandler handler = (MouseWheelEventHandler) i.next();
-			boolean result = handler.handleMouseWheelEvent(e);
-			if (result) {
-				// event was consumed:
-				return;
-			}
-		}
 
 		if ((e.getModifiers() & ZOOM_MASK) != 0) {
 			// fc, 18.11.2003: when control pressed, then the zoom is changed.

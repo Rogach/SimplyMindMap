@@ -49,7 +49,6 @@ import freemind.modes.MapAdapter;
 import freemind.modes.MindIcon;
 import freemind.modes.MindMap;
 import freemind.modes.MindMapNode;
-import freemind.modes.Mode;
 import freemind.modes.ModeController;
 import freemind.modes.NodeDownAction;
 import freemind.modes.common.actions.FindAction;
@@ -197,8 +196,8 @@ public class MindMapController extends ControllerAdapter implements
 	private List mPatternsList = new Vector();
 	private long mGetEventIfChangedAfterThisTimeInMillies = 0;
   
-	public MindMapController(Mode mode) {
-		super(mode);
+	public MindMapController() {
+		super();
 		if (logger == null) {
 			logger = Logger.getLogger(this.getClass().getName());
 		}

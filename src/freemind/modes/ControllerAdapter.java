@@ -70,8 +70,6 @@ public abstract class ControllerAdapter implements ModeController {
 	// Logging:
 	private static java.util.logging.Logger logger;
 
-	private Mode mode;
-
 	private Color selectionColor = new Color(200, 220, 200);
 	/**
 	 * The model, this controller belongs to. It may be null, if it is the
@@ -80,22 +78,14 @@ public abstract class ControllerAdapter implements ModeController {
 	private MapAdapter mModel;
 	private HashSet mNodeSelectionListeners = new HashSet();
 	private HashSet mNodeLifetimeListeners = new HashSet();
-	private File lastCurrentDir = null;
 
 	/**
 	 * Instantiation order: first me and then the model.
 	 */
-	public ControllerAdapter(Mode mode) {
-		this.setMode(mode);
+	public ControllerAdapter() {
 		if (logger == null) {
 			logger = Logger.getLogger(this.getClass().getName());
 		}
-		// for updates of nodes:
-		// FIXME
-		// do not associate each new ControllerAdapter
-		// with the only one application viewport
-		// DropTarget dropTarget = new DropTarget(getFrame().getViewport(),
-		// new FileOpener());
 	}
 
 	public void setModel(MapAdapter model) {
@@ -119,14 +109,6 @@ public abstract class ControllerAdapter implements ModeController {
 	 */
 	public MapAdapter newModel(ModeController modeController) {
 		throw new java.lang.UnsupportedOperationException();
-	}
-
-	/**
-	 * You may want to implement this... It returns the FileFilter that is used
-	 * by the open() and save() JFileChoosers.
-	 */
-	protected FileFilter getFileFilter() {
-		return null;
 	}
 
 	/**
@@ -314,43 +296,6 @@ public abstract class ControllerAdapter implements ModeController {
 		}
 	}
 
-	public MindMap newMap() {
-		ModeController newModeController = getMode().createModeController();
-		MapAdapter newModel = newModel(newModeController);
-		newMap(newModel);
-		newModeController.getView().moveToRoot();
-		return newModel;
-	}
-
-	public void newMap(final MindMap mapModel) {
-	}
-
-	/**
-	 * You may decide to overload this or take the default and implement the
-	 * functionality in your MapModel (implements MindMap)
-	 */
-	public ModeController load(URL file) throws FileNotFoundException,
-			IOException, XMLParseException, URISyntaxException {
-    return null;
-	}
-
-	/**
-	 * You may decide to overload this or take the default and implement the
-	 * functionality in your MapModel (implements MindMap)
-	 */
-	public ModeController load(File file) throws FileNotFoundException,
-			IOException {
-		try {
-			return load(Tools.fileToUrl(file));
-		} catch (XMLParseException e) {
-			freemind.main.Resources.getInstance().logException(e);
-			throw new RuntimeException(e);
-		} catch (URISyntaxException e) {
-			freemind.main.Resources.getInstance().logException(e);
-			throw new RuntimeException(e);
-		}
-	}
-
 	public MindMapNode createNodeTreeFromXml(Reader pReader, HashMap pIDToTarget)
 			throws XMLParseException, IOException {
 		XMLElementAdapter element = (XMLElementAdapter) createXMLElement();
@@ -461,17 +406,6 @@ public abstract class ControllerAdapter implements ModeController {
 		logger.finest("Sort result: " + inPlaceList);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.modes.FreeMindFileDialog.DirectoryResultListener#setChosenDirectory
-	 * (java.io.File)
-	 */
-	public void setChosenDirectory(File pDir) {
-		lastCurrentDir = pDir;
-	}
-
 	public void handleLoadingException(Exception ex) {
 		String exceptionType = ex.getClass().getName();
 		if (exceptionType.equals("freemind.main.XMLParseException")) {
@@ -512,29 +446,6 @@ public abstract class ControllerAdapter implements ModeController {
 		// controller actions:
 	}
 
-	//
-	// Node editing
-	//
-
-	/**
-	 * listener, that blocks the controler if the menu is active (PN) Take care!
-	 * This listener is also used for modelpopups (as for graphical links).
-	 */
-	private class ControllerPopupMenuListener implements PopupMenuListener {
-		public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-			setBlocked(true); // block controller
-		}
-
-		public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-			setBlocked(false); // unblock controller
-		}
-
-		public void popupMenuCanceled(PopupMenuEvent e) {
-			setBlocked(false); // unblock controller
-		}
-
-	}
-
 	// status, currently: default, blocked (PN)
 	// (blocked to protect against particular events e.g. in edit mode)
 	private boolean isBlocked = false;
@@ -549,28 +460,12 @@ public abstract class ControllerAdapter implements ModeController {
 		this.isBlocked = isBlocked;
 	}
 
-	//
-	// Convenience methods
-	//
-
-	public Mode getMode() {
-		return mode;
-	}
-
-	protected void setMode(Mode mode) {
-		this.mode = mode;
-	}
-
 	public MindMap getMap() {
 		return mModel;
 	}
 
 	public MindMapNode getRootNode() {
 		return (MindMapNode) getMap().getRoot();
-	}
-
-	public URL getResource(String name) {
-		return Resources.getInstance().getResource(name);
 	}
 
 	/**
@@ -627,85 +522,6 @@ public abstract class ControllerAdapter implements ModeController {
 		if (getView() != null)
 			return getView().getSelected();
 		return null;
-	}
-
-	protected class FileOpener implements DropTargetListener {
-		private boolean isDragAcceptable(DropTargetDragEvent event) {
-			// check if there is at least one File Type in the list
-			DataFlavor[] flavors = event.getCurrentDataFlavors();
-			for (int i = 0; i < flavors.length; i++) {
-				if (flavors[i].isFlavorJavaFileListType()) {
-					// event.acceptDrag(DnDConstants.ACTION_COPY);
-					return true;
-				}
-			}
-			// event.rejectDrag();
-			return false;
-		}
-
-		private boolean isDropAcceptable(DropTargetDropEvent event) {
-			// check if there is at least one File Type in the list
-			DataFlavor[] flavors = event.getCurrentDataFlavors();
-			for (int i = 0; i < flavors.length; i++) {
-				if (flavors[i].isFlavorJavaFileListType()) {
-					return true;
-				}
-			}
-			return false;
-		}
-
-		public void drop(DropTargetDropEvent dtde) {
-			if (!isDropAcceptable(dtde)) {
-				dtde.rejectDrop();
-				return;
-			}
-			dtde.acceptDrop(DnDConstants.ACTION_COPY);
-			try {
-				Object data = dtde.getTransferable().getTransferData(
-						DataFlavor.javaFileListFlavor);
-				if (data == null) {
-					// Shouldn't happen because dragEnter() rejects drags w/out
-					// at least
-					// one javaFileListFlavor. But just in case it does ...
-					dtde.dropComplete(false);
-					return;
-				}
-				Iterator iterator = ((List) data).iterator();
-				while (iterator.hasNext()) {
-					File file = (File) iterator.next();
-					load(file);
-				}
-			} catch (Exception e) {
-				JOptionPane.showMessageDialog(
-						getView(),
-						"Couldn't open dropped file(s). Reason: "
-								+ e.getMessage()
-				// getText("file_not_found")
-						);
-				dtde.dropComplete(false);
-				return;
-			}
-			dtde.dropComplete(true);
-		}
-
-		public void dragEnter(DropTargetDragEvent dtde) {
-			if (!isDragAcceptable(dtde)) {
-				dtde.rejectDrag();
-				return;
-			}
-		}
-
-		public void dragOver(DropTargetDragEvent e) {
-		}
-
-		public void dragExit(DropTargetEvent e) {
-		}
-
-		public void dragScroll(DropTargetDragEvent e) {
-		}
-
-		public void dropActionChanged(DropTargetDragEvent e) {
-		}
 	}
 
 	public Transferable copy(MindMapNode node, boolean saveInvisible) {
@@ -777,18 +593,6 @@ public abstract class ControllerAdapter implements ModeController {
      */
 	public Color getSelectionColor() {
 		return selectionColor;
-	}
-
-	public void shutdownController() {
-		setAllActions(false);
-	}
-
-	/**
-	 * This method is called after and before a change of the map module. Use it
-	 * to perform the actions that cannot be performed at creation time.
-	 * 
-	 */
-	public void startupController() {
 	}
 
 	/**
@@ -872,10 +676,6 @@ public abstract class ControllerAdapter implements ModeController {
 	 */
 	public void insertNodeInto(MindMapNode newChild, MindMapNode parent) {
 		insertNodeInto(newChild, parent, parent.getChildCount());
-	}
-
-	public Set getRegisteredMouseWheelEventHandler() {
-		return Collections.EMPTY_SET;
 	}
 
 	public void setToolTip(MindMapNode node, String key, String value) {

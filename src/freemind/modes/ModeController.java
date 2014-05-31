@@ -40,39 +40,11 @@ public interface ModeController {
 	public static final String NODESEPARATOR = "<nodeseparator>";
 
 	/**
-	 * @param file
-	 *            Nowadays this is an URL to unify the behaviour of the browser
-	 *            and the other modes.
-	 * @throws FileNotFoundException
-	 * @throws IOException
-	 * @throws XMLParseException
-	 * @return returns the new mode controller created for this url.
-	 * @throws URISyntaxException
-	 */
-	ModeController load(URL file) throws FileNotFoundException, IOException,
-			XMLParseException, URISyntaxException;
-
-	/**
-	 * This is the same as load(URL) for those points where you have a file
-	 * instead of an url (conversion is difficult between them...).
-	 */
-	ModeController load(File file) throws FileNotFoundException, IOException;
-
-	MindMap newMap();
-
-	/**
 	 * Given a valid Xml parameterization of a node (tree), this method returns
 	 * freshly created nodes.
 	 */
 	MindMapNode createNodeTreeFromXml(Reader pReader, HashMap pIDToTarget)
 			throws XMLParseException, IOException;
-
-	// activation methods:
-	void startupController();
-
-	void shutdownController();
-
-	// end activation methods.
 
 	// listener -> controller handling
 	void doubleClick(MouseEvent e);
@@ -278,11 +250,7 @@ public interface ModeController {
 	 */
 	void setModel(MapAdapter model);
 
-	Mode getMode();
-
 	Color getSelectionColor();
-
-	URL getResource(String path);
 
 	void nodeRefresh(MindMapNode node);
 

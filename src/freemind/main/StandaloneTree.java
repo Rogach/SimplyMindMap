@@ -3,7 +3,6 @@ package freemind.main;
 import freemind.modes.MindMap;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapMapModel;
-import freemind.modes.mindmapmode.MindMapMode;
 import freemind.view.mindmapview.MapView;
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
@@ -21,11 +20,8 @@ public class StandaloneTree {
     
     Properties defaultPreferences = readDefaultPreferences();
     
-    MindMapMode mindMapMode = new MindMapMode();
-    mindMapMode.init();
-    
     FreeMindCommon common = new FreeMindCommon(defaultPreferences);
-    MindMapController mc = new MindMapController(mindMapMode);
+    MindMapController mc = new MindMapController();
     MindMap m = new MindMapMapModel(common, mc);
     
     MapView mapView = new MapView(m, defaultPreferences, mc);
