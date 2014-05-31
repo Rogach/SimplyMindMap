@@ -13,5 +13,5 @@ public class ResourceKeys {
   public static final String LOAD_LAST_MAPS_AND_LAYOUT = "load_last_maps_and_layout";
   public static final String LOAD_EVENT_DURING_STARTUP = "loadEventDuringStartup";
   public static final String CHECK_SPELLING = "check_spelling";
-
+  public static final String RESOURCE_UNFOLD_ON_PASTE = "unfold_on_paste";
 }

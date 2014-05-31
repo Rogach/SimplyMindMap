@@ -41,6 +41,7 @@ import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.FixedHTMLWriter;
 import freemind.main.FreeMindCommon;
 import freemind.main.HtmlTools;
+import freemind.main.ResourceKeys;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
@@ -123,20 +124,13 @@ import org.jibx.runtime.JiBXException;
 public class MindMapController extends ControllerAdapter implements
 		MindMapActions {
   
-	private static final String RESOURCE_UNFOLD_ON_PASTE = "unfold_on_paste";
 	private static Logger logger;
 	// for MouseEventHandlers
 	private HashSet mRegisteredMouseWheelEventHandler = new HashSet();
 
 	private ActionFactory actionFactory;
-	private boolean addAsChildMode = false;
 	private Clipboard clipboard = null;
 	private Clipboard selection = null;
-
-	/**
-	 * This handler evaluates the compound xml actions. Don't delete it!
-	 */
-	private CompoundActionHandler compound = null;
 
 	public Action editLong = new EditLongAction();
 	public Action newSibling = new NewSiblingAction(this);
@@ -189,8 +183,6 @@ public class MindMapController extends ControllerAdapter implements
 
 	// Extension Actions
 	public Vector iconActions = new Vector(); // fc
-	private List mPatternsList = new Vector();
-	private long mGetEventIfChangedAfterThisTimeInMillies = 0;
   
 	public MindMapController() {
 		super();
@@ -199,9 +191,6 @@ public class MindMapController extends ControllerAdapter implements
 		}
 		// create action factory:
 		actionFactory = new ActionFactory();
-		// create compound handler, that evaluates the compound xml actions.
-		compound = new CompoundActionHandler(this);
-
 		init();
 	}
 
@@ -212,10 +201,6 @@ public class MindMapController extends ControllerAdapter implements
 		// icon actions:
 		createIconActions();
 		logger.info("createNodeHookActions");
-
-		// addAsChildMode (use old model of handling CtrN) (PN)
-		addAsChildMode = Resources.getInstance()
-				.getBoolProperty("add_as_child");
 	}
 
 	private void createStandardActions() {
@@ -397,7 +382,6 @@ public class MindMapController extends ControllerAdapter implements
 		nodeUp.setEnabled(enabled);
 		nodeDown.setEnabled(enabled);
 		deleteChild.setEnabled(enabled);
-		// normalFont.setEnabled(enabled);
 		nodeColor.setEnabled(enabled);
 		removeLastIconAction.setEnabled(enabled);
 		removeAllIconsAction.setEnabled(enabled);
@@ -506,7 +490,7 @@ public class MindMapController extends ControllerAdapter implements
 		if (!asSibling
 				&& target.isFolded()
 				&& Resources.getInstance().getBoolProperty(
-						RESOURCE_UNFOLD_ON_PASTE)) {
+						ResourceKeys.RESOURCE_UNFOLD_ON_PASTE)) {
 			setFolded(target, false);
 		}
 		return paste.paste(t, target, asSibling, isLeft);
