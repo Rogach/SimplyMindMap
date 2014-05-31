@@ -22,6 +22,7 @@
 
 package freemind.modes.viewmodes;
 
+import freemind.main.Resources;
 import freemind.view.mindmapview.NodeView;
 import java.awt.event.ActionEvent;
 import java.util.logging.Logger;
@@ -38,7 +39,7 @@ public class CommonToggleChildrenFoldedAction extends AbstractAction {
 	private Logger logger;
 
 	public CommonToggleChildrenFoldedAction(ViewControllerAdapter controller) {
-		super(controller.getText("toggle_children_folded"));
+		super(Resources.getInstance().getText("toggle_children_folded"));
 		this.modeController = controller;
 		logger = Logger.getLogger(this.getClass().getName());
 	}

@@ -151,7 +151,7 @@ public class MindMapNodeDropListener implements DropTargetListener {
 					MindMapNode actualNode = targetNode;
 					do {
 						if (selecteds.contains(actualNode)) {
-							String message = mMindMapController
+							String message = Resources.getInstance()
 									.getText("cannot_move_to_child");
               throw new RuntimeException(Resources.getInstance().getText(message));
 						}

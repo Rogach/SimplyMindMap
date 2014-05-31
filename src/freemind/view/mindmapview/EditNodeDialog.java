@@ -115,9 +115,9 @@ public class EditNodeDialog extends EditNodeBase {
 			final JCheckBox enterConfirms = new JCheckBox("",
 					binOptionIsTrue("el__enter_confirms_by_default"));
 
-			Tools.setLabelAndMnemonic(okButton, getText("ok"));
-			Tools.setLabelAndMnemonic(cancelButton, getText("cancel"));
-			Tools.setLabelAndMnemonic(enterConfirms, getText("enter_confirms"));
+			Tools.setLabelAndMnemonic(okButton, Resources.getInstance().getText("ok"));
+			Tools.setLabelAndMnemonic(cancelButton, Resources.getInstance().getText("cancel"));
+			Tools.setLabelAndMnemonic(enterConfirms, Resources.getInstance().getText("enter_confirms"));
 
 			if (booleanHolderForConfirmState == null) {
 				booleanHolderForConfirmState = new Tools.BooleanHolder();

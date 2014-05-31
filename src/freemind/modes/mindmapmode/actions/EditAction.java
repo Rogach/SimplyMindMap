@@ -229,7 +229,7 @@ public class EditAction extends AbstractAction implements ActorXml {
 		undoEditAction.setText(oldText);
 
 		mMindMapController.doTransaction(
-				mMindMapController.getText("edit_node"),
+				Resources.getInstance().getText("edit_node"),
 				new ActionPair(EditAction, undoEditAction));
 	}
 

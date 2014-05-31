@@ -22,6 +22,7 @@
 
 package freemind.modes.common;
 
+import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.ControllerAdapter;
 import freemind.modes.MindMapNode;
@@ -42,7 +43,7 @@ public class CommonToggleFoldedAction extends AbstractAction {
 	private Logger logger;
 
 	public CommonToggleFoldedAction(ControllerAdapter controller) {
-		super(controller.getText("toggle_folded"));
+		super(Resources.getInstance().getText("toggle_folded"));
 		this.modeController = controller;
 		logger = Logger.getLogger(this.getClass().getName());
 	}

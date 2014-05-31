@@ -332,14 +332,6 @@ public abstract class ControllerAdapter implements ModeController {
 		}
 	}
 
-	//
-	// Map Management
-	//
-
-	public String getText(String textId) {
-		return Resources.getInstance().getResourceString(textId);
-	}
-
 	public MindMap newMap() {
 		ModeController newModeController = getMode().createModeController();
 		MapAdapter newModel = newModel(newModeController);
@@ -502,7 +494,7 @@ public abstract class ControllerAdapter implements ModeController {
 		String exceptionType = ex.getClass().getName();
 		if (exceptionType.equals("freemind.main.XMLParseException")) {
 			int showDetail = JOptionPane.showConfirmDialog(getView(),
-					getText("map_corrupted"), "FreeMind",
+					Resources.getInstance().getText("map_corrupted"), "FreeMind",
 					JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
 			if (showDetail == JOptionPane.YES_OPTION) {
 			}

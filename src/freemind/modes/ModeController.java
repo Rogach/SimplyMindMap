@@ -20,12 +20,10 @@
 
 package freemind.modes;
 
-import freemind.common.TextTranslator;
 import freemind.main.XMLParseException;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -36,10 +34,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
-import javax.swing.JPopupMenu;
-import javax.swing.JToolBar;
 
-public interface ModeController extends TextTranslator {
+public interface ModeController {
 
 	public static final String NODESEPARATOR = "<nodeseparator>";
 
@@ -285,11 +281,6 @@ public interface ModeController extends TextTranslator {
 	Mode getMode();
 
 	Color getSelectionColor();
-
-	/**
-	 * Get text from resource file
-	 */
-	String getText(String textId);
 
 	URL getResource(String path);
 

@@ -156,7 +156,7 @@ public class NewChildAction extends AbstractAction implements ActorXml {
 		// Undo-action
 		DeleteNodeAction deleteAction = c.deleteChild
 				.getDeleteNodeAction(newId);
-		c.doTransaction(c.getText("new_child"),
+		c.doTransaction(Resources.getInstance().getText("new_child"),
 				new ActionPair(newNodeAction, deleteAction));
 		return (MindMapNode) parent.getChildAt(index);
 	}

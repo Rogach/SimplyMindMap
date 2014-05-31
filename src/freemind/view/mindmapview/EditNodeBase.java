@@ -118,7 +118,7 @@ public class EditNodeBase {
 		}
 
 		EditDialog(EditNodeBase base) {
-      super(base.getFrame(), base.getText("edit_long_node"), ModalityType.APPLICATION_MODAL);
+      super(base.getFrame(), Resources.getInstance().getText("edit_long_node"), ModalityType.APPLICATION_MODAL);
 			getContentPane().setLayout(new BorderLayout());
 			setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 			DialogWindowListener dfl = new DialogWindowListener();
@@ -129,7 +129,7 @@ public class EditNodeBase {
 		protected void confirmedSubmit() {
 			if (isChanged()) {
 				final int action = JOptionPane.showConfirmDialog(this,
-						base.getText("long_node_changed_submit"), "",
+						Resources.getInstance().getText("long_node_changed_submit"), "",
 						JOptionPane.YES_NO_CANCEL_OPTION);
 				if (action == JOptionPane.CANCEL_OPTION)
 					return;
@@ -144,7 +144,7 @@ public class EditNodeBase {
 		protected void confirmedCancel() {
 			if (isChanged()) {
 				final int action = JOptionPane.showConfirmDialog(this,
-						base.getText("long_node_changed_cancel"), "",
+						Resources.getInstance().getText("long_node_changed_cancel"), "",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (action == JOptionPane.CANCEL_OPTION)
 					return;
@@ -196,10 +196,6 @@ public class EditNodeBase {
 		return controller;
 	}
 
-	protected String getText(String string) {
-		return controller.getText(string);
-	}
-
 	protected Window getFrame() {
     Component c = node;
     while (!(c instanceof Window) && c != null) {
@@ -220,7 +216,7 @@ public class EditNodeBase {
 		private JTextComponent textComponent;
 
 		public EditCopyAction(JTextComponent textComponent) {
-			super(getText("copy"));
+			super(Resources.getInstance().getText("copy"));
 			this.textComponent = textComponent;
 		}
 

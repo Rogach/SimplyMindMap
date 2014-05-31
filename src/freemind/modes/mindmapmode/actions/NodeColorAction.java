@@ -26,6 +26,7 @@ package freemind.modes.mindmapmode.actions;
 
 import freemind.controller.actions.generated.instance.NodeColorFormatAction;
 import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
@@ -47,8 +48,8 @@ public class NodeColorAction extends FreemindAction implements ActorXml {
 
 	public void actionPerformed(ActionEvent e) {
 		Color color = Tools.showCommonJColorChooserDialog(controller
-				.getView().getSelected(), controller
-				.getText("choose_node_color"), controller.getSelected()
+				.getView().getSelected(),
+				Resources.getInstance().getText("choose_node_color"), controller.getSelected()
 				.getColor());
 		if (color == null) {
 			return;
