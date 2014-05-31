@@ -25,6 +25,7 @@ package freemind.view.mindmapview;
 
 import com.inet.jortho.SpellChecker;
 import freemind.main.FreeMindCommon;
+import freemind.main.ResourceKeys;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.MindMapNode;
@@ -241,7 +242,7 @@ public class EditNodeTextField extends EditNodeBase {
 	class TextFieldListener implements KeyListener, FocusListener,
 			MouseListener, ComponentListener {
 		private boolean checkSpelling = Resources.getInstance()
-				.getBoolProperty(FreeMindCommon.CHECK_SPELLING);
+				.getBoolProperty(ResourceKeys.CHECK_SPELLING);
 
 		public void focusGained(FocusEvent e) {
 		} // focus gained

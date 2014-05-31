@@ -894,19 +894,6 @@ public class Tools {
 	}
 
 	/**
-	 * Removes the "TranslateMe" sign from the end of not translated texts.
-	 */
-	public static String removeTranslateComment(String inputString) {
-		if (inputString != null
-				&& inputString.endsWith(FreeMindCommon.POSTFIX_TRANSLATE_ME)) {
-			// remove POSTFIX_TRANSLATE_ME:
-			inputString = inputString.substring(0, inputString.length()
-					- FreeMindCommon.POSTFIX_TRANSLATE_ME.length());
-		}
-		return inputString;
-	}
-
-	/**
 	 * Returns the same URL as input with the addition, that the reference part
 	 * "#..." is filtered out.
 	 * 

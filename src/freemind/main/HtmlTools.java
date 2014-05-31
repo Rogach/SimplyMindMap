@@ -43,7 +43,7 @@ public class HtmlTools {
 
 	private static Logger logger;
 
-	private static HtmlTools sInstance = new HtmlTools();
+	private static final HtmlTools sInstance = new HtmlTools();
 
 	private static final Pattern HTML_PATTERN = Pattern
 			.compile("(?s)^\\s*<\\s*html.*?>.*");
