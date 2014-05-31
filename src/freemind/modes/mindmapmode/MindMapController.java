@@ -218,11 +218,6 @@ public class MindMapController extends ControllerAdapter implements
 
 	// Extension Actions
 	public Vector iconActions = new Vector(); // fc
-
-	FileFilter filefilter = new MindMapFilter();
-
-	private MenuStructure mMenuStructure;
-	private List mRegistrations;
 	private List mPatternsList = new Vector();
 	private long mGetEventIfChangedAfterThisTimeInMillies = 0;
   
@@ -247,21 +242,9 @@ public class MindMapController extends ControllerAdapter implements
 		createIconActions();
 		logger.info("createNodeHookActions");
 
-		logger.info("mindmap_menus");
-		// load menus:
-		try {
-			InputStream in;
-			in = Resources.getInstance().getResource("mindmap_menus.xml").openStream();
-			mMenuStructure = updateMenusFromXml(in);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			freemind.main.Resources.getInstance().logException(e);
-		}
-
 		// addAsChildMode (use old model of handling CtrN) (PN)
 		addAsChildMode = Resources.getInstance()
 				.getBoolProperty("add_as_child");
-		mRegistrations = new Vector();
 	}
 
 	private void createStandardActions() {
@@ -275,11 +258,6 @@ public class MindMapController extends ControllerAdapter implements
 				new ModeControllerActionHandler(getActionFactory()));
 		getActionFactory().registerUndoHandler(
 				new UndoActionHandler(this, undo, redo));
-		// debug:
-//		getActionFactory().registerHandler(
-//				new freemind.modes.mindmapmode.actions.xml.PrintActionHandler(
-//						this));
-
 		cut = new CutAction(this);
 		paste = new PasteAction(this);
 		copy = new CopyAction(this);
@@ -363,10 +341,6 @@ public class MindMapController extends ControllerAdapter implements
 					removeLastIconAction);
 			iconActions.add(myAction);
 		}
-	}
-
-	public FileFilter getFileFilter() {
-		return filefilter;
 	}
 
 	public void nodeChanged(MindMapNode n) {
@@ -469,27 +443,6 @@ public class MindMapController extends ControllerAdapter implements
 		moveNodeAction.setEnabled(enabled);
 		useRichFormatting.setEnabled(enabled);
 		usePlainText.setEnabled(enabled);
-	}
-
-	private class MindMapFilter extends FileFilter {
-		public boolean accept(File f) {
-			if (f.isDirectory())
-				return true;
-			String extension = Tools.getExtension(f.getName());
-			if (extension != null) {
-				if (extension
-						.equals(freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION_WITHOUT_DOT)) {
-					return true;
-				} else {
-					return false;
-				}
-			}
-			return false;
-		}
-
-		public String getDescription() {
-			return getText("mindmaps_desc");
-		}
 	}
 
 	public void setBold(MindMapNode node, boolean bolded) {
