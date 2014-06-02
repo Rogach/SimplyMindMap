@@ -1,4 +1,4 @@
-package freemind.controller.actions.generated.instance;
+package freemind.controller.actions;
 /* CompoundAction...*/
 import java.util.ArrayList;
 public class CompoundAction extends XmlAction {

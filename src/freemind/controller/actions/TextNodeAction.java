@@ -1,4 +1,4 @@
-package freemind.controller.actions.generated.instance;
+package freemind.controller.actions;
 /* TextNodeAction...*/
 public class TextNodeAction extends NodeAction {
   protected String text;

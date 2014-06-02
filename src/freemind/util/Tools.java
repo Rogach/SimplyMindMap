@@ -20,8 +20,8 @@
 
 package freemind.util;
 
-import freemind.controller.actions.generated.instance.CompoundAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.CompoundAction;
+import freemind.controller.actions.XmlAction;
 import freemind.main.Resources;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;

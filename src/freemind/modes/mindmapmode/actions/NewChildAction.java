@@ -23,9 +23,9 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import freemind.controller.actions.generated.instance.DeleteNodeAction;
-import freemind.controller.actions.generated.instance.NewNodeAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.DeleteNodeAction;
+import freemind.controller.actions.NewNodeAction;
+import freemind.controller.actions.XmlAction;
 import freemind.main.Resources;
 import freemind.modes.MindMapNode;
 import freemind.modes.NodeAdapter;

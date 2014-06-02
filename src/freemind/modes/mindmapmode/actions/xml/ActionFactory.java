@@ -22,7 +22,7 @@
 
 package freemind.modes.mindmapmode.actions.xml;
 
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.XmlAction;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;

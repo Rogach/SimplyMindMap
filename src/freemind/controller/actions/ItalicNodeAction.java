@@ -1,4 +1,4 @@
-package freemind.controller.actions.generated.instance;
+package freemind.controller.actions;
 /* ItalicNodeAction...*/
 public class ItalicNodeAction extends FormatNodeAction {
   protected boolean italic;

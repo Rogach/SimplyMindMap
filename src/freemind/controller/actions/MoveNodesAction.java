@@ -1,4 +1,4 @@
-package freemind.controller.actions.generated.instance;
+package freemind.controller.actions;
 /* MoveNodesAction...*/
 import java.util.ArrayList;
 public class MoveNodesAction extends NodeAction {

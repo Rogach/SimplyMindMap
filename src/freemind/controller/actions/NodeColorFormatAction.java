@@ -1,4 +1,4 @@
-package freemind.controller.actions.generated.instance;
+package freemind.controller.actions;
 /* NodeColorFormatAction...*/
 public class NodeColorFormatAction extends FormatNodeAction {
   protected String color;

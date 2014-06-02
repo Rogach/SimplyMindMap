@@ -23,7 +23,7 @@
 
 package freemind.modes.mindmapmode.actions.xml;
 
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.XmlAction;
 
 /**
  * @author foltin

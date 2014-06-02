@@ -23,10 +23,10 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import freemind.controller.actions.generated.instance.DeleteNodeAction;
-import freemind.controller.actions.generated.instance.PasteNodeAction;
-import freemind.controller.actions.generated.instance.UndoPasteNodeAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.DeleteNodeAction;
+import freemind.controller.actions.PasteNodeAction;
+import freemind.controller.actions.UndoPasteNodeAction;
+import freemind.controller.actions.XmlAction;
 import freemind.main.Resources;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;

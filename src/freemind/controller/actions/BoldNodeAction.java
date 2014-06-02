@@ -1,4 +1,4 @@
-package freemind.controller.actions.generated.instance;
+package freemind.controller.actions;
 /* BoldNodeAction...*/
 public class BoldNodeAction extends FormatNodeAction {
   protected boolean bold;

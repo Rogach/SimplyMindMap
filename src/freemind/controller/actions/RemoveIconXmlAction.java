@@ -1,4 +1,4 @@
-package freemind.controller.actions.generated.instance;
+package freemind.controller.actions;
 /* RemoveIconXmlAction...*/
 public class RemoveIconXmlAction extends NodeAction {
   protected int iconPosition;

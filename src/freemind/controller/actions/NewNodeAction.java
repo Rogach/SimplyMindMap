@@ -1,4 +1,4 @@
-package freemind.controller.actions.generated.instance;
+package freemind.controller.actions;
 /* NewNodeAction...*/
 public class NewNodeAction extends NodeAction {
   protected String position;

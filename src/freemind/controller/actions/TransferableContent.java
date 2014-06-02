@@ -1,4 +1,4 @@
-package freemind.controller.actions.generated.instance;
+package freemind.controller.actions;
 /* TransferableContent...*/
 public class TransferableContent {
   protected String transferable;

@@ -22,9 +22,9 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import freemind.controller.actions.generated.instance.MoveNodesAction;
-import freemind.controller.actions.generated.instance.NodeListMember;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.MoveNodesAction;
+import freemind.controller.actions.NodeListMember;
+import freemind.controller.actions.XmlAction;
 import freemind.modes.MapAdapter;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;

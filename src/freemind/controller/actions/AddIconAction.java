@@ -1,4 +1,4 @@
-package freemind.controller.actions.generated.instance;
+package freemind.controller.actions;
 /* AddIconAction...*/
 public class AddIconAction extends NodeAction {
   protected String iconName;

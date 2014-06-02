@@ -1,4 +1,4 @@
-package freemind.controller.actions.generated.instance;
+package freemind.controller.actions;
 /* DeleteNodeAction...*/
 public class DeleteNodeAction extends NodeAction {
 } /* DeleteNodeAction*/

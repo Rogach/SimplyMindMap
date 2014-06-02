@@ -1,4 +1,4 @@
-package freemind.controller.actions.generated.instance;
+package freemind.controller.actions;
 /* UndoPasteNodeAction...*/
 public class UndoPasteNodeAction extends NodeAction {
   protected boolean isLeft;

@@ -23,9 +23,9 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import freemind.controller.actions.generated.instance.AddIconAction;
-import freemind.controller.actions.generated.instance.RemoveIconXmlAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.AddIconAction;
+import freemind.controller.actions.RemoveIconXmlAction;
+import freemind.controller.actions.XmlAction;
 import freemind.main.Resources;
 import freemind.modes.IconInformation;
 import freemind.modes.MindIcon;
@@ -88,8 +88,8 @@ public class RemoveIconAction extends NodeGeneralAction implements
     */
 
 	public void act(XmlAction action) {
-		if (action instanceof freemind.controller.actions.generated.instance.RemoveIconXmlAction) {
-			freemind.controller.actions.generated.instance.RemoveIconXmlAction removeAction = (freemind.controller.actions.generated.instance.RemoveIconXmlAction) action;
+		if (action instanceof freemind.controller.actions.RemoveIconXmlAction) {
+			freemind.controller.actions.RemoveIconXmlAction removeAction = (freemind.controller.actions.RemoveIconXmlAction) action;
 			MindMapNode node = modeController.getNodeFromID(removeAction
 					.getNode());
 			int position = removeAction.getIconPosition();

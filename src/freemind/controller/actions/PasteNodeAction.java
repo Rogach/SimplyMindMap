@@ -1,4 +1,4 @@
-package freemind.controller.actions.generated.instance;
+package freemind.controller.actions;
 /* PasteNodeAction...*/
 public class PasteNodeAction extends NodeAction {
   protected boolean isLeft;

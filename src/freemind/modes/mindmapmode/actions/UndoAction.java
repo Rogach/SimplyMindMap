@@ -23,8 +23,8 @@
 
 package freemind.modes.mindmapmode.actions;
 
-import freemind.controller.actions.generated.instance.CompoundAction;
-import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.controller.actions.CompoundAction;
+import freemind.controller.actions.XmlAction;
 import freemind.main.Resources;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.AbstractXmlAction;

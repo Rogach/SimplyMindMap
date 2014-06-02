@@ -1,4 +1,4 @@
-package freemind.controller.actions.generated.instance;
+package freemind.controller.actions;
 /* MoveNodeXmlAction...*/
 public class MoveNodeXmlAction extends NodeAction {
   protected int vGap;

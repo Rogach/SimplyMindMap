@@ -1,4 +1,4 @@
-package freemind.controller.actions.generated.instance;
+package freemind.controller.actions;
 /* XmlAction...*/
 public class XmlAction {
 } /* XmlAction*/

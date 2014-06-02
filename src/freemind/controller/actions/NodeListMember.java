@@ -1,4 +1,4 @@
-package freemind.controller.actions.generated.instance;
+package freemind.controller.actions;
 /* NodeListMember...*/
 public class NodeListMember {
   protected String node;

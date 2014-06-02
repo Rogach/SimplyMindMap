@@ -1,4 +1,4 @@
-package freemind.controller.actions.generated.instance;
+package freemind.controller.actions;
 /* FontSizeNodeAction...*/
 public class FontSizeNodeAction extends FormatNodeAction {
   protected String size;

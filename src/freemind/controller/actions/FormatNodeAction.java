@@ -1,4 +1,4 @@
-package freemind.controller.actions.generated.instance;
+package freemind.controller.actions;
 /* FormatNodeAction...*/
 public class FormatNodeAction extends NodeAction {
 } /* FormatNodeAction*/

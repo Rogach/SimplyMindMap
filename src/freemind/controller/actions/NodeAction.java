@@ -1,4 +1,4 @@
-package freemind.controller.actions.generated.instance;
+package freemind.controller.actions;
 /* NodeAction...*/
 public class NodeAction extends XmlAction {
   protected String node;

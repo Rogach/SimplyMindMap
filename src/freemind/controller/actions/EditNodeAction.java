@@ -1,4 +1,4 @@
-package freemind.controller.actions.generated.instance;
+package freemind.controller.actions;
 /* EditNodeAction...*/
 public class EditNodeAction extends TextNodeAction {
 } /* EditNodeAction*/
