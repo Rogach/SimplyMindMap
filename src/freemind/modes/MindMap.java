@@ -41,6 +41,8 @@ public interface MindMap extends TreeModel {
 	 *         no registry is present.
 	 */
 	MindMapLinkRegistry getLinkRegistry();
+  
+  String getAsPlainText(List mindMapNodes);
 
 	void nodeStructureChanged(TreeNode node);
 

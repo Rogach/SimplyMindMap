@@ -22,6 +22,8 @@ package freemind.modes.mindmapmode;
 
 import freemind.modes.MindMap;
 import freemind.modes.NodeAdapter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.ListIterator;
@@ -49,6 +51,52 @@ public class MindMapNodeModel extends NodeAdapter {
 		}
 		for (ListIterator e = childrenUnfolded(); e.hasNext();) {
 			((MindMapNodeModel) e.next()).collectColors(colors);
+		}
+	}
+  
+	public String getPlainTextContent() {
+		return getText();
+	}
+
+	public void saveTXT(Writer fileout, int depth) throws IOException {
+		String plainTextContent = getPlainTextContent();
+		for (int i = 0; i < depth; ++i) {
+			fileout.write("    ");
+		}
+		if (plainTextContent.matches(" *")) {
+			fileout.write("o");
+		} else {
+      fileout.write(plainTextContent);
+		}
+
+		fileout.write("\n");
+		// fileout.write(System.getProperty("line.separator"));
+		// fileout.newLine();
+
+		// ^ One would rather expect here one of the above commands
+		// commented out. However, it does not work as expected on
+		// Windows. My unchecked hypothesis is, that the String Java stores
+		// in Clipboard carries information that it actually is \n
+		// separated string. The current coding works fine with pasting on
+		// Windows (and I expect, that on Unix too, because \n is a Unix
+		// separator). This method is actually used only for pasting
+		// purposes, it is never used for writing to file. As a result, the
+		// writing to file is not tested.
+
+		// Another hypothesis is, that something goes astray when creating
+		// StringWriter.
+
+		saveChildrenText(fileout, depth);
+	}
+
+	private void saveChildrenText(Writer fileout, int depth) throws IOException {
+		for (ListIterator e = sortedChildrenUnfolded(); e.hasNext();) {
+			final MindMapNodeModel child = (MindMapNodeModel) e.next();
+			if (child.isVisible()) {
+				child.saveTXT(fileout, depth + 1);
+			} else {
+				child.saveChildrenText(fileout, depth);
+			}
 		}
 	}
 

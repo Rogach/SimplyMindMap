@@ -29,11 +29,18 @@ import freemind.modes.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.NodeAdapter;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ListIterator;
 
 public class MindMapMapModel extends MapAdapter {
 
@@ -183,5 +190,41 @@ public class MindMapMapModel extends MapAdapter {
 		}
 		return buffer;
 	}
+  
+  public String getAsPlainText(List mindMapNodes) {
+		// Returns success of the operation.
+		try {
+			StringWriter stringWriter = new StringWriter();
+			BufferedWriter fileout = new BufferedWriter(stringWriter);
+
+			for (ListIterator it = mindMapNodes.listIterator(); it.hasNext();) {
+				((MindMapNodeModel) it.next()).saveTXT(fileout,/* depth= */0);
+			}
+
+			fileout.close();
+			return stringWriter.toString();
+
+		} catch (Exception e) {
+			freemind.main.Resources.getInstance().logException(e);
+			return null;
+		}
+	}
+
+	public boolean saveTXT(MindMapNodeModel rootNodeOfBranch, File file) {
+		// Returns success of the operation.
+		try {
+			BufferedWriter fileout = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(file)));
+			rootNodeOfBranch.saveTXT(fileout,/* depth= */0);
+			fileout.close();
+			return true;
+
+		} catch (Exception e) {
+			System.err.println("Error in MindMapMapModel.saveTXT(): ");
+			freemind.main.Resources.getInstance().logException(e);
+			return false;
+		}
+	}
+
 
 }
