@@ -19,8 +19,8 @@
 
 package freemind.view.mindmapview;
 
-import freemind.util.Tools;
 import freemind.modes.MindMapNode;
+import freemind.util.Tools;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;

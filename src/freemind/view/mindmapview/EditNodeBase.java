@@ -25,8 +25,8 @@ package freemind.view.mindmapview;
 
 import freemind.main.ResourceKeys;
 import freemind.main.Resources;
-import freemind.util.Tools;
 import freemind.modes.ModeController;
+import freemind.util.Tools;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.KeyEventDispatcher;

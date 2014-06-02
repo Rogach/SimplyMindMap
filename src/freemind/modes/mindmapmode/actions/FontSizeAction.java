@@ -25,11 +25,11 @@ package freemind.modes.mindmapmode.actions;
 
 import freemind.controller.actions.generated.instance.FontSizeNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.util.Tools;
 import freemind.modes.MindMap;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
+import freemind.util.Tools;
 
 /**
  * @author foltin

@@ -22,8 +22,8 @@ package freemind.modes.mindmapmode.listeners;
 
 import freemind.controller.NodeMouseMotionListener.NodeMouseMotionObserver;
 import freemind.main.Resources;
-import freemind.util.Tools;
 import freemind.modes.ModeController;
+import freemind.util.Tools;
 import freemind.view.mindmapview.MainView;
 import freemind.view.mindmapview.NodeView;
 import java.awt.Rectangle;

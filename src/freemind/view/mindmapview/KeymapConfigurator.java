@@ -1,10 +1,10 @@
 package freemind.view.mindmapview;
 
 import freemind.main.Resources;
-import freemind.util.Tools;
 import freemind.modes.MindMapNode;
-import freemind.util.IconSelectionPopupDialog;
 import freemind.modes.mindmapmode.MindMapController;
+import freemind.util.IconSelectionPopupDialog;
+import freemind.util.Tools;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;

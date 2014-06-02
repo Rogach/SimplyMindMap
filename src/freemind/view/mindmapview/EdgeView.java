@@ -20,9 +20,9 @@
 
 package freemind.view.mindmapview;
 
-import freemind.util.Tools;
 import freemind.modes.EdgeAdapter;
 import freemind.modes.MindMapEdge;
+import freemind.util.Tools;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;

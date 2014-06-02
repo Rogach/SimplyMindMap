@@ -19,8 +19,8 @@
 
 package freemind.modes;
 
-import freemind.util.Tools;
 import freemind.nanoxml.XMLElement;
+import freemind.util.Tools;
 import java.awt.Font;
 import java.util.HashMap;
 import java.util.Iterator;

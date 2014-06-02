@@ -20,8 +20,8 @@
 package freemind.view.mindmapview;
 
 import freemind.main.Resources;
-import freemind.util.Tools;
 import freemind.modes.MindMapNode;
+import freemind.util.Tools;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;

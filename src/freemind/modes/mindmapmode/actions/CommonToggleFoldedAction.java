@@ -23,9 +23,9 @@
 package freemind.modes.mindmapmode.actions;
 
 import freemind.main.Resources;
-import freemind.util.Tools;
 import freemind.modes.ControllerAdapter;
 import freemind.modes.MindMapNode;
+import freemind.util.Tools;
 import java.awt.event.ActionEvent;
 import java.util.Iterator;
 import java.util.ListIterator;

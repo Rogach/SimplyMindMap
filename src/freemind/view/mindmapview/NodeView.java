@@ -20,12 +20,12 @@
 
 package freemind.view.mindmapview;
 
-import freemind.util.HtmlTools;
 import freemind.main.Resources;
-import freemind.util.Tools;
 import freemind.modes.MindIcon;
 import freemind.modes.MindMapNode;
 import freemind.modes.ModeController;
+import freemind.util.HtmlTools;
+import freemind.util.Tools;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;

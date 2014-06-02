@@ -20,8 +20,8 @@
 
 package freemind.modes;
 
-import freemind.util.Tools;
 import freemind.nanoxml.XMLElement;
+import freemind.util.Tools;
 import java.awt.Color;
 
 public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {

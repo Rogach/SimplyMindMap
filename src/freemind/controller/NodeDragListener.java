@@ -20,9 +20,9 @@
 package freemind.controller;
 
 import freemind.main.Resources;
-import freemind.util.Tools;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
+import freemind.util.Tools;
 import freemind.view.mindmapview.MainView;
 import java.awt.Cursor;
 import java.awt.datatransfer.Transferable;

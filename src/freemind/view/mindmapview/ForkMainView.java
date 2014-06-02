@@ -19,9 +19,9 @@
 
 package freemind.view.mindmapview;
 
-import freemind.util.Tools;
 import freemind.modes.MindMapEdge;
 import freemind.modes.MindMapNode;
+import freemind.util.Tools;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;

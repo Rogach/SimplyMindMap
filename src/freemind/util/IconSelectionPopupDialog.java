@@ -24,7 +24,6 @@ package freemind.util;
 
 import freemind.main.Resources;
 import freemind.modes.IconInformation;
-import freemind.view.mindmapview.NodeView;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;

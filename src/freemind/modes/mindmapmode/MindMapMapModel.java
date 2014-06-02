@@ -26,6 +26,8 @@ import freemind.modes.MindMapLinkRegistry;
 import freemind.modes.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.NodeAdapter;
+import freemind.nanoxml.XMLParseException;
+import freemind.util.Tools;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -39,8 +41,6 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
-import freemind.nanoxml.XMLParseException;
-import freemind.util.Tools;
 
 public class MindMapMapModel extends MapAdapter {
 

@@ -21,6 +21,8 @@ package freemind.modes;
 
 import freemind.main.Resources;
 import freemind.modes.mindmapmode.MindMapNodeModel;
+import freemind.nanoxml.XMLElement;
+import freemind.util.Tools;
 import freemind.view.mindmapview.NodeView;
 import java.awt.Color;
 import java.awt.Font;
@@ -42,8 +44,6 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
-import freemind.nanoxml.XMLElement;
-import freemind.util.Tools;
 
 /**
  * This class represents a single Node of a Tree. It contains direct handles to

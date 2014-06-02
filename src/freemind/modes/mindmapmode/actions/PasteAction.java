@@ -36,6 +36,8 @@ import freemind.modes.mindmapmode.MindMapMapModel;
 import freemind.modes.mindmapmode.MindMapNodeModel;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;
 import freemind.modes.mindmapmode.actions.xml.ActorXml;
+import freemind.nanoxml.XMLParseException;
+import freemind.util.Tools;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -48,8 +50,6 @@ import java.util.ListIterator;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.swing.AbstractAction;
-import freemind.nanoxml.XMLParseException;
-import freemind.util.Tools;
 
 public class PasteAction extends AbstractAction implements ActorXml {
 

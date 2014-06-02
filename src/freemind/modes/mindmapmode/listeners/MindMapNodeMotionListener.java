@@ -20,10 +20,10 @@
 package freemind.modes.mindmapmode.listeners;
 
 import freemind.controller.NodeMotionListener.NodeMotionAdapter;
-import freemind.util.Tools;
 import freemind.modes.MindMapNode;
 import freemind.modes.NodeAdapter;
 import freemind.modes.mindmapmode.MindMapController;
+import freemind.util.Tools;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeMotionListenerView;
 import freemind.view.mindmapview.NodeView;
