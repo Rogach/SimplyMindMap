@@ -201,8 +201,4 @@ public interface MindMapNode extends MutableTreeNode {
 
 	boolean isNewChildLeft();
 
-	/**
-	 * @return true, if one of its parents is folded. If itself is folded, doesn't matter.
-	 */
-	boolean hasFoldedParents();
 }

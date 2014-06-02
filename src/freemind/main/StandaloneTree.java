@@ -59,7 +59,7 @@ public class StandaloneTree {
         System.exit(0);
       }
     });
-    
+    mc.obtainFocusForSelected(); // eagerly grab focus for map, else it will require clicking before proper use
   }
   
   public static Properties readDefaultPreferences() {

@@ -82,54 +82,6 @@ public class XmlBindingTools {
 		}
 	}
 
-	protected String storeDialogPositions(WindowConfigurationStorage storage,
-			JDialog dialog) {
-		storage.setX((dialog.getX()));
-		storage.setY((dialog.getY()));
-		storage.setWidth((dialog.getWidth()));
-		storage.setHeight((dialog.getHeight()));
-		String marshalled = marshall(storage);
-		String result = marshalled;
-		return result;
-	}
-
-	public WindowConfigurationStorage decorateDialog(String marshalled,
-			JDialog dialog) {
-		// String unmarshalled = controller.getProperty(
-		// propertyName);
-		if (marshalled != null) {
-			WindowConfigurationStorage storage = (WindowConfigurationStorage) unMarshall(marshalled);
-			if (storage != null) {
-				// Check that location is on current screen.
-				Dimension screenSize;
-				if (Resources.getInstance().getBoolProperty(
-						"place_dialogs_on_first_screen")) {
-					Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
-					screenSize = defaultToolkit.getScreenSize();
-				} else {
-					screenSize = new Dimension();
-					screenSize.height = Integer.MAX_VALUE;
-					screenSize.width = Integer.MAX_VALUE;
-				}
-				int delta = 20;
-				dialog.setLocation(
-						Math.min(storage.getX(), screenSize.width - delta),
-						Math.min(storage.getY(), screenSize.height - delta));
-				dialog.setSize(new Dimension(storage.getWidth(), storage
-						.getHeight()));
-				return storage;
-			}
-		}
-
-		// set standard dialog size of no size is stored
-		final Frame rootFrame = JOptionPane.getFrameForComponent(dialog);
-		final Dimension prefSize = rootFrame.getSize();
-		prefSize.width = prefSize.width * 3 / 4;
-		prefSize.height = prefSize.height * 3 / 4;
-		dialog.setSize(prefSize);
-		return null;
-	}
-
 	public String marshall(XmlAction action) {
 		// marshall:
 		// marshal to StringBuffer:
@@ -151,8 +103,6 @@ public class XmlBindingTools {
 		return unMarshall(new StringReader(inputString));
 	}
 
-	/**
-     */
 	public XmlAction unMarshall(Reader reader) {
 		try {
 			// unmarshall:

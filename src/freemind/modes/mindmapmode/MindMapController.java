@@ -560,10 +560,6 @@ public class MindMapController extends ControllerAdapter implements
 		return Tools.marshall(action);
 	}
 
-	public XmlAction unMarshall(String inputString) {
-		return Tools.unMarshall(inputString);
-	}
-
 	public XMLElement createXMLElement() {
 		return new MindMapXMLElement(this);
 	}

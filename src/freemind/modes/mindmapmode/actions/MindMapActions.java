@@ -157,8 +157,6 @@ public interface MindMapActions {
 	// XML Actions:
 	public String marshall(XmlAction action);
 
-	public XmlAction unMarshall(String inputString);
-
 	/** undo in progress? */
 	boolean isUndoAction();
 
