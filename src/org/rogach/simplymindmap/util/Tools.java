@@ -18,13 +18,11 @@
  * Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-package freemind.main;
+package org.rogach.simplymindmap.util;
 
-//maybe move this class to another package like tools or something...
-
-import org.rogach.simplymindmap.util.XmlBindingTools;
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.XmlAction;
+import freemind.main.Resources;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.NodeView;
@@ -82,35 +80,16 @@ import javax.swing.SwingUtilities;
  * 
  */
 public class Tools {
-	/**
-	 * 
-	 */
-	public static final String FREEMIND_LIB_FREEMIND_JAR = "lib/freemind.jar";
 
 	private static java.util.logging.Logger logger = null;
 	static {
 		logger = Logger.getLogger("Tools");
 	}
 
-	public static final String CONTENTS_JAVA_FREEMIND_JAR = "Contents/Java/freemind.jar";
-
-	public static final String FREE_MIND_APP_CONTENTS_RESOURCES_JAVA = "Contents/Resources/Java/";
-
-	// public static final Set executableExtensions = new HashSet ({ "exe",
-	// "com", "vbs" });
-
-	// The Java programming language provides a shortcut syntax for creating and
-	// initializing an array. Here's an example of this syntax:
-	// boolean[] answers = { true, false, true, true, false };
-
-	public static final Set executableExtensions = new HashSet(
-			Arrays.asList(new String[] { "exe", "com", "vbs", "bat", "lnk" }));
-
-	private static Set availableFontFamilyNames = null; // Keep set of platform
+	private static Set availableFontFamilyNames = null;
 
 	private static String sEnvFonts[] = null;
 
-	// bug fix from Dimitri.
 	public static Random ran = new Random();
 
 	public static String colorToXml(Color col) {
@@ -282,6 +261,13 @@ public class Tools {
 		return text.substring(0, 1).toUpperCase()
 				+ text.substring(1, text.length());
 	}
+
+  public static Font getDefaultFont() {
+    String fontFamily = Resources.getInstance().getProperty("defaultfont");
+    int fontStyle = Resources.getInstance().getIntProperty("defaultfontstyle", 0);
+    int fontSize = Resources.getInstance().getIntProperty("defaultfontsize", 12);
+    return new Font(fontFamily, fontStyle, fontSize);
+  }
 
 	public static class IntHolder {
 		private int value;
@@ -966,8 +952,5 @@ public class Tools {
 			w.dispose();
 		}
 	}
-
-
-
 
 }

@@ -21,8 +21,6 @@
 package freemind.modes.mindmapmode;
 
 import freemind.main.FreeMindCommon;
-import freemind.main.Tools;
-import freemind.main.XMLParseException;
 import freemind.modes.MapAdapter;
 import freemind.modes.MindMapLinkRegistry;
 import freemind.modes.MindMapNode;
@@ -41,6 +39,8 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
+import org.rogach.simplymindmap.nanoxml.XMLParseException;
+import org.rogach.simplymindmap.util.Tools;
 
 public class MindMapMapModel extends MapAdapter {
 

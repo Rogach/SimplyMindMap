@@ -28,8 +28,6 @@ import freemind.controller.actions.generated.instance.TransferableContent;
 import freemind.controller.actions.generated.instance.UndoPasteNodeAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.main.XMLParseException;
 import freemind.modes.ControllerAdapter;
 import freemind.modes.MindMapNode;
 import freemind.modes.ModeController;
@@ -50,6 +48,8 @@ import java.util.ListIterator;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.swing.AbstractAction;
+import org.rogach.simplymindmap.nanoxml.XMLParseException;
+import org.rogach.simplymindmap.util.Tools;
 
 public class PasteAction extends AbstractAction implements ActorXml {
 

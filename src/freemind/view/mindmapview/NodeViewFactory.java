@@ -20,79 +20,12 @@
 package freemind.view.mindmapview;
 
 import freemind.modes.MindMapNode;
-import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.LayoutManager;
-import javax.swing.JComponent;
 
 class NodeViewFactory {
 
-	private static class ContentPane extends JComponent {
-		static private LayoutManager layoutManager = new ContentPaneLayout();
-
-		ContentPane() {
-			setLayout(layoutManager);
-		}
-	}
-
-	private static class ContentPaneLayout implements LayoutManager {
-
-		public void addLayoutComponent(String name, Component comp) {
-		}
-
-		public void layoutContainer(Container parent) {
-			final int componentCount = parent.getComponentCount();
-			final int width = parent.getWidth();
-			int y = 0;
-			for (int i = 0; i < componentCount; i++) {
-				final Component component = parent.getComponent(i);
-				if (component.isVisible()) {
-					final Dimension preferredCompSize = component
-							.getPreferredSize();
-					if (component instanceof MainView) {
-						component.setBounds(0, y, width,
-								preferredCompSize.height);
-					} else {
-						int x = (int) (component.getAlignmentX() * (width - preferredCompSize.width));
-						component.setBounds(x, y, preferredCompSize.width,
-								preferredCompSize.height);
-					}
-					y += preferredCompSize.height;
-				}
-			}
-		}
-
-		public Dimension minimumLayoutSize(Container parent) {
-			return preferredLayoutSize(parent);
-		}
-
-		public Dimension preferredLayoutSize(Container parent) {
-			final Dimension prefSize = new Dimension(0, 0);
-			final int componentCount = parent.getComponentCount();
-			for (int i = 0; i < componentCount; i++) {
-				final Component component = parent.getComponent(i);
-				if (component.isVisible()) {
-					final Dimension preferredCompSize = component
-							.getPreferredSize();
-					prefSize.height += preferredCompSize.height;
-					prefSize.width = Math.max(prefSize.width,
-							preferredCompSize.width);
-				}
-			}
-			return prefSize;
-		}
-
-		public void removeLayoutComponent(Component comp) {
-		}
-
-	}
-
 	private static NodeViewFactory factory;
-	private EdgeView sharpBezierEdgeView;
-	private EdgeView sharpLinearEdgeView;
 	private EdgeView bezierEdgeView;
-	private EdgeView linearEdgeView;
 
 	// Singleton
 	private NodeViewFactory() {
@@ -107,10 +40,6 @@ class NodeViewFactory {
 	}
 
 	EdgeView getEdge(NodeView newView) {
-    return getBezierEdgeView();
-	}
-
-	private EdgeView getBezierEdgeView() {
 		if (bezierEdgeView == null) {
 			bezierEdgeView = new BezierEdgeView();
 		}
@@ -140,7 +69,6 @@ class NodeViewFactory {
 
 		model.addViewer(newView);
 		newView.update();
-		fireNodeViewCreated(newView);
 		return newView;
 	}
 
@@ -151,11 +79,5 @@ class NodeViewFactory {
       return new ForkMainView();
     }
 	}
-
-	private void fireNodeViewCreated(NodeView newView) {
-	}
-
-	JComponent newContentPane(NodeView view) {
-		return new ContentPane();
-	}
+  
 }

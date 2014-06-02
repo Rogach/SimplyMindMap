@@ -20,7 +20,7 @@
 package freemind.controller;
 
 import freemind.main.Resources;
-import freemind.main.Tools;
+import org.rogach.simplymindmap.util.Tools;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.view.mindmapview.MainView;

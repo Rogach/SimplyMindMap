@@ -23,7 +23,7 @@
 package freemind.modes.mindmapmode.actions;
 
 import freemind.main.Resources;
-import freemind.main.Tools;
+import org.rogach.simplymindmap.util.Tools;
 import freemind.modes.ControllerAdapter;
 import freemind.modes.MindMapNode;
 import java.awt.event.ActionEvent;

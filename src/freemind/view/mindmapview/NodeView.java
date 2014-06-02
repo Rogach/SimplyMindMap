@@ -20,9 +20,9 @@
 
 package freemind.view.mindmapview;
 
-import freemind.main.HtmlTools;
+import org.rogach.simplymindmap.util.HtmlTools;
 import freemind.main.Resources;
-import freemind.main.Tools;
+import org.rogach.simplymindmap.util.Tools;
 import freemind.modes.MindIcon;
 import freemind.modes.MindMapNode;
 import freemind.modes.ModeController;
@@ -892,7 +892,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 
 	private void updateFont() {
 		Font font = getModel().getFont();
-    font = font == null ? getDefaultFont() : font;
+    font = font == null ? Tools.getDefaultFont() : font;
 		if (font != null) {
 			mainView.setFont(font);
 		} else {
@@ -900,13 +900,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 			System.err.println("NodeView.update(): default font is null.");
 		}
 	}
-  
-  public static Font getDefaultFont() {
-    String fontFamily = Resources.getInstance().getProperty("defaultfont");
-    int fontStyle = Resources.getInstance().getIntProperty("defaultfontstyle", 0);
-    int fontSize = Resources.getInstance().getIntProperty("defaultfontsize", 12);
-    return new Font(fontFamily, fontStyle, fontSize);
-  }
 
 	private void updateIcons() {
 		updateIconPosition();
@@ -1297,16 +1290,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 
 	public JComponent getContent() {
 		return contentPane == null ? mainView : contentPane;
-	}
-
-	public Container getContentPane() {
-		if (contentPane == null) {
-			contentPane = NodeViewFactory.getInstance().newContentPane(this);
-			remove(mainView);
-			contentPane.add(mainView);
-			add(contentPane);
-		}
-		return contentPane;
 	}
 
 	public NodeMotionListenerView getMotionListenerView() {

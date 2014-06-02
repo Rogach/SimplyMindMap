@@ -23,7 +23,7 @@
  */
 package freemind.view.mindmapview;
 
-import freemind.main.Tools;
+import org.rogach.simplymindmap.util.Tools;
 import java.awt.Dimension;
 import java.awt.Point;
 import javax.swing.JComponent;

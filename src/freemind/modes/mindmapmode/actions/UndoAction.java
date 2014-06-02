@@ -26,7 +26,7 @@ package freemind.modes.mindmapmode.actions;
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Resources;
-import freemind.main.Tools;
+import org.rogach.simplymindmap.util.Tools;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.actions.xml.AbstractXmlAction;
 import freemind.modes.mindmapmode.actions.xml.ActionPair;

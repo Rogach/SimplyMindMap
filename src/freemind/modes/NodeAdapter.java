@@ -20,21 +20,16 @@
 package freemind.modes;
 
 import freemind.main.Resources;
-import freemind.main.Tools;
-import freemind.main.XMLElement;
 import freemind.modes.mindmapmode.MindMapNodeModel;
 import freemind.view.mindmapview.NodeView;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -47,6 +42,8 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
+import org.rogach.simplymindmap.nanoxml.XMLElement;
+import org.rogach.simplymindmap.util.Tools;
 
 /**
  * This class represents a single Node of a Tree. It contains direct handles to
@@ -194,7 +191,7 @@ public abstract class NodeAdapter implements MindMapNode {
 	// Node holds font only in the case that the font is not default.
 
 	public void establishOwnFont() {
-		font = (font != null) ? font : NodeView
+		font = (font != null) ? font : Tools
 				.getDefaultFont();
 	}
 

@@ -20,7 +20,7 @@
 
 package freemind.modes;
 
-import freemind.main.Tools;
+import org.rogach.simplymindmap.util.Tools;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ListIterator;

@@ -18,7 +18,7 @@
  */
 /*$Id: HtmlTools.java,v 1.1.2.28 2010/12/04 21:07:23 christianfoltin Exp $*/
 
-package freemind.main;
+package org.rogach.simplymindmap.util;
 
 public class HtmlTools {
 

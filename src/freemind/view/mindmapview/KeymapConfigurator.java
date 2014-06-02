@@ -1,7 +1,7 @@
 package freemind.view.mindmapview;
 
 import freemind.main.Resources;
-import freemind.main.Tools;
+import org.rogach.simplymindmap.util.Tools;
 import freemind.modes.MindMapNode;
 import org.rogach.simplymindmap.util.IconSelectionPopupDialog;
 import freemind.modes.mindmapmode.MindMapController;

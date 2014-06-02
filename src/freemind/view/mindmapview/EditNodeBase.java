@@ -25,7 +25,7 @@ package freemind.view.mindmapview;
 
 import freemind.main.ResourceKeys;
 import freemind.main.Resources;
-import freemind.main.Tools;
+import org.rogach.simplymindmap.util.Tools;
 import freemind.modes.ModeController;
 import java.awt.BorderLayout;
 import java.awt.Component;
