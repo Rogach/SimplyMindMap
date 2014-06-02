@@ -20,48 +20,20 @@
 
 package freemind.main;
 
-import java.util.Locale;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
-
 public class HtmlTools {
 
 	public static final String NBSP = "\u00A0";
-
-	private static Logger logger;
-
-	private static final Pattern HTML_PATTERN = Pattern
-			.compile("(?s)^\\s*<\\s*html.*?>.*");
 
 	public static final String SP = "&#160;";
 
 	private HtmlTools() {
 		super();
-		logger = Resources.getInstance().getLogger(HtmlTools.class.getName());
-	}
-
-	public static boolean isHtmlNode(String text) {
-		for (int i = 0; i < text.length(); i++) {
-			final char ch = text.charAt(i);
-			if (ch == '<') {
-				break;
-			}
-			if (!Character.isWhitespace(ch) || i == text.length()) {
-				return false;
-			}
-		}
-		return HTML_PATTERN.matcher(text.toLowerCase(Locale.ENGLISH)).matches();
 	}
 
 	public static String plainToHTML(String text) {
 		char myChar;
-		String textTabsExpanded = text.replaceAll("\t", "         "); // Use
-																		// eight
-																		// spaces
-																		// as
-																		// tab
-																		// width.
-		StringBuffer result = new StringBuffer(textTabsExpanded.length()); // Heuristic
+		String textTabsExpanded = text.replaceAll("\t", "         ");
+		StringBuilder result = new StringBuilder(textTabsExpanded.length()); 
 		int lengthMinus1 = textTabsExpanded.length() - 1;
 		result.append("<html><body><p>");
 		for (int i = 0; i < textTabsExpanded.length(); ++i) {
@@ -93,21 +65,6 @@ public class HtmlTools {
 			}
 		}
 		return result.toString();
-	}
-
-	/**
-	 * Determines whether the character is valid in XML. Invalid characters
-	 * include most of the range x00-x1F, and more.
-	 * 
-	 * @see http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char.
-	 */
-	public static boolean isXMLValidCharacter(char character) {
-		// Order the tests in such a sequence that the most probable
-		// conditions are tested first.
-		return character >= 0x20 && character <= 0xD7FF || character == 0x9
-				|| character == 0xA || character == 0xD || character >= 0xE000
-				&& character <= 0xFFFD || character >= 0x10000
-				&& character <= 0x10FFFF;
 	}
 
 }
