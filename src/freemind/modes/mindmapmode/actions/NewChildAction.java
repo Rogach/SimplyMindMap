@@ -53,7 +53,6 @@ public class NewChildAction extends AbstractAction implements ActorXml {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-    System.out.println("NewChildAction.actionPerformed");
 		this.c.addNew(c.getSelected(), MindMapController.NEW_CHILD, null);
 	}
 

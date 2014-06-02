@@ -44,15 +44,9 @@ public class UndoActionHandler {
 		if (!controller.isUndoAction()) {
 			redo.clear();
 			undo.add(pair);
-			// undo.print();
 			undo.setEnabled(true);
 			redo.setEnabled(false);
 		}
 	}
 
-	public void startTransaction(String name) {
-	}
-
-	public void endTransaction(String name) {
-	}
 }

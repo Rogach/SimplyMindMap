@@ -37,7 +37,6 @@ public class CopyAction extends AbstractAction {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-    System.out.println("CopyAction");
 		if (controller.getMap() != null) {
 			Transferable copy = controller.copy();
 			if (copy != null) {
