@@ -21,20 +21,6 @@
 package freemind.modes.mindmapmode;
 
 import freemind.controller.MindMapNodesSelection;
-import freemind.controller.actions.generated.instance.Pattern;
-import freemind.controller.actions.generated.instance.PatternEdgeColor;
-import freemind.controller.actions.generated.instance.PatternEdgeStyle;
-import freemind.controller.actions.generated.instance.PatternEdgeWidth;
-import freemind.controller.actions.generated.instance.PatternIcon;
-import freemind.controller.actions.generated.instance.PatternNodeBackgroundColor;
-import freemind.controller.actions.generated.instance.PatternNodeColor;
-import freemind.controller.actions.generated.instance.PatternNodeFontBold;
-import freemind.controller.actions.generated.instance.PatternNodeFontItalic;
-import freemind.controller.actions.generated.instance.PatternNodeFontName;
-import freemind.controller.actions.generated.instance.PatternNodeFontSize;
-import freemind.controller.actions.generated.instance.PatternNodeStyle;
-import freemind.controller.actions.generated.instance.PatternNodeText;
-import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.ResourceKeys;
 import freemind.main.Resources;
 import freemind.modes.ControllerAdapter;
@@ -556,10 +542,6 @@ public class MindMapController extends ControllerAdapter implements
 
 	}
 
-	public String marshall(XmlAction action) {
-		return Tools.marshall(action);
-	}
-
 	public XMLElement createXMLElement() {
 		return new MindMapXMLElement(this);
 	}
@@ -578,23 +560,6 @@ public class MindMapController extends ControllerAdapter implements
 
 	public void repaintMap() {
 		getView().repaint();
-	}
-
-	public void clearNodeContents(MindMapNode pNode) {
-		Pattern erasePattern = new Pattern();
-		erasePattern.setPatternEdgeColor(new PatternEdgeColor());
-		erasePattern.setPatternEdgeStyle(new PatternEdgeStyle());
-		erasePattern.setPatternEdgeWidth(new PatternEdgeWidth());
-		erasePattern.setPatternIcon(new PatternIcon());
-		erasePattern
-				.setPatternNodeBackgroundColor(new PatternNodeBackgroundColor());
-		erasePattern.setPatternNodeColor(new PatternNodeColor());
-		erasePattern.setPatternNodeFontBold(new PatternNodeFontBold());
-		erasePattern.setPatternNodeFontItalic(new PatternNodeFontItalic());
-		erasePattern.setPatternNodeFontName(new PatternNodeFontName());
-		erasePattern.setPatternNodeFontSize(new PatternNodeFontSize());
-		erasePattern.setPatternNodeStyle(new PatternNodeStyle());
-		erasePattern.setPatternNodeText(new PatternNodeText());
 	}
 
 	public Transferable getClipboardContents() {

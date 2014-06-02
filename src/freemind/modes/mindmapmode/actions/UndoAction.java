@@ -118,8 +118,8 @@ public class UndoAction extends AbstractXmlAction {
 	}
 
 	public void add(ActionPair pair) {
-		XmlAction dcDo = Tools.deepCopy(pair.getDoAction());
-		XmlAction dcUndo = Tools.deepCopy(pair.getUndoAction());
+		XmlAction dcDo = pair.getDoAction();
+		XmlAction dcUndo = pair.getUndoAction();
 		long currentTime = System.currentTimeMillis();
 		if ((actionPairList.size() > 0)
 				&& (actionFrameStarted || currentTime - timeOfLastAdd < TIME_TO_BEGIN_NEW_ACTION)) {

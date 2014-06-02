@@ -703,17 +703,6 @@ public class Tools {
 		return KeyStroke.getKeyStroke("typed " + keyStrokeDescription);
 	}
 
-	public static final String JAVA_VERSION = System
-			.getProperty("java.version");
-
-	public static boolean isBelowJava6() {
-		return JAVA_VERSION.compareTo("1.6.0") < 0;
-	}
-
-	public static boolean isAboveJava4() {
-		return JAVA_VERSION.compareTo("1.4.0") > 0;
-	}
-
 	public static void restoreAntialiasing(Graphics2D g, Object renderingHint) {
 		if (RenderingHints.KEY_ANTIALIASING.isCompatibleValue(renderingHint)) {
 			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, renderingHint);
@@ -762,58 +751,14 @@ public class Tools {
 		return font;
 	}
 
-	public static String marshall(XmlAction action) {
-		return XmlBindingTools.getInstance().marshall(action);
-	}
-
-	public static XmlAction unMarshall(String inputString) {
-		return XmlBindingTools.getInstance().unMarshall(inputString);
-	}
-
 	public static Vector getVectorWithSingleElement(Object obj) {
 		Vector nodes = new Vector();
 		nodes.add(obj);
 		return nodes;
 	}
 
-	public static void swapVectorPositions(Vector pVector, int src, int dst) {
-		if (src >= pVector.size() || dst >= pVector.size() || src < 0
-				|| dst < 0) {
-			throw new IllegalArgumentException("One index is out of bounds "
-					+ src + ", " + dst + ", size= " + pVector.size());
-		}
-		pVector.set(dst, pVector.set(src, pVector.get(dst)));
-	}
-
-	public static Object getField(Object[] pObjects, String pField)
-			throws IllegalArgumentException, SecurityException,
-			IllegalAccessException, NoSuchFieldException {
-		for (int i = 0; i < pObjects.length; i++) {
-			Object object = pObjects[i];
-			for (int j = 0; j < object.getClass().getFields().length; j++) {
-				Field f = object.getClass().getFields()[j];
-				if (Tools.safeEquals(pField, f.getName())) {
-					return object.getClass().getField(pField).get(object);
-				}
-			}
-		}
-		return null;
-	}
-
 	public static boolean isUnix() {
 		return (File.separatorChar == '/') || isMacOsX();
-	}
-
-	/**
-	 * @param pNode
-	 * @param pMindMapController
-	 * @return
-	 */
-	public static String getNodeTextHierarchy(MindMapNode pNode,
-			MindMapController pMindMapController) {
-		return pNode.getText()
-				+ ((pNode.isRoot()) ? "" : (" <- " + getNodeTextHierarchy(
-						pNode.getParentNode(), pMindMapController)));
 	}
 
 	/**
@@ -858,10 +803,6 @@ public class Tools {
 			return classString + " " + buf.toString();
 		}
 		return classString;
-	}
-
-	public static XmlAction deepCopy(XmlAction action) {
-		return (XmlAction) unMarshall(marshall(action));
 	}
 
 	public static String generateID(String proposedID, HashMap hashMap,

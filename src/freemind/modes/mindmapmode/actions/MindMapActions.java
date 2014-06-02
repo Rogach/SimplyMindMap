@@ -154,9 +154,6 @@ public interface MindMapActions {
 
 	ActionFactory getActionFactory();
 
-	// XML Actions:
-	public String marshall(XmlAction action);
-
 	/** undo in progress? */
 	boolean isUndoAction();
 
@@ -179,11 +176,5 @@ public interface MindMapActions {
 	void registerMouseWheelEventHandler(MouseWheelEventHandler handler);
 
 	void deRegisterMouseWheelEventHandler(MouseWheelEventHandler handler);
-
-	/**
-	 * Erases all content of the node as text, colors, fonts, etc.
-	 */
-	void clearNodeContents(MindMapNode pNode);
-
 
 }

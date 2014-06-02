@@ -124,9 +124,6 @@ public class PasteAction extends AbstractAction implements ActorXml {
 			pUndoAction.setNode(targetId);
 			pUndoAction.setAsSibling(coord.asSibling);
 			pUndoAction.setIsLeft(coord.isLeft);
-			String s = mMindMapController.marshall(pUndoAction);
-			logger.fine("Undo action: " + s);
-
 		}
 		return pasteAction;
 	}
