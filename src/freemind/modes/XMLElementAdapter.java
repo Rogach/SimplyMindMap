@@ -19,8 +19,8 @@
 
 package freemind.modes;
 
-import org.rogach.simplymindmap.util.Tools;
-import org.rogach.simplymindmap.nanoxml.XMLElement;
+import freemind.util.Tools;
+import freemind.nanoxml.XMLElement;
 import java.awt.Font;
 import java.util.HashMap;
 import java.util.Iterator;

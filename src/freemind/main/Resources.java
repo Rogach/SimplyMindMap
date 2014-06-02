@@ -23,7 +23,7 @@
  */
 package freemind.main;
 
-import org.rogach.simplymindmap.util.Tools;
+import freemind.util.Tools;
 import java.io.InputStream;
 import java.net.URL;
 import java.text.MessageFormat;

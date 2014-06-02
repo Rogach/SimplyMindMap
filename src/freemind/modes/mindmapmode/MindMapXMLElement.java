@@ -20,7 +20,7 @@
 
 package freemind.modes.mindmapmode;
 
-import org.rogach.simplymindmap.nanoxml.XMLElement;
+import freemind.nanoxml.XMLElement;
 import freemind.modes.EdgeAdapter;
 import freemind.modes.MindMap;
 import freemind.modes.ModeController;

@@ -39,8 +39,8 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
-import org.rogach.simplymindmap.nanoxml.XMLParseException;
-import org.rogach.simplymindmap.util.Tools;
+import freemind.nanoxml.XMLParseException;
+import freemind.util.Tools;
 
 public class MindMapMapModel extends MapAdapter {
 

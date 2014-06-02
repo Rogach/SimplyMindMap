@@ -20,7 +20,7 @@
 package freemind.view.mindmapview;
 
 import freemind.main.Resources;
-import org.rogach.simplymindmap.util.Tools;
+import freemind.util.Tools;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;

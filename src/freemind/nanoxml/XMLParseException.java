@@ -49,7 +49,7 @@
 //package nanoxml;
 //</delete>
 //<insert>
-package org.rogach.simplymindmap.nanoxml;
+package freemind.nanoxml;
 
 //</insert>
 

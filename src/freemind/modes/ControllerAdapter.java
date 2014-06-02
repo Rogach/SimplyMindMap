@@ -21,8 +21,8 @@ package freemind.modes;
 
 import freemind.controller.MindMapNodesSelection;
 import freemind.main.Resources;
-import org.rogach.simplymindmap.nanoxml.XMLElement;
-import org.rogach.simplymindmap.nanoxml.XMLParseException;
+import freemind.nanoxml.XMLElement;
+import freemind.nanoxml.XMLParseException;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
 import java.awt.Color;

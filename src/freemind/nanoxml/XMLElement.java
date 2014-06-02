@@ -50,7 +50,7 @@
  * toUpperCase(Locale.ENGLISH) for turkish added.
  */
 
-package org.rogach.simplymindmap.nanoxml;
+package freemind.nanoxml;
 
 import java.io.ByteArrayOutputStream;
 import java.io.CharArrayReader;

@@ -20,7 +20,7 @@
 
 package freemind.view.mindmapview;
 
-import org.rogach.simplymindmap.util.Tools;
+import freemind.util.Tools;
 import freemind.modes.EdgeAdapter;
 import freemind.modes.MindMapEdge;
 import java.awt.BasicStroke;

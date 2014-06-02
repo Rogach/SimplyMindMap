@@ -25,7 +25,7 @@ package freemind.view.mindmapview;
 
 import com.inet.jortho.SpellChecker;
 import freemind.main.Resources;
-import org.rogach.simplymindmap.util.Tools;
+import freemind.util.Tools;
 import freemind.modes.ModeController;
 import java.awt.Color;
 import java.awt.Component;

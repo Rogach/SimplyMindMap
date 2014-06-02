@@ -22,7 +22,7 @@ package freemind.modes.mindmapmode.listeners;
 
 import freemind.controller.NodeMouseMotionListener.NodeMouseMotionObserver;
 import freemind.main.Resources;
-import org.rogach.simplymindmap.util.Tools;
+import freemind.util.Tools;
 import freemind.modes.ModeController;
 import freemind.view.mindmapview.MainView;
 import freemind.view.mindmapview.NodeView;

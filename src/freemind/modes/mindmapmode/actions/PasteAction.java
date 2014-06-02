@@ -48,8 +48,8 @@ import java.util.ListIterator;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.swing.AbstractAction;
-import org.rogach.simplymindmap.nanoxml.XMLParseException;
-import org.rogach.simplymindmap.util.Tools;
+import freemind.nanoxml.XMLParseException;
+import freemind.util.Tools;
 
 public class PasteAction extends AbstractAction implements ActorXml {
 

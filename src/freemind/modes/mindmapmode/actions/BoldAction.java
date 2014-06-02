@@ -39,7 +39,7 @@ public class BoldAction extends NodeGeneralAction implements NodeActorXml {
 	/**
 	 */
 	public BoldAction(MindMapController modeController) {
-		super(modeController, "bold", "org/rogach/simplymindmap/images/Bold16.gif");
+		super(modeController, "bold", "freemind/images/Bold16.gif");
 		addActor(this);
 	}
 

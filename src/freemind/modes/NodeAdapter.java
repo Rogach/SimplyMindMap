@@ -42,8 +42,8 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
-import org.rogach.simplymindmap.nanoxml.XMLElement;
-import org.rogach.simplymindmap.util.Tools;
+import freemind.nanoxml.XMLElement;
+import freemind.util.Tools;
 
 /**
  * This class represents a single Node of a Tree. It contains direct handles to

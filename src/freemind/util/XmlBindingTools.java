@@ -21,7 +21,7 @@
  */
 /*$Id: XmlBindingTools.java,v 1.1.2.2.2.5 2009/05/20 19:19:11 christianfoltin Exp $*/
 
-package org.rogach.simplymindmap.util;
+package freemind.util;
 
 import freemind.controller.actions.generated.instance.WindowConfigurationStorage;
 import freemind.controller.actions.generated.instance.XmlAction;

@@ -20,7 +20,7 @@
  *
  * @author <a href="mailto:labe@users.sourceforge.net">Lars Berning</a>
  */
-package org.rogach.simplymindmap.util;
+package freemind.util;
 
 import freemind.main.Resources;
 import freemind.modes.IconInformation;

@@ -20,7 +20,7 @@
 
 package freemind.modes;
 
-import org.rogach.simplymindmap.nanoxml.XMLParseException;
+import freemind.nanoxml.XMLParseException;
 import freemind.view.mindmapview.MapView;
 import freemind.view.mindmapview.NodeView;
 import java.awt.Color;

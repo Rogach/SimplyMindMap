@@ -21,7 +21,7 @@
 package freemind.modes;
 
 import freemind.main.Resources;
-import org.rogach.simplymindmap.util.Tools;
+import freemind.util.Tools;
 import java.awt.Color;
 
 public abstract class LineAdapter implements MindMapLine {

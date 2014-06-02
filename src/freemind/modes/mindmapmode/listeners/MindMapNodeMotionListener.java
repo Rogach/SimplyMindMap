@@ -20,7 +20,7 @@
 package freemind.modes.mindmapmode.listeners;
 
 import freemind.controller.NodeMotionListener.NodeMotionAdapter;
-import org.rogach.simplymindmap.util.Tools;
+import freemind.util.Tools;
 import freemind.modes.MindMapNode;
 import freemind.modes.NodeAdapter;
 import freemind.modes.mindmapmode.MindMapController;

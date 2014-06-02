@@ -19,7 +19,7 @@
 
 package freemind.view.mindmapview;
 
-import org.rogach.simplymindmap.util.Tools;
+import freemind.util.Tools;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GradientPaint;

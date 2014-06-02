@@ -20,7 +20,7 @@
 
 package freemind.modes;
 
-import org.rogach.simplymindmap.nanoxml.XMLElement;
+import freemind.nanoxml.XMLElement;
 
 public interface MindMapEdge extends MindMapLine {
 

@@ -24,7 +24,7 @@
 package freemind.view.mindmapview;
 
 import freemind.main.Resources;
-import org.rogach.simplymindmap.util.Tools;
+import freemind.util.Tools;
 import java.awt.Dimension;
 import java.awt.Point;
 

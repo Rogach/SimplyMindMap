@@ -39,7 +39,7 @@ public class ItalicAction extends NodeGeneralAction implements NodeActorXml {
 	/**
 	 */
 	public ItalicAction(MindMapController modeController) {
-		super(modeController, "italic", "org/rogach/simplymindmap/images/Italic16.gif");
+		super(modeController, "italic", "freemind/images/Italic16.gif");
 		this.modeController = modeController;
 		addActor(this);
 	}

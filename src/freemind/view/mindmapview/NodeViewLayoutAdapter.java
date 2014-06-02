@@ -19,7 +19,7 @@
 
 package freemind.view.mindmapview;
 
-import org.rogach.simplymindmap.util.Tools;
+import freemind.util.Tools;
 import freemind.modes.MindMapNode;
 import java.awt.Component;
 import java.awt.Container;

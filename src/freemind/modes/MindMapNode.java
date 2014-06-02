@@ -20,7 +20,7 @@
 
 package freemind.modes;
 
-import org.rogach.simplymindmap.nanoxml.XMLElement;
+import freemind.nanoxml.XMLElement;
 import freemind.view.mindmapview.NodeView;
 import java.awt.Color;
 import java.awt.Font;

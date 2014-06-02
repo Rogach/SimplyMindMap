@@ -18,7 +18,7 @@
  * Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-package org.rogach.simplymindmap.util;
+package freemind.util;
 
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.XmlAction;

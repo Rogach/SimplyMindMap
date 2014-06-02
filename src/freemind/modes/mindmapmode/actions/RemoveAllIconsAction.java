@@ -27,7 +27,7 @@ import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.RemoveAllIconsXmlAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Resources;
-import org.rogach.simplymindmap.util.Tools;
+import freemind.util.Tools;
 import freemind.modes.IconInformation;
 import freemind.modes.MindIcon;
 import freemind.modes.MindMap;
@@ -52,7 +52,7 @@ public class RemoveAllIconsAction extends NodeGeneralAction implements
      */
 	public RemoveAllIconsAction(MindMapController modeController,
 			IconAction addIconAction) {
-		super(modeController, "remove_all_icons", "org/rogach/simplymindmap/images/edittrash.png");
+		super(modeController, "remove_all_icons", "freemind/images/edittrash.png");
 		this.addIconAction = addIconAction;
 		addActor(this);
 	}

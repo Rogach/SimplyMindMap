@@ -20,7 +20,7 @@
 package freemind.modes.mindmapmode.actions;
 
 import freemind.main.Resources;
-import org.rogach.simplymindmap.util.Tools;
+import freemind.util.Tools;
 import freemind.modes.ControllerAdapter;
 import freemind.modes.MindMapNode;
 import java.awt.Container;
@@ -172,7 +172,7 @@ public class FindAction extends AbstractAction {
 				1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
 				new Insets(5, 5, 0, 0), 0, 0));
 		ImageIcon findImage = new ImageIcon(Resources.getInstance()
-				.getResource("org/rogach/simplymindmap/images/filefind_big.png"));
+				.getResource("freemind/images/filefind_big.png"));
 		contentPane.add(new JLabel(findImage), new GridBagConstraints(0, 0, 1,
 				2, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
 				new Insets(5, 5, 0, 0), 0, 0));
