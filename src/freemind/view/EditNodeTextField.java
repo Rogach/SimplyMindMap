@@ -23,7 +23,6 @@
 
 package freemind.view;
 
-import com.inet.jortho.SpellChecker;
 import freemind.main.ResourceKeys;
 import freemind.main.Resources;
 import freemind.modes.MindMapNode;
@@ -224,9 +223,6 @@ public class EditNodeTextField extends EditNodeBase {
 		textfield.repaint();
 		redispatchKeyEvents(textfield, firstEvent);
 
-		if (checkSpelling) {
-			SpellChecker.register(textfield, false, true, true, true);
-		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				textfield.requestFocus();
@@ -326,11 +322,6 @@ public class EditNodeTextField extends EditNodeBase {
 		private void conditionallyShowPopup(MouseEvent e) {
 			if (e.isPopupTrigger()) {
 				JPopupMenu popupMenu = new EditPopupMenu(textfield);
-				if (checkSpelling) {
-					popupMenu.add(SpellChecker.createCheckerMenu());
-					popupMenu.add(SpellChecker.createLanguagesMenu());
-					mEventSource.setValue(CANCEL); // disallow real focus lost
-				}
 				popupMenu.show(e.getComponent(), e.getX(), e.getY());
 				e.consume();
 			}

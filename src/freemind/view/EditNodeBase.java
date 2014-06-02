@@ -53,8 +53,6 @@ import javax.swing.text.JTextComponent;
  * 
  */
 public class EditNodeBase {
-	protected static boolean checkSpelling = Resources.getInstance().
-    		getBoolProperty(ResourceKeys.CHECK_SPELLING);;
 	protected static final int BUTTON_OK = 0;
 	protected static final int BUTTON_CANCEL = 1;
 	protected static final int BUTTON_SPLIT = 2;

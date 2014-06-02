@@ -23,7 +23,6 @@
 
 package freemind.view;
 
-import com.inet.jortho.SpellChecker;
 import freemind.main.Resources;
 import freemind.modes.ModeController;
 import freemind.util.Tools;
@@ -205,10 +204,6 @@ public class EditNodeDialog extends EditNodeBase {
 				private void conditionallyShowPopup(MouseEvent e) {
 					if (e.isPopupTrigger()) {
 						JPopupMenu popupMenu = new EditPopupMenu(textArea);
-						if (checkSpelling) {
-							popupMenu.add(SpellChecker.createCheckerMenu());
-							popupMenu.add(SpellChecker.createLanguagesMenu());
-						}
 						popupMenu.show(e.getComponent(), e.getX(), e.getY());
 						e.consume();
 					}
@@ -251,10 +246,6 @@ public class EditNodeDialog extends EditNodeBase {
 			} // 1st key event defined
 			else {
 				textArea.setCaretPosition(getText().length());
-			}
-
-			if (checkSpelling) {
-				SpellChecker.register(textArea, false, true, true, true);
 			}
 		}
 
