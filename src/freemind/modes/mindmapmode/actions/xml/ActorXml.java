@@ -20,21 +20,14 @@
  * Created on 25.04.2004
  */
 
-
 package freemind.modes.mindmapmode.actions.xml;
 
 import freemind.controller.actions.generated.instance.XmlAction;
 
-/**
- * @author foltin
- * 
- */
 public interface ActorXml {
 
 	public void act(XmlAction action);
 
-	/**
-	 */
 	Class getDoActionClass();
 
 }

@@ -71,28 +71,11 @@ public class ActionFactory {
 		registeredHandler.remove(newHandler);
 	}
 
-	private void startTransaction(String name) {
-		for (Iterator i = registeredHandler.iterator(); i.hasNext();) {
-			ActionHandler handler = (ActionHandler) i.next();
-			handler.startTransaction(name);
-		}
-	}
-
-	private void endTransaction(String name) {
-		for (Iterator i = registeredHandler.iterator(); i.hasNext();) {
-			ActionHandler handler = (ActionHandler) i.next();
-			handler.endTransaction(name);
-		}
-	}
-
 	/**
 	 * @return see {@link #executeAction(ActionPair)}
 	 */
 	public boolean doTransaction(String pName, ActionPair pPair) {
-		this.startTransaction(pName);
-		boolean result = this.executeAction(pPair);
-		this.endTransaction(pName);
-		return result;
+    return this.executeAction(pPair);
 	}
 
 	/**

@@ -52,27 +52,5 @@ public class ModeControllerActionHandler implements ActionHandler {
 		// exception handling is done by the caller.
 		actor.act(action);
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.controller.actions.ActionHandler#startTransaction(java.lang.
-	 * String)
-	 */
-	public void startTransaction(String name) {
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * freemind.controller.actions.ActionHandler#endTransaction(java.lang.String
-	 * )
-	 */
-	public void endTransaction(String name) {
-
-	}
-
+  
 }

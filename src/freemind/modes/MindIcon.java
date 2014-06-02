@@ -21,8 +21,6 @@
 package freemind.modes;
 
 import freemind.main.Resources;
-import freemind.main.Tools;
-import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.StringTokenizer;
