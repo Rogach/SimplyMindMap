@@ -22,7 +22,7 @@ package freemind.main;
 
 //maybe move this class to another package like tools or something...
 
-import freemind.common.XmlBindingTools;
+import org.rogach.simplymindmap.util.XmlBindingTools;
 import freemind.controller.actions.generated.instance.CompoundAction;
 import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.modes.MindMapNode;
