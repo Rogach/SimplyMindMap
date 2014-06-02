@@ -23,7 +23,6 @@
 
 package freemind.view;
 
-import freemind.main.ResourceKeys;
 import freemind.main.Resources;
 import freemind.modes.ModeController;
 import freemind.util.Tools;
