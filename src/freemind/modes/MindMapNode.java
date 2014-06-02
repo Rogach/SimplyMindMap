@@ -171,12 +171,6 @@ public interface MindMapNode extends MutableTreeNode {
 	SortedMap getToolTip();
 
 	/**
-	 * @return a flat copy of this node including all extras like notes, etc.
-	 *         But the children are not copied!
-	 */
-	MindMapNode shallowCopy();
-
-	/**
 	 * @param saveHidden
 	 *            TODO: Seems not to be used. Remove or fill with live.
 	 * @param saveChildren

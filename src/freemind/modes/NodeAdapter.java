@@ -22,6 +22,7 @@ package freemind.modes;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
+import freemind.modes.mindmapmode.MindMapNodeModel;
 import freemind.view.mindmapview.NodeView;
 import java.awt.Color;
 import java.awt.Font;
@@ -78,7 +79,7 @@ public abstract class NodeAdapter implements MindMapNode {
 	private int hGap = HGAP;
 	private int shiftY = 0;
 
-	protected List children;
+	protected List<MindMapNode> children;
 	private MindMapNode preferredChild;
 
 	protected Font font;
@@ -337,23 +338,6 @@ public abstract class NodeAdapter implements MindMapNode {
 		this.folded = folded;
 	}
 
-	public MindMapNode shallowCopy() {
-		try {
-			// get XML from me.
-			StringWriter writer = new StringWriter();
-			this.save(writer, this.getMap().getLinkRegistry(), true, false);
-			String result = writer.toString();
-			HashMap IDToTarget = new HashMap();
-			MindMapNode copy = this.getModeController().createNodeTreeFromXml(
-					new StringReader(result), IDToTarget);
-			copy.setFolded(false);
-			return copy;
-		} catch (Exception e) {
-			freemind.main.Resources.getInstance().logException(e);
-			return null;
-		}
-	}
-
 	//
 	// other
 	//
@@ -441,7 +425,7 @@ public abstract class NodeAdapter implements MindMapNode {
 		return childrenUnfolded();
 	}
 
-	public List getChildren() {
+	public List<MindMapNodeModel> getChildren() {
 		return Collections.unmodifiableList((children != null) ? children
 				: Collections.EMPTY_LIST);
 	}
@@ -519,10 +503,15 @@ public abstract class NodeAdapter implements MindMapNode {
 		}
 		return false;
 	}
+  
+  public void add(MindMapNodeModel child) {
+    insert(child, this.getChildCount());
+  }
 
 	//
 	// Interface MutableTreeNode
 	//
+  
 
 	// do all remove methods have to work recursively to make the
 	// Garbage Collection work (Nodes in removed Sub-Trees reference each
@@ -530,12 +519,12 @@ public abstract class NodeAdapter implements MindMapNode {
 
 	public void insert(MutableTreeNode child, int index) {
 		logger.finest("Insert at " + index + " the node " + child);
-		final MindMapNode childNode = (MindMapNode) child;
+		final MindMapNodeModel childNode = (MindMapNodeModel) child;
 		if (index < 0) { // add to the end (used in xml load) (PN)
 			index = getChildCount();
-			children.add(index, child);
+			children.add(index, childNode);
 		} else { // mind preferred child :-)
-			children.add(index, child);
+			children.add(index, childNode);
 			preferredChild = childNode;
 		}
 		child.setParent(this);

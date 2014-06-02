@@ -1072,19 +1072,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 		return selectedNodes;
 	}
 
-	/**
-	 * @return an ArrayList of MindMapNode objects. If both ancestor and
-	 *         descandant node are selected, only the ancestor ist returned
-	 */
-	public ArrayList /* of MindMapNodes */getSingleSelectedNodes() {
-		ArrayList selectedNodes = new ArrayList(selected.size());
-		for (int i = selected.size() - 1; i >= 0; i--) {
-			selectedNodes.add(getSelected(i).getModel().shallowCopy());
-		}
-
-		return selectedNodes;
-	}
-
 	public boolean isSelected(NodeView n) {
 		if (isPrinting)
 			return false;

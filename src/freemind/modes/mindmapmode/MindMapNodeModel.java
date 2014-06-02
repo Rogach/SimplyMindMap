@@ -34,7 +34,6 @@ import java.util.ListIterator;
  */
 public class MindMapNodeModel extends NodeAdapter {
 
-
 	public MindMapNodeModel(MindMap map) {
 		this(null, map);
 	}

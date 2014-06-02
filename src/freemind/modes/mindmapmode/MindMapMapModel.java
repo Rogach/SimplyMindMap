@@ -74,8 +74,16 @@ public class MindMapMapModel extends MapAdapter {
 		if (root == null)
 			root = new MindMapNodeModel(common.getResourceString("new_mindmap"),
 					 this);
+    updateMapReferenceInNodes(root);
 		setRoot(root);
 	}
+  
+  private void updateMapReferenceInNodes(MindMapNodeModel node) {
+    node.setMap(this);
+    for (MindMapNodeModel child : node.getChildren()) {
+      updateMapReferenceInNodes(child);
+    }
+  }
 
 	//
 
