@@ -178,10 +178,6 @@ public class FreeMindCommon {
 				pDefault);
 	}
 
-	public void clearLanguageResources() {
-		resources = null;
-	}
-
 	public String getAdjustableProperty(final String label) {
 		String value = getProperty(label);
 		if (value == null) {
@@ -195,17 +191,6 @@ public class FreeMindCommon {
 			setDefaultProperty(label, value);
 		}
 		return value;
-	}
-
-	public void loadUIProperties(Properties props) {
-		// props.put(FreeMind.RESOURCES_BACKGROUND_COLOR,
-		// Tools.colorToXml(UIManager.getColor("text")));
-		// props.put(FreeMind.RESOURCES_NODE_TEXT_COLOR,
-		// Tools.colorToXml(UIManager.getColor("textText")));
-		// props.put(FreeMind.RESOURCES_SELECTED_NODE_COLOR,
-		// Tools.colorToXml(UIManager.getColor("textHighlight")));
-		// props.put(FreeMind.RESOURCES_SELECTED_NODE_TEXT_COLOR,
-		// Tools.colorToXml(UIManager.getColor("textHighlightText")));
 	}
 
 }

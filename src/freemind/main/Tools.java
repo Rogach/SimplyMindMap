@@ -136,12 +136,6 @@ public class Tools {
 	// bug fix from Dimitri.
 	public static Random ran = new Random();
 
-	// fonts
-
-	public static boolean executableByExtension(String file) {
-		return executableExtensions.contains(getExtension(file));
-	}
-
 	public static String colorToXml(Color col) {
 		// if (col == null) throw new IllegalArgumentException("Color was
 		// null");
