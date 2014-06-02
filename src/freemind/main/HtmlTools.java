@@ -70,37 +70,6 @@ public class HtmlTools {
 		return sInstance;
 	}
 
-	public String toXhtml(String htmlText) {
-		if (!isHtmlNode(htmlText)) {
-			return null;
-		}
-		logger.fine("Enter toXhtml with " + htmlText);
-		StringReader reader = new StringReader(htmlText);
-		StringWriter writer = new StringWriter();
-		try {
-			XHTMLWriter.html2xhtml(reader, writer);
-			String resultXml = writer.toString();
-			// for safety:
-			if (isWellformedXml(resultXml)) {
-				logger.fine("Leave toXhtml with " + resultXml);
-				return resultXml;
-			}
-		} catch (IOException e) {
-			freemind.main.Resources.getInstance().logException(e);
-		} catch (BadLocationException e) {
-			freemind.main.Resources.getInstance().logException(e);
-		}
-		// fallback:
-		String fallbackText = toXMLEscapedText(htmlText);
-		logger.fine("Leave toXhtml with fallback " + fallbackText);
-		return fallbackText;
-	}
-
-	public String toHtml(String xhtmlText) {
-		// Remove '/' from <.../> of elements that do not have '/' there in HTML
-		return SLASHED_TAGS_PATTERN.matcher(xhtmlText).replaceAll("<$1>");
-	}
-
 	public static class IndexPair {
 		public int originalStart;
 		public int originalEnd;
@@ -144,152 +113,6 @@ public class HtmlTools {
 			buffer.append("]");
 			return buffer.toString();
 		}
-	}
-
-	/**
-	 * Replaces text in node content without replacing tags. fc, 19.12.06: This
-	 * method is very difficult. If you have a simplier method, please supply
-	 * it. But look that it complies with FindTextTests!!!
-	 */
-	public String getReplaceResult(Pattern pattern, String replacement,
-			String text) {
-		ArrayList splittedStringList = new ArrayList();
-		String stringWithoutTags = null;
-		// remove tags and denote their positions:
-		{
-			StringBuffer sb = new StringBuffer();
-			Matcher matcher = FIND_TAGS_PATTERN.matcher(text);
-			int lastMatchEnd = 0;
-			while (matcher.find()) {
-				String textWithoutTag = matcher.group(1);
-				// Append text without tags:
-				int replStart = sb.length();
-				matcher.appendReplacement(sb, "$1");
-				IndexPair indexPair;
-				if (textWithoutTag.length() > 0) {
-					indexPair = new IndexPair(lastMatchEnd, matcher.end(1),
-							replStart, sb.length(), false);
-					lastMatchEnd = matcher.end(1);
-					// System.out.println(sb.toString()
-					// + ", "
-					// + input.substring(indexPair.originalStart,
-					// indexPair.originalEnd) + ", " + indexPair);
-					splittedStringList.add(indexPair);
-				}
-				// String tag = matcher.group(2);
-				replStart = sb.length();
-				indexPair = new IndexPair(lastMatchEnd, matcher.end(2),
-						replStart, sb.length(), true);
-				lastMatchEnd = matcher.end(2);
-				// System.out.println(sb.toString() + ", " +
-				// input.substring(indexPair.originalStart,
-				// indexPair.originalEnd)+ ", " + indexPair);
-				splittedStringList.add(indexPair);
-			}
-			int replStart = sb.length();
-			matcher.appendTail(sb);
-			// append tail only if there is a tail
-			if (sb.length() != replStart) {
-				IndexPair indexPair = new IndexPair(lastMatchEnd,
-						text.length(), replStart, sb.length(), false);
-				// System.out.println(sb.toString() + ", " + indexPair);
-				splittedStringList.add(indexPair);
-			}
-			// System.out.println(sb.toString());
-			stringWithoutTags = sb.toString();
-		}
-
-		// // give it out:
-		// for (Iterator iter = splittedStringList.iterator(); iter.hasNext();)
-		// {
-		// IndexPair pair = (IndexPair) iter.next();
-		// System.out.println(text.substring(pair.originalStart,
-		// pair.originalEnd) + ", " + pair);
-		// }
-
-		/**
-		 * For each pair which is not a tag we find concurrences and replace
-		 * them, if pair is a tag then we just append
-		 */
-		StringBuffer sbResult = new StringBuffer();
-		for (Iterator iter = splittedStringList.iterator(); iter.hasNext();) {
-			IndexPair pair = (IndexPair) iter.next();
-
-			if (pair.mIsTag)
-				append(sbResult, text, pair.originalStart, pair.originalEnd);
-			else {
-
-				Matcher matcher = pattern.matcher(text.substring(
-						pair.originalStart, pair.originalEnd));
-				int mStart = 0;
-				int mEnd = 0;
-				int mEndOld = 0;
-				int mStartOld = 0;
-
-				while (matcher.find()) {
-					mStart = matcher.start();
-					mEnd = matcher.end();
-
-					append(sbResult, text, pair.originalStart + mEndOld,
-							pair.originalStart + mStart);
-					/**
-					 * If it's a first iteration then we append text between
-					 * start and first concurrence, and when it's not first
-					 * iteration (mEndOld != 0) we append text between two
-					 * concurrences
-					 */
-
-					// sbResult.append(text, pair.originalStart + mStart,
-					// pair.originalStart + mEnd);
-					// original text
-					sbResult.append(replacement);
-					mEndOld = mEnd;
-					mStartOld = mStart;
-				}
-				append(sbResult, text, pair.originalStart + mEndOld,
-						pair.originalEnd);
-				// append tail
-			}
-		}
-		// System.out.println("Result:'"+sbResult.toString()+"'");
-		return sbResult.toString();
-	}
-
-	/**
-	 * Need to program this, as the stringbuffer method appears in java 1.5
-	 * first.
-	 * */
-	private void append(StringBuffer pSbResult, String pText, int pStart,
-			int pEnd) {
-		pSbResult.append(pText.substring(pStart, pEnd));
-	}
-
-	public int getMinimalOriginalPosition(int pI, ArrayList pListOfIndices) {
-		for (Iterator iter = pListOfIndices.iterator(); iter.hasNext();) {
-			IndexPair pair = (IndexPair) iter.next();
-			if (pI >= pair.replacedStart && pI <= pair.replacedEnd) {
-				return pair.originalStart + pI - pair.replacedStart;
-			}
-		}
-		throw new IllegalArgumentException("Position " + pI + " not found.");
-	}
-
-	/**
-	 * @return the maximal index i such that pI is mapped to i by removing all
-	 *         tags from the original input.
-	 */
-	public int getMaximalOriginalPosition(int pI, ArrayList pListOfIndices) {
-		for (int i = pListOfIndices.size() - 1; i >= 0; --i) {
-			IndexPair pair = (IndexPair) pListOfIndices.get(i);
-			if (pI >= pair.replacedStart) {
-				if (!pair.mIsTag) {
-					return pair.originalStart + pI - pair.replacedStart;
-				} else {
-					return pair.originalEnd;
-				}
-			}
-		}
-		throw new IllegalArgumentException("Position " + pI + " not found.");
 	}
 
 	public static boolean isHtmlNode(String text) {
@@ -397,23 +220,6 @@ public class HtmlTools {
 		return result.toString();
 	}
 
-	/**
-	 * Removes all tags (<..>) from a string if it starts with "<html>..." to
-	 * make it compareable.
-	 */
-	public static String removeHtmlTagsFromString(String text) {
-		if (HtmlTools.isHtmlNode(text)) {
-			return removeAllTagsFromString(text); // (?s) enables that . matches
-													// newline.
-		} else {
-			return text;
-		}
-	}
-
-	public static String removeAllTagsFromString(String text) {
-		return TAGS_PATTERN.matcher(text).replaceAll("");
-	}
-
 	public static String htmlToPlain(String text) {
 		return htmlToPlain(text, /* strictHTMLOnly= */true);
 	}
@@ -514,45 +320,6 @@ public class HtmlTools {
 		return result.toString();
 	}
 
-	public static String toXMLUnescapedText(String text) {
-		return text.replaceAll("&lt;", "<").replaceAll("&gt;", ">")
-				.replaceAll("&quot;", "\"").replaceAll("&amp;", "&");
-	}
-
-	public static String toXMLEscapedTextExpandingWhitespace(String text) {
-		// Spaces and tabs are handled
-		text = text.replaceAll("\t", "         "); // Use eight spaces as tab
-													// width.
-		int len = text.length();
-		StringBuffer result = new StringBuffer(len);
-		char myChar;
-		for (int i = 0; i < len; ++i) {
-			myChar = text.charAt(i);
-			switch (myChar) {
-			case '&':
-				result.append("&amp;");
-				break;
-			case '<':
-				result.append("&lt;");
-				break;
-			case '>':
-				result.append("&gt;");
-				break;
-			case ' ':
-				if (i > 0 && i < len - 1 && (int) text.charAt(i - 1) > 32
-						&& (int) text.charAt(i + 1) > 32) {
-					result.append(' ');
-				} else {
-					result.append("&nbsp;");
-				}
-				break;
-			default:
-				result.append(myChar);
-			}
-		}
-		return result.toString();
-	}
-
 	public static String toXMLEscapedText(String text) {
 		if(text == null) {
 			return "ERROR: none";
@@ -561,49 +328,9 @@ public class HtmlTools {
 				.replaceAll(">", "&gt;").replaceAll("\"", "&quot;");
 	}
 
-	/**
-	 * @return true, if well formed XML.
-	 */
-	public boolean isWellformedXml(String xml) {
-		try {
-			// Create a builder factory
-			SAXParserFactory factory = SAXParserFactory.newInstance();
-			factory.setValidating(false);
-
-			// Create the builder and parse the file
-			factory.newSAXParser().parse(
-					new InputSource(new StringReader(xml)),
-					new DefaultHandler());
-			return true;
-		} catch (SAXParseException e) {
-			logger.log(
-					Level.SEVERE,
-					"XmlParseError on line " + e.getLineNumber() + " of " + xml,
-					e);
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "XmlParseError", e);
-		}
-		return false;
-	}
-
 	/** \0 is not allowed: */
 	public static String makeValidXml(String pXmlNoteText) {
 		return pXmlNoteText.replaceAll("\0", "").replaceAll("&#0;", "");
-	}
-
-	public static String replaceIllegalXmlCharacters(String fileContents) {
-		// replace &xa; by newline.
-		fileContents = fileContents.replaceAll("&#x0*[Aa];", "\n");
-		/*
-		 * &#xb; is illegal, but sometimes occurs in 0.8.x maps. Thus, we
-		 * exclude all from 0 - 1f and replace them by nothing. TODO: Which more
-		 * are illegal??
-		 */
-		fileContents = fileContents.replaceAll("&#x0*1?[0-9A-Fa-f];", "");
-		// decimal: 0-31
-		fileContents = fileContents.replaceAll("&#0*[1-2]?[0-9];", "");
-		fileContents = fileContents.replaceAll("&#0*3[0-1];", "");
-		return fileContents;
 	}
 
 	/**
@@ -704,32 +431,6 @@ public class HtmlTools {
 		}
 		output = output.substring(start, end);
 		return output;
-	}
-
-	/**
-	 * Is used from XSLT! Don't change, unless you change the freemind_version_updater.xslt, too.
-	 * @param input
-	 * @return
-	 */
-	public static String replaceSpacesToNonbreakableSpaces(String input) {
-		StringBuffer result = new StringBuffer(input.length());
-		boolean readingSpaces = false;
-		char myChar;
-		for (int i = 0; i < input.length(); ++i) {
-			myChar = input.charAt(i);
-			if (myChar == ' ') {
-				if (readingSpaces) {
-					result.append(NBSP);
-				} else {
-					result.append(myChar);
-					readingSpaces = true;
-				}
-			} else {
-				readingSpaces = false;
-				result.append(myChar);
-			}
-		}
-		return result.toString();
 	}
 
 }

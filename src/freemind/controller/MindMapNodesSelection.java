@@ -33,11 +33,9 @@ public class MindMapNodesSelection implements Transferable, ClipboardOwner {
 
 	private final String nodesContent;
 	private final String stringContent;
-	private final String htmlContent;
 	private String dropActionContent;
 	private final List nodeIdsContent;
 	public static DataFlavor mindMapNodesFlavor = null;
-	public static DataFlavor htmlFlavor = null;
 	/**
 	 * fc, 7.8.2004: This is a quite interesting flavor, but how does it
 	 * works???
@@ -53,7 +51,6 @@ public class MindMapNodesSelection implements Transferable, ClipboardOwner {
 		try {
 			mindMapNodesFlavor = new DataFlavor(
 					"text/freemind-nodes; class=java.lang.String");
-			htmlFlavor = new DataFlavor("text/html; class=java.lang.String");
 			dropActionFlavor = new DataFlavor(
 					"text/drop-action; class=java.lang.String");
 			copyNodeIdsFlavor = new DataFlavor(
@@ -63,14 +60,12 @@ public class MindMapNodesSelection implements Transferable, ClipboardOwner {
 		}
 	}
 
-	//
 	public MindMapNodesSelection(String nodesContent,
-			String stringContent, String htmlContent,
+			String stringContent,
 			String dropActionContent, List nodeIdsContent) {
 		this.nodesContent = nodesContent;
 		this.stringContent = stringContent;
 		this.dropActionContent = dropActionContent;
-		this.htmlContent = htmlContent;
 		this.nodeIdsContent = nodeIdsContent;
 	}
 
@@ -85,9 +80,6 @@ public class MindMapNodesSelection implements Transferable, ClipboardOwner {
 		if (flavor.equals(dropActionFlavor)) {
 			return dropActionContent;
 		}
-		if (flavor.equals(htmlFlavor) && htmlContent != null) {
-			return htmlContent;
-		}
 		if (flavor.equals(copyNodeIdsFlavor)) {
 			return nodeIdsContent;
 		}
@@ -97,7 +89,7 @@ public class MindMapNodesSelection implements Transferable, ClipboardOwner {
 	public DataFlavor[] getTransferDataFlavors() {
 		return new DataFlavor[] {
 				DataFlavor.stringFlavor, mindMapNodesFlavor,
-				htmlFlavor, dropActionFlavor, copyNodeIdsFlavor };
+				dropActionFlavor, copyNodeIdsFlavor };
 	}
 
 	public boolean isDataFlavorSupported(DataFlavor flavor) {
@@ -108,9 +100,6 @@ public class MindMapNodesSelection implements Transferable, ClipboardOwner {
 			return true;
 		}
 		if (flavor.equals(dropActionFlavor) && dropActionContent != null) {
-			return true;
-		}
-		if (flavor.equals(htmlFlavor) && htmlContent != null) {
 			return true;
 		}
 		if (flavor.equals(copyNodeIdsFlavor) && nodeIdsContent != null) {

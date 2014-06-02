@@ -531,8 +531,7 @@ public abstract class ControllerAdapter implements ModeController {
 					copyInvisible);
 
 			return new MindMapNodesSelection(forNodesFlavor,
-					null, getMap().getAsHTML(
-							selectedNodes), null, createForNodeIdsFlavor);
+					null, null, createForNodeIdsFlavor);
 		}
 
 		catch (UnsupportedFlavorException ex) {

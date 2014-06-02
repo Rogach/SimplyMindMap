@@ -36,7 +36,6 @@ import freemind.controller.actions.generated.instance.PatternNodeFontSize;
 import freemind.controller.actions.generated.instance.PatternNodeStyle;
 import freemind.controller.actions.generated.instance.PatternNodeText;
 import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.main.FixedHTMLWriter;
 import freemind.main.HtmlTools;
 import freemind.main.ResourceKeys;
 import freemind.main.Resources;
@@ -94,7 +93,6 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Collections;
@@ -105,9 +103,6 @@ import java.util.Vector;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.html.HTMLDocument;
-import javax.swing.text.html.HTMLEditorKit;
 
 public class MindMapController extends ControllerAdapter implements
 		MindMapActions {
@@ -414,7 +409,7 @@ public class MindMapController extends ControllerAdapter implements
 		}
 		Vector nodeList = Tools.getVectorWithSingleElement(getNodeID(node));
 		return new MindMapNodesSelection(stringWriter.toString(),
-				null, null, null, nodeList);
+				null, null, nodeList);
 	}
 
 	public Transferable cut() {
@@ -517,95 +512,6 @@ public class MindMapController extends ControllerAdapter implements
 			throws IOException {
 		MindMapHTMLWriter htmlWriter = new MindMapHTMLWriter(fileout);
 		htmlWriter.saveHTML(mindMapNodes);
-	}
-
-	/**
-     */
-	public void splitNode(MindMapNode node, int caretPosition, String newText) {
-		if (node.isRoot()) {
-			return;
-		}
-		// If there are children, they go to the node below
-		String futureText = newText != null ? newText : node.toString();
-
-		String[] strings = getContent(futureText, caretPosition);
-		if (strings == null) { // do nothing
-			return;
-		}
-		String newUpperContent = strings[0];
-		String newLowerContent = strings[1];
-		setNodeText(node, newUpperContent);
-
-		MindMapNode parent = node.getParentNode();
-		MindMapNode lowerNode = addNewNode(parent,
-				parent.getChildPosition(node) + 1, node.isLeft());
-		lowerNode.setColor(node.getColor());
-		lowerNode.setFont(node.getFont());
-		setNodeText(lowerNode, newLowerContent);
-
-	}
-
-	private String[] getContent(String text, int pos) {
-		if (pos <= 0) {
-			return null;
-		}
-		String[] strings = new String[2];
-		if (text.startsWith("<html>")) {
-			HTMLEditorKit kit = new HTMLEditorKit();
-			HTMLDocument doc = new HTMLDocument();
-			StringReader buf = new StringReader(text);
-			try {
-				kit.read(buf, doc, 0);
-				final char[] firstText = doc.getText(0, pos).toCharArray();
-				int firstStart = 0;
-				int firstLen = pos;
-				while ((firstStart < firstLen)
-						&& (firstText[firstStart] <= ' ')) {
-					firstStart++;
-				}
-				while ((firstStart < firstLen)
-						&& (firstText[firstLen - 1] <= ' ')) {
-					firstLen--;
-				}
-				int secondStart = 0;
-				int secondLen = doc.getLength() - pos;
-				final char[] secondText = doc.getText(pos, secondLen)
-						.toCharArray();
-				while ((secondStart < secondLen)
-						&& (secondText[secondStart] <= ' ')) {
-					secondStart++;
-				}
-				while ((secondStart < secondLen)
-						&& (secondText[secondLen - 1] <= ' ')) {
-					secondLen--;
-				}
-				if (firstStart == firstLen || secondStart == secondLen) {
-					return null;
-				}
-				StringWriter out = new StringWriter();
-				new FixedHTMLWriter(out, doc, firstStart, firstLen - firstStart)
-						.write();
-				strings[0] = out.toString();
-				out = new StringWriter();
-				new FixedHTMLWriter(out, doc, pos + secondStart, secondLen
-						- secondStart).write();
-				strings[1] = out.toString();
-				return strings;
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				freemind.main.Resources.getInstance().logException(e);
-			} catch (BadLocationException e) {
-				// TODO Auto-generated catch block
-				freemind.main.Resources.getInstance().logException(e);
-			}
-		} else {
-			if (pos >= text.length()) {
-				return null;
-			}
-			strings[0] = text.substring(0, pos);
-			strings[1] = text.substring(pos);
-		}
-		return strings;
 	}
 
 	public void doubleClick(MouseEvent e) {

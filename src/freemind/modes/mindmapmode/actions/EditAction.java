@@ -144,11 +144,6 @@ public class EditAction extends AbstractAction implements ActorXml {
 							cancel();
 						}
 
-						public void split(String newText, int position) {
-							mMindMapController.splitNode(node.getModel(),
-									position, newText);
-							cancel();
-						}
 					});
 			mCurrentEditDialog = nodeEditDialog;
 			nodeEditDialog.show();
@@ -187,8 +182,6 @@ public class EditAction extends AbstractAction implements ActorXml {
 						mCurrentEditDialog = null;
 					}
 
-					public void split(String newText, int position) {
-					}
 				});
 		mCurrentEditDialog = textfield;
 		textfield.show();

@@ -516,27 +516,6 @@ public class PasteAction extends AbstractAction implements ActorXml {
 					amountAlreadySet = true;
 				}
 			}
-			if (t.isDataFlavorSupported(MindMapNodesSelection.htmlFlavor)) {
-				String textFromClipboard;
-				textFromClipboard = (String) t
-						.getTransferData(MindMapNodesSelection.htmlFlavor);
-				trans.setTransferableAsHtml(textFromClipboard.replaceAll("\u0000", "")
-						.replaceAll("&#0;", ""));
-				if (pUndoAction != null && !amountAlreadySet) {
-					// on html paste, the string text is taken and "improved".
-					// Thus, we count its lines.
-					final int childCount;
-					try {
-						childCount = determineAmountOfNewNodes(t);
-						pUndoAction.setNodeAmount(childCount);
-					} catch (Exception e) {
-						freemind.main.Resources.getInstance().logException(e);
-						// ok, something went wrong, but this breaks undo, only.
-						pUndoAction.setNodeAmount(1);
-					}
-					amountAlreadySet = true;
-				}
-			}
 			return trans;
 		} catch (UnsupportedFlavorException e) {
 			freemind.main.Resources.getInstance().logException(e);
@@ -562,7 +541,6 @@ public class PasteAction extends AbstractAction implements ActorXml {
 	private Transferable getTransferable(TransferableContent trans) {
 		Transferable copy = new MindMapNodesSelection(trans.getTransferable(),
 				trans.getTransferableAsPlainText(),
-				 trans.getTransferableAsHtml(),
 				trans.getTransferableAsDrop(), null);
 		return copy;
 	}

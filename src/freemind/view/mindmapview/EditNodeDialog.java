@@ -276,17 +276,6 @@ public class EditNodeDialog extends EditNodeBase {
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see freemind.view.mindmapview.EditNodeBase.Dialog#split()
-		 */
-		protected void split() {
-			getEditControl().split(textArea.getText(),
-					textArea.getCaretPosition());
-			super.split();
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
 		 * @see freemind.view.mindmapview.EditNodeBase.Dialog#submit()
 		 */
 		protected void submit() {

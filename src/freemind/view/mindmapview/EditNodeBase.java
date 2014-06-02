@@ -101,14 +101,6 @@ public class EditNodeBase {
 			}
 		}
 
-		class SplitAction extends AbstractAction {
-			private static final long serialVersionUID = 6876147686811246433L;
-
-			public void actionPerformed(ActionEvent e) {
-				split();
-			}
-		}
-
 		class CancelAction extends AbstractAction {
 			private static final long serialVersionUID = -6277471363654329607L;
 
@@ -185,7 +177,6 @@ public class EditNodeBase {
 	public interface EditControl {
 		void cancel();
 		void ok(String newText);
-		void split(String newText, int position);
 	}
 
 	protected MapView getView() {

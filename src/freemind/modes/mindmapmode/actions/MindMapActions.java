@@ -138,8 +138,6 @@ public interface MindMapActions {
   
 	public void increaseFontSize(MindMapNode node, int increment);
 
-	public void splitNode(MindMapNode node, int caretPosition, String newText);
-
 	public void paste(Transferable t, MindMapNode parent);
 
 	/**

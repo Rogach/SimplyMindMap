@@ -8,8 +8,6 @@ public class TransferableContent {
 
   protected String transferableAsDrop;
 
-  protected String transferableAsHtml;
-
   public String getTransferable() {
     return this.transferable;
   }
@@ -32,13 +30,5 @@ public class TransferableContent {
 
   public void setTransferableAsDrop(String value){
     this.transferableAsDrop = value;
-  }
-
-  public String getTransferableAsHtml() {
-    return this.transferableAsHtml;
-  }
-
-  public void setTransferableAsHtml(String value){
-    this.transferableAsHtml = value;
   }
 } /* TransferableContent*/
