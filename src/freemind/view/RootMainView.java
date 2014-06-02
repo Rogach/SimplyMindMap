@@ -17,7 +17,7 @@
  *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package freemind.view.mindmapview;
+package freemind.view;
 
 import freemind.main.Resources;
 import freemind.util.Tools;

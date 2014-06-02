@@ -4,7 +4,7 @@ import freemind.modes.MindMap;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.modes.mindmapmode.MindMapMapModel;
 import freemind.modes.mindmapmode.MindMapNodeModel;
-import freemind.view.mindmapview.MapView;
+import freemind.view.MapView;
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

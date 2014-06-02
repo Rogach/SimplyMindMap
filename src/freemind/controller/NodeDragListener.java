@@ -23,7 +23,7 @@ import freemind.main.Resources;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
 import freemind.util.Tools;
-import freemind.view.mindmapview.MainView;
+import freemind.view.MainView;
 import java.awt.Cursor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;

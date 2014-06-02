@@ -23,7 +23,7 @@ import freemind.main.Resources;
 import freemind.modes.mindmapmode.MindMapNodeModel;
 import freemind.nanoxml.XMLElement;
 import freemind.util.Tools;
-import freemind.view.mindmapview.NodeView;
+import freemind.view.NodeView;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;

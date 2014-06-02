@@ -21,7 +21,7 @@
  * Created on 05.06.2005
  *
  */
-package freemind.view.mindmapview;
+package freemind.view;
 
 import freemind.main.Resources;
 import freemind.util.Tools;

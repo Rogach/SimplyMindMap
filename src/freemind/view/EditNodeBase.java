@@ -21,7 +21,7 @@
  */
 /*$Id: EditNodeBase.java,v 1.1.4.2.12.14 2008/12/16 21:57:01 christianfoltin Exp $*/
 
-package freemind.view.mindmapview;
+package freemind.view;
 
 import freemind.main.ResourceKeys;
 import freemind.main.Resources;

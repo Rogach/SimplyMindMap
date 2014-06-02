@@ -21,7 +21,7 @@
 package freemind.modes;
 
 import freemind.nanoxml.XMLElement;
-import freemind.view.mindmapview.NodeView;
+import freemind.view.NodeView;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;

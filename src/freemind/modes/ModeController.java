@@ -21,8 +21,8 @@
 package freemind.modes;
 
 import freemind.nanoxml.XMLParseException;
-import freemind.view.mindmapview.MapView;
-import freemind.view.mindmapview.NodeView;
+import freemind.view.MapView;
+import freemind.view.NodeView;
 import java.awt.Color;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.MouseEvent;

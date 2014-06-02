@@ -21,7 +21,7 @@
  */
 /*$Id: EditNodeDialog.java,v 1.1.4.1.16.20 2009/06/24 20:40:19 christianfoltin Exp $*/
 
-package freemind.view.mindmapview;
+package freemind.view;
 
 import com.inet.jortho.SpellChecker;
 import freemind.main.Resources;

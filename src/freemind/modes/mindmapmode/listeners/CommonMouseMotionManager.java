@@ -24,7 +24,7 @@ package freemind.modes.mindmapmode.listeners;
 
 import freemind.controller.MapMouseMotionListener.MapMouseMotionReceiver;
 import freemind.modes.ModeController;
-import freemind.view.mindmapview.MapView;
+import freemind.view.MapView;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 

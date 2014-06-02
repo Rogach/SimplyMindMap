@@ -1,4 +1,4 @@
-package freemind.view.mindmapview;
+package freemind.view;
 
 import freemind.main.Resources;
 import freemind.modes.MindMapNode;

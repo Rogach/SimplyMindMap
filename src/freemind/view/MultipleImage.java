@@ -18,7 +18,7 @@
  */
 /*$Id: MultipleImage.java,v 1.1.18.2 2006/03/14 21:56:28 christianfoltin Exp $*/
 
-package freemind.view.mindmapview;
+package freemind.view;
 
 import java.awt.Component;
 import java.awt.Graphics;

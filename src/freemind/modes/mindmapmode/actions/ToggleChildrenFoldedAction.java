@@ -25,7 +25,7 @@ package freemind.modes.mindmapmode.actions;
 
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
-import freemind.view.mindmapview.MapView;
+import freemind.view.MapView;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 

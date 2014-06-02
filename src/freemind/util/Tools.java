@@ -25,7 +25,7 @@ import freemind.controller.actions.generated.instance.XmlAction;
 import freemind.main.Resources;
 import freemind.modes.MindMapNode;
 import freemind.modes.mindmapmode.MindMapController;
-import freemind.view.mindmapview.NodeView;
+import freemind.view.NodeView;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;

@@ -24,7 +24,7 @@ package freemind.modes.mindmapmode.listeners;
 
 import freemind.main.Resources;
 import freemind.modes.ControllerAdapter;
-import freemind.view.mindmapview.MapView;
+import freemind.view.MapView;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;

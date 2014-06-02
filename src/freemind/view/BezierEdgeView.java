@@ -18,7 +18,7 @@
  */
 /*$Id: BezierEdgeView.java,v 1.13.18.1.2.6 2008/06/09 21:01:15 dpolivaev Exp $*/
 
-package freemind.view.mindmapview;
+package freemind.view;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

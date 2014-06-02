@@ -18,7 +18,7 @@
  */
 /*$Id: EdgeView.java,v 1.13.14.2.4.9 2008/06/09 21:01:15 dpolivaev Exp $*/
 
-package freemind.view.mindmapview;
+package freemind.view;
 
 import freemind.modes.EdgeAdapter;
 import freemind.modes.MindMapEdge;

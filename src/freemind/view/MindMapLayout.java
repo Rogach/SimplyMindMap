@@ -18,7 +18,7 @@
  */
 /*$Id: MindMapLayout.java,v 1.15.14.5.4.12 2007/04/21 15:11:23 dpolivaev Exp $*/
 
-package freemind.view.mindmapview;
+package freemind.view;
 
 import java.awt.Component;
 import java.awt.Container;

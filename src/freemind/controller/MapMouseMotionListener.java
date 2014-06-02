@@ -20,7 +20,7 @@
 
 package freemind.controller;
 
-import freemind.view.mindmapview.MapView;
+import freemind.view.MapView;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;

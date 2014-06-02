@@ -21,7 +21,7 @@
  */
 /*$Id: EditNodeTextField.java,v 1.1.4.3.10.25 2010/02/22 21:18:53 christianfoltin Exp $*/
 
-package freemind.view.mindmapview;
+package freemind.view;
 
 import com.inet.jortho.SpellChecker;
 import freemind.main.ResourceKeys;
