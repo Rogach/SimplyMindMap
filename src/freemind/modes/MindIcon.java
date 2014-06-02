@@ -127,14 +127,14 @@ public class MindIcon implements Comparable, IconInformation {
 	}
 
 	public static String getIconsPath() {
-		return "images/icons/";
+		return "org/rogach/simplymindmap/images/icons/";
 	}
 
 	public ImageIcon getIcon() {
 		// We need the frame to be able to obtain the resource URL of the icon.
 		if (iconNotFound == null) {
 			iconNotFound = new ImageIcon(Resources.getInstance().getResource(
-					"images/IconNotFound.png"));
+					"org/rogach/simplymindmap/images/IconNotFound.png"));
 		}
 
 		if (associatedIcon != null)

@@ -172,7 +172,7 @@ public class FindAction extends AbstractAction {
 				1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
 				new Insets(5, 5, 0, 0), 0, 0));
 		ImageIcon findImage = new ImageIcon(Resources.getInstance()
-				.getResource("images/filefind_big.png"));
+				.getResource("org/rogach/simplymindmap/images/filefind_big.png"));
 		contentPane.add(new JLabel(findImage), new GridBagConstraints(0, 0, 1,
 				2, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
 				new Insets(5, 5, 0, 0), 0, 0));

@@ -51,7 +51,7 @@ public class RemoveIconAction extends NodeGeneralAction implements
 	/**
      */
 	public RemoveIconAction(MindMapController modeController) {
-		super(modeController, "remove_last_icon", "images/remove.png");
+		super(modeController, "remove_last_icon", "org/rogach/simplymindmap/images/remove.png");
 		addActor(this);
 	}
 
