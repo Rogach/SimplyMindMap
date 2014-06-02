@@ -64,10 +64,6 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 		super.setRoot(root);
 	}
 
-	public String getAsHTML(List mindMapNodes) {
-		return null;
-	}
-
 	public MindMapLinkRegistry getLinkRegistry() {
 		return null;
 	}

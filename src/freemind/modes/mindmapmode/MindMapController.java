@@ -21,7 +21,6 @@
 package freemind.modes.mindmapmode;
 
 import freemind.controller.MindMapNodesSelection;
-import freemind.controller.actions.generated.instance.EditNoteToNodeAction;
 import freemind.controller.actions.generated.instance.Pattern;
 import freemind.controller.actions.generated.instance.PatternEdgeColor;
 import freemind.controller.actions.generated.instance.PatternEdgeStyle;
@@ -36,7 +35,6 @@ import freemind.controller.actions.generated.instance.PatternNodeFontSize;
 import freemind.controller.actions.generated.instance.PatternNodeStyle;
 import freemind.controller.actions.generated.instance.PatternNodeText;
 import freemind.controller.actions.generated.instance.XmlAction;
-import freemind.main.HtmlTools;
 import freemind.main.ResourceKeys;
 import freemind.main.Resources;
 import freemind.main.Tools;
@@ -94,7 +92,6 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.io.Writer;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -508,12 +505,6 @@ public class MindMapController extends ControllerAdapter implements
 		}
 	}
 
-	static public void saveHTML(List mindMapNodes, Writer fileout)
-			throws IOException {
-		MindMapHTMLWriter htmlWriter = new MindMapHTMLWriter(fileout);
-		htmlWriter.saveHTML(mindMapNodes);
-	}
-
 	public void doubleClick(MouseEvent e) {
 		/* perform action only if one selected node. */
 		if (getSelecteds().size() != 1)
@@ -641,20 +632,6 @@ public class MindMapController extends ControllerAdapter implements
 		erasePattern.setPatternNodeFontSize(new PatternNodeFontSize());
 		erasePattern.setPatternNodeStyle(new PatternNodeStyle());
 		erasePattern.setPatternNodeText(new PatternNodeText());
-	}
-
-	public EditNoteToNodeAction createEditNoteToNodeAction(MindMapNode node,
-			String text) {
-		EditNoteToNodeAction nodeAction = new EditNoteToNodeAction();
-		nodeAction.setNode(node.getObjectId(this));
-		if (text != null
-				&& (HtmlTools.htmlToPlain(text).length() != 0 || text
-						.indexOf("<img") >= 0)) {
-			nodeAction.setText(text);
-		} else {
-			nodeAction.setText(null);
-		}
-		return nodeAction;
 	}
 
 	public Transferable getClipboardContents() {

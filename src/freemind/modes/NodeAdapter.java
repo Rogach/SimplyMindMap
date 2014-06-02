@@ -19,7 +19,6 @@
 
 package freemind.modes;
 
-import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.main.XMLElement;
@@ -743,11 +742,6 @@ public abstract class NodeAdapter implements MindMapNode {
 			node.write(writer);
 		}
 		return node;
-	}
-
-	public static String convertToEncodedContent(String xmlText2) {
-		String replace = HtmlTools.makeValidXml(xmlText2);
-		return HtmlTools.unicodeToHTMLUnicodeEntity(replace, true);
 	}
 
 	public ModeController getModeController() {

@@ -785,10 +785,6 @@ public class Tools {
 		dialog.setLocation(dx, dy);
 	}
 
-	public static String replaceUtf8AndIllegalXmlChars(String fileContents) {
-		return HtmlTools.removeInvalidXmlCharacters(fileContents);
-	}
-
 	/**
 	 * Creates a default reader that just reads the given file.
 	 * 

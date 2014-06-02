@@ -19,7 +19,6 @@
  */
 package freemind.modes.mindmapmode.actions;
 
-import freemind.main.HtmlTools;
 import freemind.main.Resources;
 import freemind.main.Tools;
 import freemind.modes.ControllerAdapter;
@@ -70,8 +69,7 @@ public class FindAction extends AbstractAction {
 	}
 
 	public String getFindFromText() {
-		String plainNodeText = HtmlTools.htmlToPlain(findFromNode.toString())
-				.replaceAll("\n", " ");
+		String plainNodeText = findFromNode.getText().replaceAll("\n", " ");
 		return plainNodeText.length() <= 30 ? plainNodeText : plainNodeText
 				.substring(0, 30) + "...";
 	}
@@ -208,15 +206,7 @@ public class FindAction extends AbstractAction {
 	}
 
 	private String getSearchTermAsEscapedString(String messageText) {
-		String searchTerm = messageText.startsWith("<html>") ? HtmlTools
-				.toXMLEscapedText(getSearchTerm()) : getSearchTerm();
-		// Fix for
-		// https://sourceforge.net/tracker/?func=detail&aid=3200783&group_id=7118&atid=107118
-		// Patch
-		// https://sourceforge.net/tracker/?func=detail&aid=3276562&group_id=7118&atid=307118,
-		// thanks to the author
-		searchTerm = searchTerm.replace("$", "\\$");
-		return searchTerm;
+		return getSearchTerm().replace("$", "\\$");
 	}
 
 	public static class FindNextAction extends AbstractAction {

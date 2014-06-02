@@ -34,8 +34,6 @@ public interface MindMap extends TreeModel {
 
 	void nodeRefresh(TreeNode node);
 
-	String getAsHTML(List mindMapNodes);
-
 	TreeNode[] getPathToRoot(TreeNode node);
 
 	/**

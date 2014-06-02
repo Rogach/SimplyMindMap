@@ -21,7 +21,6 @@
 package freemind.modes.mindmapmode;
 
 import freemind.main.FreeMindCommon;
-import freemind.main.HtmlTools;
 import freemind.main.Tools;
 import freemind.main.XMLParseException;
 import freemind.modes.MapAdapter;
@@ -30,14 +29,11 @@ import freemind.modes.MindMapNode;
 import freemind.modes.ModeController;
 import freemind.modes.NodeAdapter;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.HashMap;
-import java.util.List;
 
 public class MindMapMapModel extends MapAdapter {
 
@@ -81,27 +77,8 @@ public class MindMapMapModel extends MapAdapter {
 	}
 
 	public void changeNode(MindMapNode node, String newText) {
-		if (node.toString().startsWith("<html>")) {
-			node.setUserObject(HtmlTools.unescapeHTMLUnicodeEntity(newText));
-		} else {
-			node.setUserObject(newText);
-		}
+    node.setUserObject(newText);
 		nodeChanged(node);
-	}
-  
-  public String getAsHTML(List mindMapNodes) {
-		// Returns success of the operation.
-		try {
-			StringWriter stringWriter = new StringWriter();
-			BufferedWriter fileout = new BufferedWriter(stringWriter);
-			MindMapController.saveHTML(mindMapNodes, fileout);
-			fileout.close();
-
-			return stringWriter.toString();
-		} catch (Exception e) {
-			freemind.main.Resources.getInstance().logException(e);
-			return null;
-		}
 	}
 
 	public static class StringReaderCreator implements ReaderCreator {

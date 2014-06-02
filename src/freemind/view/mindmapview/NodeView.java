@@ -878,20 +878,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 						+ map.getMaxNodeWidth() + "\">");
 			}
 			setText(nodeText);
-		} else if (nodeText.startsWith("<table>")) {
-			String[] lines = nodeText.split("\n");
-			lines[0] = lines[0].substring(7); // remove <table> tag
-			int startingLine = lines[0].matches("\\s*") ? 1 : 0;
-			// ^ If the remaining first line is empty, do not draw it
-
-			String text = "<html><table border=1 style=\"border-color: white\">";
-			// String[] lines = nodeText.split("\n");
-			for (int line = startingLine; line < lines.length; line++) {
-				text += "<tr><td style=\"border-color: white;\">"
-						+ HtmlTools.toXMLEscapedText(lines[line]).replaceAll(
-								"\t", "<td style=\"border-color: white\">");
-			}
-			setText(text);
 		} else if (isLong) {
 			String text = HtmlTools.plainToHTML(nodeText);
 			if (widthMustBeRestricted) {
