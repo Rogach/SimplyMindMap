@@ -258,8 +258,6 @@ public interface ModeController {
 
 	Transferable copy();
 
-	Transferable copySingle();
-
 	public Transferable copy(List selectedNodes, boolean copyInvisible);
 
 	void setView(MapView pView);

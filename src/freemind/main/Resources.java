@@ -91,10 +91,6 @@ public class Resources {
 		return resourcesInstance;
 	}
 
-	public String getFreemindDirectory() {
-		return null;
-	}
-
 	public int getIntProperty(String key, int defaultValue) {
     try {
 			return Integer.parseInt(getProperty(key));

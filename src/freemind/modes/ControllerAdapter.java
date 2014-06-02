@@ -476,9 +476,6 @@ public abstract class ControllerAdapter implements ModeController {
 		mView = pView;
 	}
 
-	protected void updateMapModuleName() {
-	}
-
 	/**
 	 * @throws {@link IllegalArgumentException} when node isn't found.
 	 */
@@ -515,12 +512,6 @@ public abstract class ControllerAdapter implements ModeController {
 
 	public Transferable copy() {
 		return copy(getView().getSelectedNodesSortedByY(), false);
-	}
-
-	public Transferable copySingle() {
-
-		final ArrayList selectedNodes = getView().getSingleSelectedNodes();
-		return copy(selectedNodes, false);
 	}
 
 	public Transferable copy(List selectedNodes, boolean copyInvisible) {

@@ -120,8 +120,6 @@ public interface MindMapActions {
 
 	public void setNodeColor(MindMapNode node, Color color);
 
-	public void blendNodeColor(MindMapNode node);
-
 	public void setFontFamily(MindMapNode node, String fontFamily);
 
 	public void setFontSize(MindMapNode node, String fontSizeValue);

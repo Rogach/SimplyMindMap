@@ -144,17 +144,6 @@ public class MindIcon implements Comparable, IconInformation {
 		if (name != null) {
 			URL imageURL = Resources.getInstance().getResource(
 					getIconFileName());
-			if (imageURL == null) { // As standard icon not found, try user's
-				try {
-					final File file = new File(Resources.getInstance()
-							.getFreemindDirectory(), "icons/" + getName()
-							+ ".png");
-					if (file.canRead()) {
-						imageURL = Tools.fileToUrl(file);
-					}
-				} catch (Exception e) {
-				}
-			}
 			ImageIcon icon = imageURL == null ? iconNotFound : new ImageIcon(
 					imageURL);
 			setIcon(icon);

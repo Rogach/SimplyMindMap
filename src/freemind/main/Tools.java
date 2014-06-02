@@ -233,17 +233,6 @@ public class Tools {
 		return str;
 	}
 
-	/**
-	 * Replaces a ~ in a filename with the users home directory
-	 */
-	public static String expandFileName(String file) {
-		// replace ~ with the users home dir
-		if (file.startsWith("~")) {
-			file = System.getProperty("user.home") + file.substring(1);
-		}
-		return file;
-	}
-
 	public static Set getAvailableFontFamilyNames() {
 		if (availableFontFamilyNames == null) {
 			String[] envFonts = getAvailableFonts();
@@ -282,199 +271,6 @@ public class Tools {
 	}
 
 	/**
-	 * Returns the lowercase of the extension of a file. Example:
-	 * getExtension("fork.pork.MM") ==
-	 * freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION_WITHOUT_DOT
-	 */
-	public static String getExtension(File f) {
-		return getExtension(f.toString());
-	}
-
-	/**
-	 * Returns the lowercase of the extension of a file name. Example:
-	 * getExtension("fork.pork.MM") ==
-	 * freemind.main.FreeMindCommon.FREEMIND_FILE_EXTENSION_WITHOUT_DOT
-	 */
-	public static String getExtension(String s) {
-		int i = s.lastIndexOf('.');
-		return (i > 0 && i < s.length() - 1) ? s.substring(i + 1).toLowerCase()
-				.trim() : "";
-	}
-
-	public static String removeExtension(String s) {
-		int i = s.lastIndexOf('.');
-		return (i > 0 && i < s.length() - 1) ? s.substring(0, i) : "";
-	}
-
-	public static boolean isAbsolutePath(String path) {
-		// On Windows, we cannot just ask if the file name starts with file
-		// separator.
-		// If path contains ":" at the second position, then it is not relative,
-		// I guess.
-		// However, if it starts with separator, then it is absolute too.
-
-		// Possible problems: Not tested on Macintosh, but should work.
-		// Koh, 1.4.2004: Resolved problem: I tested on Mac OS X 10.3.3 and
-		// worked.
-
-		String osNameStart = System.getProperty("os.name").substring(0, 3);
-		String fileSeparator = System.getProperty("file.separator");
-		if (osNameStart.equals("Win")) {
-			return ((path.length() > 1) && path.substring(1, 2).equals(":"))
-					|| path.startsWith(fileSeparator);
-		} else if (osNameStart.equals("Mac")) {
-			// Koh:Panther (or Java 1.4.2) may change file path rule
-			return path.startsWith(fileSeparator);
-		} else {
-			return path.startsWith(fileSeparator);
-		}
-	}
-
-	/**
-	 * This is a correction of a method getFile of a class URL. Namely, on
-	 * Windows it returned file paths like /C: etc., which are not valid on
-	 * Windows. This correction is heuristic to a great extend. One of the
-	 * reasons is that file:// is basically no protocol at all, but rather
-	 * something every browser and every system uses slightly differently.
-	 */
-	public static String urlGetFile(URL url) {
-		if (isWindows() && isFile(url)) {
-			String fileName = url.toString().replaceFirst("^file:", "")
-					.replace('/', '\\');
-			return (fileName.indexOf(':') >= 0) ? fileName.replaceFirst(
-					"^\\\\*", "") : fileName;
-		} // Network path
-		else {
-			return url.getFile();
-		}
-	}
-
-	public static boolean isWindows() {
-		return System.getProperty("os.name").substring(0, 3).equals("Win");
-	}
-
-	public static boolean isFile(URL url) {
-		return url.getProtocol().equals("file");
-	}
-
-	/**
-	 * @return "/" for absolute file names under Unix, "c:\\" or similar under
-	 *         windows, null otherwise
-	 */
-	public static String getPrefix(String pFileName) {
-		if (isWindows()) {
-			if (pFileName.matches("^[a-zA-Z]:\\\\.*")) {
-				return pFileName.substring(0, 3);
-			}
-		} else {
-			if (pFileName.startsWith(File.separator)) {
-				return File.separator;
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * This method converts an absolute url to an url relative to a given
-	 * base-url. Something like this should be included in the librarys, but I
-	 * couldn't find it. You can create a new absolute url with
-	 * "new URL(URL context, URL relative)".
-	 */
-	public static String toRelativeURL(URL base, URL target) {
-		// Precondition: If URL is a path to folder, then it must end with '/'
-		// character.
-		if (base == null || !base.getProtocol().equals(target.getProtocol())
-				|| !base.getHost().equals(target.getHost())) {
-			return target.toString();
-		}
-		String baseString = base.getFile();
-		String targetString = target.getFile();
-		String result = "";
-		// remove filename from URL
-		targetString = targetString.substring(0,
-				targetString.lastIndexOf("/") + 1);
-		// remove filename from URL
-		baseString = baseString.substring(0, baseString.lastIndexOf("/") + 1);
-
-		// Algorithm
-		// look for same start:
-		int index = targetString.length() - 1;
-		while (!baseString.startsWith(targetString.substring(0, index + 1))) {
-			// remove last part:
-			index = targetString.lastIndexOf("/", index - 1);
-			if (index < 0) {
-				// no common part. This is strange, as both should start with /,
-				// but...
-				break;
-			}
-		}
-
-		// now, baseString is targetString + "/" + rest. we determine
-		// rest=baseStringRest now.
-		String baseStringRest = baseString
-				.substring(index, baseString.length());
-
-		// Maybe this causes problems under windows
-		StringTokenizer baseTokens = new StringTokenizer(baseStringRest, "/");
-
-		// Maybe this causes problems under windows
-		StringTokenizer targetTokens = new StringTokenizer(
-				targetString.substring(index + 1), "/");
-
-		String nextTargetToken = "";
-
-		while (baseTokens.hasMoreTokens()) {
-			result = result.concat("../");
-			baseTokens.nextToken();
-		}
-		while (targetTokens.hasMoreTokens()) {
-			nextTargetToken = targetTokens.nextToken();
-			result = result.concat(nextTargetToken + "/");
-		}
-
-		String temp = target.getFile();
-		result = result.concat(temp.substring(temp.lastIndexOf("/") + 1,
-				temp.length()));
-		return result;
-	}
-
-	/**
-	 * If the preferences say, that links should be relative, a relative url is
-	 * returned.
-	 * 
-	 * @param input
-	 *            the file that is treated
-	 * @param pMapFile
-	 *            the file, that input is made relative to
-	 * @return in case of trouble the absolute path.
-	 */
-	public static String fileToRelativeUrlString(File input, File pMapFile) {
-		URL link;
-		String relative;
-		try {
-			link = Tools.fileToUrl(input);
-			relative = link.toString();
-			if ("relative".equals(Resources.getInstance().getProperty("links"))) {
-				// Create relative URL
-				relative = Tools.toRelativeURL(Tools.fileToUrl(pMapFile), link);
-			}
-			return relative;
-		} catch (MalformedURLException ex) {
-			freemind.main.Resources.getInstance().logException(ex);
-		}
-		return input.getAbsolutePath();
-	}
-
-	/**
-	 * Tests a string to be equals with "true".
-	 * 
-	 * @return true, iff the String is "true".
-	 */
-	public static boolean isPreferenceTrue(String option) {
-		return Tools.safeEquals(option, "true");
-	}
-
-	/**
 	 * @param string1
 	 *            input (or null)
 	 * @param string2
@@ -508,70 +304,6 @@ public class Tools {
 		}
 		return text.substring(0, 1).toUpperCase()
 				+ text.substring(1, text.length());
-	}
-
-	public static void setHidden(File file, boolean hidden,
-			boolean synchronously) {
-		// According to Web articles, UNIX systems do not have attribute hidden
-		// in general, rather, they consider files starting with . as hidden.
-		String osNameStart = System.getProperty("os.name").substring(0, 3);
-		if (osNameStart.equals("Win")) {
-			try {
-				Runtime.getRuntime().exec(
-						"attrib " + (hidden ? "+" : "-") + "H \""
-								+ file.getAbsolutePath() + "\"");
-				// Synchronize the effect, because it is asynchronous in
-				// general.
-				if (!synchronously) {
-					return;
-				}
-				int timeOut = 10;
-				while (file.isHidden() != hidden && timeOut > 0) {
-					Thread.sleep(10/* miliseconds */);
-					timeOut--;
-				}
-			} catch (Exception e) {
-				freemind.main.Resources.getInstance().logException(e);
-			}
-		}
-	}
-
-	/**
-	 * Example: expandPlaceholders("Hello $1.","Dolly"); => "Hello Dolly."
-	 */
-	public static String expandPlaceholders(String message, String s1) {
-		String result = message;
-		if (s1 != null) {
-			s1 = s1.replaceAll("\\\\", "\\\\\\\\"); // Replace \ with \\
-			result = result.replaceAll("\\$1", s1);
-		}
-		return result;
-	}
-
-	public static String expandPlaceholders(String message, String s1, String s2) {
-		String result = message;
-		if (s1 != null) {
-			result = result.replaceAll("\\$1", s1);
-		}
-		if (s2 != null) {
-			result = result.replaceAll("\\$2", s2);
-		}
-		return result;
-	}
-
-	public static String expandPlaceholders(String message, String s1,
-			String s2, String s3) {
-		String result = message;
-		if (s1 != null) {
-			result = result.replaceAll("\\$1", s1);
-		}
-		if (s2 != null) {
-			result = result.replaceAll("\\$2", s2);
-		}
-		if (s3 != null) {
-			result = result.replaceAll("\\$3", s3);
-		}
-		return result;
 	}
 
 	public static class IntHolder {
@@ -648,43 +380,6 @@ public class Tools {
 		public Object getSecond() {
 			return second;
 		}
-	}
-
-	/**
-     */
-	public static String byteArrayToUTF8String(byte[] compressedData) {
-		// Decode using utf-8
-		try {
-			return new String(compressedData, "UTF8");
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException("UTF8 packing not allowed");
-		}
-	}
-
-	/**
-     */
-	public static byte[] uTF8StringToByteArray(String uncompressedData) {
-		// Code using utf-8
-		try {
-			return uncompressedData.getBytes("UTF8");
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException("UTF8 packing not allowed");
-		}
-	}
-
-	/**
-	 * Extracts a long from xml. Only useful for dates.
-	 */
-	public static Date xmlToDate(String xmlString) {
-		try {
-			return new Date(Long.valueOf(xmlString).longValue());
-		} catch (Exception e) {
-			return new Date(System.currentTimeMillis());
-		}
-	}
-
-	public static String dateToString(Date date) {
-		return Long.toString(date.getTime());
 	}
 
 	public static boolean safeEquals(BooleanHolder holder, BooleanHolder holder2) {
@@ -789,71 +484,6 @@ public class Tools {
 		return new BufferedReader(pReader);
 	}
 
-	/**
-	 * In case of trouble, the method returns null.
-	 * 
-	 * @param pInputFile
-	 *            the file to read.
-	 * @return the complete content of the file. or null if an exception has
-	 *         occured.
-	 */
-	public static String getFile(File pInputFile) {
-		try {
-			return getFile(getReaderFromFile(pInputFile));
-		} catch (FileNotFoundException e) {
-			freemind.main.Resources.getInstance().logException(e);
-			return null;
-		}
-	}
-
-	public static Reader getReaderFromFile(File pInputFile)
-			throws FileNotFoundException {
-		return new FileReader(pInputFile);
-	}
-
-	public static String getFile(Reader pReader) {
-		StringBuffer lines = new StringBuffer();
-		BufferedReader bufferedReader = null;
-		try {
-			bufferedReader = new BufferedReader(pReader);
-			final String endLine = System.getProperty("line.separator");
-			String line;
-			while ((line = bufferedReader.readLine()) != null) {
-				lines.append(line).append(endLine);
-			}
-			bufferedReader.close();
-		} catch (Exception e) {
-			freemind.main.Resources.getInstance().logException(e);
-			if (bufferedReader != null) {
-				try {
-					bufferedReader.close();
-				} catch (Exception ex) {
-					freemind.main.Resources.getInstance().logException(ex);
-				}
-			}
-			return null;
-		}
-		return lines.toString();
-	}
-
-	public static void logTransferable(Transferable t) {
-		System.err.println();
-		System.err.println("BEGIN OF Transferable:\t" + t);
-		DataFlavor[] dataFlavors = t.getTransferDataFlavors();
-		for (int i = 0; i < dataFlavors.length; i++) {
-			System.out.println("  Flavor:\t" + dataFlavors[i]);
-			System.out.println("    Supported:\t"
-					+ t.isDataFlavorSupported(dataFlavors[i]));
-			try {
-				System.out.println("    Content:\t"
-						+ t.getTransferData(dataFlavors[i]));
-			} catch (Exception e) {
-			}
-		}
-		System.err.println("END OF Transferable");
-		System.err.println();
-	}
-
 	public static void addEscapeActionToDialog(final JDialog dialog) {
 		class EscapeAction extends AbstractAction {
 			private static final long serialVersionUID = 238333614987438806L;
@@ -881,30 +511,6 @@ public class Tools {
 		// Register action
 		dialog.getRootPane().getActionMap()
 				.put(action.getValue(Action.NAME), action);
-	}
-
-	/**
-	 * Returns the same URL as input with the addition, that the reference part
-	 * "#..." is filtered out.
-	 * 
-	 * @throws MalformedURLException
-	 */
-	public static URL getURLWithoutReference(URL input)
-			throws MalformedURLException {
-		return new URL(input.toString().replaceFirst("#.*", ""));
-	}
-
-	public static void copyStream(InputStream in, OutputStream out,
-			boolean pCloseOutput) throws IOException {
-		byte[] buf = new byte[1024];
-		int len;
-		while ((len = in.read(buf)) > 0) {
-			out.write(buf, 0, len);
-		}
-		in.close();
-		if (pCloseOutput) {
-			out.close();
-		}
 	}
 
 	public static Point convertPointToAncestor(Component c, Point p,
@@ -1062,25 +668,6 @@ public class Tools {
 
 	}
 
-	public static class MindMapNodePair {
-		MindMapNode first;
-
-		MindMapNode second;
-
-		public MindMapNodePair(MindMapNode first, MindMapNode second) {
-			this.first = first;
-			this.second = second;
-		}
-
-		public MindMapNode getCorresponding() {
-			return first;
-		}
-
-		public MindMapNode getCloneNode() {
-			return second;
-		}
-	}
-
 	/**
 	 * Ampersand indicates that the character after it is a mnemo, unless the
 	 * character is a space. In "Find & Replace", ampersand does not label
@@ -1157,26 +744,12 @@ public class Tools {
 	public static final String JAVA_VERSION = System
 			.getProperty("java.version");
 
-	public static URL fileToUrl(File pFile) throws MalformedURLException {
-		if (pFile == null)
-			return null;
-		return pFile.toURI().toURL();
-	}
-
 	public static boolean isBelowJava6() {
 		return JAVA_VERSION.compareTo("1.6.0") < 0;
 	}
 
 	public static boolean isAboveJava4() {
 		return JAVA_VERSION.compareTo("1.4.0") > 0;
-	}
-
-	public static File urlToFile(URL pUrl) throws URISyntaxException {
-		// fix for java1.4 and java5 only.
-		if (isBelowJava6()) {
-			return new File(urlGetFile(pUrl));
-		}
-		return new File(new URI(pUrl.toString()));
 	}
 
 	public static void restoreAntialiasing(Graphics2D g, Object renderingHint) {
@@ -1205,24 +778,6 @@ public class Tools {
 	}
 
 	/**
-	 * Logs the stacktrace via a dummy exception.
-	 */
-	public static void printStackTrace() {
-		freemind.main.Resources.getInstance().logException(
-				new IllegalArgumentException("HERE"));
-	}
-
-	/**
-	 * Logs the stacktrace into a string.
-	 */
-	public static String getStackTrace() {
-		IllegalArgumentException ex = new IllegalArgumentException("HERE");
-		ByteArrayOutputStream b = new ByteArrayOutputStream();
-		ex.printStackTrace(new PrintStream(b));
-		return b.toString();
-	}
-
-	/**
 	 * Adapts the font size inside of a component to the zoom
 	 * 
 	 * @param c
@@ -1245,75 +800,12 @@ public class Tools {
 		return font;
 	}
 
-	public static String compareText(String pText1, String pText2) {
-		if (pText1 == null || pText2 == null) {
-			return "One of the Strings is null " + pText1 + ", " + pText2;
-		}
-		StringBuffer b = new StringBuffer();
-		if (pText1.length() > pText2.length()) {
-			b.append("First string is longer :"
-					+ pText1.substring(pText2.length()) + "\n");
-		}
-		if (pText1.length() < pText2.length()) {
-			b.append("Second string is longer :"
-					+ pText2.substring(pText1.length()) + "\n");
-		}
-		for (int i = 0; i < Math.min(pText1.length(), pText2.length()); i++) {
-			if (pText1.charAt(i) != pText2.charAt(i)) {
-				b.append("Difference at " + i + ": " + pText1.charAt(i) + "!="
-						+ pText2.charAt(i) + "\n");
-			}
-
-		}
-		return b.toString();
-	}
-
-	public static String getHostName() {
-		String hostname = "UNKNOWN";
-		try {
-			InetAddress addr = InetAddress.getLocalHost();
-			hostname = addr.getHostName();
-		} catch (UnknownHostException e) {
-		}
-		return hostname;
-	}
-
-	public static String getUserName() {
-		// Get host name
-		String hostname = getHostName();
-		return System.getProperty("user.name") + "@" + hostname;
-	}
-
 	public static String marshall(XmlAction action) {
 		return XmlBindingTools.getInstance().marshall(action);
 	}
 
 	public static XmlAction unMarshall(String inputString) {
 		return XmlBindingTools.getInstance().unMarshall(inputString);
-	}
-
-	public static String getFileNameFromRestorable(String restoreable) {
-		StringTokenizer token = new StringTokenizer(restoreable, ":");
-		String fileName;
-		if (token.hasMoreTokens()) {
-			token.nextToken();
-			// fix for windows (??, fc, 25.11.2005).
-			fileName = token.nextToken("").substring(1);
-		} else {
-			fileName = null;
-		}
-		return fileName;
-	}
-
-	public static String getModeFromRestorable(String restoreable) {
-		StringTokenizer token = new StringTokenizer(restoreable, ":");
-		String mode;
-		if (token.hasMoreTokens()) {
-			mode = token.nextToken();
-		} else {
-			mode = null;
-		}
-		return mode;
 	}
 
 	public static Vector getVectorWithSingleElement(Object obj) {
@@ -1350,79 +842,6 @@ public class Tools {
 		return (File.separatorChar == '/') || isMacOsX();
 	}
 
-	// {{{ setPermissions() method
-	/**
-	 * Sets numeric permissions of a file. On non-Unix platforms, does nothing.
-	 * From jEdit
-	 */
-	public static void setPermissions(String path, int permissions) {
-
-		if (permissions != 0) {
-			if (isUnix()) {
-				String[] cmdarray = { "chmod",
-						Integer.toString(permissions, 8), path };
-
-				try {
-					Process process = Runtime.getRuntime().exec(cmdarray);
-					process.getInputStream().close();
-					process.getOutputStream().close();
-					process.getErrorStream().close();
-					// Jun 9 2004 12:40 PM
-					// waitFor() hangs on some Java
-					// implementations.
-					/*
-					 * int exitCode = process.waitFor(); if(exitCode != 0)
-					 * Log.log
-					 * (Log.NOTICE,FileVFS.class,"chmod exited with code " +
-					 * exitCode);
-					 */
-				}
-
-				// Feb 4 2000 5:30 PM
-				// Catch Throwable here rather than Exception.
-				// Kaffe's implementation of Runtime.exec throws
-				// java.lang.InternalError.
-				catch (Throwable t) {
-				}
-			}
-		}
-	} // }}}
-
-	public static String arrayToUrls(String[] pArgs) {
-		StringBuffer b = new StringBuffer();
-		for (int i = 0; i < pArgs.length; i++) {
-			String fileName = pArgs[i];
-			try {
-				b.append(fileToUrl(new File(fileName)));
-				b.append('\n');
-			} catch (MalformedURLException e) {
-				freemind.main.Resources.getInstance().logException(e);
-			}
-		}
-		return b.toString();
-	}
-
-	public static Vector/* <URL> */urlStringToUrls(String pUrls) {
-		String[] urls = pUrls.split("\n");
-		Vector ret = new Vector();
-		for (int i = 0; i < urls.length; i++) {
-			String url = urls[i];
-			try {
-				ret.add(new URL(url));
-			} catch (MalformedURLException e) {
-				freemind.main.Resources.getInstance().logException(e);
-			}
-		}
-		return ret;
-	}
-
-	/**
-	 * @return
-	 */
-	public static boolean isHeadless() {
-		return GraphicsEnvironment.getLocalGraphicsEnvironment().isHeadless();
-	}
-
 	/**
 	 * @param pNode
 	 * @param pMindMapController
@@ -1441,52 +860,6 @@ public class Tools {
 		return Toolkit.getDefaultToolkit().getSystemClipboard();
 	}
 
-	public static void addFocusPrintTimer() {
-		Timer timer = new Timer(1000, new ActionListener() {
-
-			public void actionPerformed(ActionEvent pE) {
-				logger.info("Component: "
-						+ KeyboardFocusManager.getCurrentKeyboardFocusManager()
-								.getFocusOwner()
-						+ ", Window: "
-						+ KeyboardFocusManager.getCurrentKeyboardFocusManager()
-								.getFocusedWindow());
-			}
-		});
-		timer.start();
-
-	}
-
-	/**
-	 * copied from HomePane.java 15 mai 2006
-	 * 
-	 * Sweet Home 3D, Copyright (c) 2006 Emmanuel PUYBARET / eTeks
-	 * <info@eteks.com>
-	 * 
-	 * - This listener manages accelerator keys that may require the use of
-	 * shift key depending on keyboard layout (like + - or ?)
-	 */
-	public static void invokeActionsToKeyboardLayoutDependantCharacters(
-			KeyEvent pEvent, Action[] specialKeyActions, Object pObject) {
-		// on purpose without shift.
-		int modifiersMask = KeyEvent.ALT_MASK | KeyEvent.CTRL_MASK
-				| KeyEvent.META_MASK;
-		for (int i = 0; i < specialKeyActions.length; i++) {
-			Action specialKeyAction = specialKeyActions[i];
-			KeyStroke actionKeyStroke = (KeyStroke) specialKeyAction
-					.getValue(Action.ACCELERATOR_KEY);
-			if (pEvent.getKeyChar() == actionKeyStroke.getKeyChar()
-					&& (pEvent.getModifiers() & modifiersMask) == (actionKeyStroke
-							.getModifiers() & modifiersMask)
-					&& specialKeyAction.isEnabled()) {
-				specialKeyAction.actionPerformed(new ActionEvent(pObject,
-						ActionEvent.ACTION_PERFORMED, (String) specialKeyAction
-								.getValue(Action.ACTION_COMMAND_KEY)));
-				pEvent.consume();
-			}
-		}
-	}
-
 	/**
 	 * @param pString
 	 * @param pSearchString
@@ -1503,74 +876,6 @@ public class Tools {
 			pString = pString.substring(index + pSearchString.length());
 		}
 		return amount;
-	}
-
-	public static void correctJSplitPaneKeyMap() {
-		InputMap map = (InputMap) UIManager.get("SplitPane.ancestorInputMap");
-		KeyStroke keyStrokeF6 = KeyStroke.getKeyStroke(KeyEvent.VK_F6, 0);
-		KeyStroke keyStrokeF8 = KeyStroke.getKeyStroke(KeyEvent.VK_F8, 0);
-		map.remove(keyStrokeF6);
-		map.remove(keyStrokeF8);
-	}
-
-	/**
-	 * @param pPageFormat
-	 * @param pPageFormatProperty
-	 */
-	public static void setPageFormatFromString(Paper pPaper,
-			String pPageFormatProperty) {
-		try {
-			// parse string:
-			StringTokenizer tokenizer = new StringTokenizer(
-					pPageFormatProperty, ";");
-			if (tokenizer.countTokens() != 6) {
-				logger.warning("Page format property has not the correct format:"
-						+ pPageFormatProperty);
-				return;
-			}
-			pPaper.setSize(nt(tokenizer), nt(tokenizer));
-			pPaper.setImageableArea(nt(tokenizer), nt(tokenizer),
-					nt(tokenizer), nt(tokenizer));
-		} catch (Exception e) {
-			freemind.main.Resources.getInstance().logException(e);
-		}
-	}
-
-	/**
-	 * @param pTokenizer
-	 * @return
-	 */
-	private static double nt(StringTokenizer pTokenizer) {
-		String nextToken = pTokenizer.nextToken();
-		try {
-			return Double.parseDouble(nextToken);
-		} catch (Exception e) {
-			freemind.main.Resources.getInstance().logException(e);
-		}
-		return 0;
-	}
-
-	/**
-	 * @param pPageFormat
-	 * @return
-	 */
-	public static String getPageFormatAsString(Paper pPaper) {
-		return pPaper.getWidth() + ";" + pPaper.getHeight() + ";"
-				+ pPaper.getImageableX() + ";" + pPaper.getImageableY() + ";"
-				+ pPaper.getImageableWidth() + ";"
-				+ pPaper.getImageableHeight();
-	}
-
-	/**
-	 * @return
-	 */
-	public static String getHostIpAsString() {
-		try {
-			return InetAddress.getLocalHost().getHostAddress();
-		} catch (UnknownHostException e) {
-			freemind.main.Resources.getInstance().logException(e);
-		}
-		return null;
 	}
 
 	public static String printXmlAction(XmlAction pAction) {
@@ -1634,18 +939,6 @@ public class Tools {
 		} else {
 			EventQueue.invokeAndWait(pRunnable);
 		}
-	}
-
-	public static Properties copyChangedProperties(Properties props2,
-			Properties defProps2) {
-		Properties toBeStored = new Properties();
-		for (Iterator it = props2.keySet().iterator(); it.hasNext();) {
-			String key = (String) it.next();
-			if (!safeEquals(props2.get(key), defProps2.get(key))) {
-				toBeStored.put(key, props2.get(key));
-			}
-		}
-		return toBeStored;
 	}
   
   public static Color showCommonJColorChooserDialog(Component component,

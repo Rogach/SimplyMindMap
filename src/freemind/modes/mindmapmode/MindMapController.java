@@ -226,24 +226,6 @@ public class MindMapController extends ControllerAdapter implements
 
 	private void createIconActions() {
 		Vector iconNames = MindIcon.getAllIconNames();
-		File iconDir = new File(Resources.getInstance().getFreemindDirectory(),
-				"icons");
-		if (iconDir.exists()) {
-			String[] userIconArray = iconDir.list(new FilenameFilter() {
-				public boolean accept(File dir, String name) {
-					return name.matches(".*\\.png");
-				}
-			});
-			if (userIconArray != null)
-				for (int i = 0; i < userIconArray.length; ++i) {
-					String iconName = userIconArray[i];
-					iconName = iconName.substring(0, iconName.length() - 4);
-					if (iconName.equals("")) {
-						continue;
-					}
-					iconNames.add(iconName);
-				}
-		}
 		for (int i = 0; i < iconNames.size(); ++i) {
 			String iconName = ((String) iconNames.get(i));
 			MindIcon myIcon = MindIcon.factory(iconName);
@@ -362,18 +344,6 @@ public class MindMapController extends ControllerAdapter implements
 
 	public void setNodeColor(MindMapNode node, Color color) {
 		nodeColor.setNodeColor(node, color);
-	}
-
-	public void blendNodeColor(MindMapNode node) {
-		Color mapColor = getView().getBackground();
-		Color nodeColor = node.getColor();
-		if (nodeColor == null) {
-			nodeColor = MapView.standardNodeTextColor;
-		}
-		setNodeColor(node,
-				new Color((3 * mapColor.getRed() + nodeColor.getRed()) / 4,
-						(3 * mapColor.getGreen() + nodeColor.getGreen()) / 4,
-						(3 * mapColor.getBlue() + nodeColor.getBlue()) / 4));
 	}
 
 	public void addIcon(MindMapNode node, MindIcon icon) {
