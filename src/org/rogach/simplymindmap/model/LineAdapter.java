@@ -24,6 +24,7 @@ import java.awt.Color;
 import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
+import org.rogach.simplymindmap.util.XmlTools;
 
 public abstract class LineAdapter implements MindMapLine {
 
@@ -58,7 +59,7 @@ public abstract class LineAdapter implements MindMapLine {
 			String stdColor = Resources.getInstance().getProperty(
 					getStandardColorPropertyString());
 			if (stdColor != null && stdColor.length() == 7) {
-				setStandardColor(Tools.xmlToColor(stdColor));
+				setStandardColor(XmlTools.xmlToColor(stdColor));
 			} else {
 				setStandardColor(Color.RED);
 			}

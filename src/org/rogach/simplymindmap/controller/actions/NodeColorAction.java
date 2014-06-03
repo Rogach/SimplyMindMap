@@ -35,6 +35,7 @@ import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.controller.actions.xml.ActorXml;
 import org.rogach.simplymindmap.util.Tools;
+import org.rogach.simplymindmap.util.XmlTools;
 
 public class NodeColorAction extends FreemindAction implements ActorXml {
 	private final MindMapController controller;
@@ -76,14 +77,14 @@ public class NodeColorAction extends FreemindAction implements ActorXml {
 			Color color) {
 		NodeColorFormatAction nodeAction = new NodeColorFormatAction();
 		nodeAction.setNode(node.getObjectId(controller));
-		nodeAction.setColor(Tools.colorToXml(color));
+		nodeAction.setColor(XmlTools.colorToXml(color));
 		return nodeAction;
 	}
 
 	public void act(XmlAction action) {
 		if (action instanceof NodeColorFormatAction) {
 			NodeColorFormatAction nodeColorAction = (NodeColorFormatAction) action;
-			Color color = Tools.xmlToColor(nodeColorAction.getColor());
+			Color color = XmlTools.xmlToColor(nodeColorAction.getColor());
 			MindMapNode node = controller.getNodeFromID(nodeColorAction
 					.getNode());
 			Color oldColor = node.getColor();

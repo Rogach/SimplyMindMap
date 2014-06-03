@@ -24,6 +24,7 @@ import java.awt.Color;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.nanoxml.XMLElement;
 import org.rogach.simplymindmap.util.Tools;
+import org.rogach.simplymindmap.util.XmlTools;
 
 public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {
 
@@ -89,7 +90,7 @@ public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {
 			edge.setName("edge");
 
 			if (color != null) {
-				edge.setAttribute("COLOR", Tools.colorToXml(color));
+				edge.setAttribute("COLOR", XmlTools.colorToXml(color));
 			}
 			if (width != WIDTH_PARENT) {
 				if (width == WIDTH_THIN)

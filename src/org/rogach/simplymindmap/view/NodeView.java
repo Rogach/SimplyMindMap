@@ -62,21 +62,13 @@ import org.rogach.simplymindmap.util.Tools;
  * TreeCellRenderer).
  */
 public class NodeView extends JComponent implements TreeModelListener {
-	public void setFocusCycleRoot(boolean pFocusCycleRoot) {
-		// FIXME: On purpose removed. test this!
-		// super.setFocusCycleRoot(pFocusCycleRoot);
-	}
 
 	static private int FOLDING_SYMBOL_WIDTH = -1;
   final static Stroke DEF_STROKE = new BasicStroke();
 	protected MindMapNode model;
 	protected MapView map;
 	private MainView mainView;
-	protected final static Color dragColor = Color.lightGray; // the Color of
-																// appearing
-																// GradientBox
-																// on
-																// drag over
+	protected final static Color dragColor = Color.lightGray; // the Color of appearing GradientBox on drag over
 	private boolean left = true; // is the node left of root?
 	private boolean isLong = false;
 
@@ -89,14 +81,10 @@ public class NodeView extends JComponent implements TreeModelListener {
 	final static int ALIGN_BOTTOM = -1;
 	final static int ALIGN_CENTER = 0;
 	final static int ALIGN_TOP = 1;
-
-	final private static Point zeroPoint = new Point(0, 0);
 	private static Logger logger;
 	//
 	// Constructors
 	//
-
-	private Object viewDeletionEvent;
 	private int maxToolTipWidth;
 	private NodeView preferredChild;
 	private JComponent contentPane;
@@ -940,8 +928,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 	}
 
 	boolean useSelectionColors() {
-		return isSelected() && !MapView.standardDrawRectangleForSelection
-				&& !map.isCurrentlyPrinting();
+		return isSelected() && !MapView.standardDrawRectangleForSelection;
 	}
 
 	/**

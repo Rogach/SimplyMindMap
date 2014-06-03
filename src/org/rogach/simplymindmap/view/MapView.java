@@ -19,6 +19,7 @@
 
 package org.rogach.simplymindmap.view;
 
+import org.rogach.simplymindmap.controller.KeymapConfigurator;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
@@ -73,80 +74,13 @@ import org.rogach.simplymindmap.model.MindMapModel;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
 import org.rogach.simplymindmap.util.Tools.Pair;
+import org.rogach.simplymindmap.util.XmlTools;
 
 /**
  * This class represents the view of a whole MindMap (in analogy to class
  * JTree).
  */
-public class MapView extends JPanel implements Printable, Autoscroll {
-	/**
-	 * Currently, this listener does nothing. But it should move the map
-	 * according to the resize event, such that the current map's center stays
-	 * at the same location (seen relative).
-	 */
-	private final class ResizeListener extends ComponentAdapter {
-		Dimension mSize;
-
-		ResizeListener() {
-			mSize = getSize();
-		}
-
-		public void componentResized(ComponentEvent pE) {
-			logger.fine("Component resized " + pE + " old size " + mSize
-					+ " new size " + getSize());
-			// int deltaWidth = mSize.width - getWidth();
-			// int deltaHeight = mSize.height - getHeight();
-			// Point viewPosition = getViewPosition();
-			// viewPosition.x += deltaWidth/2;
-			// viewPosition.y += deltaHeight/2;
-			// mapViewport.setViewPosition(viewPosition);
-			mSize = getSize();
-
-		}
-	}
-
-	static public class ScrollPane extends JScrollPane {
-		public ScrollPane() {
-			// /*
-			// * Diagnosis for the input map, but I haven't
-			// * managed to remove the ctrl pageup/down keys
-			// * from it.
-			// */
-			// InputMap inputMap =
-			// getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-			// KeyStroke[] keys = inputMap.allKeys();
-			// if (keys != null) {
-			// for (int i = 0; i < keys.length; i++) {
-			// KeyStroke stroke = keys[i];
-			// logger.fine("Stroke: " + stroke);
-			// }
-			// } else {
-			// logger.fine("No keys in input map");
-			// }
-		}
-
-		protected boolean processKeyBinding(KeyStroke pKs, KeyEvent pE,
-				int pCondition, boolean pPressed) {
-			/*
-			 * the scroll pane eats control page up and down. Moreover, the page
-			 * up and down itself is not very useful, as the map hops away too
-			 * far.
-			 */
-			if (pE.getKeyCode() == KeyEvent.VK_PAGE_DOWN
-					|| pE.getKeyCode() == KeyEvent.VK_PAGE_UP)
-				return false;
-			return super.processKeyBinding(pKs, pE, pCondition, pPressed);
-		}
-
-		protected void validateTree() {
-			final Component view = getViewport().getView();
-			if (view != null) {
-				view.validate();
-			}
-			super.validateTree();
-		}
-
-	}
+public class MapView extends JPanel implements Autoscroll {
 
 	int mPaintingTime;
 	int mPaintingAmount;
@@ -157,122 +91,25 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	public static Color standardNodeTextColor;
 	static boolean standardDrawRectangleForSelection;
 	private static Stroke standardSelectionStroke;
-  
-  
-	private class Selected {
-		private Vector mySelected = new Vector();
-
-		public Selected() {
-		};
-
-		public void clear() {
-			if (size() > 0) {
-				removeFocusForHooks(get(0));
-			}
-			for (Iterator it = mySelected.iterator(); it.hasNext();) {
-				NodeView view = (NodeView) it.next();
-				changeSelection(view, false);
-			}
-			mySelected.clear();
-			logger.finest("Cleared selected.");
-		}
-
-		/**
-		 * @param pNode
-		 */
-		private void changeSelection(NodeView pNode, boolean pIsSelected) {
-			if (pNode.getModel() == null)
-				return;
-			getModel().getMindMapController().changeSelection(pNode, pIsSelected);
-			
-		}
-
-		public int size() {
-			return mySelected.size();
-		}
-
-		public void remove(NodeView node) {
-			if (mySelected.indexOf(node) == 0) {
-				removeFocusForHooks(node);
-			}
-			changeSelection(node, false);
-			mySelected.remove(node);
-			logger.finest("Removed focused " + node);
-		}
-
-		public void add(NodeView node) {
-			if (size() > 0) {
-				removeFocusForHooks(get(0));
-			}
-			mySelected.add(0, node);
-			addFocusForHooks(node);
-			changeSelection(node, true);
-			logger.finest("Added focused " + node + "\nAll=" + mySelected);
-		}
-
-		private void removeFocusForHooks(NodeView node) {
-			if (node.getModel() == null)
-				return;
-			getModel().getMindMapController().onLostFocusNode(node);
-		}
-
-		private void addFocusForHooks(NodeView node) {
-			getModel().getMindMapController().onFocusNode(node);
-		}
-
-		public NodeView get(int i) {
-			return (NodeView) mySelected.get(i);
-		}
-
-		public boolean contains(NodeView node) {
-			return mySelected.contains(node);
-		}
-
-		/**
-		 */
-		public void moveToFirst(NodeView newSelected) {
-			if (contains(newSelected)) {
-				int pos = mySelected.indexOf(newSelected);
-				if (pos > 0) { // move
-					if (size() > 0) {
-						removeFocusForHooks(get(0));
-					}
-					mySelected.remove(newSelected);
-					mySelected.add(0, newSelected);
-				}
-			} else {
-				add(newSelected);
-			}
-			addFocusForHooks(newSelected);
-			logger.finest("MovedToFront selected " + newSelected + "\nAll="
-					+ mySelected);
-		}
-	}
 
 	// Logging:
 	private static java.util.logging.Logger logger;
 
 	private MindMapModel model;
 	private NodeView rootView = null;
-	private Selected selected = new Selected();
+	private Selected selected = new Selected(this);
 	private float zoom = 1F;
 	private boolean disableMoveCursor = true;
 	private int siblingMaxLevel;
-	private boolean isPrinting = false; // use for remove selection from print
 	private NodeView shiftSelectionOrigin = null;
 	private int maxNodeWidth = 0;
 	private Color background = null;
-	private Rectangle boundingRectangle = null;
-	private boolean fitToPage = true;
   private MindMapController controller = null;
   
   private NodeDragListener nodeDragListener;
   private NodeDropListener nodeDropListener;
   private NodeMouseMotionListener nodeMouseMotionListener;
   private NodeMotionListener nodeMotionListener;
-
-	/** Used to identify a right click onto a link curve. */
-	private Vector/* of ArrowLinkViews */mArrowLinkViews = new Vector();
 
 	private Point rootContentLocation;
 
@@ -294,57 +131,14 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 		if (logger == null)
 			logger = Logger.getLogger(this.getClass().getName());
 		mCenterNodeTimer = new Timer();
+    
 		// initialize the standard colors.
-		if (standardNodeTextColor == null) {
-			try {
-				String stdcolor = Resources.getInstance().getProperty("standardbackgroundcolor");
-				standardMapBackgroundColor = Tools.xmlToColor(stdcolor);
-			} catch (Exception ex) {
-				org.rogach.simplymindmap.main.Resources.getInstance().logException(ex);
-				standardMapBackgroundColor = Color.WHITE;
-			}
-			try {
-				String stdcolor = Resources.getInstance().getProperty("standardnodetextcolor");
-				standardNodeTextColor = Tools.xmlToColor(stdcolor);
-			} catch (Exception ex) {
-				org.rogach.simplymindmap.main.Resources.getInstance().logException(ex);
-				standardSelectColor = Color.WHITE;
-			}
-			// initialize the selectedColor:
-			try {
-				String stdcolor = Resources.getInstance().getProperty("standardselectednodecolor");
-				standardSelectColor = Tools.xmlToColor(stdcolor);
-			} catch (Exception ex) {
-				org.rogach.simplymindmap.main.Resources.getInstance().logException(ex);
-				standardSelectColor = Color.BLUE.darker();
-			}
-
-			// initialize the selectedTextColor:
-			try {
-				String stdtextcolor = Resources.getInstance().getProperty("standardselectednoderectanglecolor");
-				standardSelectRectangleColor = Tools.xmlToColor(stdtextcolor);
-			} catch (Exception ex) {
-				org.rogach.simplymindmap.main.Resources.getInstance().logException(ex);
-				standardSelectRectangleColor = Color.WHITE;
-			}
-			try {
-				String drawCircle = Resources.getInstance().getProperty("standarddrawrectangleforselection");
-				standardDrawRectangleForSelection = Tools
-						.xmlToBoolean(drawCircle);
-			} catch (Exception ex) {
-				org.rogach.simplymindmap.main.Resources.getInstance().logException(ex);
-				standardDrawRectangleForSelection = false;
-			}
-
-			try {
-				String printOnWhite = Resources.getInstance().getProperty("printonwhitebackground");
-				printOnWhiteBackground = Tools.xmlToBoolean(printOnWhite);
-			} catch (Exception ex) {
-				org.rogach.simplymindmap.main.Resources.getInstance().logException(ex);
-				printOnWhiteBackground = true;
-			}
-
-		}
+    standardMapBackgroundColor = XmlTools.xmlToColor(Resources.getInstance().getProperty("standardbackgroundcolor"));
+    standardNodeTextColor = XmlTools.xmlToColor(Resources.getInstance().getProperty("standardnodetextcolor"));
+    standardSelectColor = XmlTools.xmlToColor(Resources.getInstance().getProperty("standardselectednodecolor"));
+    standardSelectRectangleColor = XmlTools.xmlToColor(Resources.getInstance().getProperty("standardselectednoderectanglecolor"));
+    standardDrawRectangleForSelection = XmlTools.xmlToBoolean(Resources.getInstance().getProperty("standarddrawrectangleforselection"));
+    printOnWhiteBackground = XmlTools.xmlToBoolean(Resources.getInstance().getProperty("printonwhitebackground"));
 		this.setAutoscrolls(true);
 
 		this.setLayout(new MindMapLayout());
@@ -414,10 +208,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 		// on the other hand it doesn't allow key navigation (sdfe)
 		disableMoveCursor = Resources.getInstance().getBoolProperty(
 				"disable_cursor_move_paper");
-
-		addComponentListener(new ResizeListener());
-    
-    
 	}
 
 	public void initRoot() {
@@ -1054,8 +844,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	}
 
 	public boolean isSelected(NodeView n) {
-		if (isPrinting)
-			return false;
 		return selected.contains(n);
 	}
 
@@ -1181,7 +969,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 		// }
 		// graphics.drawImage(image, 0, 0, getHeight(), getWidth(), null);
 		HashMap labels = new HashMap();
-		mArrowLinkViews = new Vector();
 		collectLabels(rootView, labels);
 		super.paintChildren(graphics);
 		Graphics2D graphics2d = (Graphics2D) graphics;
@@ -1194,7 +981,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	}
 
 	private void paintSelecteds(Graphics2D g) {
-		if (!standardDrawRectangleForSelection || isCurrentlyPrinting()) {
+		if (!standardDrawRectangleForSelection) {
 			return;
 		}
 		final Color c = g.getColor();
@@ -1247,31 +1034,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 			HashMap labels, HashSet /* MindMapLink s */LinkAlreadyVisited) {
 		
 	};
-  
-	/**
-	 * Call preparePrinting() before printing and endPrinting() after printing
-	 * to minimize calculation efforts
-	 */
-	public void preparePrinting() {
-		if (!isPrinting) {
-			isPrinting = true;
-			/* repaint for printing: */
-			if (NEED_PREF_SIZE_BUG_FIX) {
-				getRoot().updateAll();
-				validate();
-			} else {
-				repaintSelecteds();
-			}
-			if (printOnWhiteBackground) {
-				background = getBackground();
-				setBackground(Color.WHITE);
-			}
-			boundingRectangle = getInnerBounds();
-			fitToPage = Resources.getInstance().getBoolProperty("fit_to_page");
-		} else {
-			logger.warning("Called preparePrinting although isPrinting is true.");
-		}
-	}
 
 	private void repaintSelecteds() {
 		final Iterator iterator = getSelecteds().iterator();
@@ -1281,120 +1043,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 		}
 		// repaint();
 	}
-
-	/**
-	 * Call preparePrinting() before printing and endPrinting() after printing
-	 * to minimize calculation efforts
-	 */
-	public void endPrinting() {
-		if (isPrinting) {
-			isPrinting = false;
-			if (printOnWhiteBackground) {
-				setBackground(background);
-			}
-			/* repaint for end printing: */
-			if (NEED_PREF_SIZE_BUG_FIX) {
-				getRoot().updateAll();
-				validate();
-			} else {
-				repaintSelecteds();
-			}
-		} else {
-			logger.warning("Called endPrinting although isPrinting is false.");
-		}
-	}
-
-	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) {
-		// TODO:
-		// ask user for :
-		// - center in page (in page format ?)
-		// - print zoom or maximize (in page format ?)
-		// - print selection only
-		// remember those parameters from one session to another
-		// (as orientation & margin from pf)
-
-		// User parameters
-
-		double userZoomFactor = 1;
-		try {
-			userZoomFactor = Double.parseDouble(Resources.getInstance()
-					.getProperty("user_zoom"));
-		} catch (Exception e) {
-			// freemind.main.Resources.getInstance().logException(e);
-		}
-		userZoomFactor = Math.max(0, userZoomFactor);
-		userZoomFactor = Math.min(2, userZoomFactor);
-
-		// TODO: read user parameters from properties, make sure the multiple
-		// page
-		// printing really works, have look at Book class.
-
-		if (fitToPage && pageIndex > 0) {
-			return Printable.NO_SUCH_PAGE;
-		}
-
-		Graphics2D graphics2D = (Graphics2D) graphics;
-
-		try {
-			preparePrinting();
-
-			double zoomFactor = 1;
-			if (fitToPage) {
-				double zoomFactorX = pageFormat.getImageableWidth()
-						/ boundingRectangle.getWidth();
-				double zoomFactorY = pageFormat.getImageableHeight()
-						/ boundingRectangle.getHeight();
-				zoomFactor = Math.min(zoomFactorX, zoomFactorY);
-			} else {
-				zoomFactor = userZoomFactor;
-
-				int nrPagesInWidth = (int) Math.ceil(zoomFactor
-						* boundingRectangle.getWidth()
-						/ pageFormat.getImageableWidth());
-				int nrPagesInHeight = (int) Math.ceil(zoomFactor
-						* boundingRectangle.getHeight()
-						/ pageFormat.getImageableHeight());
-				if (pageIndex >= nrPagesInWidth * nrPagesInHeight) {
-					return Printable.NO_SUCH_PAGE;
-				}
-				int yPageCoord = (int) Math.floor(pageIndex / nrPagesInWidth);
-				int xPageCoord = pageIndex - yPageCoord * nrPagesInWidth;
-
-				graphics2D.translate(-pageFormat.getImageableWidth()
-						* xPageCoord, -pageFormat.getImageableHeight()
-						* yPageCoord);
-			}
-
-			graphics2D.translate(pageFormat.getImageableX(),
-					pageFormat.getImageableY());
-			graphics2D.scale(zoomFactor, zoomFactor);
-			graphics2D.translate(-boundingRectangle.getX(),
-					-boundingRectangle.getY());
-
-			print(graphics2D);
-		} finally {
-			endPrinting();
-		}
-		return Printable.PAGE_EXISTS;
-	}
-
-	// public void print(Graphics g) {
-	// try{
-	// preparePrinting();
-	// super.print(g);
-	// }
-	// finally{
-	// endPrinting();
-	// }
-	// }
-
-	/**
-	 * For nodes, they can ask, whether or not the width must be bigger to
-	 * prevent the "..." at the output. (Bug of java).
-	 */
-	public boolean isCurrentlyPrinting() {
-		return isPrinting;
-	};
 
 	/**
 	 * Return the bounding box of all the descendants of the source view, that

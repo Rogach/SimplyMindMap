@@ -91,10 +91,6 @@ public abstract class MainView extends JLabel {
 			prefSize.width = (int) (0.99 + prefSize.width * zoom);
 			prefSize.height = (int) (0.99 + prefSize.height * zoom);
 		}
-
-		if (isCurrentlyPrinting() && MapView.NEED_PREF_SIZE_BUG_FIX) {
-			prefSize.width += getNodeView().getMap().getZoomed(10);
-		}
 		prefSize.width = Math.max(
 				getNodeView().getMap().getZoomed(MIN_HOR_NODE_SIZE),
 				prefSize.width);
@@ -127,17 +123,9 @@ public abstract class MainView extends JLabel {
 		}
 	}
 
-	protected boolean isCurrentlyPrinting() {
-		return getNodeView().getMap().isCurrentlyPrinting();
-	}
-
 	private float getZoom() {
 		float zoom = getNodeView().getMap().getZoom();
 		return zoom;
-	}
-
-	protected void printComponent(Graphics g) {
-		super.paintComponent(g);
 	}
 
 	public void paintSelected(Graphics2D graphics) {

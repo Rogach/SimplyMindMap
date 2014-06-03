@@ -45,6 +45,7 @@ import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.nanoxml.XMLElement;
 import org.rogach.simplymindmap.util.Tools;
+import org.rogach.simplymindmap.util.XmlTools;
 import org.rogach.simplymindmap.view.NodeView;
 
 /**
@@ -678,11 +679,11 @@ public class MindMapNode implements MutableTreeNode {
       }
     }
     if (color != null) {
-      node.setAttribute("COLOR", Tools.colorToXml(getColor()));
+      node.setAttribute("COLOR", XmlTools.colorToXml(getColor()));
     }
     // new background color.
     if (getBackgroundColor() != null) {
-      node.setAttribute("BACKGROUND_COLOR", Tools.colorToXml(getBackgroundColor()));
+      node.setAttribute("BACKGROUND_COLOR", XmlTools.colorToXml(getBackgroundColor()));
     }
     // ^ Here cannot be just getStyle() without super. This is because
     // getStyle's style depends on folded / unfolded. For example, when

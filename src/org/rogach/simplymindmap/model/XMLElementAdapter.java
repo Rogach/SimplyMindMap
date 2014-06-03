@@ -28,6 +28,7 @@ import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.nanoxml.XMLElement;
 import org.rogach.simplymindmap.util.Tools;
+import org.rogach.simplymindmap.util.XmlTools;
 
 public abstract class XMLElementAdapter extends XMLElement {
 
@@ -197,7 +198,7 @@ public abstract class XMLElementAdapter extends XMLElement {
 		if (userObject instanceof EdgeAdapter) {
 			EdgeAdapter edge = (EdgeAdapter) userObject;
 			if (name.equals("COLOR")) {
-				edge.setColor(Tools.xmlToColor(sValue));
+				edge.setColor(XmlTools.xmlToColor(sValue));
 			} else if (name.equals("WIDTH")) {
 				if (sValue.equals(EdgeAdapter.EDGE_WIDTH_THIN_STRING)) {
 					edge.setWidth(EdgeAdapter.WIDTH_THIN);
@@ -246,11 +247,11 @@ public abstract class XMLElementAdapter extends XMLElement {
 			node.setLeft(sValue.equals("left"));
 		} else if (name.equals("COLOR")) {
 			if (sValue.length() == 7) {
-				node.setColor(Tools.xmlToColor(sValue));
+				node.setColor(XmlTools.xmlToColor(sValue));
 			}
 		} else if (name.equals("BACKGROUND_COLOR")) {
 			if (sValue.length() == 7) {
-				node.setBackgroundColor(Tools.xmlToColor(sValue));
+				node.setBackgroundColor(XmlTools.xmlToColor(sValue));
 			}
 		} else if (name.equals("ID")) {
 			// do not set label but annotate in list:

@@ -167,7 +167,6 @@ public class MindMapController {
   
   public FitToPageAction fitToPage = null;
 
-	// Extension Actions
 	public Vector iconActions = new Vector(); // fc
   private Color selectionColor = new Color(200, 220, 200);
   /**

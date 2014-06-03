@@ -12,6 +12,7 @@ import javax.swing.UIManager;
 import org.rogach.simplymindmap.model.MindMapModel;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.view.MapView;
+import org.rogach.simplymindmap.view.MapViewScrollPane;
 
 public class StandaloneTree {
   public static void main(String[] args) throws Exception {
@@ -27,7 +28,7 @@ public class StandaloneTree {
     
     JFrame frame = new JFrame();
     
-    MapView.ScrollPane scrollPane = new MapView.ScrollPane();
+    MapViewScrollPane scrollPane = new MapViewScrollPane();
     scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     scrollPane.setViewportView(mapView);
