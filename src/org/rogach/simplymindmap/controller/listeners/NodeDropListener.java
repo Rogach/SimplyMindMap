@@ -19,13 +19,16 @@
 
 package org.rogach.simplymindmap.controller.listeners;
 
+import java.awt.HeadlessException;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import org.rogach.simplymindmap.controller.MindMapController;
@@ -167,7 +170,7 @@ public class NodeDropListener implements DropTargetListener {
 					// an error occured. how to react?
 
 				}
-		} catch (Exception e) {
+		} catch (UnsupportedFlavorException | IOException | HeadlessException e) {
 			System.err.println("Drop exception:" + e);
 			org.rogach.simplymindmap.main.Resources.getInstance().logException(e);
 			dtde.dropComplete(false);

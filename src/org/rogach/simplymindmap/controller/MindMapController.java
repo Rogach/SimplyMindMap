@@ -866,9 +866,7 @@ public class MindMapController {
 					getMap().getAsPlainText(selectedNodes), null, createForNodeIdsFlavor);
 		}
 
-		catch (UnsupportedFlavorException ex) {
-			org.rogach.simplymindmap.main.Resources.getInstance().logException(ex);
-		} catch (IOException ex) {
+		catch (UnsupportedFlavorException | IOException ex) {
 			org.rogach.simplymindmap.main.Resources.getInstance().logException(ex);
 		}
 		return null;

@@ -87,12 +87,12 @@ public class FreeMindCommon {
 			if (systemResource == null) {
 				return null;
 			}
-			InputStream in = systemResource.openStream();
-			if (in == null) {
-				return null;
-			}
-			PropertyResourceBundle bundle = new PropertyResourceBundle(in);
-			in.close();
+      PropertyResourceBundle bundle;
+      try (InputStream in = systemResource.openStream()) {
+        if (in == null) {
+          return null;
+        } bundle = new PropertyResourceBundle(in);
+      }
 			return bundle;
 		}
 

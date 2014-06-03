@@ -109,35 +109,48 @@ public abstract class XMLElementAdapter extends XMLElement {
 
 	public void setName(String name) {
 		super.setName(name);
-		// Create user object based on name
-		if (name.equals(XML_NODE)) {
-			userObject = createNodeAdapter(null);
-			nodeAttributes.clear();
-		} else if (name.equals("edge")) {
-			userObject = createEdgeAdapter(null);
-		} else if (name.equals("font")) {
-			userObject = null;
-		} else if (name.equals(XML_NODE_ATTRIBUTE)) {
-			userObject = null;
-		} else if (name.equals(XML_NODE_ATTRIBUTE_LAYOUT)) {
-			userObject = null;
-		} else if (name.equals("map")) {
-			userObject = null;
-		} else if (name.equals(XML_NODE_ATTRIBUTE_REGISTRY)) {
-			userObject = null;
-		} else if (name.equals(XML_NODE_REGISTERED_ATTRIBUTE_NAME)) {
-			userObject = null;
-		} else if (name.equals(XML_NODE_REGISTERED_ATTRIBUTE_VALUE)) {
-			userObject = null;
-		} else if (name.equals("icon")) {
-			userObject = null;
-		} else if (name.equals("hook")) {
-			// we gather the xml element and send it to the hook after
-			// completion.
-			userObject = new XMLElement();
-		} else {
-			userObject = new XMLElement(); // for childs of hooks
-		}
+    // Create user object based on name
+    switch (name) {
+      case XML_NODE:
+        userObject = createNodeAdapter(null);
+        nodeAttributes.clear();
+        break;
+      case "edge":
+        userObject = createEdgeAdapter(null);
+        break;
+      case "font":
+        userObject = null;
+        break;
+      case XML_NODE_ATTRIBUTE:
+        userObject = null;
+        break;
+      case XML_NODE_ATTRIBUTE_LAYOUT:
+        userObject = null;
+        break;
+      case "map":
+        userObject = null;
+        break;
+      case XML_NODE_ATTRIBUTE_REGISTRY:
+        userObject = null;
+        break;
+      case XML_NODE_REGISTERED_ATTRIBUTE_NAME:
+        userObject = null;
+        break;
+      case XML_NODE_REGISTERED_ATTRIBUTE_VALUE:
+        userObject = null;
+        break;
+      case "icon":
+        userObject = null;
+        break;
+      case "hook":
+        // we gather the xml element and send it to the hook after
+        // completion.
+        userObject = new XMLElement();
+        break;
+      default:
+        userObject = new XMLElement(); // for childs of hooks
+        break;
+    }
 	}
 
 	public void addChild(XMLElement child) {
@@ -195,15 +208,17 @@ public abstract class XMLElementAdapter extends XMLElement {
 
 		if (userObject instanceof EdgeAdapter) {
 			EdgeAdapter edge = (EdgeAdapter) userObject;
-			if (name.equals("COLOR")) {
-				edge.setColor(XmlTools.xmlToColor(sValue));
-			} else if (name.equals("WIDTH")) {
-				if (sValue.equals(EdgeAdapter.EDGE_WIDTH_THIN_STRING)) {
-					edge.setWidth(EdgeAdapter.WIDTH_THIN);
-				} else {
-					edge.setWidth(Integer.parseInt(sValue));
-				}
-			}
+      switch (name) {
+        case "COLOR":
+          edge.setColor(XmlTools.xmlToColor(sValue));
+          break;
+        case "WIDTH":
+          if (sValue.equals(EdgeAdapter.EDGE_WIDTH_THIN_STRING)) {
+            edge.setWidth(EdgeAdapter.WIDTH_THIN);
+          } else {
+            edge.setWidth(Integer.parseInt(sValue));
+          } break;
+      }
 			return;
 		}
 
@@ -216,11 +231,14 @@ public abstract class XMLElementAdapter extends XMLElement {
 
 			// Styling
 			else if (sValue.equals("true")) {
-				if (name.equals("BOLD")) {
-					fontStyle += Font.BOLD;
-				} else if (name.equals("ITALIC")) {
-					fontStyle += Font.ITALIC;
-				}
+        switch (name) {
+          case "BOLD":
+            fontStyle += Font.BOLD;
+            break;
+          case "ITALIC":
+            fontStyle += Font.ITALIC;
+            break;
+        }
 			}
 		}
 		/* icons */
@@ -233,35 +251,42 @@ public abstract class XMLElementAdapter extends XMLElement {
 
 	private MindMapNode setNodeAttribute(String name, String sValue,
 			MindMapNode node) {
-		if (name.equals(XML_NODE_TEXT)) {
-			logger.finest("Setting node text content to:" + sValue);
-			node.setUserObject(sValue);
-		} else if (name.equals("FOLDED")) {
-			if (sValue.equals("true")) {
-				node.setFolded(true);
-			}
-		} else if (name.equals("POSITION")) {
-			// fc, 17.12.2003: Remove the left/right bug.
-			node.setLeft(sValue.equals("left"));
-		} else if (name.equals("COLOR")) {
-			if (sValue.length() == 7) {
-				node.setColor(XmlTools.xmlToColor(sValue));
-			}
-		} else if (name.equals("BACKGROUND_COLOR")) {
-			if (sValue.length() == 7) {
-				node.setBackgroundColor(XmlTools.xmlToColor(sValue));
-			}
-		} else if (name.equals("ID")) {
-			// do not set label but annotate in list:
-			// System.out.println("(sValue, node) = " + sValue + ", "+ node);
-			mIdToTarget.put(sValue, node);
-		} else if (name.equals("VSHIFT")) {
-			node.setShiftY(Integer.parseInt(sValue));
-		} else if (name.equals("VGAP")) {
-			node.setVGap(Integer.parseInt(sValue));
-		} else if (name.equals("HGAP")) {
-			node.setHGap(Integer.parseInt(sValue));
-		}
+    switch (name) {
+      case XML_NODE_TEXT:
+        logger.finest("Setting node text content to:" + sValue);
+        node.setUserObject(sValue);
+        break;
+      case "FOLDED":
+        if (sValue.equals("true")) {
+          node.setFolded(true);
+        } break;
+      case "POSITION":
+        // fc, 17.12.2003: Remove the left/right bug.
+        node.setLeft(sValue.equals("left"));
+        break;
+      case "COLOR":
+        if (sValue.length() == 7) {
+          node.setColor(XmlTools.xmlToColor(sValue));
+        } break;
+      case "BACKGROUND_COLOR":
+        if (sValue.length() == 7) {
+          node.setBackgroundColor(XmlTools.xmlToColor(sValue));
+        } break;
+      case "ID":
+        // do not set label but annotate in list:
+        // System.out.println("(sValue, node) = " + sValue + ", "+ node);
+        mIdToTarget.put(sValue, node);
+        break;
+      case "VSHIFT":
+        node.setShiftY(Integer.parseInt(sValue));
+        break;
+      case "VGAP":
+        node.setVGap(Integer.parseInt(sValue));
+        break;
+      case "HGAP":
+        node.setHGap(Integer.parseInt(sValue));
+        break;
+    }
 		return node;
 	}
 

@@ -21,6 +21,7 @@
 package org.rogach.simplymindmap.model;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Vector;
 import java.util.logging.Logger;
@@ -75,7 +76,7 @@ public class MindMapXMLElement extends XMLElementAdapter {
 			MindMapNode nodeImplementor = (MindMapNode) constructor
 					.newInstance(constrObjs);
 			return nodeImplementor;
-		} catch (Exception e) {
+		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			org.rogach.simplymindmap.main.Resources.getInstance().logException(e,
 					"Error occurred loading node implementor: " + nodeClass);
 			// the best we can do is to return the normal class:

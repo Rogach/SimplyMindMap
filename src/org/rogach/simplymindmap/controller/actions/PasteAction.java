@@ -243,7 +243,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 								true);
 						// addUndoAction(importNode);
 					}
-				} catch (Exception e) {
+				} catch (XMLParseException | IOException e) {
 					org.rogach.simplymindmap.main.Resources.getInstance().logException(e);
 				}
 			}
@@ -288,9 +288,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 					handler.paste(t.getTransferData(flavor), target, asSibling,
 							isLeft, t);
 					break;
-				} catch (UnsupportedFlavorException e) {
-					Resources.getInstance().logException(e);
-				} catch (IOException e) {
+				} catch (UnsupportedFlavorException | IOException e) {
 					Resources.getInstance().logException(e);
 				}
 			}
@@ -507,9 +505,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 				}
 			}
 			return trans;
-		} catch (UnsupportedFlavorException e) {
-			org.rogach.simplymindmap.main.Resources.getInstance().logException(e);
-		} catch (IOException e) {
+		} catch (UnsupportedFlavorException | IOException e) {
 			org.rogach.simplymindmap.main.Resources.getInstance().logException(e);
 		}
 		return null;

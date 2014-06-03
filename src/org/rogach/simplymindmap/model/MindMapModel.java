@@ -307,7 +307,7 @@ public class MindMapModel extends DefaultTreeModel {
 			// // we wait with "invokeHooksRecursively" until the map is fully
 			// // registered.
 			// return (MindMapNodeModel) mapElement.getMapChild();
-		} catch (Exception ex) {
+		} catch (XMLParseException | IOException ex) {
 			String errorMessage = "Error while parsing file:" + ex;
 			System.err.println(errorMessage);
 			org.rogach.simplymindmap.main.Resources.getInstance().logException(ex);
@@ -352,13 +352,11 @@ public class MindMapModel extends DefaultTreeModel {
 		// Returns success of the operation.
 		try {
 			StringWriter stringWriter = new StringWriter();
-			BufferedWriter fileout = new BufferedWriter(stringWriter);
-
-			for (ListIterator it = mindMapNodes.listIterator(); it.hasNext();) {
-				((MindMapNode) it.next()).saveTXT(fileout,/* depth= */0);
-			}
-
-			fileout.close();
+      try (BufferedWriter fileout = new BufferedWriter(stringWriter)) {
+        for (ListIterator it = mindMapNodes.listIterator(); it.hasNext();) {
+          ((MindMapNode) it.next()).saveTXT(fileout,/* depth= */0);
+        }
+      }
 			return stringWriter.toString();
 
 		} catch (Exception e) {
@@ -370,10 +368,10 @@ public class MindMapModel extends DefaultTreeModel {
 	public boolean saveTXT(MindMapNode rootNodeOfBranch, File file) {
 		// Returns success of the operation.
 		try {
-			BufferedWriter fileout = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(file)));
-			rootNodeOfBranch.saveTXT(fileout,/* depth= */0);
-			fileout.close();
+      try (BufferedWriter fileout = new BufferedWriter(new OutputStreamWriter(
+              new FileOutputStream(file)))) {
+        rootNodeOfBranch.saveTXT(fileout,/* depth= */0);
+      }
 			return true;
 
 		} catch (Exception e) {

@@ -49,9 +49,9 @@ public class Resources {
         Resources.class.getClassLoader().getResource(propsLoc);
     Properties props = new Properties();
     try {
-      InputStream in = defaultPropsURL.openStream();
-      props.load(in);
-      in.close();
+      try (InputStream in = defaultPropsURL.openStream()) {
+        props.load(in);
+      }
     } catch (Exception ex) {
       ex.printStackTrace();
       System.err.println("Panic! Error while loading default properties.");

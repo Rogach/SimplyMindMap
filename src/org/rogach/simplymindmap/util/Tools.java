@@ -645,7 +645,7 @@ public class Tools {
 			} else {
 				logger.warning("Can't wait for event queue, if I'm inside this queue!");
 			}
-		} catch (Exception e) {
+		} catch (InterruptedException | InvocationTargetException e) {
 			org.rogach.simplymindmap.main.Resources.getInstance().logException(e);
 		}
 	}

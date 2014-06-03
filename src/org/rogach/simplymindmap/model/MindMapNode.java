@@ -413,7 +413,7 @@ public class MindMapNode implements MutableTreeNode {
     if (children == null) {
       return null;
     }
-    LinkedList<MindMapNode> sorted = new LinkedList<MindMapNode>(children);
+    LinkedList<MindMapNode> sorted = new LinkedList<>(children);
     /*
      * Using this stable sort, we assure that the left nodes came in front
      * of the right ones.
