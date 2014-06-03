@@ -75,7 +75,7 @@ public class CutAction extends AbstractAction implements ActorXml {
 		return cutAction;
 	}
 
-	public Transferable cut(List nodeList) {
+	public Transferable cut(List<MindMapNode> nodeList) {
 		controller.sortNodesByDepth(nodeList);
 		Transferable totalCopy = controller.copy(nodeList, true);
 		// Do-action

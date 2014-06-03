@@ -93,15 +93,15 @@ public class MindMapNode implements MutableTreeNode {
 	public MindMapNode(String userObject, MindMapModel map) {
     setText(userObject);
     this.model = map;
-		children = new LinkedList();
+		children = new LinkedList<>();
 		setEdge(new MindMapEdgeModel(this));
 	}
 
-	public void collectColors(HashSet colors) {
+	public void collectColors(HashSet<Color> colors) {
 		if (color != null) {
 			colors.add(getColor());
 		}
-		for (ListIterator e = childrenUnfolded(); e.hasNext();) {
+    for (ListIterator e = childrenUnfolded(); e.hasNext();) {
 			((MindMapNode) e.next()).collectColors(colors);
 		}
 	}
@@ -172,9 +172,9 @@ public class MindMapNode implements MutableTreeNode {
     userObject = text;
   }
 
-  public Collection getViewers() {
+  public Collection<NodeView> getViewers() {
     if (views == null) {
-      views = new LinkedList<>();
+      views = new LinkedList<NodeView>();
     }
     return views;
   }
@@ -191,7 +191,7 @@ public class MindMapNode implements MutableTreeNode {
 
   /** Creates the TreePath recursively */
   public TreePath getPath() {
-    Vector pathVector = new Vector();
+    Vector<MindMapNode> pathVector = new Vector<MindMapNode>();
     TreePath treePath;
     this.addToPathVector(pathVector);
     treePath = new TreePath(pathVector.toArray());
@@ -401,7 +401,8 @@ public class MindMapNode implements MutableTreeNode {
   }
 
   public ListIterator<MindMapNode> childrenUnfolded() {
-    return children != null ? children.listIterator() : Collections.EMPTY_LIST.listIterator();
+    ListIterator<MindMapNode> emptyIterator = Collections.emptyListIterator();
+    return children != null ? children.listIterator() : emptyIterator;
   }
 
   /*
@@ -438,13 +439,14 @@ public class MindMapNode implements MutableTreeNode {
 
   public ListIterator<MindMapNode> childrenFolded() {
     if (isFolded()) {
-      return Collections.EMPTY_LIST.listIterator();
+      return Collections.emptyListIterator();
     }
     return childrenUnfolded();
   }
 
   public List<MindMapNode> getChildren() {
-    return Collections.unmodifiableList((children != null) ? children : Collections.EMPTY_LIST);
+    List<MindMapNode> noNodes = Collections.emptyList();
+    return Collections.unmodifiableList((children != null) ? children : noNodes);
   }
 
   //
@@ -583,10 +585,10 @@ public class MindMapNode implements MutableTreeNode {
   // Private methods. Internal Implementation
   // ////////////
   /** Recursive Method for getPath() */
-  private void addToPathVector(Vector pathVector) {
+  private void addToPathVector(Vector<MindMapNode> pathVector) {
     pathVector.add(0, this); // Add myself to beginning of Vector
     if (parent != null) {
-      ((MindMapNode) parent).addToPathVector(pathVector);
+      parent.addToPathVector(pathVector);
     }
   }
 
@@ -604,21 +606,21 @@ public class MindMapNode implements MutableTreeNode {
 
   private void createToolTip() {
     if (toolTip == null) {
-      toolTip = new TreeMap();
+      toolTip = new TreeMap<>();
     }
   }
 
   private void createIcons() {
     if (icons == null) {
-      icons = new Vector();
+      icons = new Vector<>();
     }
   }
 
   /**
    */
-  public SortedMap getToolTip() {
+  public SortedMap<String, String> getToolTip() {
     if (toolTip == null) {
-      return new TreeMap();
+      return new TreeMap<>();
     }
     ;
     return Collections.unmodifiableSortedMap(toolTip);

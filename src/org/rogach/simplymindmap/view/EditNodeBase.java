@@ -36,6 +36,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -259,7 +260,7 @@ public class EditNodeBase {
 		final KeyboardFocusManager currentKeyboardFocusManager =
 				KeyboardFocusManager.getCurrentKeyboardFocusManager();
 		class KeyEventQueue implements KeyEventDispatcher, FocusListener {
-			LinkedList events = new LinkedList();
+			List<KeyEvent> events = new LinkedList<>();
 
 			public boolean dispatchKeyEvent(KeyEvent e) {
 				events.add(e);

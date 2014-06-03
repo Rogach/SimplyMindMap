@@ -25,10 +25,10 @@ public class CompoundAction extends XmlAction {
     choiceList.clear();
   }
 
-  public java.util.List getListChoiceList() {
+  public java.util.List<Object> getListChoiceList() {
     return java.util.Collections.unmodifiableList(choiceList);
   }
 
-  protected ArrayList choiceList = new ArrayList();
+  protected ArrayList<Object> choiceList = new ArrayList<>();
 
 } /* CompoundAction*/

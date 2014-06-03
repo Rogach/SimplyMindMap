@@ -167,15 +167,15 @@ public class MindMapController {
   
   public FitToPageAction fitToPage = null;
 
-	public Vector iconActions = new Vector(); // fc
+	public Vector<Action> iconActions = new Vector<>();
   private Color selectionColor = new Color(200, 220, 200);
   /**
    * The model, this controller belongs to. It may be null, if it is the
    * default controller that does not show a map.
    */
   private MindMapModel mModel;
-  private HashSet mNodeSelectionListeners = new HashSet();
-  private HashSet mNodeLifetimeListeners = new HashSet();
+  private HashSet<NodeSelectionListener> mNodeSelectionListeners = new HashSet<>();
+  private HashSet<NodeLifetimeListener> mNodeLifetimeListeners = new HashSet<>();
   // status, currently: default, blocked (PN)
   // (blocked to protect against particular events e.g. in edit mode)
   private boolean isBlocked = false;
@@ -314,11 +314,10 @@ public class MindMapController {
   public void onLostFocusNode(NodeView node) {
     try {
       // deselect the old node:
-      HashSet copy = new HashSet(mNodeSelectionListeners);
+      HashSet<NodeSelectionListener> copy = new HashSet<>(mNodeSelectionListeners);
       // we copied the set to be able to remove listeners during a
       // listener method.
-      for (Iterator iter = copy.iterator(); iter.hasNext();) {
-        NodeSelectionListener listener = (NodeSelectionListener) iter.next();
+      for (NodeSelectionListener listener : copy) {
         listener.onLostFocusNode(node);
       }
     } catch (RuntimeException e) {
@@ -329,7 +328,7 @@ public class MindMapController {
   public void onFocusNode(NodeView node) {
     try {
       // select the new node:
-      HashSet copy = new HashSet(mNodeSelectionListeners);
+      HashSet<NodeSelectionListener> copy = new HashSet<>(mNodeSelectionListeners);
       // we copied the set to be able to remove listeners during a
       // listener method.
       for (Iterator iter = copy.iterator(); iter.hasNext();) {
@@ -343,9 +342,8 @@ public class MindMapController {
 
   public void changeSelection(NodeView pNode, boolean pIsSelected) {
     try {
-      HashSet copy = new HashSet(mNodeSelectionListeners);
-      for (Iterator iter = copy.iterator(); iter.hasNext();) {
-        NodeSelectionListener listener = (NodeSelectionListener) iter.next();
+      HashSet<NodeSelectionListener> copy = new HashSet<>(mNodeSelectionListeners);
+      for (NodeSelectionListener listener : copy) {
         listener.onSelectionChange(pNode, pIsSelected);
       }
     } catch (RuntimeException e) {
@@ -424,7 +422,7 @@ public class MindMapController {
 
   public void firePreSaveEvent(MindMapNode node) {
     // copy to prevent concurrent modification.
-    HashSet listenerCopy = new HashSet(mNodeSelectionListeners);
+    HashSet<NodeSelectionListener> listenerCopy = new HashSet<>(mNodeSelectionListeners);
     for (Iterator iter = listenerCopy.iterator(); iter.hasNext();) {
       NodeSelectionListener listener = (NodeSelectionListener) iter.next();
       listener.onSaveNode(node);
@@ -438,9 +436,9 @@ public class MindMapController {
    *
    * @return returns a list of MindMapNode s.
    */
-  public List getSelecteds() {
-    LinkedList selecteds = new LinkedList();
-    ListIterator it = getView().getSelecteds().listIterator();
+  public List<MindMapNode> getSelecteds() {
+    LinkedList<MindMapNode> selecteds = new LinkedList<>();
+    ListIterator<NodeView> it = getView().getSelecteds().listIterator();
     if (it != null) {
       while (it.hasNext()) {
         NodeView selected = (NodeView) it.next();
@@ -487,14 +485,14 @@ public class MindMapController {
     getView().selectBranch(selected, extend);
   }
 
-  public List getSelectedsByDepth() {
+  public List<MindMapNode> getSelectedsByDepth() {
     // return an ArrayList of MindMapNodes.
-    List result = getSelecteds();
+    List<MindMapNode> result = getSelecteds();
     sortNodesByDepth(result);
     return result;
   }
 
-  public void sortNodesByDepth(List inPlaceList) {
+  public void sortNodesByDepth(List<MindMapNode> inPlaceList) {
     Collections.sort(inPlaceList, new MindMapController.nodesDepthComparator());
     logger.finest("Sort result: " + inPlaceList);
   }
@@ -590,7 +588,7 @@ public class MindMapController {
   }
 
   public List createForNodeIdsFlavor(List selectedNodes, boolean copyInvisible) throws UnsupportedFlavorException, IOException {
-    Vector forNodesFlavor = new Vector();
+    Vector<String> forNodesFlavor = new Vector<>();
     boolean firstLoop = true;
     for (Iterator it = selectedNodes.iterator(); it.hasNext();) {
       MindMapNode tmpNode = (MindMapNode) it.next();
@@ -630,7 +628,7 @@ public class MindMapController {
    * Display a node in the display (used by find and the goto action by arrow
    * link actions).
    */
-  public void displayNode(MindMapNode node, ArrayList nodesUnfoldedByDisplay) {
+  public void displayNode(MindMapNode node, ArrayList<MindMapNode> nodesUnfoldedByDisplay) {
     // Unfold the path to the node
     Object[] path = getMap().getPathToRoot(node);
     // Iterate the path with the exception of the last node
@@ -846,7 +844,8 @@ public class MindMapController {
 					.getLinkRegistry(), saveInvisible, true);
 		} catch (IOException e) {
 		}
-		Vector nodeList = Tools.getVectorWithSingleElement(getNodeID(node));
+		Vector<String> nodeList = new Vector<>();
+    nodeList.add(getNodeID(node));
 		return new MindMapNodesSelection(stringWriter.toString(),
 				null, null, nodeList);
 	}
@@ -876,7 +875,7 @@ public class MindMapController {
 		return cut(getView().getSelectedNodesSortedByY());
 	}
 
-	public Transferable cut(List nodeList) {
+	public Transferable cut(List<MindMapNode> nodeList) {
 		return cut.cut(nodeList);
 	}
 
@@ -1041,7 +1040,7 @@ public class MindMapController {
 		return new MindMapXMLElement(this);
 	}
   
-	public MindMapNode createNodeTreeFromXml(Reader pReader, HashMap pIDToTarget)
+	public MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, MindMapNode> pIDToTarget)
 			throws XMLParseException, IOException {
 		XMLElementAdapter element = (XMLElementAdapter) createXMLElement();
 		element.setIDToTarget(pIDToTarget);
@@ -1104,16 +1103,14 @@ public class MindMapController {
    * Moreover, it sorts nodes with the same depth according to their position
    * relative to each other.
    */
-  protected class nodesDepthComparator implements Comparator {
+  protected class nodesDepthComparator implements Comparator<MindMapNode> {
 
     public nodesDepthComparator() {
       super();
     }
 
     /* the < relation. */
-    public int compare(Object p1, Object p2) {
-      MindMapNode n1 = (MindMapNode) p1;
-      MindMapNode n2 = (MindMapNode) p2;
+    public int compare(MindMapNode n1, MindMapNode n2) {
       Object[] path1 = getModel().getPathToRoot(n1);
       Object[] path2 = getModel().getPathToRoot(n2);
       int depth = path1.length - path2.length;

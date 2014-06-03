@@ -41,15 +41,14 @@ public class MindMapLinkRegistry {
 	// //////////////////////////////////////////////////////////////////////////////////////
 
 	/** MindMapNode = Target -> ID. */
-	protected HashMap mTargetToId;
+	protected HashMap<MindMapNode, String> mTargetToId;
 	/** MindMapNode-> ID. */
-	protected HashMap mIdToTarget;
+	protected HashMap<String, MindMapNode> mIdToTarget;
 	/** id -> vector of links whose TargetToID.get(target) == id. */
-	protected HashMap mIdToLinks;
+	protected HashMap<String, Vector<Object>> mIdToLinks;
 	/** id -> link */
 	protected HashMap mIdToLink;
-	/** id */
-	protected HashSet mLocallyLinkedIds;
+	protected HashSet<String> mLocallyLinkedIds;
 
 	protected static java.util.logging.Logger logger = null;
 
@@ -61,11 +60,11 @@ public class MindMapLinkRegistry {
 			logger = org.rogach.simplymindmap.main.Resources.getInstance().getLogger(
 					this.getClass().getName());
 		}
-		mTargetToId = new HashMap();
-		mIdToTarget = new HashMap();
-		mIdToLinks = new HashMap();
-		mIdToLink = new HashMap();
-		mLocallyLinkedIds = new HashSet();
+		mTargetToId = new HashMap<>();
+		mIdToTarget = new HashMap<>();
+		mIdToLinks = new HashMap<>();
+		mIdToLink = new HashMap<>();
+		mLocallyLinkedIds = new HashSet<>();
 	}
 
 	/**
@@ -131,7 +130,7 @@ public class MindMapLinkRegistry {
 	 */
 	public String getState(MindMapNode node) {
 		if (mTargetToId.containsKey(node))
-			return (String) mTargetToId.get(node);
+			return mTargetToId.get(node);
 		return null;
 	}
 
@@ -140,19 +139,18 @@ public class MindMapLinkRegistry {
 	 * the argument.
 	 */
 	public MindMapNode getTargetForId(String ID) {
-		final Object target = mIdToTarget.get(ID);
-		return (MindMapNode) target;
+		return mIdToTarget.get(ID);
 	}
 
 	/** @return a Vector of {@link MindMapLink}s */
 	private Vector getAssignedLinksVector(String newId) {
 		String id = newId;
 		// look, if target is already present:
-		Vector vec;
+		Vector<Object> vec;
 		if (mIdToLinks.containsKey(id)) {
-			vec = (Vector) mIdToLinks.get(id);
+			vec = mIdToLinks.get(id);
 		} else {
-			vec = new Vector();
+			vec = new Vector<>();
 			mIdToLinks.put(id, vec);
 		}
 

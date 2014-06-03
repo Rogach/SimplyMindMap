@@ -188,7 +188,7 @@ public class XMLElement {
 	 * </dd>
 	 * </dl>
 	 */
-	private TreeMap attributes;
+	private TreeMap<String, String> attributes;
 
 	/**
 	 * Child elements of the element.
@@ -205,7 +205,7 @@ public class XMLElement {
 	 * </dd>
 	 * </dl>
 	 */
-	private Vector children;
+	private Vector<XMLElement> children;
 
 	/**
 	 * The name of the element.
@@ -264,7 +264,7 @@ public class XMLElement {
 	 * </dd>
 	 * </dl>
 	 */
-	private Hashtable entities;
+	private Hashtable<String, char[]> entities;
 
 	/**
 	 * The line number where the element starts.
@@ -357,7 +357,7 @@ public class XMLElement {
 	 *      XMLElement(Hashtable, boolean)
 	 */
 	public XMLElement() {
-		this(new Hashtable(), false, true, true);
+		this(new Hashtable<String, char[]>(), false, true, true);
 	}
 
 	/**
@@ -401,7 +401,7 @@ public class XMLElement {
 	 * @see freemind.main.XMLElement#XMLElement(java.util.Hashtable,boolean)
 	 *      XMLElement(Hashtable, boolean)
 	 */
-	public XMLElement(Hashtable entities) {
+	public XMLElement(Hashtable<String, char[]> entities) {
 		this(entities, false, true, true);
 	}
 
@@ -440,7 +440,7 @@ public class XMLElement {
 	 *      XMLElement(Hashtable, boolean)
 	 */
 	public XMLElement(boolean skipLeadingWhitespace) {
-		this(new Hashtable(), skipLeadingWhitespace, true, true);
+		this(new Hashtable<String, char[]>(), skipLeadingWhitespace, true, true);
 	}
 
 	/**
@@ -485,7 +485,7 @@ public class XMLElement {
 	 * @see freemind.main.XMLElement#XMLElement(java.util.Hashtable)
 	 *      XMLElement(Hashtable)
 	 */
-	public XMLElement(Hashtable entities, boolean skipLeadingWhitespace) {
+	public XMLElement(Hashtable<String, char[]> entities, boolean skipLeadingWhitespace) {
 		this(entities, skipLeadingWhitespace, true, true);
 	}
 
@@ -529,7 +529,7 @@ public class XMLElement {
 	 * @see freemind.main.XMLElement#XMLElement(java.util.Hashtable,boolean)
 	 *      XMLElement(Hashtable, boolean)
 	 */
-	public XMLElement(Hashtable entities, boolean skipLeadingWhitespace,
+	public XMLElement(Hashtable<String, char[]> entities, boolean skipLeadingWhitespace,
 			boolean ignoreCase) {
 		this(entities, skipLeadingWhitespace, true, ignoreCase);
 	}
@@ -578,25 +578,16 @@ public class XMLElement {
 	 * 
 	 * @see freemind.main.XMLElement#createAnotherElement()
 	 */
-	protected XMLElement(Hashtable entities, boolean skipLeadingWhitespace,
+	protected XMLElement(Hashtable<String, char[]> entities, boolean skipLeadingWhitespace,
 			boolean fillBasicConversionTable, boolean ignoreCase) {
 		this.ignoreWhitespace = skipLeadingWhitespace;
 		this.ignoreCase = ignoreCase;
 		this.name = null;
 		this.contents = "";
-		this.attributes = new TreeMap();
-		this.children = new Vector();
+		this.attributes = new TreeMap<>();
+		this.children = new Vector<>();
 		this.entities = entities;
 		this.lineNr = 0;
-		Enumeration enumerator = this.entities.keys();
-		while (enumerator.hasMoreElements()) {
-			Object key = enumerator.nextElement();
-			Object value = this.entities.get(key);
-			if (value instanceof String) {
-				value = ((String) value).toCharArray();
-				this.entities.put(key, value);
-			}
-		}
 		if (fillBasicConversionTable) {
 			this.entities.put("amp", new char[] { '&' });
 			this.entities.put("quot", new char[] { '"' });

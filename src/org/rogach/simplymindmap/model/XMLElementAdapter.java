@@ -35,7 +35,7 @@ public abstract class XMLElementAdapter extends XMLElement {
 
 	private Object userObject = null;
 	private MindMapNode mapChild = null;
-	private HashMap nodeAttributes = new HashMap();
+	private HashMap<String, String> nodeAttributes = new HashMap<>();
 
 	// Font attributes
 
@@ -49,7 +49,7 @@ public abstract class XMLElementAdapter extends XMLElement {
 
 	// arrow link attributes:
 	protected Vector mArrowLinkAdapters;
-	protected HashMap /* id -> target */mIdToTarget;
+	protected HashMap<String, MindMapNode> mIdToTarget;
 	public static final String XML_NODE_TEXT = "TEXT";
 	public static final String XML_NODE = "node";
 	public static final String XML_NODE_ATTRIBUTE = "attribute";
@@ -73,13 +73,11 @@ public abstract class XMLElementAdapter extends XMLElement {
 	// Overhead methods
 
 	public XMLElementAdapter(MindMapController modeController) {
-		this(modeController, new Vector(), new HashMap());
+		this(modeController, new HashMap<String, MindMapNode>());
 	}
 
-	protected XMLElementAdapter(MindMapController modeController,
-			Vector arrowLinkAdapters, HashMap IDToTarget) {
+	protected XMLElementAdapter(MindMapController modeController, HashMap<String, MindMapNode> IDToTarget) {
 		this.mMindMapController = modeController;
-		this.mArrowLinkAdapters = arrowLinkAdapters;
 		this.mIdToTarget = IDToTarget;
 		if (logger == null) {
 			logger = Logger.getLogger(this.getClass().getName());
@@ -354,7 +352,7 @@ public abstract class XMLElementAdapter extends XMLElement {
 		return mIdToTarget;
 	}
 
-	public void setIDToTarget(HashMap pToTarget) {
+	public void setIDToTarget(HashMap<String, MindMapNode> pToTarget) {
 		mIdToTarget = pToTarget;
 	}
 }

@@ -34,7 +34,7 @@ import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 public class ActionFactory {
   
 	/** HashMap of Action class -> actor instance. */
-	private HashMap registeredActors;
+	private HashMap<Class, ActorXml> registeredActors;
 	private UndoActionHandler undoActionHandler;
 	private static java.util.logging.Logger logger = null;
 
@@ -46,7 +46,7 @@ public class ActionFactory {
 		if (logger == null) {
 			logger = Logger.getLogger(this.getClass().getName());
 		}
-		registeredActors = new HashMap();
+		registeredActors = new HashMap<>();
 	}
 
 	/**

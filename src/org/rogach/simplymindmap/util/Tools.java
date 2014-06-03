@@ -82,7 +82,7 @@ public class Tools {
 		logger = Logger.getLogger("Tools");
 	}
 
-	private static Set availableFontFamilyNames = null;
+	private static Set<String> availableFontFamilyNames = null;
 
 	private static String sEnvFonts[] = null;
 
@@ -92,9 +92,9 @@ public class Tools {
 	 * Converts a String in the format "value;value;value" to a List with the
 	 * values (as strings)
 	 */
-	public static List stringToList(String string) {
+	public static List<String> stringToList(String string) {
 		StringTokenizer tok = new StringTokenizer(string, ";");
-		List list = new LinkedList();
+		List<String> list = new LinkedList<>();
 		while (tok.hasMoreTokens()) {
 			list.add(tok.nextToken());
 		}
@@ -110,10 +110,10 @@ public class Tools {
 		return str;
 	}
 
-	public static Set getAvailableFontFamilyNames() {
+	public static Set<String> getAvailableFontFamilyNames() {
 		if (availableFontFamilyNames == null) {
 			String[] envFonts = getAvailableFonts();
-			availableFontFamilyNames = new HashSet();
+			availableFontFamilyNames = new HashSet<String>();
 			for (int i = 0; i < envFonts.length; i++) {
 				availableFontFamilyNames.add(envFonts[i]);
 			}
@@ -132,15 +132,6 @@ public class Tools {
 			sEnvFonts = gEnv.getAvailableFontFamilyNames();
 		}
 		return sEnvFonts;
-	}
-
-	public static Vector getAvailableFontFamilyNamesAsVector() {
-		String[] envFonts = getAvailableFonts();
-		Vector availableFontFamilyNames = new Vector();
-		for (int i = 0; i < envFonts.length; i++) {
-			availableFontFamilyNames.add(envFonts[i]);
-		}
-		return availableFontFamilyNames;
 	}
 
 	public static boolean isAvailableFontFamily(String fontFamilyName) {
@@ -673,12 +664,6 @@ public class Tools {
 		return font;
 	}
 
-	public static Vector getVectorWithSingleElement(Object obj) {
-		Vector nodes = new Vector();
-		nodes.add(obj);
-		return nodes;
-	}
-
 	public static boolean isUnix() {
 		return (File.separatorChar == '/') || isMacOsX();
 	}
@@ -778,7 +763,7 @@ public class Tools {
 		dialog.addWindowListener(new Closer());
 		dialog.addComponentListener(new DisposeOnClose());
 
-		dialog.show(); // blocks until user brings dialog down...
+		dialog.setVisible(true); // blocks until user brings dialog down...
 
 		return ok.getColor();
 	}

@@ -2,6 +2,7 @@ package org.rogach.simplymindmap.util;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Vector;
@@ -45,9 +46,8 @@ public class XmlTools {
 
 	public static String PointToXml(Point col) {
 		if (col == null)
-			return null; // throw new IllegalArgumentException("Point was
-		// null");
-		Vector l = new Vector();
+			return null;
+		List<String> l = new ArrayList<String>();
 		l.add(Integer.toString(col.x));
 		l.add(Integer.toString(col.y));
 		return listToString((List) l);

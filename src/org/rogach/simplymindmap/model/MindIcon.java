@@ -37,18 +37,17 @@ import org.rogach.simplymindmap.main.Resources;
 public class MindIcon implements Comparable, IconInformation {
 	public static final String PROPERTY_STRING_ICONS_LIST = "icons.list";
 	private String name;
-	private String description;
 	private int number = UNKNOWN;
 	/**
 	 * Stores the once created ImageIcon.
 	 */
 	private ImageIcon associatedIcon;
-	private static Vector mAllIconNames;
+	private static Vector<String> mAllIconNames;
 	private static ImageIcon iconNotFound;
 	/**
 	 * Set of all created icons. Name -> MindIcon
 	 */
-	private static HashMap createdIcons = new HashMap();
+	private static HashMap<String, MindIcon> createdIcons = new HashMap<>();
 	private static final int UNKNOWN = -1;
 	public static final int LAST = UNKNOWN;
 	static int nextNumber = UNKNOWN - 1;
@@ -162,10 +161,10 @@ public class MindIcon implements Comparable, IconInformation {
 		this.associatedIcon = _associatedIcon;
 	}
 
-	public static Vector getAllIconNames() {
+	public static Vector<String> getAllIconNames() {
 		if (mAllIconNames != null)
 			return mAllIconNames;
-		Vector mAllIconNames = new Vector();
+		Vector<String> mAllIconNames = new Vector<>();
 		String icons = Resources.getInstance().getProperty(PROPERTY_STRING_ICONS_LIST);
 		StringTokenizer tokenizer = new StringTokenizer(icons, ";");
 		while (tokenizer.hasMoreTokens()) {

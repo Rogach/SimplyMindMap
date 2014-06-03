@@ -31,7 +31,7 @@ import java.util.Vector;
 import javax.swing.ImageIcon;
 
 public class MultipleImage extends ImageIcon {
-	private Vector mImages = new Vector();
+	private Vector<ImageIcon> mImages = new Vector<ImageIcon>();
 	private double zoomFactor = 1;
 	private boolean isDirty;
 

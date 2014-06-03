@@ -296,7 +296,7 @@ public class MindMapModel extends DefaultTreeModel {
       reader = Tools.getActualReader(pReaderCreator.createReader());
     }
 		try {
-			HashMap IDToTarget = new HashMap();
+			HashMap<String, MindMapNode> IDToTarget = new HashMap<>();
 			return (MindMapNode) mMindMapController.createNodeTreeFromXml(
 					reader, IDToTarget);
 			// MindMapXMLElement mapElement = new

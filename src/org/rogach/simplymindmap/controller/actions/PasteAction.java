@@ -307,7 +307,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 
 	public MindMapNode pasteXMLWithoutRedisplay(String pasted,
 			MindMapNode target, boolean asSibling, boolean changeSide,
-			boolean isLeft, HashMap pIDToTarget) throws XMLParseException {
+			boolean isLeft, HashMap<String, MindMapNode> pIDToTarget) throws XMLParseException {
 		// Call nodeStructureChanged(target) after this function.
 		logger.fine("Pasting " + pasted + " to " + target);
 		try {
@@ -379,8 +379,8 @@ public class PasteAction extends AbstractAction implements ActorXml {
 			parent = new MindMapNode(null, mMindMapController.getMap());
 		}
 
-		ArrayList parentNodes = new ArrayList();
-		ArrayList parentNodesDepths = new ArrayList();
+		ArrayList<MindMapNode> parentNodes = new ArrayList<>();
+		ArrayList<Integer> parentNodesDepths = new ArrayList<>();
 
 		parentNodes.add(parent);
 		parentNodesDepths.add(new Integer(-1));

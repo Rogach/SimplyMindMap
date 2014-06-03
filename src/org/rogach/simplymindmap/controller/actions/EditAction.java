@@ -157,7 +157,7 @@ public class EditAction extends AbstractAction implements ActorXml {
 											// to the parent
 							mMindMapController.getView()
 									.selectAsTheOnlyOneSelected(node);
-							Vector nodeList = new Vector();
+							Vector<MindMapNode> nodeList = new Vector<>();
 							nodeList.add(node.getModel());
 							mMindMapController.cut(nodeList);
 							mMindMapController.select(prevSelected);

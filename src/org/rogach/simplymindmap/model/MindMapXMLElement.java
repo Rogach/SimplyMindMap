@@ -39,8 +39,8 @@ public class MindMapXMLElement extends XMLElementAdapter {
 	}
 
 	protected MindMapXMLElement(MindMapController pMindMapController,
-			Vector ArrowLinkAdapters, HashMap IDToTarget) {
-		super(pMindMapController, ArrowLinkAdapters, IDToTarget);
+			Vector ArrowLinkAdapters, HashMap<String, MindMapNode> IDToTarget) {
+		super(pMindMapController, IDToTarget);
 		init();
 	}
 
@@ -69,10 +69,10 @@ public class MindMapXMLElement extends XMLElementAdapter {
 			// construct class loader:
 			ClassLoader loader = this.getClass().getClassLoader();
 			// constructed.
-			Class nodeJavaClass = Class.forName(nodeClass, true, loader);
+			Class<?> nodeJavaClass = Class.forName(nodeClass, true, loader);
 			Class[] constrArgs = new Class[] { Object.class, MindMapModel.class };
 			Object[] constrObjs = new Object[] { null, getMap() };
-			Constructor constructor = nodeJavaClass.getConstructor(constrArgs);
+			Constructor<?> constructor = nodeJavaClass.getConstructor(constrArgs);
 			MindMapNode nodeImplementor = (MindMapNode) constructor
 					.newInstance(constrObjs);
 			return nodeImplementor;

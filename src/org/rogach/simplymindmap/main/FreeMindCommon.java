@@ -110,7 +110,7 @@ public class FreeMindCommon {
 			}
 		}
 
-		public Enumeration getKeys() {
+		public Enumeration<String> getKeys() {
 			return defaultResources.getKeys();
 		}
 

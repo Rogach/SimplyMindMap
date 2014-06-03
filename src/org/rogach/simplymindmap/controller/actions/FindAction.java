@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ListIterator;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
@@ -49,13 +50,13 @@ import org.rogach.simplymindmap.util.Tools;
 public class FindAction extends AbstractAction {
 	private final MindMapController controller;
 
-	private ArrayList findNodesUnfoldedByLastFind;
+	private List<MindMapNode> findNodesUnfoldedByLastFind;
 
 	private MindMapNode findFromNode;
 
 	private String searchTerm;
 
-	private Collection subterms;
+	private Collection<String> subterms;
 
 	/**
 	 * @return Returns the subterms.
@@ -76,7 +77,7 @@ public class FindAction extends AbstractAction {
 
 	private boolean findCaseSensitive;
 
-	private LinkedList findNodeQueue;
+	private LinkedList<MindMapNode> findNodeQueue;
 
 	private JDialog mDialog;
 
@@ -103,7 +104,7 @@ public class FindAction extends AbstractAction {
 		if (what == null || what.equals("")) {
 			return;
 		}
-		Collection subterms = breakSearchTermIntoSubterms(what);
+		Collection<String> subterms = breakSearchTermIntoSubterms(what);
 		this.searchTerm = what;
 		// System.err.println(subterms);
 		/* caseSensitive=false */
@@ -244,15 +245,15 @@ public class FindAction extends AbstractAction {
 		}
 	}
 
-	public boolean find(MindMapNode node, Collection subterms,
+	public boolean find(MindMapNode node, Collection<String> subterms,
 			boolean caseSensitive) {
-		findNodesUnfoldedByLastFind = new ArrayList();
-		LinkedList nodes = new LinkedList();
+		findNodesUnfoldedByLastFind = new ArrayList<MindMapNode>();
+		LinkedList<MindMapNode> nodes = new LinkedList<MindMapNode>();
 		nodes.addFirst(node);
 		findFromNode = node;
-		Collection finalizedSubterms;
+		Collection<String> finalizedSubterms;
 		if (!caseSensitive) {
-			finalizedSubterms = new ArrayList();
+			finalizedSubterms = new ArrayList<String>();
 			for (Iterator i = subterms.iterator(); i.hasNext();) {
 				finalizedSubterms.add(((String) i.next()).toLowerCase());
 			}
@@ -262,35 +263,25 @@ public class FindAction extends AbstractAction {
 		return find(nodes, finalizedSubterms, caseSensitive);
 	}
 
-	private boolean find(LinkedList /* queue of MindMapNode */nodes,
-			Collection subterms, boolean caseSensitive) {
-		// Precondition: if !caseSensitive then >>what<< is in lowercase.
-		boolean searchInNotesToo = Resources.getInstance().getBoolProperty(
-				"resources_search_in_notes_too");
+	private boolean find(LinkedList<MindMapNode> nodes,
+			Collection<String> subterms, boolean caseSensitive) {
 
-		// Fold the path of previously found node
-		boolean thereWereNodesToBeFolded = !findNodesUnfoldedByLastFind
-				.isEmpty();
 		if (!findNodesUnfoldedByLastFind.isEmpty()) {
 
-			// if (false) {
-			ListIterator i = findNodesUnfoldedByLastFind
-					.listIterator(findNodesUnfoldedByLastFind.size());
-			while (i.hasPrevious()) {
-				MindMapNode node = (MindMapNode) i.previous();
+			for (MindMapNode node : findNodesUnfoldedByLastFind) {
 				try {
 					controller.setFolded(node, true);
 				} catch (Exception e) {
 				}
 			}
-			findNodesUnfoldedByLastFind = new ArrayList();
+			findNodesUnfoldedByLastFind = new ArrayList<>();
 		}
 
 		// We implement width-first search.
 		while (!nodes.isEmpty()) {
 			MindMapNode node = (MindMapNode) nodes.removeFirst();
 			// Add children to the queue
-			for (ListIterator i = node.childrenUnfolded(); i.hasNext();) {
+			for (ListIterator<MindMapNode> i = node.childrenUnfolded(); i.hasNext();) {
 				nodes.addLast(i.next());
 			}
 
@@ -337,8 +328,8 @@ public class FindAction extends AbstractAction {
 		return nodeText;
 	}
 
-	private Collection breakSearchTermIntoSubterms(String searchTerm) {
-		ArrayList subterms = new ArrayList();
+	private Collection<String> breakSearchTermIntoSubterms(String searchTerm) {
+		List<String> subterms = new ArrayList<>();
 		StringBuffer subterm = new StringBuffer();
 		int len = searchTerm.length();
 		char myChar;
@@ -373,7 +364,7 @@ public class FindAction extends AbstractAction {
 	 * Display a node in the display (used by find and the goto action by arrow
 	 * link actions).
 	 */
-	public void displayNode(MindMapNode node, ArrayList nodesUnfoldedByDisplay) {
+	public void displayNode(MindMapNode node, List<MindMapNode> nodesUnfoldedByDisplay) {
 		// Unfold the path to the node
 		Object[] path = controller.getMap().getPathToRoot(node);
 		// Iterate the path with the exception of the last node

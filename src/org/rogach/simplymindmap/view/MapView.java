@@ -43,6 +43,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -513,7 +514,7 @@ public class MapView extends JPanel implements Autoscroll {
 	 */
 	public void selectAsTheOnlyOneSelected(NodeView newSelected) {
 		logger.finest("selectAsTheOnlyOneSelected");
-		LinkedList oldSelecteds = getSelecteds();
+		List<NodeView> oldSelecteds = getSelecteds();
 		// select new node
 		this.selected.clear();
 		this.selected.add(newSelected);
@@ -527,8 +528,7 @@ public class MapView extends JPanel implements Autoscroll {
 		scrollNodeToVisible(newSelected);
 		newSelected.repaintSelected();
 
-		for (ListIterator e = oldSelecteds.listIterator(); e.hasNext();) {
-			NodeView oldSelected = (NodeView) e.next();
+    for (NodeView oldSelected : oldSelecteds) {
 			if (oldSelected != null) {
 				oldSelected.repaintSelected();
 			}
@@ -603,8 +603,8 @@ public class MapView extends JPanel implements Autoscroll {
 		/* fc, 25.1.2004: corrected due to completely inconsistent behaviour. */
 		NodeView oldSelected = null;
 		// search for the last already selected item among the siblings:
-		LinkedList selList = getSelecteds();
-		ListIterator j = selList.listIterator(/* selList.size() */);
+		List<NodeView> selList = getSelecteds();
+		ListIterator j = selList.listIterator();
 		while (j.hasNext()) {
 			NodeView selectedNode = (NodeView) j.next();
 			if (selectedNode != newSelected
@@ -728,9 +728,9 @@ public class MapView extends JPanel implements Autoscroll {
 		return selected.get(i);
 	}
 
-	public LinkedList getSelecteds() {
+	public List<NodeView> getSelecteds() {
 		// return an ArrayList of NodeViews.
-		LinkedList result = new LinkedList();
+		List<NodeView> result = new LinkedList<>();
 		for (int i = 0; i < selected.size(); i++) {
 			result.add(getSelected(i));
 		}
@@ -741,12 +741,12 @@ public class MapView extends JPanel implements Autoscroll {
 	 * @return an ArrayList of MindMapNode objects. If both ancestor and
 	 *         descendant node are selected, only the ancestor is returned
 	 */
-	public ArrayList /* of MindMapNodes */getSelectedNodesSortedByY() {
-		final HashSet selectedNodesSet = new HashSet();
+	public List<MindMapNode> getSelectedNodesSortedByY() {
+		final HashSet<MindMapNode> selectedNodesSet = new HashSet<>();
 		for (int i = 0; i < selected.size(); i++) {
 			selectedNodesSet.add(getSelected(i).getModel());
 		}
-		LinkedList pointNodePairs = new LinkedList();
+		List<Pair> pointNodePairs = new LinkedList<>();
 
 		Point point = new Point();
 		iteration: for (int i = 0; i < selected.size(); i++) {
@@ -763,33 +763,19 @@ public class MapView extends JPanel implements Autoscroll {
 			pointNodePairs.add(new Pair(new Integer(point.y), node));
 		}
 		// do the sorting:
-		Collections.sort(pointNodePairs, new Comparator() {
+		Collections.sort(pointNodePairs, new Comparator<Pair>() {
 
-			public int compare(Object arg0, Object arg1) {
-				if (arg0 instanceof Pair) {
-					Pair pair0 = (Pair) arg0;
-					if (arg1 instanceof Pair) {
-						Pair pair1 = (Pair) arg1;
-						Integer int0 = (Integer) pair0.getFirst();
-						Integer int1 = (Integer) pair1.getFirst();
-						return int0.compareTo(int1);
-					}
-				}
-				throw new IllegalArgumentException("Wrong compare arguments "
-						+ arg0 + ", " + arg1);
+			public int compare(Pair arg0, Pair arg1) {
+        Integer int0 = (Integer) arg0.getFirst();
+				Integer int1 = (Integer) arg1.getFirst();
+        return int0.compareTo(int1);
 			}
 		});
 
-		ArrayList selectedNodes = new ArrayList();
+		List<MindMapNode> selectedNodes = new ArrayList<>();
 		for (Iterator it = pointNodePairs.iterator(); it.hasNext();) {
-			selectedNodes.add(((Pair) it.next()).getSecond());
+			selectedNodes.add((MindMapNode) ((Pair) it.next()).getSecond());
 		}
-
-		// logger.fine("Cutting #" + selectedNodes.size());
-		// for (Iterator it = selectedNodes.iterator(); it.hasNext();) {
-		// MindMapNode node = (MindMapNode) it.next();
-		// logger.fine("Cutting " + node);
-		// }
 		return selectedNodes;
 	}
 
@@ -918,7 +904,7 @@ public class MapView extends JPanel implements Autoscroll {
 		// MindIcon.factory("ksmiletris").getIcon(controller.getFrame()).getImage();
 		// }
 		// graphics.drawImage(image, 0, 0, getHeight(), getWidth(), null);
-		HashMap labels = new HashMap();
+		HashMap<String, NodeView> labels = new HashMap<>();
 		collectLabels(rootView, labels);
 		super.paintChildren(graphics);
 		Graphics2D graphics2d = (Graphics2D) graphics;
@@ -965,7 +951,7 @@ public class MapView extends JPanel implements Autoscroll {
 	}
 
 	/** collect all existing labels in the current map. */
-	protected void collectLabels(NodeView source, HashMap labels) {
+	protected void collectLabels(NodeView source, HashMap<String, NodeView> labels) {
 		// check for existing registry:
 		if (getModel().getLinkRegistry() == null)
 			return;
@@ -973,9 +959,7 @@ public class MapView extends JPanel implements Autoscroll {
 		String label = getModel().getLinkRegistry().getLabel(source.getModel());
 		if (label != null)
 			labels.put(label, source);
-		for (ListIterator e = source.getChildrenViews().listIterator(); e
-				.hasNext();) {
-			NodeView target = (NodeView) e.next();
+    for (NodeView target : source.getChildrenViews()) {
 			collectLabels(target, labels);
 		}
 	}
@@ -1083,9 +1067,8 @@ public class MapView extends JPanel implements Autoscroll {
 		selectedsValid = true;
 		// Keep selected nodes
 		logger.finest("validateSelecteds");
-		ArrayList selectedNodes = new ArrayList();
-		for (ListIterator it = getSelecteds().listIterator(); it.hasNext();) {
-			NodeView nodeView = (NodeView) it.next();
+		List<NodeView> selectedNodes = new ArrayList<>();
+    for (NodeView nodeView : getSelecteds()) {
 			if (nodeView != null) {
 				selectedNodes.add(nodeView);
 			}
@@ -1093,8 +1076,7 @@ public class MapView extends JPanel implements Autoscroll {
 		// Warning, the old views still exist, because JVM has not deleted them.
 		// But don't use them!
 		selected.clear();
-		for (ListIterator it = selectedNodes.listIterator(); it.hasNext();) {
-			NodeView oldNodeView = ((NodeView) it.next());
+    for (NodeView oldNodeView : selectedNodes) {
 			if (oldNodeView.isContentVisible()) {
 				NodeView newNodeView = getNodeView(oldNodeView.getModel());
 				// test, whether or not the node is still visible:

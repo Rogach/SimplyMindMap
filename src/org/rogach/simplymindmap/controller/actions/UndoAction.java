@@ -41,7 +41,7 @@ public class UndoAction extends AbstractXmlAction {
 
 	private MindMapController controller;
 	private boolean isUndoAction;
-	protected Vector actionPairList = new Vector();
+	protected Vector<ActionPair> actionPairList = new Vector<>();
 	private long timeOfLastAdd = 0;
 	private boolean actionFrameStarted = false;
 	private static final long TIME_TO_BEGIN_NEW_ACTION = 100;

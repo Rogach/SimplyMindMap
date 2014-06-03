@@ -235,11 +235,11 @@ public class NodeView extends JComponent implements TreeModelListener {
 	 * Returns the coordinates occupied by the node and its children as a vector
 	 * of four point per node.
 	 */
-	public void getCoordinates(LinkedList inList) {
+	public void getCoordinates(LinkedList<Point> inList) {
 		getCoordinates(inList, 0, false, 0, 0);
 	}
 
-	private void getCoordinates(LinkedList inList,
+	private void getCoordinates(LinkedList<Point> inList,
 			int additionalDistanceForConvexHull, boolean byChildren,
 			int transX, int transY) {
 		if (!isVisible())
@@ -262,10 +262,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 					+ width, -additionalDistanceForConvexHull + y));
 		}
 
-		LinkedList childrenViews = getChildrenViews();
-		ListIterator children_it = childrenViews.listIterator();
-		while (children_it.hasNext()) {
-			NodeView child = (NodeView) children_it.next();
+    for (NodeView child : getChildrenViews()) {
 			child.getCoordinates(inList, additionalDistanceForConvexHull, true,
 					transX + child.getX(), transY + child.getY());
 		}
@@ -369,8 +366,8 @@ public class NodeView extends JComponent implements TreeModelListener {
 	/**
 	 * This method returns the NodeViews that are children of this node.
 	 */
-	public LinkedList getChildrenViews() {
-		LinkedList childrenViews = new LinkedList();
+	public List<NodeView> getChildrenViews() {
+		List<NodeView> childrenViews = new LinkedList<>();
 		final Component[] components = getComponents();
 		for (int i = 0; i < components.length; i++) {
 			if (!(components[i] instanceof NodeView)) {
@@ -382,7 +379,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 		return childrenViews;
 	}
 
-	protected LinkedList getSiblingViews() {
+	protected List<NodeView> getSiblingViews() {
 		return getParentView().getChildrenViews();
 	}
 
@@ -629,11 +626,10 @@ public class NodeView extends JComponent implements TreeModelListener {
 		return null;
 	}
 
-	LinkedList getLeft(boolean onlyVisible) {
-		LinkedList all = getChildrenViews();
-		LinkedList left = new LinkedList();
-		for (ListIterator e = all.listIterator(); e.hasNext();) {
-			NodeView node = (NodeView) e.next();
+	List<NodeView> getLeft(boolean onlyVisible) {
+		List<NodeView> all = getChildrenViews();
+		List<NodeView> left = new LinkedList<>();
+    for (NodeView node : all) {
 			if (node == null)
 				continue;
 			if (node.isLeft())
@@ -642,11 +638,10 @@ public class NodeView extends JComponent implements TreeModelListener {
 		return left;
 	}
 
-	LinkedList getRight(boolean onlyVisible) {
-		LinkedList all = getChildrenViews();
-		LinkedList right = new LinkedList();
-		for (ListIterator e = all.listIterator(); e.hasNext();) {
-			NodeView node = (NodeView) e.next();
+	List<NodeView> getRight(boolean onlyVisible) {
+		List<NodeView> all = getChildrenViews();
+		List<NodeView> right = new LinkedList<>();
+    for (NodeView node : all) {
 			if (node == null)
 				continue;
 			if (!node.isLeft())
@@ -687,7 +682,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 	}
 
 	protected NodeView getNextSiblingSingle() {
-		LinkedList v = null;
+		List<NodeView> v = null;
 		if (getParentView().getModel().isRoot()) {
 			if (this.isLeft()) {
 				v = (getParentView()).getLeft(true);
@@ -713,7 +708,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 	}
 
 	protected NodeView getPreviousSiblingSingle() {
-		LinkedList v = null;
+		List<NodeView> v = null;
 		if (getParentView().getModel().isRoot()) {
 			if (this.isLeft()) {
 				v = (getParentView()).getLeft(true);

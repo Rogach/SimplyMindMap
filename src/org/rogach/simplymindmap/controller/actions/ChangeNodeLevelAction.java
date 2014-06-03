@@ -26,7 +26,7 @@ public class ChangeNodeLevelAction extends AbstractAction {
   @Override
   public void actionPerformed(ActionEvent e) {
     MindMapNode selectedNode = controller.getSelected();
-    List selectedNodes = controller.getSelecteds();
+    List<MindMapNode> selectedNodes = controller.getSelecteds();
     // bug fix: sort to make independent by user's selection:
     controller.sortNodesByDepth(selectedNodes);
     if (selectedNode.isRoot()) {
@@ -58,7 +58,7 @@ public class ChangeNodeLevelAction extends AbstractAction {
     // WORKAROUND: Make target of local hyperlinks for the case, that ids
     // are not stored persistently.
     controller.getMap().getLinkRegistry().registerLocalHyperlinkId(selectedNodeId);
-    Vector selectedNodesId = new Vector();
+    Vector<String> selectedNodesId = new Vector<>();
     for (Iterator iter = selectedNodes.iterator(); iter.hasNext();) {
       MindMapNode node = (MindMapNode) iter.next();
       String nodeId = node.getObjectId(controller);
@@ -118,12 +118,11 @@ public class ChangeNodeLevelAction extends AbstractAction {
     controller.obtainFocusForSelected();
   }
 
-  private void select(String selectedNodeId, List selectedNodesIds) {
+  private void select(String selectedNodeId, List<String> selectedNodesIds) {
     // get new nodes by object id:
     MindMapNode newInstanceOfSelectedNode = controller.getNodeFromID(selectedNodeId);
-    List newSelecteds = new LinkedList();
-    for (Iterator iter = selectedNodesIds.iterator(); iter.hasNext();) {
-      String nodeId = (String) iter.next();
+    List<MindMapNode> newSelecteds = new LinkedList<>();
+    for (String nodeId : selectedNodesIds) {
       newSelecteds.add(controller.getNodeFromID(nodeId));
     }
     controller.select(newInstanceOfSelectedNode, newSelecteds);

@@ -73,19 +73,17 @@ public class NodeUpAction extends AbstractAction implements ActorXml {
 	}
 
 	public void _moveNodes(MindMapNode selected, List selecteds, int direction) {
-		Comparator comparator = (direction == -1) ? null : new Comparator() {
+		Comparator<Integer> comparator = (direction == -1) ? null : new Comparator<Integer>() {
 
-			public int compare(Object o1, Object o2) {
-				int i1 = ((Integer) o1).intValue();
-				int i2 = ((Integer) o2).intValue();
-				return i2 - i1;
+			public int compare(Integer o1, Integer o2) {
+				return o2 - o1;
 			}
 		};
 		if (!selected.isRoot()) {
 			MindMapNode parent = selected.getParentNode();
 			// multiple move:
 			Vector sortedChildren = getSortedSiblings(parent);
-			TreeSet range = new TreeSet(comparator);
+			TreeSet<Integer> range = new TreeSet<>(comparator);
 			for (Iterator i = selecteds.iterator(); i.hasNext();) {
 				MindMapNode node = (MindMapNode) i.next();
 				if (node.getParent() != parent) {
@@ -98,8 +96,7 @@ public class NodeUpAction extends AbstractAction implements ActorXml {
 			}
 			// test range for adjacent nodes:
 			Integer last = (Integer) range.iterator().next();
-			for (Iterator i = range.iterator(); i.hasNext();) {
-				Integer newInt = (Integer) i.next();
+      for (Integer newInt : range) {
 				if (Math.abs(newInt.intValue() - last.intValue()) > 1) {
 					logger.warning("Not adjacent nodes. Skipped. ");
 					return;
@@ -150,14 +147,14 @@ public class NodeUpAction extends AbstractAction implements ActorXml {
 	/**
 	 * Sorts nodes by their left/right status. The left are first.
 	 */
-	private Vector getSortedSiblings(MindMapNode node) {
-		Vector nodes = new Vector();
-		for (Iterator i = node.childrenUnfolded(); i.hasNext();) {
+	private Vector<MindMapNode> getSortedSiblings(MindMapNode node) {
+		Vector<MindMapNode> nodes = new Vector<>();
+		for (Iterator<MindMapNode> i = node.childrenUnfolded(); i.hasNext();) {
 			nodes.add(i.next());
 		}
-		Collections.sort(nodes, new Comparator() {
+		Collections.sort(nodes, new Comparator<MindMapNode>() {
 
-			public int compare(Object o1, Object o2) {
+			public int compare(MindMapNode o1, MindMapNode o2) {
 				if (o1 instanceof MindMapNode) {
 					MindMapNode n1 = (MindMapNode) o1;
 					if (o2 instanceof MindMapNode) {
@@ -172,7 +169,6 @@ public class NodeUpAction extends AbstractAction implements ActorXml {
 						"Elements in LeftRightComparator are not comparable.");
 			}
 		});
-		// logger.finest("Sorted nodes "+ nodes);
 		return nodes;
 	}
 
@@ -181,10 +177,8 @@ public class NodeUpAction extends AbstractAction implements ActorXml {
 			MoveNodesAction moveAction = (MoveNodesAction) action;
 			MindMapNode selected = modeController.getNodeFromID(moveAction
 					.getNode());
-			Vector selecteds = new Vector();
-			for (Iterator i = moveAction.getListNodeListMemberList().iterator(); i
-					.hasNext();) {
-				NodeListMember node = (NodeListMember) i.next();
+			Vector<MindMapNode> selecteds = new Vector<>();
+      for (NodeListMember node : moveAction.getListNodeListMemberList()) {
 				selecteds.add(modeController.getNodeFromID(node.getNode()));
 			}
 			_moveNodes(selected, selecteds, moveAction.getDirection());

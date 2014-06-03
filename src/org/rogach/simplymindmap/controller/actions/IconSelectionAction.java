@@ -22,8 +22,8 @@ public class IconSelectionAction extends AbstractAction {
   @Override
   public void actionPerformed(ActionEvent e) {
     NodeView focussed = controller.getSelectedView();
-    Vector actions = new Vector();
-    Vector iconActions = controller.iconActions;
+    Vector<Action> actions = new Vector<>();
+    Vector<Action> iconActions = controller.iconActions;
     actions.addAll(iconActions);
     actions.add(controller.removeLastIconAction);
     actions.add(controller.removeAllIconsAction);

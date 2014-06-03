@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Vector;
 
 class Selected {
-  private Vector mySelected = new Vector();
+  private Vector<NodeView> mySelected = new Vector<>();
   private final MapView outer;
 
   public Selected(final MapView outer) {

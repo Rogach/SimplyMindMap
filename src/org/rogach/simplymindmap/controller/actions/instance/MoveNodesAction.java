@@ -33,9 +33,9 @@ public class MoveNodesAction extends NodeAction {
     nodeListMemberList.clear();
   }
 
-  public java.util.List getListNodeListMemberList() {
+  public java.util.List<NodeListMember> getListNodeListMemberList() {
     return java.util.Collections.unmodifiableList(nodeListMemberList);
   }
-    protected ArrayList nodeListMemberList = new ArrayList();
+  protected ArrayList<NodeListMember> nodeListMemberList = new ArrayList<>();
 
 } /* MoveNodesAction*/

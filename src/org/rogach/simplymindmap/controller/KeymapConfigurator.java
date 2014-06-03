@@ -1,7 +1,9 @@
 package org.rogach.simplymindmap.controller;
 
+import java.awt.AWTKeyStroke;
 import java.awt.KeyboardFocusManager;
 import java.util.Collections;
+import java.util.Set;
 import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
@@ -28,12 +30,10 @@ public class KeymapConfigurator {
     
     view.addKeyListener(new NodeKeyListener(controller));
     
-    view.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
-				Collections.EMPTY_SET);
-		view.setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS,
-				Collections.EMPTY_SET);
-		view.setFocusTraversalKeys(KeyboardFocusManager.UP_CYCLE_TRAVERSAL_KEYS,
-				Collections.EMPTY_SET);
+    Set<AWTKeyStroke> noKeyStrokes = Collections.emptySet();
+    view.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, noKeyStrokes);
+		view.setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, noKeyStrokes);
+		view.setFocusTraversalKeys(KeyboardFocusManager.UP_CYCLE_TRAVERSAL_KEYS, noKeyStrokes);
   }
   
   private static void putAction(MapView view, String actionKey, String keyStroke, Action action) {
