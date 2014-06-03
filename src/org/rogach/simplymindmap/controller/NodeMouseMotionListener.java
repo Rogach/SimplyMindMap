@@ -20,75 +20,222 @@
 
 package org.rogach.simplymindmap.controller;
 
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.Point2D;
+import java.util.Timer;
+import java.util.TimerTask;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
+import org.rogach.simplymindmap.util.Tools;
+import org.rogach.simplymindmap.view.MainView;
+import org.rogach.simplymindmap.view.NodeView;
 
 /**
  * The MouseMotionListener which belongs to every NodeView
  */
 public class NodeMouseMotionListener implements MouseMotionListener,
 		MouseListener {
+  
+  private MindMapController controller;
 
-	public static interface NodeMouseMotionObserver extends
-			MouseMotionListener, MouseListener {
+  	/** time in ms, overwritten by property time_for_delayed_selection */
+	private static Tools.IntHolder timeForDelayedSelection;
 
-		void updateSelectionMethod();
+	/** overwritten by property delayed_selection_enabled */
+	private static Tools.BooleanHolder delayedSelectionEnabled;
 
-	}
+  private Timer timerForDelayedSelection;
+  
+  /**
+	 * The mouse has to stay in this region to enable the selection after a
+	 * given time.
+	 */
+	private Rectangle controlRegionForDelayedSelection;
 
-	private NodeMouseMotionObserver mListener;
-
-	public NodeMouseMotionListener() {
-	}
-
-	public void register(NodeMouseMotionObserver listener) {
-		this.mListener = listener;
-
-	}
-
-	public void deregister() {
-		mListener = null;
+	private MouseEvent mMousePressedEvent;
+  
+	public NodeMouseMotionListener(MindMapController controller) {
+    this.controller = controller;
+    if (delayedSelectionEnabled == null)
+			updateSelectionMethod();
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		if (mListener != null)
-			mListener.mouseClicked(e);
 	}
 
 	public void mouseDragged(MouseEvent e) {
-		if (mListener != null)
-			mListener.mouseDragged(e);
+		// first stop the timer and select the node:
+		stopTimerForDelayedSelection();
+		NodeView nodeV = ((MainView) e.getComponent()).getNodeView();
+
+		// if dragged for the first time, select the node:
+		if (!controller.getView().isSelected(nodeV))
+			controller.extendSelection(e);
 	}
 
 	public void mouseEntered(MouseEvent e) {
-		if (mListener != null)
-			mListener.mouseEntered(e);
+		if (!JOptionPane.getFrameForComponent(e.getComponent()).isFocused())
+			return;
+		createTimer(e);
 	}
 
 	public void mouseExited(MouseEvent e) {
-		if (mListener != null)
-			mListener.mouseExited(e);
+		stopTimerForDelayedSelection();
 	}
 
 	public void mouseMoved(MouseEvent e) {
-		if (mListener != null)
-			mListener.mouseMoved(e);
+		// Invoked when the mouse button has been moved on a component (with no
+		// buttons down).
+		MainView node = ((MainView) e.getComponent());
+		// test if still in selection region:
+		if (controlRegionForDelayedSelection != null
+				&& delayedSelectionEnabled.getValue()) {
+			if (!controlRegionForDelayedSelection.contains(e.getPoint())) {
+				// point is not in the region. start timer again and adjust
+				// region to the current point:
+				createTimer(e);
+			}
+		}
 	}
 
 	public void mousePressed(MouseEvent e) {
-		if (mListener != null)
-			mListener.mousePressed(e);
+		// for Linux/Mac
+		mMousePressedEvent = e;
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		if (mListener != null)
-			mListener.mouseReleased(e);
+		// handling click in mouseReleased rather than in mouseClicked
+		// provides better interaction. If mouse was slightly moved
+		// between pressed and released events, the event clicked
+		// is not triggered.
+		// The behavior is not tested on Linux.
+		
+		MouseEvent ev = e;
+		/* 
+		 * For Mac see 
+		 * https://developer.apple.com/library/mac/#documentation/Java/Conceptual/Java14Development/07-NativePlatformIntegration/NativePlatformIntegration.html
+		 * */
+		if(Tools.isLinux() || Tools.isMacOsX()) {
+			ev = mMousePressedEvent;
+		} 
+		handlePopupMenu(ev);
+		
+		if (ev.isConsumed()) {
+			return;
+		}
+
+		if (e.getModifiers() == MouseEvent.BUTTON1_MASK) {
+			// FIXME Dimitry: Double Click comes after Plain Click combining
+			// (un)folding with editing
+			// if (e.getClickCount() % 2 == 0) {
+			// c.doubleClick(e);
+			// } else {
+			controller.plainClick(e);
+			// }
+			e.consume();
+		}
+	}
+  
+  /**
+	 * And a static method to reread this holder. This is used when the
+	 * selection method is changed via the option menu.
+	 */
+	public void updateSelectionMethod() {
+		if (timeForDelayedSelection == null) {
+			timeForDelayedSelection = new Tools.IntHolder();
+		}
+		delayedSelectionEnabled = new Tools.BooleanHolder();
+		delayedSelectionEnabled.setValue(Resources.getInstance()
+				.getProperty("selection_method")
+				.equals("selection_method_direct") ? false : true);
+		/*
+		 * set time for delay to infinity, if selection_method equals
+		 * selection_method_by_click.
+		 */
+		if (Resources.getInstance().getProperty("selection_method")
+				.equals("selection_method_by_click")) {
+			timeForDelayedSelection.setValue(Integer.MAX_VALUE);
+		} else {
+			timeForDelayedSelection.setValue(Integer.parseInt(Resources.getInstance()
+					.getProperty("time_for_delayed_selection")));
+		}
+	}
+  
+  
+	protected void handlePopupMenu(MouseEvent e) {
+		// first stop the timer and select the node:
+		stopTimerForDelayedSelection();
+		controller.extendSelection(e);
+		// Right mouse <i>press</i> is <i>not</i> a popup trigger for Windows.
+		// Only Right mouse release is a popup trigger!
+		// OK, but Right mouse <i>press</i> <i>is</i> a popup trigger on Linux.
+    
+		//c.showPopupMenu(e);
+    //popupmenu.show(e.getComponent(), e.getX(), e.getY());
+    //e.consume();
 	}
 
-	public void updateSelectionMethod() {
-		if (mListener != null)
-			mListener.updateSelectionMethod();
+	protected Rectangle getControlRegion(Point2D p) {
+		// Create a small square around the given point.
+		int side = 8;
+		return new Rectangle((int) (p.getX() - side / 2),
+				(int) (p.getY() - side / 2), side, side);
+	}
+
+	public void createTimer(MouseEvent e) {
+		// stop old timer if present.*/
+		stopTimerForDelayedSelection();
+		/* Region to check for in the sequel. */
+		controlRegionForDelayedSelection = getControlRegion(e.getPoint());
+		timerForDelayedSelection = new Timer();
+		timerForDelayedSelection.schedule(
+				new timeDelayedSelection(controller, e),
+				/*
+				 * if the new selection method is not enabled we put 0 to get
+				 * direct selection.
+				 */
+				(delayedSelectionEnabled.getValue()) ? timeForDelayedSelection
+						.getValue() : 0);
+	}
+
+	protected void stopTimerForDelayedSelection() {
+		// stop timer.
+		if (timerForDelayedSelection != null)
+			timerForDelayedSelection.cancel();
+		timerForDelayedSelection = null;
+		controlRegionForDelayedSelection = null;
+	}
+
+	protected class timeDelayedSelection extends TimerTask {
+		private final MindMapController c;
+
+		private final MouseEvent e;
+
+		timeDelayedSelection(MindMapController c, MouseEvent e) {
+			this.c = c;
+			this.e = e;
+		}
+
+		/** TimerTask method to enable the selection after a given time. */
+		public void run() {
+			/*
+			 * formerly in ControllerAdapter. To guarantee, that point-to-select
+			 * does not change selection if any meta key is pressed.
+			 */
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					if (e.getModifiers() == 0 && !c.isBlocked()
+							&& c.getView().getSelecteds().size() <= 1) {
+						c.extendSelection(e);
+					}
+				}
+			});
+		}
 	}
 
 }
