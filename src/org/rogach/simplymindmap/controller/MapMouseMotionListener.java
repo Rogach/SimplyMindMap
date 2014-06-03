@@ -39,31 +39,22 @@ public class MapMouseMotionListener implements MouseMotionListener,
 		public void mouseReleased(MouseEvent e);
 	}
 
-	private MapMouseMotionReceiver mReceiver;
-  
   private final MapView view;
+  
+  private int originX = -1;
+	private int originY = -1;
 
 	public MapMouseMotionListener(MapView view) {
     this.view = view;
-	}
-
-	public void register(MapMouseMotionReceiver receiver) {
-		mReceiver = receiver;
-	}
-
-	public void deregister() {
-		mReceiver = null;
-	}
-
-	private void handlePopup(MouseEvent e) {
 	}
 
 	public void mouseMoved(MouseEvent e) {
 	}
 
 	public void mouseDragged(MouseEvent e) {
-		if (mReceiver != null) {
-			mReceiver.mouseDragged(e);
+		// Always try to get mouse to the original position in the Map.
+		if (originX >= 0) {
+			view.scrollBy(originX - e.getX(), originY - e.getY());
 		}
 	}
 
@@ -80,21 +71,20 @@ public class MapMouseMotionListener implements MouseMotionListener,
 	}
 
 	public void mousePressed(MouseEvent e) {
-		if (e.isPopupTrigger()) { // start the move, when the user press the
-									// mouse (PN)
-			handlePopup(e);
-		} else if (mReceiver != null)
-			mReceiver.mousePressed(e);
+		if (!e.isPopupTrigger()) {
+      if (!view.getController().isBlocked() && e.getButton() == MouseEvent.BUTTON1) {
+			view.setMoveCursor(true);
+			originX = e.getX();
+			originY = e.getY();
+		}
+    }
 		e.consume();
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		if (mReceiver != null) {
-			mReceiver.mouseReleased(e);
-		}
-		handlePopup(e);
+    originX = -1;
+		originY = -1;
 		e.consume();
-		view.setMoveCursor(false); // release the cursor to default
-											// (PN)
+		view.setMoveCursor(false);
 	}
 }

@@ -74,7 +74,6 @@ import org.rogach.simplymindmap.modes.mindmapmode.MindMapMapModel;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.listeners.CommonNodeKeyListener;
 import org.rogach.simplymindmap.modes.mindmapmode.listeners.CommonNodeMouseMotionListener;
-import org.rogach.simplymindmap.modes.mindmapmode.listeners.MindMapMouseMotionManager;
 import org.rogach.simplymindmap.modes.mindmapmode.listeners.MindMapMouseWheelEventHandler;
 import org.rogach.simplymindmap.modes.mindmapmode.listeners.MindMapNodeDropListener;
 import org.rogach.simplymindmap.modes.mindmapmode.listeners.MindMapNodeMotionListener;
@@ -374,7 +373,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
     MapMouseMotionListener mapMouseMotionListener = new MapMouseMotionListener(this);
 		addMouseListener(mapMouseMotionListener);
 		addMouseMotionListener(mapMouseMotionListener);
-    mapMouseMotionListener.register(new MindMapMouseMotionManager(controller));
     
     MapMouseWheelListener mapMouseWheelListener = new MapMouseWheelListener();
 		addMouseWheelListener(mapMouseWheelListener);
