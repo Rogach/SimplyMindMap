@@ -20,7 +20,6 @@
 
 package org.rogach.simplymindmap.model;
 
-import org.rogach.simplymindmap.model.MindMapEdgeModel;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
@@ -41,8 +40,8 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.controller.MindMapController;
+import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.nanoxml.XMLElement;
 import org.rogach.simplymindmap.util.Tools;
 import org.rogach.simplymindmap.util.XmlTools;

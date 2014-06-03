@@ -21,12 +21,12 @@
 package org.rogach.simplymindmap.controller.actions;
 
 import java.util.logging.Logger;
+import org.rogach.simplymindmap.controller.MindMapController;
+import org.rogach.simplymindmap.controller.actions.PasteAction.NodeCoordinate;
 import org.rogach.simplymindmap.controller.actions.instance.UndoPasteNodeAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
-import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.model.MindMapNode;
-import org.rogach.simplymindmap.controller.actions.PasteAction.NodeCoordinate;
 import org.rogach.simplymindmap.controller.actions.xml.ActorXml;
+import org.rogach.simplymindmap.model.MindMapNode;
 
 /**
  * @author foltin

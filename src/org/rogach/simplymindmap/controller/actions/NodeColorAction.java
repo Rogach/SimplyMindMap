@@ -27,13 +27,13 @@ package org.rogach.simplymindmap.controller.actions;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.ListIterator;
+import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.actions.instance.NodeColorFormatAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
-import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.controller.actions.xml.ActorXml;
+import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
 import org.rogach.simplymindmap.util.XmlTools;
 

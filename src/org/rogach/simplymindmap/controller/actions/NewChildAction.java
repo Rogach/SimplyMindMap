@@ -27,14 +27,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
+import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.actions.instance.DeleteNodeAction;
 import org.rogach.simplymindmap.controller.actions.instance.NewNodeAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
-import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.controller.actions.xml.ActorXml;
+import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.view.NodeView;
 
 public class NewChildAction extends AbstractAction implements ActorXml {

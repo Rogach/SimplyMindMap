@@ -20,9 +20,6 @@
 
 package org.rogach.simplymindmap.controller;
 
-import org.rogach.simplymindmap.model.MindMapModel;
-import org.rogach.simplymindmap.model.MindMapNode;
-import org.rogach.simplymindmap.model.MindMapXMLElement;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -49,10 +46,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import org.rogach.simplymindmap.main.ResourceKeys;
-import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.model.MindIcon;
-import org.rogach.simplymindmap.model.XMLElementAdapter;
 import org.rogach.simplymindmap.controller.actions.BoldAction;
 import org.rogach.simplymindmap.controller.actions.ChangeNodeLevelAction;
 import org.rogach.simplymindmap.controller.actions.CompoundActionHandler;
@@ -89,6 +82,13 @@ import org.rogach.simplymindmap.controller.actions.UndoAction;
 import org.rogach.simplymindmap.controller.actions.xml.ActionFactory;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.controller.actions.xml.UndoActionHandler;
+import org.rogach.simplymindmap.main.ResourceKeys;
+import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.model.MindIcon;
+import org.rogach.simplymindmap.model.MindMapModel;
+import org.rogach.simplymindmap.model.MindMapNode;
+import org.rogach.simplymindmap.model.MindMapXMLElement;
+import org.rogach.simplymindmap.model.XMLElementAdapter;
 import org.rogach.simplymindmap.nanoxml.XMLElement;
 import org.rogach.simplymindmap.nanoxml.XMLParseException;
 import org.rogach.simplymindmap.util.Tools;

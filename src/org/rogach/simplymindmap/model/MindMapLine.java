@@ -21,7 +21,6 @@
 package org.rogach.simplymindmap.model;
 
 import java.awt.Color;
-import org.rogach.simplymindmap.model.MindMapNode;
 
 public interface MindMapLine extends Cloneable {
 

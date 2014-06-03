@@ -24,7 +24,6 @@ package org.rogach.simplymindmap.controller.actions.xml;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Vector;
 import java.util.logging.Logger;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 

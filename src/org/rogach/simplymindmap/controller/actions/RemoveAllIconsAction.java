@@ -27,16 +27,16 @@ import java.util.Iterator;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
+import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.actions.instance.CompoundAction;
 import org.rogach.simplymindmap.controller.actions.instance.RemoveAllIconsXmlAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
+import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.IconInformation;
 import org.rogach.simplymindmap.model.MindIcon;
-import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.model.MindMapNode;
-import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.model.MindMapModel;
+import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
 
 /**

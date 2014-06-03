@@ -24,10 +24,8 @@
 package org.rogach.simplymindmap.view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
-import java.awt.Window;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
@@ -43,8 +41,8 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.text.JTextComponent;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.controller.MindMapController;
+import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.util.Tools;
 
 /**

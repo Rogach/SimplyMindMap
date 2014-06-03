@@ -1,7 +1,5 @@
 package org.rogach.simplymindmap.controller.actions;
 
-import java.awt.Component;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.util.Vector;
 import javax.swing.AbstractAction;

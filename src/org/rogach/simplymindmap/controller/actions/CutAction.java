@@ -30,16 +30,16 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
+import org.rogach.simplymindmap.controller.MindMapController;
+import org.rogach.simplymindmap.controller.actions.PasteAction.NodeCoordinate;
 import org.rogach.simplymindmap.controller.actions.instance.CompoundAction;
 import org.rogach.simplymindmap.controller.actions.instance.CutNodeAction;
 import org.rogach.simplymindmap.controller.actions.instance.UndoPasteNodeAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
-import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.model.MindMapNode;
-import org.rogach.simplymindmap.controller.actions.PasteAction.NodeCoordinate;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.controller.actions.xml.ActorXml;
+import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.model.MindMapNode;
 
 public class CutAction extends AbstractAction implements ActorXml {
 	private String text;

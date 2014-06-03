@@ -29,12 +29,12 @@ import java.util.Iterator;
 import java.util.Vector;
 import java.util.logging.Logger;
 import javax.swing.Icon;
+import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.actions.instance.CompoundAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
-import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.actions.xml.AbstractXmlAction;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
+import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.util.Tools;
 
 public class UndoAction extends AbstractXmlAction {

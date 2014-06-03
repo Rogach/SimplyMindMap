@@ -31,14 +31,14 @@ import java.util.TreeSet;
 import java.util.Vector;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
+import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.actions.instance.MoveNodesAction;
 import org.rogach.simplymindmap.controller.actions.instance.NodeListMember;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
-import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.controller.actions.xml.ActorXml;
 import org.rogach.simplymindmap.model.MindMapModel;
+import org.rogach.simplymindmap.model.MindMapNode;
 
 public class NodeUpAction extends AbstractAction implements ActorXml {
 	private final MindMapController modeController;
