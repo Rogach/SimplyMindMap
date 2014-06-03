@@ -1,12 +1,15 @@
 package org.rogach.simplymindmap.controller;
 
+import java.awt.KeyboardFocusManager;
+import java.util.Collections;
 import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
+import org.rogach.simplymindmap.controller.listeners.NodeKeyListener;
 import org.rogach.simplymindmap.view.MapView;
 
 public class KeymapConfigurator {
-  public static void configureKeymap(final MapView view, final MindMapController controller) {
+  public static void configureKeymap(MapView view, MindMapController controller) {
     putAction(view, "new_child_action", "INSERT", controller.newChild);
     putAction(view, "new_sibling_action", "ENTER", controller.newSibling);
     putAction(view, "new_previous_sibling_action", "shift ENTER", controller.newPreviousSibling);
@@ -22,6 +25,15 @@ public class KeymapConfigurator {
     putAction(view, "toggle_children_folded", "control SPACE", controller.toggleChildrenFolded);
     putAction(view, "node_up", "control UP", controller.nodeUp);
     putAction(view, "node_down", "control DOWN", controller.nodeDown);
+    
+    view.addKeyListener(new NodeKeyListener(controller));
+    
+    view.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
+				Collections.EMPTY_SET);
+		view.setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS,
+				Collections.EMPTY_SET);
+		view.setFocusTraversalKeys(KeyboardFocusManager.UP_CYCLE_TRAVERSAL_KEYS,
+				Collections.EMPTY_SET);
   }
   
   private static void putAction(MapView view, String actionKey, String keyStroke, Action action) {

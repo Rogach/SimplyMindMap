@@ -29,14 +29,11 @@ import java.awt.FocusTraversalPolicy;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
-import java.awt.KeyboardFocusManager;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.dnd.Autoscroll;
-import java.awt.dnd.DragGestureListener;
-import java.awt.dnd.DropTargetListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -55,11 +52,7 @@ import javax.swing.JPanel;
 import javax.swing.JViewport;
 import org.rogach.simplymindmap.controller.KeymapConfigurator;
 import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.controller.listeners.MapMouseMotionListener;
-import org.rogach.simplymindmap.controller.listeners.MapMouseWheelListener;
-import org.rogach.simplymindmap.controller.listeners.NodeDragListener;
-import org.rogach.simplymindmap.controller.listeners.NodeDropListener;
-import org.rogach.simplymindmap.controller.listeners.NodeKeyListener;
+import org.rogach.simplymindmap.controller.MouseConfigurator;
 import org.rogach.simplymindmap.controller.listeners.NodeMotionListener;
 import org.rogach.simplymindmap.controller.listeners.NodeMouseMotionListener;
 import org.rogach.simplymindmap.main.Resources;
@@ -96,11 +89,7 @@ public class MapView extends JPanel implements Autoscroll {
 	private int siblingMaxLevel;
 	private NodeView shiftSelectionOrigin = null;
 	private int maxNodeWidth = 0;
-	private Color background = null;
   private MindMapController controller = null;
-  
-  private NodeDragListener nodeDragListener;
-  private NodeDropListener nodeDropListener;
   private NodeMouseMotionListener nodeMouseMotionListener;
   private NodeMotionListener nodeMotionListener;
 
@@ -111,9 +100,7 @@ public class MapView extends JPanel implements Autoscroll {
 	private int extraWidth;
 
 	private boolean selectedsValid = true;
-	//
-	// Constructors
-	//
+	
 	static boolean NEED_PREF_SIZE_BUG_FIX = false;
 
 	public MapView(MindMapModel model) {
@@ -135,39 +122,17 @@ public class MapView extends JPanel implements Autoscroll {
 		this.setAutoscrolls(true);
 
 		this.setLayout(new MindMapLayout());
-
-    nodeDragListener = new NodeDragListener(controller);
-    nodeDropListener = new NodeDropListener(controller);
     
     nodeMotionListener = new NodeMotionListener(controller);
-    
     nodeMouseMotionListener = new NodeMouseMotionListener(controller);
     
 		initRoot();
 
 		setBackground(standardMapBackgroundColor);
     
-    MapMouseMotionListener mapMouseMotionListener = new MapMouseMotionListener(this);
-		addMouseListener(mapMouseMotionListener);
-		addMouseMotionListener(mapMouseMotionListener);
-    
-    MapMouseWheelListener mapMouseWheelListener = new MapMouseWheelListener(this);
-		addMouseWheelListener(mapMouseWheelListener);
-    
-    NodeKeyListener nodeKeyListener = new NodeKeyListener(controller);
-    addKeyListener(nodeKeyListener);
-    
+    MouseConfigurator.configureMouseListeners(this);
     KeymapConfigurator.configureKeymap(this, controller);
     
-		// fc, 20.6.2004: to enable tab for insert.
-		setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
-				Collections.EMPTY_SET);
-		setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS,
-				Collections.EMPTY_SET);
-		setFocusTraversalKeys(KeyboardFocusManager.UP_CYCLE_TRAVERSAL_KEYS,
-				Collections.EMPTY_SET);
-		// end change.
-
 		// fc, 31.3.2013: set policy to achive that after note window close, the
 		// current node is selected.
 		setFocusTraversalPolicy(new FocusTraversalPolicy() {
@@ -751,14 +716,6 @@ public class MapView extends JPanel implements Autoscroll {
 	NodeMotionListener getNodeMotionListener() {
 		return nodeMotionListener;
 	}
-  
-	DragGestureListener getNodeDragListener() {
-		return nodeDragListener;
-	}
-
-	DropTargetListener getNodeDropListener() {
-		return nodeDropListener;
-	}
 
 	public NodeView getSelected() {
 		if (selected.size() > 0)
@@ -1028,15 +985,6 @@ public class MapView extends JPanel implements Autoscroll {
 		
 	};
 
-	private void repaintSelecteds() {
-		final Iterator iterator = getSelecteds().iterator();
-		while (iterator.hasNext()) {
-			NodeView next = (NodeView) iterator.next();
-			next.repaintSelected();
-		}
-		// repaint();
-	}
-
 	/**
 	 * Return the bounding box of all the descendants of the source view, that
 	 * without BORDER. Should that be implemented in LayoutManager as minimum
@@ -1054,22 +1002,10 @@ public class MapView extends JPanel implements Autoscroll {
 		return rootView;
 	}
 
-	private MindMapLayout getMindMapLayout() {
-		return (MindMapLayout) getLayout();
-	}
-
-	/**
-	 * This method is a workaround to allow the inner class access to "this".
-	 * Change it as soon the correct syntax is known.
-	 */
-	private MapView getMap() {
-		return this;
-	}
-
-	// this property is used when the user navigates up/down using cursor keys
-	// (PN)
-	// it will keep the level of nodes that are understand as "siblings"
-
+	/*  this property is used when the user navigates up/down using cursor keys
+	 * (PN)
+	 * it will keep the level of nodes that are understand as "siblings"
+   */
 	public int getSiblingMaxLevel() {
 		return this.siblingMaxLevel;
 	}

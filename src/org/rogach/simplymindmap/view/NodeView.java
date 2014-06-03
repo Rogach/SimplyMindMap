@@ -51,6 +51,8 @@ import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeNode;
 import org.rogach.simplymindmap.controller.MindMapController;
+import org.rogach.simplymindmap.controller.listeners.NodeDragListener;
+import org.rogach.simplymindmap.controller.listeners.NodeDropListener;
 import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.MindIcon;
 import org.rogach.simplymindmap.model.MindMapNode;
@@ -166,8 +168,8 @@ public class NodeView extends JComponent implements TreeModelListener {
 		ToolTipManager.sharedInstance().registerComponent(mainView);
 		mainView.addMouseListener(this.map.getNodeMouseMotionListener());
 		mainView.addMouseMotionListener(this.map.getNodeMouseMotionListener());
-		addDragListener(map.getNodeDragListener());
-		addDropListener(map.getNodeDropListener());
+    addDragListener(new NodeDragListener(map.getController()));
+    addDropListener(new NodeDropListener(map.getController()));
 		if (!model.isRoot() && "true".equals(Resources.getInstance().getProperty("enable_node_movement"))) {
 			motionListenerView = new NodeMotionListenerView(this);
 			add(motionListenerView);
