@@ -88,10 +88,10 @@ public class MindMapNodeMotionListener extends NodeMotionAdapter {
 							.getModel();
 					parentNode
 							.setVGap(getVGap(dragNextPoint, dragStartingPoint));
-					c.getModeController().nodeRefresh(parentNode);
+					c.nodeRefresh(parentNode);
 				}
 				dragStartingPoint = dragNextPoint;
-				c.getModeController().nodeRefresh(node);
+				c.nodeRefresh(node);
 			}
 			Point mapPoint = e.getPoint();
 			Tools.convertPointToAncestor(motionListenerView, mapPoint, mapView);

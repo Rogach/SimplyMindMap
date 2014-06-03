@@ -156,8 +156,6 @@ public interface MindMapActions {
 	/** undo in progress? */
 	boolean isUndoAction();
 
-	public MindMapNode getRootNode();
-
 	/**
 	 * Moves the node to a new position.
 	 */

@@ -231,7 +231,7 @@ public abstract class ControllerAdapter implements ModeController {
 			// call create node for all:
 			// TODO: fc, 10.2.08: this event goes to all listeners. It should be for
 			// the new listener only?
-			fireRecursiveNodeCreateEvent(getRootNode());
+			fireRecursiveNodeCreateEvent((MindMapNode) getMap().getRoot());
 		}
 	}
 
@@ -391,20 +391,6 @@ public abstract class ControllerAdapter implements ModeController {
 		logger.finest("Sort result: " + inPlaceList);
 	}
 
-	public void handleLoadingException(Exception ex) {
-		String exceptionType = ex.getClass().getName();
-		if (exceptionType.equals("freemind.main.XMLParseException")) {
-			int showDetail = JOptionPane.showConfirmDialog(getView(),
-					Resources.getInstance().getText("map_corrupted"), "FreeMind",
-					JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
-			if (showDetail == JOptionPane.YES_OPTION) {
-			}
-		} else if (exceptionType.equals("java.io.FileNotFoundException")) {
-		} else {
-			org.rogach.simplymindmap.main.Resources.getInstance().logException(ex);
-		}
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -439,18 +425,6 @@ public abstract class ControllerAdapter implements ModeController {
 
 	public MindMap getMap() {
 		return mModel;
-	}
-
-	public MindMapNode getRootNode() {
-		return (MindMapNode) getMap().getRoot();
-	}
-
-	/**
-	 * This was inserted by fc, 10.03.04 to enable all actions to refer to its
-	 * controller easily.
-	 */
-	public ControllerAdapter getModeController() {
-		return this;
 	}
 
 	// fc, 29.2.2004: there is no sense in having this private and the
