@@ -83,14 +83,14 @@ public class MindMapNode implements MutableTreeNode {
    */
   private MindMapEdge edge;
   private Collection<NodeView> views = null;
-  private MindMapMapModel model = null;
+  private MindMapModel model = null;
   EventListenerList listenerList = new EventListenerList();
 
 	public MindMapNode(String userObject) {
 		this(userObject, null);
 	}
 
-	public MindMapNode(String userObject, MindMapMapModel map) {
+	public MindMapNode(String userObject, MindMapModel map) {
     setText(userObject);
     this.model = map;
 		children = new LinkedList();
@@ -152,7 +152,7 @@ public class MindMapNode implements MutableTreeNode {
 		}
 	}
 
-  public void setMap(MindMapMapModel map) {
+  public void setMap(MindMapModel map) {
     this.model = map;
   }
 
@@ -312,7 +312,7 @@ public class MindMapNode implements MutableTreeNode {
     return icons;
   }
 
-  public MindMapMapModel getModel() {
+  public MindMapModel getModel() {
     return model;
   }
 

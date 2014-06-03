@@ -21,7 +21,7 @@
 package org.rogach.simplymindmap.controller.actions;
 
 import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.model.MindMapMapModel;
+import org.rogach.simplymindmap.model.MindMapModel;
 import org.rogach.simplymindmap.model.MindMapNode;
 
 /** */
@@ -33,7 +33,7 @@ public class SelectAllAction extends NodeGeneralAction {
 	public SelectAllAction(final MindMapController modeController) {
 		super(modeController, "select_all", null, new SingleNodeOperation() {
 
-			public void apply(MindMapMapModel map, MindMapNode node) {
+			public void apply(MindMapModel map, MindMapNode node) {
 				modeController.selectBranch(modeController.getView().getRoot(),
 						false);
 			}

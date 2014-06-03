@@ -30,7 +30,7 @@ import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
-import org.rogach.simplymindmap.model.MindMapMapModel;
+import org.rogach.simplymindmap.model.MindMapModel;
 
 public class ItalicAction extends NodeGeneralAction implements NodeActorXml {
 	private final MindMapController modeController;
@@ -56,7 +56,7 @@ public class ItalicAction extends NodeGeneralAction implements NodeActorXml {
 		return ItalicNodeAction.class;
 	}
 
-	public ActionPair apply(MindMapMapModel model, MindMapNode selected) {
+	public ActionPair apply(MindMapModel model, MindMapNode selected) {
 		// every node is set to the inverse of the focussed node.
 		boolean italic = modeController.getSelected().isItalic();
 		return getActionPair(selected, !italic);

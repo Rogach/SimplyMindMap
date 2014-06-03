@@ -41,7 +41,7 @@ import org.rogach.simplymindmap.controller.actions.instance.UndoPasteNodeAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.model.MindMapMapModel;
+import org.rogach.simplymindmap.model.MindMapModel;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.controller.actions.xml.ActorXml;
@@ -224,7 +224,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 				String[] textLines = textFromClipboard
 						.split(MindMapController.NODESEPARATOR);
 				// and now? paste it:
-				String mapContent = MindMapMapModel.MAP_INITIAL_START
+				String mapContent = MindMapModel.MAP_INITIAL_START
 						+ "1.0.1" + "\"><node TEXT=\"DUMMY\">";
 				for (int j = 0; j < textLines.length; j++) {
 					mapContent += textLines[j];
@@ -234,7 +234,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 				try {
 					MindMapNode node = mMindMapController.getMindMapMapModel()
 							.loadTree(
-									new MindMapMapModel.StringReaderCreator(
+									new MindMapModel.StringReaderCreator(
 											mapContent), false);
 					for (ListIterator i = node.childrenUnfolded(); i.hasNext();) {
 						MindMapNode importNode = (MindMapNode) i

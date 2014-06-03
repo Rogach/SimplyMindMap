@@ -69,7 +69,7 @@ import org.rogach.simplymindmap.controller.listeners.NodeMotionListener;
 import org.rogach.simplymindmap.controller.listeners.NodeMouseMotionListener;
 import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.model.MindMapMapModel;
+import org.rogach.simplymindmap.model.MindMapModel;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
 import org.rogach.simplymindmap.util.Tools.Pair;
@@ -252,7 +252,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	// Logging:
 	private static java.util.logging.Logger logger;
 
-	private MindMapMapModel model;
+	private MindMapModel model;
 	private NodeView rootView = null;
 	private Selected selected = new Selected();
 	private float zoom = 1F;
@@ -286,7 +286,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	//
 	static boolean NEED_PREF_SIZE_BUG_FIX = false;
 
-	public MapView(MindMapMapModel model) {
+	public MapView(MindMapModel model) {
 		super();
     this.controller = new MindMapController(this);
 		this.model = model;
@@ -946,7 +946,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	// get/set methods
 	//
 
-	public MindMapMapModel getModel() {
+	public MindMapModel getModel() {
 		return model;
 	}
 

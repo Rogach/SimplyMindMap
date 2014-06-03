@@ -20,7 +20,7 @@
 
 package org.rogach.simplymindmap.controller;
 
-import org.rogach.simplymindmap.model.MindMapMapModel;
+import org.rogach.simplymindmap.model.MindMapModel;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.model.MindMapXMLElement;
 import java.awt.Color;
@@ -121,13 +121,13 @@ public class MindMapController {
 
 	public Action increaseNodeFont = new NodeGeneralAction(this,
 			"increase_node_font_size", null, new SingleNodeOperation() {
-				public void apply(MindMapMapModel map, MindMapNode node) {
+				public void apply(MindMapModel map, MindMapNode node) {
 					increaseFontSize(node, 1);
 				}
 			});
 	public Action decreaseNodeFont = new NodeGeneralAction(this,
 			"decrease_node_font_size", null, new SingleNodeOperation() {
-				public void apply(MindMapMapModel map, MindMapNode node) {
+				public void apply(MindMapModel map, MindMapNode node) {
 					increaseFontSize(node, -1);
 				}
 			});
@@ -174,7 +174,7 @@ public class MindMapController {
    * The model, this controller belongs to. It may be null, if it is the
    * default controller that does not show a map.
    */
-  private MindMapMapModel mModel;
+  private MindMapModel mModel;
   private HashSet mNodeSelectionListeners = new HashSet();
   private HashSet mNodeLifetimeListeners = new HashSet();
   // status, currently: default, blocked (PN)
@@ -257,7 +257,7 @@ public class MindMapController {
 	// fc, 14.12.2004: changes, such that different models can be used:
 	private NewNodeCreator myNewNodeCreator = null;
 
-  public void setModel(MindMapMapModel model) {
+  public void setModel(MindMapModel model) {
     mModel = model;
   }
 
@@ -279,7 +279,7 @@ public class MindMapController {
       // Tell any node hooks that the node is changed:
       updateNode(node);
     }
-    ((MindMapMapModel) getMap()).nodeChangedInternal(node);
+    ((MindMapModel) getMap()).nodeChangedInternal(node);
   }
 
   public void refreshMap() {
@@ -293,7 +293,7 @@ public class MindMapController {
       MindMapNode child = (MindMapNode) iterator.next();
       refreshMapFrom(child);
     }
-    ((MindMapMapModel) getMap()).nodeChangedInternal(node);
+    ((MindMapModel) getMap()).nodeChangedInternal(node);
   }
 
   /**
@@ -526,14 +526,14 @@ public class MindMapController {
     this.isBlocked = isBlocked;
   }
 
-  public MindMapMapModel getMap() {
+  public MindMapModel getMap() {
     return mModel;
   }
 
   // fc, 29.2.2004: there is no sense in having this private and the
   // controller public,
   // because the getController().getModel() method is available anyway.
-  public MindMapMapModel getModel() {
+  public MindMapModel getModel() {
     return mModel;
   }
 
@@ -757,12 +757,12 @@ public class MindMapController {
   }
   
 	public interface NewNodeCreator {
-		MindMapNode createNode(String userObject, MindMapMapModel map);
+		MindMapNode createNode(String userObject, MindMapModel map);
 	}
 
 	public class DefaultMindMapNodeCreator implements NewNodeCreator {
 
-		public MindMapNode createNode(String userObject, MindMapMapModel map) {
+		public MindMapNode createNode(String userObject, MindMapModel map) {
 			return new MindMapNode(userObject, map);
 		}
 
@@ -772,7 +772,7 @@ public class MindMapController {
 		myNewNodeCreator = creator;
 	}
 
-	public MindMapNode newNode(String userObject, MindMapMapModel map) {
+	public MindMapNode newNode(String userObject, MindMapModel map) {
 		// singleton default:
 		if (myNewNodeCreator == null) {
 			myNewNodeCreator = new DefaultMindMapNodeCreator();
@@ -781,8 +781,8 @@ public class MindMapController {
 	}
 
 	// convenience methods
-	public MindMapMapModel getMindMapMapModel() {
-		return (MindMapMapModel) getMap();
+	public MindMapModel getMindMapMapModel() {
+		return (MindMapModel) getMap();
 	}
 
 	public void setBold(MindMapNode node, boolean bolded) {

@@ -38,7 +38,7 @@ import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.controller.actions.xml.ActorXml;
-import org.rogach.simplymindmap.model.MindMapMapModel;
+import org.rogach.simplymindmap.model.MindMapModel;
 
 public class NodeUpAction extends AbstractAction implements ActorXml {
 	private final MindMapController modeController;
@@ -125,7 +125,7 @@ public class NodeUpAction extends AbstractAction implements ActorXml {
 	 */
 	public int moveNodeTo(MindMapNode newChild, MindMapNode parent,
 			int direction) {
-		MindMapMapModel model = modeController.getModel();
+		MindMapModel model = modeController.getModel();
 		int index = model.getIndexOfChild(parent, newChild);
 		int newIndex = index;
 		int maxIndex = parent.getChildCount();

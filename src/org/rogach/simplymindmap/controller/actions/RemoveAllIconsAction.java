@@ -36,7 +36,7 @@ import org.rogach.simplymindmap.model.MindIcon;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
-import org.rogach.simplymindmap.model.MindMapMapModel;
+import org.rogach.simplymindmap.model.MindMapModel;
 import org.rogach.simplymindmap.util.Tools;
 
 /**
@@ -57,7 +57,7 @@ public class RemoveAllIconsAction extends NodeGeneralAction implements
 		addActor(this);
 	}
 
-	public ActionPair apply(MindMapMapModel model, MindMapNode selected) {
+	public ActionPair apply(MindMapModel model, MindMapNode selected) {
 		CompoundAction undoAction = new CompoundAction();
 		for (Iterator i = selected.getIcons().iterator(); i.hasNext();) {
 			MindIcon icon = (MindIcon) i.next();

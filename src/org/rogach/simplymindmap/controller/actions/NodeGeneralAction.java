@@ -34,7 +34,7 @@ import org.rogach.simplymindmap.controller.actions.instance.CompoundAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.model.MindMapMapModel;
+import org.rogach.simplymindmap.model.MindMapModel;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.controller.actions.xml.AbstractXmlAction;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
@@ -110,7 +110,7 @@ public class NodeGeneralAction extends AbstractXmlAction {
 					.hasNext();) {
 				MindMapNode selected = (MindMapNode) it.next();
 				singleNodeOperation.apply(
-						(MindMapMapModel) this.modeController.getMap(),
+						(MindMapModel) this.modeController.getMap(),
 						selected);
 			}
 		} else {

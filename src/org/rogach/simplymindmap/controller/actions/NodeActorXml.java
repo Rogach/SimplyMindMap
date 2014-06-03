@@ -28,7 +28,7 @@ package org.rogach.simplymindmap.controller.actions;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.controller.actions.xml.ActorXml;
-import org.rogach.simplymindmap.model.MindMapMapModel;
+import org.rogach.simplymindmap.model.MindMapModel;
 
 /**
  * @author foltin
@@ -41,6 +41,6 @@ public interface NodeActorXml extends ActorXml {
 	 * @param model
 	 * @param selected
 	 */
-	ActionPair apply(MindMapMapModel model, MindMapNode selected);
+	ActionPair apply(MindMapModel model, MindMapNode selected);
 
 }

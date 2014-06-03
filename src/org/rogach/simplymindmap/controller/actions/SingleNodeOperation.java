@@ -25,12 +25,12 @@
  */
 package org.rogach.simplymindmap.controller.actions;
 
-import org.rogach.simplymindmap.model.MindMapMapModel;
+import org.rogach.simplymindmap.model.MindMapModel;
 import org.rogach.simplymindmap.model.MindMapNode;
 
 // NodeGeneralAction
 // __________________
 
 public interface SingleNodeOperation {
-	public void apply(MindMapMapModel map, MindMapNode node);
+	public void apply(MindMapModel map, MindMapNode node);
 }
