@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
+import javax.swing.JOptionPane;
 import org.rogach.simplymindmap.controller.actions.CompoundAction;
 import org.rogach.simplymindmap.controller.actions.CutNodeAction;
 import org.rogach.simplymindmap.controller.actions.UndoPasteNodeAction;
@@ -42,7 +43,7 @@ import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActorXml;
 
 public class CutAction extends AbstractAction implements ActorXml {
 	private String text;
-	private final MindMapController mMindMapController;
+	private final MindMapController controller;
 	private static java.util.logging.Logger logger = null;
 
 	public CutAction(MindMapController c) {
@@ -50,33 +51,33 @@ public class CutAction extends AbstractAction implements ActorXml {
 		if (logger == null) {
 			logger = Logger.getLogger(this.getClass().getName());
 		}
-		this.mMindMapController = c;
+		this.controller = c;
 		this.text = "";
-		this.mMindMapController.getActionFactory().registerActor(this,
+		this.controller.getActionFactory().registerActor(this,
 				getDoActionClass());
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (mMindMapController.getView().getRoot().isSelected()) {
-      throw new RuntimeException(
-					Resources.getInstance().getResourceString(
-							"cannot_delete_root"));
+		if (controller.getView().getRoot().isSelected()) {
+      JOptionPane.showMessageDialog(controller.getView(), 
+              Resources.getInstance().getResourceString("cannot_delete_root"), "", JOptionPane.ERROR_MESSAGE);
+      return;
 		}
-		Transferable copy = mMindMapController.cut();
+		Transferable copy = controller.cut();
 		// and set it.
-		mMindMapController.setClipboardContents(copy);
-    mMindMapController.obtainFocusForSelected();
+		controller.setClipboardContents(copy);
+    controller.obtainFocusForSelected();
 	}
 
 	public CutNodeAction getCutNodeAction(MindMapNode node) {
 		CutNodeAction cutAction = new CutNodeAction();
-		cutAction.setNode(mMindMapController.getNodeID(node));
+		cutAction.setNode(controller.getNodeID(node));
 		return cutAction;
 	}
 
 	public Transferable cut(List nodeList) {
-		mMindMapController.sortNodesByDepth(nodeList);
-		Transferable totalCopy = mMindMapController.copy(nodeList, true);
+		controller.sortNodesByDepth(nodeList);
+		Transferable totalCopy = controller.copy(nodeList, true);
 		// Do-action
 		CompoundAction doAction = new CompoundAction();
 		// Undo-action
@@ -91,8 +92,8 @@ public class CutAction extends AbstractAction implements ActorXml {
 			doAction.addChoice(cutNodeAction);
 
 			NodeCoordinate coord = new NodeCoordinate(node, node.isLeft());
-			Transferable copy = mMindMapController.copy(node, true);
-			XmlAction pasteNodeAction = mMindMapController.paste
+			Transferable copy = controller.copy(node, true);
+			XmlAction pasteNodeAction = controller.paste
 					.getPasteNodeAction(copy, coord, (UndoPasteNodeAction) null);
 			// The paste actions are reversed because of the strange
 			// coordinates.
@@ -100,7 +101,7 @@ public class CutAction extends AbstractAction implements ActorXml {
 
 		}
 		if (doAction.sizeChoiceList() > 0) {
-			mMindMapController.doTransaction(text,
+			controller.doTransaction(text,
 					new ActionPair(doAction, undo));
 		}
 		return totalCopy;
@@ -115,9 +116,9 @@ public class CutAction extends AbstractAction implements ActorXml {
 	 */
 	public void act(XmlAction action) {
 		CutNodeAction cutAction = (CutNodeAction) action;
-		MindMapNode selectedNode = mMindMapController.getNodeFromID(cutAction
+		MindMapNode selectedNode = controller.getNodeFromID(cutAction
 				.getNode());
-		mMindMapController.deleteChild.deleteWithoutUndo(selectedNode);
+		controller.deleteChild.deleteWithoutUndo(selectedNode);
 	}
 
 	/*

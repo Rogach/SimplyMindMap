@@ -27,6 +27,7 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
@@ -145,7 +146,8 @@ public class NodeDropListener implements DropTargetListener {
 						if (selecteds.contains(actualNode)) {
 							String message = Resources.getInstance()
 									.getText("cannot_move_to_child");
-              throw new RuntimeException(Resources.getInstance().getText(message));
+              JOptionPane.showMessageDialog(controller.getView(), message, "", JOptionPane.ERROR_MESSAGE);
+              return;
 						}
 						actualNode = (actualNode.isRoot()) ? null : actualNode
 								.getParentNode();

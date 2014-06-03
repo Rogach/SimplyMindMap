@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.AbstractAction;
+import javax.swing.JOptionPane;
 import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
@@ -29,7 +30,9 @@ public class ChangeNodeLevelAction extends AbstractAction {
     // bug fix: sort to make independent by user's selection:
     controller.sortNodesByDepth(selectedNodes);
     if (selectedNode.isRoot()) {
-      throw new RuntimeException(Resources.getInstance().getResourceString("cannot_add_parent_to_root"));
+      JOptionPane.showMessageDialog(controller.getView(), 
+              Resources.getInstance().getResourceString("cannot_add_parent_to_root"), "", JOptionPane.ERROR_MESSAGE);
+      return;
     }
     boolean upwards = Tools.safeEquals("left", direction) != selectedNode.isLeft();
     // Make sure the selected nodes all have the same parent
@@ -40,10 +43,14 @@ public class ChangeNodeLevelAction extends AbstractAction {
     for (Iterator it = selectedNodes.iterator(); it.hasNext();) {
       MindMapNode node = (MindMapNode) it.next();
       if (node.getParentNode() != selectedParent) {
-        throw new RuntimeException(Resources.getInstance().getResourceString("cannot_add_parent_diff_parents"));
+        JOptionPane.showMessageDialog(controller.getView(), 
+              Resources.getInstance().getResourceString("cannot_add_parent_diff_parents"), "", JOptionPane.ERROR_MESSAGE);
+        return;
       }
       if (node.isRoot()) {
-        throw new RuntimeException(Resources.getInstance().getResourceString("cannot_add_parent_to_root"));
+        JOptionPane.showMessageDialog(controller.getView(), 
+              Resources.getInstance().getResourceString("cannot_add_parent_to_root"), "", JOptionPane.ERROR_MESSAGE);
+        return;
       }
     }
     // collect node ids:

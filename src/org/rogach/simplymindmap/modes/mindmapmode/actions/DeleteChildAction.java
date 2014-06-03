@@ -27,6 +27,7 @@ import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.util.Iterator;
 import javax.swing.AbstractAction;
+import javax.swing.JOptionPane;
 import org.rogach.simplymindmap.controller.actions.DeleteNodeAction;
 import org.rogach.simplymindmap.controller.actions.PasteNodeAction;
 import org.rogach.simplymindmap.controller.actions.UndoPasteNodeAction;
@@ -41,29 +42,30 @@ import org.rogach.simplymindmap.view.MapView;
 import org.rogach.simplymindmap.view.NodeView;
 
 public class DeleteChildAction extends AbstractAction implements ActorXml {
-	private final MindMapController mMindMapController;
+	private final MindMapController controller;
 	private String text;
 
 	public DeleteChildAction(MindMapController modeController) {
 		super("", null);
 		text = "";
-		this.mMindMapController = modeController;
-		this.mMindMapController.getActionFactory().registerActor(this,
+		this.controller = modeController;
+		this.controller.getActionFactory().registerActor(this,
 				getDoActionClass());
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		// ask user if not root is selected:
-		for (Iterator iterator = mMindMapController.getSelecteds().iterator(); iterator
+		for (Iterator iterator = controller.getSelecteds().iterator(); iterator
 				.hasNext();) {
 			MindMapNode node = (MindMapNode) iterator.next();
 			if (node.isRoot()) {
-        throw new RuntimeException(Resources.getInstance().getResourceString(
-								"cannot_delete_root"));
+        JOptionPane.showMessageDialog(controller.getView(), 
+              Resources.getInstance().getResourceString("cannot_delete_root"), "", JOptionPane.ERROR_MESSAGE);
+        return;
 			}
 		}
 		// because of multiple selection, cut is better.
-		mMindMapController.cut();
+		controller.cut();
 		// this.c.deleteNode(c.getSelected());
 	}
 
@@ -76,7 +78,7 @@ public class DeleteChildAction extends AbstractAction implements ActorXml {
 	 */
 	public void act(XmlAction action) {
 		DeleteNodeAction deleteNodeAction = (DeleteNodeAction) action;
-		MindMapNode selectedNode = this.mMindMapController
+		MindMapNode selectedNode = this.controller
 				.getNodeFromID(deleteNodeAction.getNode());
 		deleteWithoutUndo(selectedNode);
 	}
@@ -85,14 +87,14 @@ public class DeleteChildAction extends AbstractAction implements ActorXml {
      */
 	public void deleteWithoutUndo(MindMapNode selectedNode) {
 		MindMapNode parent = selectedNode.getParentNode();
-		mMindMapController.fireNodePreDeleteEvent(selectedNode);
+		controller.fireNodePreDeleteEvent(selectedNode);
 
     // deregister node:
-		mMindMapController.getModel().getLinkRegistry()
+		controller.getModel().getLinkRegistry()
 				.deregisterLinkTarget(selectedNode);
 
 		// deselect
-		MapView view = mMindMapController.getView();
+		MapView view = controller.getView();
 		NodeView nodeView = view.getNodeView(selectedNode);
 		view.deselect(nodeView);
 		if(view.getSelecteds().size() == 0) {
@@ -110,9 +112,9 @@ public class DeleteChildAction extends AbstractAction implements ActorXml {
 			}
 			view.selectAsTheOnlyOneSelected(newSelectedView);
 		}
-		mMindMapController.removeNodeFromParent(selectedNode);
+		controller.removeNodeFromParent(selectedNode);
 		// post event
-		mMindMapController.fireNodePostDeleteEvent(selectedNode, parent);
+		controller.fireNodePostDeleteEvent(selectedNode, parent);
 	}
 
 	/*
@@ -125,18 +127,18 @@ public class DeleteChildAction extends AbstractAction implements ActorXml {
 	}
 
 	public void deleteNode(MindMapNode selectedNode) {
-		String newId = mMindMapController.getNodeID(selectedNode);
+		String newId = controller.getNodeID(selectedNode);
 
-		Transferable copy = mMindMapController.copy(selectedNode, true);
+		Transferable copy = controller.copy(selectedNode, true);
 		NodeCoordinate coord = new NodeCoordinate(selectedNode,
 				selectedNode.isLeft());
 		// Undo-action
 		PasteNodeAction pasteNodeAction = null;
-		pasteNodeAction = mMindMapController.paste.getPasteNodeAction(copy,
+		pasteNodeAction = controller.paste.getPasteNodeAction(copy,
 				coord, (UndoPasteNodeAction) null);
 
 		DeleteNodeAction deleteAction = getDeleteNodeAction(newId);
-		mMindMapController.doTransaction(text,
+		controller.doTransaction(text,
 				new ActionPair(deleteAction, pasteNodeAction));
 	}
 
