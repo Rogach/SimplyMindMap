@@ -20,7 +20,7 @@
 package org.rogach.simplymindmap.view;
 
 import java.awt.Container;
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
+import org.rogach.simplymindmap.model.MindMapNode;
 
 class NodeViewFactory {
 

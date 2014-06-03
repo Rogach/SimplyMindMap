@@ -3,7 +3,7 @@ package org.rogach.simplymindmap.view;
 import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
+import org.rogach.simplymindmap.controller.MindMapController;
 
 public class KeymapConfigurator {
   public static void configureKeymap(final MapView view, final MindMapController controller) {

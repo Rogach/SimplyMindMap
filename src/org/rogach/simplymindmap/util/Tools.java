@@ -66,8 +66,8 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
-import org.rogach.simplymindmap.controller.actions.CompoundAction;
-import org.rogach.simplymindmap.controller.actions.XmlAction;
+import org.rogach.simplymindmap.controller.actions.instance.CompoundAction;
+import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.view.NodeView;
 

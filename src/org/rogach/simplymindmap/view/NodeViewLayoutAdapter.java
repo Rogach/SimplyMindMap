@@ -24,7 +24,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Point;
 import javax.swing.JComponent;
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
+import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
 
 /**

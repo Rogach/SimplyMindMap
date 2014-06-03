@@ -44,7 +44,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.text.JTextComponent;
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
+import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.util.Tools;
 
 /**

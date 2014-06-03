@@ -42,7 +42,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.border.BevelBorder;
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.IconInformation;
+import org.rogach.simplymindmap.model.IconInformation;
 
 public class IconSelectionPopupDialog extends JDialog implements KeyListener,
 		MouseListener {

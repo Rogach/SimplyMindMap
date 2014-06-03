@@ -43,7 +43,7 @@ import javax.swing.Timer;
 import javax.swing.plaf.basic.BasicButtonListener;
 import javax.swing.plaf.basic.BasicButtonUI;
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
+import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
 
 /**

@@ -25,8 +25,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Stroke;
-import org.rogach.simplymindmap.modes.EdgeAdapter;
-import org.rogach.simplymindmap.modes.MindMapEdge;
+import org.rogach.simplymindmap.model.EdgeAdapter;
+import org.rogach.simplymindmap.model.MindMapEdge;
 import org.rogach.simplymindmap.util.Tools;
 
 /**
