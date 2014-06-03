@@ -22,18 +22,16 @@ public class StandaloneTree {
     Properties defaultPreferences = readDefaultPreferences();
     
     FreeMindCommon common = new FreeMindCommon(defaultPreferences);
-    MindMapController mc = new MindMapController();
     
     // populate data
     MindMapNodeModel root = new MindMapNodeModel("root", null);
     root.add(new MindMapNodeModel("child0", null));
     root.add(new MindMapNodeModel("child1", null));
     
-    MindMap m = new MindMapMapModel(root, common, mc);
+    MindMapMapModel m = new MindMapMapModel(root, common);
     
-    MapView mapView = new MapView(m, defaultPreferences, mc);
+    MapView mapView = new MapView(m, defaultPreferences);
     mapView.selectAsTheOnlyOneSelected(mapView.getRoot());
-    mc.setView(mapView);
     
     JFrame frame = new JFrame();
     
@@ -59,7 +57,7 @@ public class StandaloneTree {
         System.exit(0);
       }
     });
-    mc.obtainFocusForSelected(); // eagerly grab focus for map, else it will require clicking before proper use
+    mapView.getController().obtainFocusForSelected(); // eagerly grab focus for map, else it will require clicking before proper use
   }
   
   public static Properties readDefaultPreferences() {

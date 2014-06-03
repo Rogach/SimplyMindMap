@@ -1,29 +1,8 @@
 package org.rogach.simplymindmap.view;
 
-import org.rogach.simplymindmap.modes.mindmapmode.actions.FitToPageAction;
-import org.rogach.simplymindmap.modes.mindmapmode.actions.ChangeNodeLevelAction;
-import org.rogach.simplymindmap.modes.mindmapmode.actions.IconSelectionAction;
-import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
-import org.rogach.simplymindmap.util.IconSelectionPopupDialog;
-import org.rogach.simplymindmap.util.Tools;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Rectangle;
-import java.awt.Window;
-import java.awt.datatransfer.Transferable;
-import java.awt.event.ActionEvent;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Vector;
-import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.JScrollPane;
-import javax.swing.JViewport;
 import javax.swing.KeyStroke;
 
 public class KeymapConfigurator {

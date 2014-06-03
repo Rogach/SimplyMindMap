@@ -60,13 +60,12 @@ public class MindMapMapModel extends MapAdapter {
 	// Constructors
 	//
 
-	public MindMapMapModel(FreeMindCommon common, ModeController modeController) {
-		this(null, common, modeController);
+	public MindMapMapModel(FreeMindCommon common) {
+		this(null, common);
 	}
 
-	public MindMapMapModel(MindMapNodeModel root, FreeMindCommon common,
-			ModeController modeController) {
-		super(modeController);
+	public MindMapMapModel(MindMapNodeModel root, FreeMindCommon common) {
+		super();
 
 		// register new LinkRegistryAdapter
 		linkRegistry = new MindMapLinkRegistry();

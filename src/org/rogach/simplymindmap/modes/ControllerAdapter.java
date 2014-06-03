@@ -427,7 +427,7 @@ public abstract class ControllerAdapter implements ModeController {
 	// (blocked to protect against particular events e.g. in edit mode)
 	private boolean isBlocked = false;
 
-	private MapView mView;
+	protected MapView mView;
 
 	public boolean isBlocked() {
 		return this.isBlocked;

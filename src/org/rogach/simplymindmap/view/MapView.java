@@ -80,6 +80,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import javax.swing.KeyStroke;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapMapModel;
 
 /**
  * This class represents the view of a whole MindMap (in analogy to class
@@ -259,7 +260,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	// Logging:
 	private static java.util.logging.Logger logger;
 
-	private MindMap model;
+	private MindMapMapModel model;
 	private NodeView rootView = null;
 	private Selected selected = new Selected();
 	private float zoom = 1F;
@@ -294,11 +295,12 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	//
 	static boolean NEED_PREF_SIZE_BUG_FIX = false;
 
-	public MapView(MindMap model, Properties properties, final MindMapController controller) {
+	public MapView(MindMapMapModel model, Properties properties) {
 		super();
     this.properties = properties;
-    this.controller = controller;
+    this.controller = new MindMapController(this);
 		this.model = model;
+    this.model.setModeController(controller);
 		if (logger == null)
 			logger = Logger.getLogger(this.getClass().getName());
 		mCenterNodeTimer = new Timer();
@@ -464,6 +466,10 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 		}
 		return maxNodeWidth;
 	}
+  
+  public MindMapController getController() {
+    return controller;
+  }
 
 	//
 	// Navigation

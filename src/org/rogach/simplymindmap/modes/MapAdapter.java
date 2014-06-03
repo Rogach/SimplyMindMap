@@ -31,12 +31,10 @@ import javax.swing.tree.TreeNode;
 public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 
 	static protected Logger logger;
-	protected final ModeController mModeController;
+	protected ModeController mModeController;
 
-	public MapAdapter(ModeController modeController) {
+	public MapAdapter() {
 		super(null);
-		this.mModeController = modeController;
-		mModeController.setModel(this);
 		if (logger == null) {
 			logger = Logger.getLogger(this.getClass().getName());
 		}
@@ -45,15 +43,11 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 	public ModeController getModeController() {
 		return mModeController;
 	}
-
-	private void removeNodes(MindMapNode node) {
-		mModeController.fireNodePreDeleteEvent(node);
-		// and all children:
-		for (Iterator i = node.childrenUnfolded(); i.hasNext();) {
-			MindMapNode child = (MindMapNode) i.next();
-			removeNodes(child);
-		}
-	}
+  
+  public void setModeController(ModeController controller) {
+    this.mModeController = controller;
+    this.mModeController.setModel(this);
+  }
 
 	public MindMapNode getRootNode() {
 		return (MindMapNode) getRoot();

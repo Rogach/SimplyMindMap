@@ -86,6 +86,7 @@ import javax.swing.Action;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.ChangeNodeLevelAction;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.FitToPageAction;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.IconSelectionAction;
+import org.rogach.simplymindmap.view.MapView;
 
 public class MindMapController extends ControllerAdapter implements
 		MindMapActions {
@@ -156,8 +157,9 @@ public class MindMapController extends ControllerAdapter implements
 	// Extension Actions
 	public Vector iconActions = new Vector(); // fc
   
-	public MindMapController() {
+	public MindMapController(MapView view) {
 		super();
+    this.mView = view;
 		if (logger == null) {
 			logger = Logger.getLogger(this.getClass().getName());
 		}
@@ -167,7 +169,6 @@ public class MindMapController extends ControllerAdapter implements
     logger.info("createIconActions");
     createStandardActions();
     createIconActions();
-    logger.info("createNodeHookActions");
 	}
 
 	private void createStandardActions() {
@@ -546,7 +547,6 @@ public class MindMapController extends ControllerAdapter implements
 			Toolkit toolkit = Toolkit.getDefaultToolkit();
 			selection = toolkit.getSystemSelection();
 			clipboard = toolkit.getSystemClipboard();
-
 		}
 	}
 
