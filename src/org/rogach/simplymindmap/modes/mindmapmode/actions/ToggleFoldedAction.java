@@ -27,7 +27,6 @@ import org.rogach.simplymindmap.controller.actions.CompoundAction;
 import org.rogach.simplymindmap.controller.actions.FoldAction;
 import org.rogach.simplymindmap.controller.actions.XmlAction;
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActorXml;
@@ -36,6 +35,7 @@ import java.awt.event.ActionEvent;
 import java.util.ListIterator;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 public class ToggleFoldedAction extends AbstractAction implements ActorXml {
 	private final MindMapController modeController;

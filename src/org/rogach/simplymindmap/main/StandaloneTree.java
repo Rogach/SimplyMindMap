@@ -1,9 +1,7 @@
 package org.rogach.simplymindmap.main;
 
-import org.rogach.simplymindmap.modes.MindMap;
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapMapModel;
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapNodeModel;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 import org.rogach.simplymindmap.view.MapView;
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
@@ -20,7 +18,7 @@ public class StandaloneTree {
     UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
     
     // populate data
-    MindMapNodeModel root = new MindMapNodeModel("root");
+    MindMapNode root = new MindMapNode("root");
     
     MindMapMapModel m = new MindMapMapModel(root);
     

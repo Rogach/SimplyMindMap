@@ -22,8 +22,6 @@ package org.rogach.simplymindmap.modes.mindmapmode;
 
 import org.rogach.simplymindmap.modes.MapAdapter;
 import org.rogach.simplymindmap.modes.MindMapLinkRegistry;
-import org.rogach.simplymindmap.modes.MindMapNode;
-import org.rogach.simplymindmap.modes.NodeAdapter;
 import org.rogach.simplymindmap.nanoxml.XMLParseException;
 import org.rogach.simplymindmap.util.Tools;
 import java.io.BufferedReader;
@@ -63,22 +61,22 @@ public class MindMapMapModel extends MapAdapter {
 		this(null);
 	}
 
-	public MindMapMapModel(MindMapNodeModel root) {
+	public MindMapMapModel(MindMapNode root) {
 		super();
 
 		// register new LinkRegistryAdapter
 		linkRegistry = new MindMapLinkRegistry();
 
 		if (root == null)
-			root = new MindMapNodeModel(Resources.getInstance().getResourceString("new_mindmap"),
+			root = new MindMapNode(Resources.getInstance().getResourceString("new_mindmap"),
 					 this);
     updateMapReferenceInNodes(root);
 		setRoot(root);
 	}
   
-  private void updateMapReferenceInNodes(MindMapNodeModel node) {
+  private void updateMapReferenceInNodes(MindMapNode node) {
     node.setMap(this);
-    for (MindMapNodeModel child : node.getChildren()) {
+    for (MindMapNode child : node.getChildren()) {
       updateMapReferenceInNodes(child);
     }
   }
@@ -115,12 +113,12 @@ public class MindMapMapModel extends MapAdapter {
 		Reader createReader() throws FileNotFoundException;
 	}
 
-	MindMapNodeModel loadTree(ReaderCreator pReaderCreator)
+	MindMapNode loadTree(ReaderCreator pReaderCreator)
 			throws XMLParseException, IOException {
 		return loadTree(pReaderCreator, true);
 	}
 
-	public MindMapNodeModel loadTree(ReaderCreator pReaderCreator,
+	public MindMapNode loadTree(ReaderCreator pReaderCreator,
 			boolean pAskUserBeforeUpdate) throws XMLParseException, IOException {
 		int versionInfoLength;
 		versionInfoLength = EXPECTED_START_STRINGS[0].length();
@@ -146,7 +144,7 @@ public class MindMapMapModel extends MapAdapter {
     }
 		try {
 			HashMap IDToTarget = new HashMap();
-			return (MindMapNodeModel) mMindMapController.createNodeTreeFromXml(
+			return (MindMapNode) mMindMapController.createNodeTreeFromXml(
 					reader, IDToTarget);
 			// MindMapXMLElement mapElement = new
 			// MindMapXMLElement(mMindMapController);
@@ -162,9 +160,9 @@ public class MindMapMapModel extends MapAdapter {
 			org.rogach.simplymindmap.main.Resources.getInstance().logException(ex);
 			MindMapXMLElement mapElement = new MindMapXMLElement(
 					mMindMapController);
-			NodeAdapter result = mapElement.createNodeAdapter(null);
+			MindMapNode result = mapElement.createNodeAdapter(null);
 			result.setText(errorMessage);
-			return (MindMapNodeModel) result;
+			return (MindMapNode) result;
 		} finally {
 			if (reader != null) {
 				reader.close();
@@ -204,7 +202,7 @@ public class MindMapMapModel extends MapAdapter {
 			BufferedWriter fileout = new BufferedWriter(stringWriter);
 
 			for (ListIterator it = mindMapNodes.listIterator(); it.hasNext();) {
-				((MindMapNodeModel) it.next()).saveTXT(fileout,/* depth= */0);
+				((MindMapNode) it.next()).saveTXT(fileout,/* depth= */0);
 			}
 
 			fileout.close();
@@ -216,7 +214,7 @@ public class MindMapMapModel extends MapAdapter {
 		}
 	}
 
-	public boolean saveTXT(MindMapNodeModel rootNodeOfBranch, File file) {
+	public boolean saveTXT(MindMapNode rootNodeOfBranch, File file) {
 		// Returns success of the operation.
 		try {
 			BufferedWriter fileout = new BufferedWriter(new OutputStreamWriter(

@@ -26,12 +26,11 @@ package org.rogach.simplymindmap.modes.mindmapmode.actions;
 import org.rogach.simplymindmap.controller.actions.ItalicNodeAction;
 import org.rogach.simplymindmap.controller.actions.XmlAction;
 import org.rogach.simplymindmap.modes.MindMap;
-import org.rogach.simplymindmap.modes.MindMapNode;
-import org.rogach.simplymindmap.modes.NodeAdapter;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
 import javax.swing.Action;
 import javax.swing.JMenuItem;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 public class ItalicAction extends NodeGeneralAction implements NodeActorXml {
 	private final MindMapController modeController;
@@ -46,7 +45,7 @@ public class ItalicAction extends NodeGeneralAction implements NodeActorXml {
 
 	public void act(XmlAction action) {
 		ItalicNodeAction italicact = (ItalicNodeAction) action;
-		NodeAdapter node = getNodeFromID(italicact.getNode());
+		MindMapNode node = getNodeFromID(italicact.getNode());
 		if (node.isItalic() != italicact.getItalic()) {
 			node.setItalic(italicact.getItalic());
 			this.modeController.nodeChanged(node);

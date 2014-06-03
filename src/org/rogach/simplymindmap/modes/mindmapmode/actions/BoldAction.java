@@ -28,12 +28,11 @@ package org.rogach.simplymindmap.modes.mindmapmode.actions;
 import org.rogach.simplymindmap.controller.actions.BoldNodeAction;
 import org.rogach.simplymindmap.controller.actions.XmlAction;
 import org.rogach.simplymindmap.modes.MindMap;
-import org.rogach.simplymindmap.modes.MindMapNode;
-import org.rogach.simplymindmap.modes.NodeAdapter;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
 import javax.swing.Action;
 import javax.swing.JMenuItem;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 public class BoldAction extends NodeGeneralAction implements NodeActorXml {
 	/**
@@ -46,7 +45,7 @@ public class BoldAction extends NodeGeneralAction implements NodeActorXml {
 	public void act(XmlAction action) {
 		if (action instanceof BoldNodeAction) {
 			BoldNodeAction boldact = (BoldNodeAction) action;
-			NodeAdapter node = getNodeFromID(boldact.getNode());
+			MindMapNode node = getNodeFromID(boldact.getNode());
 			if (node.isBold() != boldact.getBold()) {
 				node.setBold(boldact.getBold());
 				modeController.nodeChanged(node);

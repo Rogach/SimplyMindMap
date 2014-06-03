@@ -28,10 +28,9 @@ import org.rogach.simplymindmap.controller.actions.TransferableContent;
 import org.rogach.simplymindmap.controller.actions.UndoPasteNodeAction;
 import org.rogach.simplymindmap.controller.actions.XmlAction;
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapMapModel;
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapNodeModel;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActorXml;
 import org.rogach.simplymindmap.nanoxml.XMLParseException;
@@ -238,7 +237,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 									new MindMapMapModel.StringReaderCreator(
 											mapContent), false);
 					for (ListIterator i = node.childrenUnfolded(); i.hasNext();) {
-						MindMapNodeModel importNode = (MindMapNodeModel) i
+						MindMapNode importNode = (MindMapNode) i
 								.next();
 						insertNodeInto(importNode, target, asSibling, isLeft,
 								true);
@@ -308,13 +307,13 @@ public class PasteAction extends AbstractAction implements ActorXml {
 		return dataFlavorHandlerList;
 	}
 
-	public MindMapNodeModel pasteXMLWithoutRedisplay(String pasted,
+	public MindMapNode pasteXMLWithoutRedisplay(String pasted,
 			MindMapNode target, boolean asSibling, boolean changeSide,
 			boolean isLeft, HashMap pIDToTarget) throws XMLParseException {
 		// Call nodeStructureChanged(target) after this function.
 		logger.fine("Pasting " + pasted + " to " + target);
 		try {
-			MindMapNodeModel node = (MindMapNodeModel) mMindMapController
+			MindMapNode node = (MindMapNode) mMindMapController
 					.createNodeTreeFromXml(new StringReader(pasted),
 							pIDToTarget);
 			insertNodeInto(node, target, asSibling, isLeft, changeSide);
@@ -325,7 +324,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 		}
 	}
 
-	private void insertNodeInto(MindMapNodeModel node, MindMapNode target,
+	private void insertNodeInto(MindMapNode node, MindMapNode target,
 			boolean asSibling, boolean isLeft, boolean changeSide) {
 		MindMapNode parent;
 		if (asSibling) {
@@ -379,7 +378,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 			// node to
 			// the parent of real parent.
 			realParent = parent;
-			parent = new MindMapNodeModel(null, mMindMapController.getMap());
+			parent = new MindMapNode(null, mMindMapController.getMap());
 		}
 
 		ArrayList parentNodes = new ArrayList();
@@ -468,7 +467,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 
 	/**
      */
-	private void insertNodeInto(MindMapNodeModel node, MindMapNode parent, int i) {
+	private void insertNodeInto(MindMapNode node, MindMapNode parent, int i) {
 		mMindMapController.insertNodeInto(node, parent, i);
 	}
 
@@ -523,7 +522,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 	protected int determineAmountOfNewNodes(Transferable t)
 			throws UnsupportedFlavorException, IOException {
 		// create a new node for testing purposes.
-		MindMapNodeModel parent = new MindMapNodeModel(null, mMindMapController.getMap());
+		MindMapNode parent = new MindMapNode(null, mMindMapController.getMap());
 		pasteStringWithoutRedisplay(t, parent, false, false);
 		final int childCount = parent.getChildCount();
 		return childCount;

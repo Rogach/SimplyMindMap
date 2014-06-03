@@ -23,7 +23,6 @@
 package org.rogach.simplymindmap.modes.mindmapmode.actions;
 
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
 import java.awt.event.ActionEvent;
 import java.util.Iterator;
@@ -31,6 +30,7 @@ import java.util.ListIterator;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 /**
  * @author foltin

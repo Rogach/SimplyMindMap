@@ -20,7 +20,6 @@
 package org.rogach.simplymindmap.controller;
 
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.util.Tools;
 import org.rogach.simplymindmap.view.MainView;
@@ -35,6 +34,7 @@ import java.awt.dnd.DragSourceDropEvent;
 import java.awt.dnd.DragSourceEvent;
 import java.awt.dnd.DragSourceListener;
 import java.awt.event.InputEvent;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 /**
  * The NodeDragListener which belongs to every NodeView

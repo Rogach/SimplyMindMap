@@ -26,9 +26,8 @@ package org.rogach.simplymindmap.modes.mindmapmode.actions;
 import org.rogach.simplymindmap.controller.actions.MoveNodeXmlAction;
 import org.rogach.simplymindmap.controller.actions.XmlAction;
 import org.rogach.simplymindmap.modes.MindMap;
-import org.rogach.simplymindmap.modes.MindMapNode;
-import org.rogach.simplymindmap.modes.NodeAdapter;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
 
 public class MoveNodeAction extends NodeGeneralAction implements NodeActorXml {
@@ -44,7 +43,7 @@ public class MoveNodeAction extends NodeGeneralAction implements NodeActorXml {
 
 	public void act(XmlAction action) {
 		MoveNodeXmlAction moveAction = (MoveNodeXmlAction) action;
-		NodeAdapter node = getNodeFromID(moveAction.getNode());
+		MindMapNode node = getNodeFromID(moveAction.getNode());
 		node.setHGap(moveAction.getHGap());
 		node.setShiftY(moveAction.getShiftY());
 		if (!node.isRoot())
@@ -60,7 +59,7 @@ public class MoveNodeAction extends NodeGeneralAction implements NodeActorXml {
 		// reset position
 		if (selected.isRoot())
 			return null;
-		return getActionPair(selected, NodeAdapter.VGAP, NodeAdapter.HGAP, 0);
+		return getActionPair(selected, MindMapNode.VGAP, MindMapNode.HGAP, 0);
 	}
 
 	private ActionPair getActionPair(MindMapNode selected, int parentVGap,

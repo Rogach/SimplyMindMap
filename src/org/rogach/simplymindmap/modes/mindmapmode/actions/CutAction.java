@@ -28,7 +28,6 @@ import org.rogach.simplymindmap.controller.actions.CutNodeAction;
 import org.rogach.simplymindmap.controller.actions.UndoPasteNodeAction;
 import org.rogach.simplymindmap.controller.actions.XmlAction;
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.PasteAction.NodeCoordinate;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
@@ -39,6 +38,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 public class CutAction extends AbstractAction implements ActorXml {
 	private String text;

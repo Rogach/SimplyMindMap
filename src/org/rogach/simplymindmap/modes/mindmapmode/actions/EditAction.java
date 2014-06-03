@@ -28,8 +28,6 @@ package org.rogach.simplymindmap.modes.mindmapmode.actions;
 import org.rogach.simplymindmap.controller.actions.EditNodeAction;
 import org.rogach.simplymindmap.controller.actions.XmlAction;
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.MindMapNode;
-import org.rogach.simplymindmap.modes.NodeAdapter;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActorXml;
@@ -43,6 +41,7 @@ import java.awt.event.KeyEvent;
 import java.util.Vector;
 import java.util.regex.Pattern;
 import javax.swing.AbstractAction;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 //
 //Node editing
@@ -76,7 +75,7 @@ public class EditAction extends AbstractAction implements ActorXml {
 	 */
 	public void act(XmlAction action) {
 		EditNodeAction editAction = (EditNodeAction) action;
-		NodeAdapter node = this.mMindMapController.getNodeFromID(editAction
+		MindMapNode node = this.mMindMapController.getNodeFromID(editAction
 				.getNode());
 		if (!node.toString().equals(editAction.getText())) {
 			node.setUserObject(editAction.getText());

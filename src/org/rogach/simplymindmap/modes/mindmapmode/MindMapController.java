@@ -25,7 +25,6 @@ import org.rogach.simplymindmap.main.ResourceKeys;
 import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.modes.MindIcon;
 import org.rogach.simplymindmap.modes.MindMap;
-import org.rogach.simplymindmap.modes.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.BoldAction;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.CompoundActionHandler;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.CopyAction;
@@ -91,7 +90,6 @@ import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import org.rogach.simplymindmap.modes.MapAdapter;
-import org.rogach.simplymindmap.modes.NodeAdapter;
 import org.rogach.simplymindmap.modes.XMLElementAdapter;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.ChangeNodeLevelAction;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.FitToPageAction;
@@ -124,13 +122,13 @@ public class MindMapController {
 
 	public Action increaseNodeFont = new NodeGeneralAction(this,
 			"increase_node_font_size", null, new SingleNodeOperation() {
-				public void apply(MindMapMapModel map, MindMapNodeModel node) {
+				public void apply(MindMapMapModel map, MindMapNode node) {
 					increaseFontSize(node, 1);
 				}
 			});
 	public Action decreaseNodeFont = new NodeGeneralAction(this,
 			"decrease_node_font_size", null, new SingleNodeOperation() {
-				public void apply(MindMapMapModel map, MindMapNodeModel node) {
+				public void apply(MindMapMapModel map, MindMapNode node) {
 					increaseFontSize(node, -1);
 				}
 			});
@@ -421,7 +419,7 @@ public class MindMapController {
 
   public void fireRecursiveNodeCreateEvent(MindMapNode node) {
     for (Iterator i = node.childrenUnfolded(); i.hasNext();) {
-      NodeAdapter child = (NodeAdapter) i.next();
+      MindMapNode child = (MindMapNode) i.next();
       fireRecursiveNodeCreateEvent(child);
     }
     // call lifetime listeners:
@@ -556,8 +554,8 @@ public class MindMapController {
   /**
    * @throws {@link IllegalArgumentException} when node isn't found.
    */
-  public NodeAdapter getNodeFromID(String nodeID) {
-    NodeAdapter node = (NodeAdapter) getMap().getLinkRegistry().getTargetForId(nodeID);
+  public MindMapNode getNodeFromID(String nodeID) {
+    MindMapNode node = (MindMapNode) getMap().getLinkRegistry().getTargetForId(nodeID);
     if (node == null) {
       throw new IllegalArgumentException("Node belonging to the node id " + nodeID + " not found in map");
     }
@@ -765,13 +763,13 @@ public class MindMapController {
   }
   
 	public interface NewNodeCreator {
-		MindMapNode createNode(Object userObject, MindMap map);
+		MindMapNode createNode(String userObject, MindMap map);
 	}
 
 	public class DefaultMindMapNodeCreator implements NewNodeCreator {
 
-		public MindMapNode createNode(Object userObject, MindMap map) {
-			return new MindMapNodeModel(userObject, map);
+		public MindMapNode createNode(String userObject, MindMap map) {
+			return new MindMapNode(userObject, map);
 		}
 
 	}
@@ -780,7 +778,7 @@ public class MindMapController {
 		myNewNodeCreator = creator;
 	}
 
-	public MindMapNode newNode(Object userObject, MindMap map) {
+	public MindMapNode newNode(String userObject, MindMap map) {
 		// singleton default:
 		if (myNewNodeCreator == null) {
 			myNewNodeCreator = new DefaultMindMapNodeCreator();
@@ -851,7 +849,7 @@ public class MindMapController {
 	public Transferable copy(MindMapNode node, boolean saveInvisible) {
 		StringWriter stringWriter = new StringWriter();
 		try {
-			((MindMapNodeModel) node).save(stringWriter, getMap()
+			((MindMapNode) node).save(stringWriter, getMap()
 					.getLinkRegistry(), saveInvisible, true);
 		} catch (IOException e) {
 		}

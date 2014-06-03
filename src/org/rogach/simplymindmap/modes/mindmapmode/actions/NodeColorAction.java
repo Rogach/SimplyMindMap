@@ -27,9 +27,8 @@ package org.rogach.simplymindmap.modes.mindmapmode.actions;
 import org.rogach.simplymindmap.controller.actions.NodeColorFormatAction;
 import org.rogach.simplymindmap.controller.actions.XmlAction;
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapNodeModel;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActorXml;
 import org.rogach.simplymindmap.util.Tools;
@@ -56,7 +55,7 @@ public class NodeColorAction extends FreemindAction implements ActorXml {
 		}
 		for (ListIterator it = controller.getSelecteds().listIterator(); it
 				.hasNext();) {
-			MindMapNodeModel selected = (MindMapNodeModel) it.next();
+			MindMapNode selected = (MindMapNode) it.next();
 			setNodeColor(selected, color);
 		}
 	}

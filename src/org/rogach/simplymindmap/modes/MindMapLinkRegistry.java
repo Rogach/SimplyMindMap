@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ListIterator;
 import java.util.Vector;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 /**
  * Interface for the registry, which manages the ids of nodes and the existing

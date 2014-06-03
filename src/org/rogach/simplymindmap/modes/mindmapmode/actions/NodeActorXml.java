@@ -26,7 +26,7 @@
 package org.rogach.simplymindmap.modes.mindmapmode.actions;
 
 import org.rogach.simplymindmap.modes.MindMap;
-import org.rogach.simplymindmap.modes.MindMapNode;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActorXml;
 

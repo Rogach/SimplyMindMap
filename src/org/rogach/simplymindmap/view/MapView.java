@@ -28,7 +28,6 @@ import org.rogach.simplymindmap.controller.NodeMotionListener;
 import org.rogach.simplymindmap.controller.NodeMouseMotionListener;
 import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.modes.MindMap;
-import org.rogach.simplymindmap.modes.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.listeners.CommonNodeKeyListener;
 import org.rogach.simplymindmap.modes.mindmapmode.listeners.CommonNodeMouseMotionListener;
@@ -81,6 +80,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapMapModel;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 /**
  * This class represents the view of a whole MindMap (in analogy to class

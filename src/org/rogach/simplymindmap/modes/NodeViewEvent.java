@@ -23,6 +23,8 @@
  */
 package org.rogach.simplymindmap.modes;
 
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
+
 /**
  * @author Dimitri Polivaev 31.10.2005
  */

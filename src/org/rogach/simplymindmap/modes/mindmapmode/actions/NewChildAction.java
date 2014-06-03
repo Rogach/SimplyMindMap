@@ -27,8 +27,6 @@ import org.rogach.simplymindmap.controller.actions.DeleteNodeAction;
 import org.rogach.simplymindmap.controller.actions.NewNodeAction;
 import org.rogach.simplymindmap.controller.actions.XmlAction;
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.MindMapNode;
-import org.rogach.simplymindmap.modes.NodeAdapter;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActorXml;
@@ -37,6 +35,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 public class NewChildAction extends AbstractAction implements ActorXml {
 	private final MindMapController c;
@@ -65,7 +64,7 @@ public class NewChildAction extends AbstractAction implements ActorXml {
 	 */
 	public void act(XmlAction action) {
 		NewNodeAction addNodeAction = (NewNodeAction) action;
-		NodeAdapter parent = this.c.getNodeFromID(addNodeAction.getNode());
+		MindMapNode parent = this.c.getNodeFromID(addNodeAction.getNode());
 		int index = addNodeAction.getIndex();
 		MindMapNode newNode = c.newNode("", parent.getMap());
 		newNode.setLeft(addNodeAction.getPosition().equals("left"));

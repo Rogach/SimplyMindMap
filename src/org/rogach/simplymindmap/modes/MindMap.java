@@ -24,6 +24,7 @@ import java.util.List;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 public interface MindMap extends TreeModel {
 

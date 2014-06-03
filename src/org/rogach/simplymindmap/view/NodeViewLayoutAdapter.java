@@ -19,13 +19,13 @@
 
 package org.rogach.simplymindmap.view;
 
-import org.rogach.simplymindmap.modes.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Point;
 import javax.swing.JComponent;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 /**
  * @author foltin

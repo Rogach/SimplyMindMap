@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Vector;
 import javax.swing.AbstractAction;
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
 import org.rogach.simplymindmap.view.MapView;
 

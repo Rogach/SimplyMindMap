@@ -22,7 +22,6 @@ package org.rogach.simplymindmap.view;
 
 import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.modes.MindIcon;
-import org.rogach.simplymindmap.modes.MindMapNode;
 import org.rogach.simplymindmap.util.HtmlTools;
 import org.rogach.simplymindmap.util.Tools;
 import java.awt.BasicStroke;
@@ -56,6 +55,7 @@ import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeNode;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 /**
  * This class represents a single Node of a MindMap (in analogy to
@@ -914,10 +914,10 @@ public class NodeView extends JComponent implements TreeModelListener {
 			iconImages.addImage(myIcon.getIcon());
 		}
 		// /* Folded icon by Matthias Schade (mascha2), fc, 20.12.2003*/
-		// if (((NodeAdapter)getModel()).isFolded()) {
+		// if (((MindMapNodeModel)getModel()).isFolded()) {
 		// iconPresent = true;
 		// ImageIcon icon = new
-		// ImageIcon(((NodeAdapter)getModel()).getFrame().getResource("images/Folded.png"));
+		// ImageIcon(((MindMapNodeModel)getModel()).getFrame().getResource("images/Folded.png"));
 		// iconImages.addImage(icon);
 		// }
 		// DanielPolansky: set icon only if icon is present, because

@@ -28,11 +28,9 @@ package org.rogach.simplymindmap.modes.mindmapmode.actions;
 import org.rogach.simplymindmap.controller.actions.CompoundAction;
 import org.rogach.simplymindmap.controller.actions.XmlAction;
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.MindMapNode;
-import org.rogach.simplymindmap.modes.NodeAdapter;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapMapModel;
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapNodeModel;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.AbstractXmlAction;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
 import org.rogach.simplymindmap.util.Tools;
@@ -110,7 +108,7 @@ public class NodeGeneralAction extends AbstractXmlAction {
 		if (singleNodeOperation != null) {
 			for (ListIterator it = modeController.getSelecteds().listIterator(); it
 					.hasNext();) {
-				MindMapNodeModel selected = (MindMapNodeModel) it.next();
+				MindMapNode selected = (MindMapNode) it.next();
 				singleNodeOperation.apply(
 						(MindMapMapModel) this.modeController.getMap(),
 						selected);
@@ -125,7 +123,7 @@ public class NodeGeneralAction extends AbstractXmlAction {
 			// sons are deleted first:
 			for (ListIterator it = modeController.getSelecteds().listIterator(); it
 					.hasNext();) {
-				MindMapNodeModel selected = (MindMapNodeModel) it.next();
+				MindMapNode selected = (MindMapNode) it.next();
 				ActionPair pair = actor.apply(this.modeController.getMap(),
 						selected);
 				if (pair != null) {
@@ -157,7 +155,7 @@ public class NodeGeneralAction extends AbstractXmlAction {
 
 	/**
      */
-	protected NodeAdapter getNodeFromID(String string) {
+	protected MindMapNode getNodeFromID(String string) {
 		return modeController.getNodeFromID(string);
 	}
 

@@ -28,6 +28,7 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 

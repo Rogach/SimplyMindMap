@@ -20,7 +20,6 @@
 package org.rogach.simplymindmap.view;
 
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
 import java.awt.Color;
 import java.awt.Component;
@@ -45,6 +44,7 @@ import javax.swing.JComponent;
 import javax.swing.Timer;
 import javax.swing.plaf.basic.BasicButtonListener;
 import javax.swing.plaf.basic.BasicButtonUI;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 /**
  * @author Foltin

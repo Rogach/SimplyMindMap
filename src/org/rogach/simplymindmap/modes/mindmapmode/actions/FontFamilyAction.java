@@ -26,12 +26,11 @@ package org.rogach.simplymindmap.modes.mindmapmode.actions;
 import org.rogach.simplymindmap.controller.actions.FontNodeAction;
 import org.rogach.simplymindmap.controller.actions.XmlAction;
 import org.rogach.simplymindmap.modes.MindMap;
-import org.rogach.simplymindmap.modes.MindMapNode;
-import org.rogach.simplymindmap.modes.NodeAdapter;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
 import org.rogach.simplymindmap.util.Tools;
 import java.awt.Font;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 /**
  * @author foltin
@@ -97,7 +96,7 @@ public class FontFamilyAction extends NodeGeneralAction implements NodeActorXml 
 			MindMapNode node = getNodeFromID(fontFamilyAction.getNode());
 			String fontFamily = fontFamilyAction.getFont();
 			if (!Tools.safeEquals(node.getFontFamilyName(), fontFamily)) {
-				((NodeAdapter) node).establishOwnFont();
+				((MindMapNode) node).establishOwnFont();
 				node.setFont(
 						new Font(fontFamily, node.getFont().getStyle(), node
 								.getFont().getSize()));

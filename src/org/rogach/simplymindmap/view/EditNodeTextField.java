@@ -25,7 +25,6 @@ package org.rogach.simplymindmap.view;
 
 import org.rogach.simplymindmap.main.ResourceKeys;
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -51,6 +50,7 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 /**
  * @author foltin

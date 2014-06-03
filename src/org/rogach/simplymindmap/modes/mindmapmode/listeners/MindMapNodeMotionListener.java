@@ -20,8 +20,6 @@
 package org.rogach.simplymindmap.modes.mindmapmode.listeners;
 
 import org.rogach.simplymindmap.controller.NodeMotionListener.NodeMotionAdapter;
-import org.rogach.simplymindmap.modes.MindMapNode;
-import org.rogach.simplymindmap.modes.NodeAdapter;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.util.Tools;
 import org.rogach.simplymindmap.view.MapView;
@@ -36,6 +34,7 @@ import java.awt.event.MouseEvent;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 /**
  * The MouseMotionListener which belongs to every NodeView
@@ -154,13 +153,13 @@ public class MindMapNodeMotionListener extends NodeMotionAdapter {
 			if (e.getModifiersEx() == 0) {
 				NodeView nodeV = getNodeView(e);
 				MindMapNode node = nodeV.getModel();
-				c.moveNodePosition(node, node.getVGap(), NodeAdapter.HGAP, 0);
+				c.moveNodePosition(node, node.getVGap(), MindMapNode.HGAP, 0);
 				return;
 			}
 			if (e.getModifiersEx() == InputEvent.CTRL_DOWN_MASK) {
 				NodeView nodeV = getNodeView(e);
 				MindMapNode node = nodeV.getModel();
-				c.moveNodePosition(node, NodeAdapter.VGAP, node.getHGap(),
+				c.moveNodePosition(node, MindMapNode.VGAP, node.getHGap(),
 						node.getShiftY());
 				return;
 			}

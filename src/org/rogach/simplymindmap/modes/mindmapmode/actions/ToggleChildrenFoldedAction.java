@@ -23,11 +23,11 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode.actions;
 
-import org.rogach.simplymindmap.modes.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.view.MapView;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 public class ToggleChildrenFoldedAction extends AbstractAction {
 	private final MindMapController modeController;

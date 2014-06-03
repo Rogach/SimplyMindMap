@@ -21,7 +21,6 @@
 package org.rogach.simplymindmap.modes.mindmapmode;
 
 import org.rogach.simplymindmap.modes.EdgeAdapter;
-import org.rogach.simplymindmap.modes.MindMapNode;
 
 public class MindMapEdgeModel extends EdgeAdapter {
 

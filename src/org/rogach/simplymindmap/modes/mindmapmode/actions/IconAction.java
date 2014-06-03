@@ -28,9 +28,8 @@ import org.rogach.simplymindmap.controller.actions.XmlAction;
 import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.modes.IconInformation;
 import org.rogach.simplymindmap.modes.MindIcon;
-import org.rogach.simplymindmap.modes.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapNodeModel;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActorXml;
 import org.rogach.simplymindmap.util.Tools;
@@ -85,7 +84,7 @@ public class IconAction extends FreemindAction implements ActorXml,
 	private void addLastIcon() {
 		for (ListIterator it = modeController.getSelecteds().listIterator(); it
 				.hasNext();) {
-			MindMapNodeModel selected = (MindMapNodeModel) it.next();
+			MindMapNode selected = (MindMapNode) it.next();
 			addIcon(selected, icon);
 		}
 	}
@@ -93,7 +92,7 @@ public class IconAction extends FreemindAction implements ActorXml,
 	private void removeIcon(boolean removeFirst) {
 		for (ListIterator it = modeController.getSelecteds().listIterator(); it
 				.hasNext();) {
-			MindMapNodeModel selected = (MindMapNodeModel) it.next();
+			MindMapNode selected = (MindMapNode) it.next();
 			removeIcon(selected, icon, removeFirst);
 		}
 	}
@@ -101,7 +100,7 @@ public class IconAction extends FreemindAction implements ActorXml,
 	private void removeAllIcons() {
 		for (ListIterator it = modeController.getSelecteds().listIterator(); it
 				.hasNext();) {
-			MindMapNodeModel selected = (MindMapNodeModel) it.next();
+			MindMapNode selected = (MindMapNode) it.next();
 			if (selected.getIcons().size() > 0) {
 				modeController.removeAllIcons(selected);
 			}

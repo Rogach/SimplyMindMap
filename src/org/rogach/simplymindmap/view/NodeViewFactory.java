@@ -19,8 +19,8 @@
 
 package org.rogach.simplymindmap.view;
 
-import org.rogach.simplymindmap.modes.MindMapNode;
 import java.awt.Container;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 class NodeViewFactory {
 

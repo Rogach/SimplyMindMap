@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.Vector;
 import java.util.logging.Logger;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 public abstract class XMLElementAdapter extends XMLElement {
 
@@ -34,7 +35,7 @@ public abstract class XMLElementAdapter extends XMLElement {
 	protected static java.util.logging.Logger logger;
 
 	private Object userObject = null;
-	private NodeAdapter mapChild = null;
+	private MindMapNode mapChild = null;
 	private HashMap nodeAttributes = new HashMap();
 
 	// Font attributes
@@ -89,9 +90,9 @@ public abstract class XMLElementAdapter extends XMLElement {
 	/** abstract method to create elements of my type (factory). */
 	abstract protected XMLElement createAnotherElement();
 
-	abstract protected NodeAdapter createNodeAdapter(String nodeClass);
+	abstract protected MindMapNode createNodeAdapter(String nodeClass);
 
-	abstract protected EdgeAdapter createEdgeAdapter(NodeAdapter node);
+	abstract protected EdgeAdapter createEdgeAdapter(MindMapNode node);
 
 	public Object getUserObject() {
 		return userObject;
@@ -101,7 +102,7 @@ public abstract class XMLElementAdapter extends XMLElement {
 		userObject = obj;
 	}
 
-	public NodeAdapter getMapChild() {
+	public MindMapNode getMapChild() {
 		return mapChild;
 	}
 
@@ -142,7 +143,7 @@ public abstract class XMLElementAdapter extends XMLElement {
 
 	public void addChild(XMLElement child) {
 		if (getName().equals("map")) {
-			mapChild = (NodeAdapter) child.getUserObject();
+			mapChild = (MindMapNode) child.getUserObject();
 			return;
 		}
 		if (userObject instanceof XMLElement) {
@@ -150,10 +151,10 @@ public abstract class XMLElementAdapter extends XMLElement {
 			super.addChild(child);
 			return;
 		}
-		if (userObject instanceof NodeAdapter) {
-			NodeAdapter node = (NodeAdapter) userObject;
-			if (child.getUserObject() instanceof NodeAdapter) {
-				node.insert((NodeAdapter) child.getUserObject(), -1);
+		if (userObject instanceof MindMapNode) {
+			MindMapNode node = (MindMapNode) userObject;
+			if (child.getUserObject() instanceof MindMapNode) {
+				node.insert((MindMapNode) child.getUserObject(), -1);
 			} // to the end without preferable... (PN)
 				// node.getRealChildCount()); }
 			else if (child.getUserObject() instanceof EdgeAdapter) {
@@ -185,9 +186,9 @@ public abstract class XMLElementAdapter extends XMLElement {
 			return;
 		}
 
-		if (userObject instanceof NodeAdapter) {
+		if (userObject instanceof MindMapNode) {
 			//
-			NodeAdapter node = (NodeAdapter) userObject;
+			MindMapNode node = (MindMapNode) userObject;
 			userObject = setNodeAttribute(name, sValue, node);
 			nodeAttributes.put(name, sValue);
 			return;
@@ -231,8 +232,8 @@ public abstract class XMLElementAdapter extends XMLElement {
 		}
 	}
 
-	private NodeAdapter setNodeAttribute(String name, String sValue,
-			NodeAdapter node) {
+	private MindMapNode setNodeAttribute(String name, String sValue,
+			MindMapNode node) {
 		if (name.equals(XML_NODE_TEXT)) {
 			logger.finest("Setting node text content to:" + sValue);
 			node.setUserObject(sValue);
@@ -270,7 +271,7 @@ public abstract class XMLElementAdapter extends XMLElement {
 	 * to a given (new) node. Thus, the instance of a node can be changed after
 	 * the creation. (At the moment, relevant for encrypted nodes).
 	 */
-	protected void copyAttributesToNode(NodeAdapter node) {
+	protected void copyAttributesToNode(MindMapNode node) {
 		// reactivate all settings from nodeAttributes:
 		for (Iterator i = nodeAttributes.keySet().iterator(); i.hasNext();) {
 			String key = (String) i.next();
@@ -283,7 +284,7 @@ public abstract class XMLElementAdapter extends XMLElement {
 		if (getName().equals(XML_NODE)) {
 			// unify map child behaviour:
 			if (mapChild == null) {
-				mapChild = (NodeAdapter) userObject;
+				mapChild = (MindMapNode) userObject;
 			}
 			return;
 		}
@@ -312,7 +313,7 @@ public abstract class XMLElementAdapter extends XMLElement {
 		// add labels to the nodes:
 		for (Iterator i1 = mIdToTarget.keySet().iterator(); i1.hasNext();) {
 			String key = (String) i1.next();
-			NodeAdapter target1 = (NodeAdapter) mIdToTarget.get(key);
+			MindMapNode target1 = (MindMapNode) mIdToTarget.get(key);
 			/*
 			 * key is the proposed name for the target, is changed by the
 			 * registry, if already present.

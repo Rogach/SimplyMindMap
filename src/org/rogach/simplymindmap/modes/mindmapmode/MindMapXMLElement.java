@@ -22,7 +22,6 @@ package org.rogach.simplymindmap.modes.mindmapmode;
 
 import org.rogach.simplymindmap.modes.EdgeAdapter;
 import org.rogach.simplymindmap.modes.MindMap;
-import org.rogach.simplymindmap.modes.NodeAdapter;
 import org.rogach.simplymindmap.modes.XMLElementAdapter;
 import org.rogach.simplymindmap.nanoxml.XMLElement;
 import java.lang.reflect.Constructor;
@@ -62,9 +61,9 @@ public class MindMapXMLElement extends XMLElementAdapter {
 				mIdToTarget);
 	}
 
-	protected NodeAdapter createNodeAdapter(String nodeClass) {
+	protected MindMapNode createNodeAdapter(String nodeClass) {
 		if (nodeClass == null) {
-			return new MindMapNodeModel(null, getMap());
+			return new MindMapNode(null, getMap());
 		}
 		// reflection:
 		try {
@@ -75,19 +74,19 @@ public class MindMapXMLElement extends XMLElementAdapter {
 			Class[] constrArgs = new Class[] { Object.class, MindMap.class };
 			Object[] constrObjs = new Object[] { null, getMap() };
 			Constructor constructor = nodeJavaClass.getConstructor(constrArgs);
-			NodeAdapter nodeImplementor = (NodeAdapter) constructor
+			MindMapNode nodeImplementor = (MindMapNode) constructor
 					.newInstance(constrObjs);
 			return nodeImplementor;
 		} catch (Exception e) {
 			org.rogach.simplymindmap.main.Resources.getInstance().logException(e,
 					"Error occurred loading node implementor: " + nodeClass);
 			// the best we can do is to return the normal class:
-			NodeAdapter node = new MindMapNodeModel(null, getMap());
+			MindMapNode node = new MindMapNode(null, getMap());
 			return node;
 		}
 	}
 
-	protected EdgeAdapter createEdgeAdapter(NodeAdapter node) {
+	protected EdgeAdapter createEdgeAdapter(MindMapNode node) {
 		return new MindMapEdgeModel(node);
 	}
 

@@ -23,6 +23,7 @@ package org.rogach.simplymindmap.modes;
 import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.util.Tools;
 import java.awt.Color;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 public abstract class LineAdapter implements MindMapLine {
 

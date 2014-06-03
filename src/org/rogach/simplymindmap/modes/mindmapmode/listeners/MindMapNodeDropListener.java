@@ -21,9 +21,8 @@ package org.rogach.simplymindmap.modes.mindmapmode.listeners;
 
 import org.rogach.simplymindmap.controller.MindMapNodesSelection;
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapNodeModel;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 import org.rogach.simplymindmap.view.MainView;
 import org.rogach.simplymindmap.view.NodeView;
 import java.awt.datatransfer.DataFlavor;
@@ -72,7 +71,7 @@ public class MindMapNodeDropListener implements DropTargetListener {
 					.getComponent();
 			NodeView targetNodeView = mainView.getNodeView();
 			MindMapNode targetNode = targetNodeView.getModel();
-			MindMapNodeModel targetNodeModel = (MindMapNodeModel) targetNode;
+			MindMapNode targetNodeModel = (MindMapNode) targetNode;
 
 			// Intra application DnD
 
