@@ -20,7 +20,6 @@
 
 package org.rogach.simplymindmap.modes;
 
-import org.rogach.simplymindmap.main.Resources;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.StringTokenizer;
@@ -29,6 +28,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.KeyStroke;
+import org.rogach.simplymindmap.main.Resources;
 
 /**
  * This class represents a MindIcon than can be applied to a node or a whole

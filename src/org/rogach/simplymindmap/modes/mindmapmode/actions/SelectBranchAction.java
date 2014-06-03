@@ -20,8 +20,8 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode.actions;
 
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import java.awt.event.ActionEvent;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 
 /** */
 public class SelectBranchAction extends FreemindAction {

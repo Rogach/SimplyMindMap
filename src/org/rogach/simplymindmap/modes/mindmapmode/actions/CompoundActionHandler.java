@@ -23,12 +23,12 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode.actions;
 
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
 import org.rogach.simplymindmap.controller.actions.CompoundAction;
 import org.rogach.simplymindmap.controller.actions.XmlAction;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActorXml;
-import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
 
 /**
  * @author foltin

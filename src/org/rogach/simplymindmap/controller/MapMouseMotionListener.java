@@ -20,10 +20,10 @@
 
 package org.rogach.simplymindmap.controller;
 
-import org.rogach.simplymindmap.view.MapView;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import org.rogach.simplymindmap.view.MapView;
 
 /**
  * The MouseListener which belongs to MapView

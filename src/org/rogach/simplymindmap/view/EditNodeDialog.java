@@ -23,8 +23,6 @@
 
 package org.rogach.simplymindmap.view;
 
-import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.util.Tools;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -43,7 +41,9 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
+import org.rogach.simplymindmap.util.Tools;
 
 /**
  * @author foltin

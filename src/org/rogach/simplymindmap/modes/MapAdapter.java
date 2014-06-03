@@ -20,7 +20,6 @@
 
 package org.rogach.simplymindmap.modes;
 
-import java.util.Iterator;
 import java.util.logging.Logger;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelEvent;

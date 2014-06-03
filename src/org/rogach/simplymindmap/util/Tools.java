@@ -20,10 +20,6 @@
 
 package org.rogach.simplymindmap.util;
 
-import org.rogach.simplymindmap.controller.actions.CompoundAction;
-import org.rogach.simplymindmap.controller.actions.XmlAction;
-import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.view.NodeView;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -70,6 +66,10 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import org.rogach.simplymindmap.controller.actions.CompoundAction;
+import org.rogach.simplymindmap.controller.actions.XmlAction;
+import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.view.NodeView;
 
 /**
  * @author foltin

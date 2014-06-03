@@ -20,10 +20,6 @@
 
 package org.rogach.simplymindmap.view;
 
-import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.MindIcon;
-import org.rogach.simplymindmap.util.HtmlTools;
-import org.rogach.simplymindmap.util.Tools;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
@@ -54,8 +50,12 @@ import javax.swing.ToolTipManager;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeNode;
+import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.modes.MindIcon;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
+import org.rogach.simplymindmap.util.HtmlTools;
+import org.rogach.simplymindmap.util.Tools;
 
 /**
  * This class represents a single Node of a MindMap (in analogy to

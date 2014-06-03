@@ -19,7 +19,6 @@
 
 package org.rogach.simplymindmap.view;
 
-import org.rogach.simplymindmap.util.Tools;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GradientPaint;
@@ -32,6 +31,7 @@ import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import org.rogach.simplymindmap.util.Tools;
 
 /**
  * Base class for all node views.

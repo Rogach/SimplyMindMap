@@ -20,14 +20,14 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode;
 
-import org.rogach.simplymindmap.modes.EdgeAdapter;
-import org.rogach.simplymindmap.modes.MindMap;
-import org.rogach.simplymindmap.modes.XMLElementAdapter;
-import org.rogach.simplymindmap.nanoxml.XMLElement;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Vector;
 import java.util.logging.Logger;
+import org.rogach.simplymindmap.modes.EdgeAdapter;
+import org.rogach.simplymindmap.modes.MindMap;
+import org.rogach.simplymindmap.modes.XMLElementAdapter;
+import org.rogach.simplymindmap.nanoxml.XMLElement;
 
 public class MindMapXMLElement extends XMLElementAdapter {
 

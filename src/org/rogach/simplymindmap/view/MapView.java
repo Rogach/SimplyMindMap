@@ -19,24 +19,6 @@
 
 package org.rogach.simplymindmap.view;
 
-import org.rogach.simplymindmap.controller.MapMouseMotionListener;
-import org.rogach.simplymindmap.controller.MapMouseWheelListener;
-import org.rogach.simplymindmap.controller.NodeDragListener;
-import org.rogach.simplymindmap.controller.NodeDropListener;
-import org.rogach.simplymindmap.controller.NodeKeyListener;
-import org.rogach.simplymindmap.controller.NodeMotionListener;
-import org.rogach.simplymindmap.controller.NodeMouseMotionListener;
-import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.MindMap;
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
-import org.rogach.simplymindmap.modes.mindmapmode.listeners.CommonNodeKeyListener;
-import org.rogach.simplymindmap.modes.mindmapmode.listeners.CommonNodeMouseMotionListener;
-import org.rogach.simplymindmap.modes.mindmapmode.listeners.MindMapMouseMotionManager;
-import org.rogach.simplymindmap.modes.mindmapmode.listeners.MindMapMouseWheelEventHandler;
-import org.rogach.simplymindmap.modes.mindmapmode.listeners.MindMapNodeDropListener;
-import org.rogach.simplymindmap.modes.mindmapmode.listeners.MindMapNodeMotionListener;
-import org.rogach.simplymindmap.util.Tools;
-import org.rogach.simplymindmap.util.Tools.Pair;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
@@ -69,7 +51,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
-import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
@@ -79,8 +60,26 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import javax.swing.KeyStroke;
+import org.rogach.simplymindmap.controller.MapMouseMotionListener;
+import org.rogach.simplymindmap.controller.MapMouseWheelListener;
+import org.rogach.simplymindmap.controller.NodeDragListener;
+import org.rogach.simplymindmap.controller.NodeDropListener;
+import org.rogach.simplymindmap.controller.NodeKeyListener;
+import org.rogach.simplymindmap.controller.NodeMotionListener;
+import org.rogach.simplymindmap.controller.NodeMouseMotionListener;
+import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.modes.MindMap;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapMapModel;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
+import org.rogach.simplymindmap.modes.mindmapmode.listeners.CommonNodeKeyListener;
+import org.rogach.simplymindmap.modes.mindmapmode.listeners.CommonNodeMouseMotionListener;
+import org.rogach.simplymindmap.modes.mindmapmode.listeners.MindMapMouseMotionManager;
+import org.rogach.simplymindmap.modes.mindmapmode.listeners.MindMapMouseWheelEventHandler;
+import org.rogach.simplymindmap.modes.mindmapmode.listeners.MindMapNodeDropListener;
+import org.rogach.simplymindmap.modes.mindmapmode.listeners.MindMapNodeMotionListener;
+import org.rogach.simplymindmap.util.Tools;
+import org.rogach.simplymindmap.util.Tools.Pair;
 
 /**
  * This class represents the view of a whole MindMap (in analogy to class

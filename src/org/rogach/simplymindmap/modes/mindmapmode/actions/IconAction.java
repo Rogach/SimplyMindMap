@@ -23,6 +23,12 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode.actions;
 
+import java.awt.event.ActionEvent;
+import java.util.List;
+import java.util.ListIterator;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.actions.AddIconAction;
 import org.rogach.simplymindmap.controller.actions.XmlAction;
 import org.rogach.simplymindmap.main.Resources;
@@ -33,12 +39,6 @@ import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActorXml;
 import org.rogach.simplymindmap.util.Tools;
-import java.awt.event.ActionEvent;
-import java.util.List;
-import java.util.ListIterator;
-import javax.swing.Action;
-import javax.swing.ImageIcon;
-import javax.swing.KeyStroke;
 
 public class IconAction extends FreemindAction implements ActorXml,
 		IconInformation {

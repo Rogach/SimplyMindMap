@@ -19,15 +19,15 @@
 
 package org.rogach.simplymindmap.view;
 
-import org.rogach.simplymindmap.modes.MindMapEdge;
-import org.rogach.simplymindmap.util.Tools;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
+import org.rogach.simplymindmap.modes.MindMapEdge;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
+import org.rogach.simplymindmap.util.Tools;
 
 class ForkMainView extends MainView {
 	public void paint(Graphics graphics) {

@@ -19,8 +19,6 @@
 
 package org.rogach.simplymindmap.view;
 
-import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.util.Tools;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -29,6 +27,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
+import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.util.Tools;
 
 class RootMainView extends MainView {
 

@@ -19,8 +19,6 @@
 /*$Id: NodeMotionListenerView.java,v 1.1.4.4.4.9 2009/03/29 19:37:23 christianfoltin Exp $*/
 package org.rogach.simplymindmap.view;
 
-import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.util.Tools;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -44,7 +42,9 @@ import javax.swing.JComponent;
 import javax.swing.Timer;
 import javax.swing.plaf.basic.BasicButtonListener;
 import javax.swing.plaf.basic.BasicButtonUI;
+import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
+import org.rogach.simplymindmap.util.Tools;
 
 /**
  * @author Foltin

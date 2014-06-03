@@ -24,6 +24,9 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode.actions;
 
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.util.ListIterator;
 import org.rogach.simplymindmap.controller.actions.NodeColorFormatAction;
 import org.rogach.simplymindmap.controller.actions.XmlAction;
 import org.rogach.simplymindmap.main.Resources;
@@ -32,9 +35,6 @@ import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActorXml;
 import org.rogach.simplymindmap.util.Tools;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.util.ListIterator;
 
 public class NodeColorAction extends FreemindAction implements ActorXml {
 	private final MindMapController controller;

@@ -19,8 +19,6 @@
 
 package org.rogach.simplymindmap.modes;
 
-import org.rogach.simplymindmap.nanoxml.XMLElement;
-import org.rogach.simplymindmap.util.Tools;
 import java.awt.Font;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -28,6 +26,8 @@ import java.util.Vector;
 import java.util.logging.Logger;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
+import org.rogach.simplymindmap.nanoxml.XMLElement;
+import org.rogach.simplymindmap.util.Tools;
 
 public abstract class XMLElementAdapter extends XMLElement {
 

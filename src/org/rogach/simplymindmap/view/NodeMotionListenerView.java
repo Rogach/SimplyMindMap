@@ -19,8 +19,6 @@
 /*$Id: NodeMotionListenerView.java,v 1.1.4.4.4.9 2009/03/29 19:37:23 christianfoltin Exp $*/
 package org.rogach.simplymindmap.view;
 
-import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.util.Tools;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -29,6 +27,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import javax.swing.JComponent;
+import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.util.Tools;
 
 /**
  * 

@@ -20,11 +20,11 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode.listeners;
 
-import org.rogach.simplymindmap.main.Resources;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.logging.Logger;
 import javax.swing.KeyStroke;
+import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 
 /**

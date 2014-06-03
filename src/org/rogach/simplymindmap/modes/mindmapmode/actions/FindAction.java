@@ -19,8 +19,6 @@
  */
 package org.rogach.simplymindmap.modes.mindmapmode.actions;
 
-import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.util.Tools;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -43,8 +41,10 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
+import org.rogach.simplymindmap.util.Tools;
 
 public class FindAction extends AbstractAction {
 	private final MindMapController controller;

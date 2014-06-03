@@ -23,14 +23,14 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode.actions;
 
+import java.awt.Font;
 import org.rogach.simplymindmap.controller.actions.FontNodeAction;
 import org.rogach.simplymindmap.controller.actions.XmlAction;
 import org.rogach.simplymindmap.modes.MindMap;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
 import org.rogach.simplymindmap.util.Tools;
-import java.awt.Font;
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 /**
  * @author foltin

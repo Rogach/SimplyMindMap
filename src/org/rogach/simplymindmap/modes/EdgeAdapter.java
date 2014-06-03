@@ -20,10 +20,10 @@
 
 package org.rogach.simplymindmap.modes;
 
-import org.rogach.simplymindmap.nanoxml.XMLElement;
-import org.rogach.simplymindmap.util.Tools;
 import java.awt.Color;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
+import org.rogach.simplymindmap.nanoxml.XMLElement;
+import org.rogach.simplymindmap.util.Tools;
 
 public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {
 

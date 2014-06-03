@@ -22,11 +22,11 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode.actions.xml;
 
-import org.rogach.simplymindmap.controller.actions.XmlAction;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 import java.util.logging.Logger;
+import org.rogach.simplymindmap.controller.actions.XmlAction;
 
 /**
  * @author foltin

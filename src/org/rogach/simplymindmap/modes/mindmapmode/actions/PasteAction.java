@@ -22,6 +22,18 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode.actions;
 
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.ListIterator;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
+import javax.swing.AbstractAction;
 import org.rogach.simplymindmap.controller.MindMapNodesSelection;
 import org.rogach.simplymindmap.controller.actions.PasteNodeAction;
 import org.rogach.simplymindmap.controller.actions.TransferableContent;
@@ -35,18 +47,6 @@ import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActorXml;
 import org.rogach.simplymindmap.nanoxml.XMLParseException;
 import org.rogach.simplymindmap.util.Tools;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.ListIterator;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
-import javax.swing.AbstractAction;
 
 public class PasteAction extends AbstractAction implements ActorXml {
 

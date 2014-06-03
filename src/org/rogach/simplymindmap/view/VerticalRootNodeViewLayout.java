@@ -23,10 +23,10 @@
  */
 package org.rogach.simplymindmap.view;
 
-import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.util.Tools;
 import java.awt.Dimension;
 import java.awt.Point;
+import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.util.Tools;
 
 /**
  * Root layout.

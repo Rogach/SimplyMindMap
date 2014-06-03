@@ -23,11 +23,11 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode.actions.xml;
 
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
-import org.rogach.simplymindmap.modes.mindmapmode.actions.FreemindAction;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
 import javax.swing.Icon;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
+import org.rogach.simplymindmap.modes.mindmapmode.actions.FreemindAction;
 
 /**
  * @author foltin

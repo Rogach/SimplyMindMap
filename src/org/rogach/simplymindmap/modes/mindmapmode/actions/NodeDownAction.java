@@ -22,10 +22,10 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode.actions;
 
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import javax.swing.AbstractAction;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 public class NodeDownAction extends AbstractAction {

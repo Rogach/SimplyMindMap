@@ -25,10 +25,16 @@
  */
 package org.rogach.simplymindmap.modes.mindmapmode.actions;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.util.Vector;
+import java.util.regex.Pattern;
+import javax.swing.AbstractAction;
 import org.rogach.simplymindmap.controller.actions.EditNodeAction;
 import org.rogach.simplymindmap.controller.actions.XmlAction;
 import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActorXml;
 import org.rogach.simplymindmap.view.EditNodeBase;
@@ -36,12 +42,6 @@ import org.rogach.simplymindmap.view.EditNodeDialog;
 import org.rogach.simplymindmap.view.EditNodeTextField;
 import org.rogach.simplymindmap.view.MapView;
 import org.rogach.simplymindmap.view.NodeView;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.util.Vector;
-import java.util.regex.Pattern;
-import javax.swing.AbstractAction;
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 //
 //Node editing

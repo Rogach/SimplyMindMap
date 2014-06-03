@@ -1,8 +1,5 @@
 package org.rogach.simplymindmap.main;
 
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapMapModel;
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
-import org.rogach.simplymindmap.view.MapView;
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -12,6 +9,9 @@ import java.util.Properties;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapMapModel;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
+import org.rogach.simplymindmap.view.MapView;
 
 public class StandaloneTree {
   public static void main(String[] args) throws Exception {

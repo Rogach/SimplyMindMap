@@ -20,10 +20,10 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode.listeners;
 
+import java.awt.event.MouseEvent;
 import org.rogach.simplymindmap.controller.MapMouseMotionListener.MapMouseMotionReceiver;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.view.MapView;
-import java.awt.event.MouseEvent;
 
 /** */
 public class MindMapMouseMotionManager implements MapMouseMotionReceiver {

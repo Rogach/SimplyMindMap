@@ -25,6 +25,11 @@
  */
 package org.rogach.simplymindmap.modes.mindmapmode.actions;
 
+import java.awt.event.ActionEvent;
+import java.util.ListIterator;
+import java.util.logging.Logger;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
 import org.rogach.simplymindmap.controller.actions.CompoundAction;
 import org.rogach.simplymindmap.controller.actions.XmlAction;
 import org.rogach.simplymindmap.main.Resources;
@@ -34,11 +39,6 @@ import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.AbstractXmlAction;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
 import org.rogach.simplymindmap.util.Tools;
-import java.awt.event.ActionEvent;
-import java.util.ListIterator;
-import java.util.logging.Logger;
-import javax.swing.Action;
-import javax.swing.ImageIcon;
 
 public class NodeGeneralAction extends AbstractXmlAction {
 	protected final MindMapController modeController;

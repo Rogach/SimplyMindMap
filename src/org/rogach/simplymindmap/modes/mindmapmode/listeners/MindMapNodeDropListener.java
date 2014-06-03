@@ -19,12 +19,6 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode.listeners;
 
-import org.rogach.simplymindmap.controller.MindMapNodesSelection;
-import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
-import org.rogach.simplymindmap.view.MainView;
-import org.rogach.simplymindmap.view.NodeView;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
@@ -33,6 +27,12 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.util.List;
+import org.rogach.simplymindmap.controller.MindMapNodesSelection;
+import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
+import org.rogach.simplymindmap.view.MainView;
+import org.rogach.simplymindmap.view.NodeView;
 
 // import ublic class MindMapNodesSelection implements Transferable,
 // ClipboardOwner {

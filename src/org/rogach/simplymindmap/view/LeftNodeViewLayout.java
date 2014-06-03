@@ -23,10 +23,10 @@
  */
 package org.rogach.simplymindmap.view;
 
-import org.rogach.simplymindmap.util.Tools;
 import java.awt.Dimension;
 import java.awt.Point;
 import javax.swing.JComponent;
+import org.rogach.simplymindmap.util.Tools;
 
 /**
  * @author dimitri 05.06.2005

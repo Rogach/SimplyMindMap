@@ -23,14 +23,14 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode.actions;
 
+import javax.swing.Action;
+import javax.swing.JMenuItem;
 import org.rogach.simplymindmap.controller.actions.ItalicNodeAction;
 import org.rogach.simplymindmap.controller.actions.XmlAction;
 import org.rogach.simplymindmap.modes.MindMap;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
-import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
-import javax.swing.Action;
-import javax.swing.JMenuItem;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
+import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
 
 public class ItalicAction extends NodeGeneralAction implements NodeActorXml {
 	private final MindMapController modeController;

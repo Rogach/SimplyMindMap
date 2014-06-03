@@ -22,9 +22,9 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode.actions;
 
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 
 public class NewPreviousSiblingAction extends AbstractAction {
 	private final MindMapController controller;

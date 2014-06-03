@@ -19,12 +19,6 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode.listeners;
 
-import org.rogach.simplymindmap.controller.NodeMotionListener.NodeMotionAdapter;
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
-import org.rogach.simplymindmap.util.Tools;
-import org.rogach.simplymindmap.view.MapView;
-import org.rogach.simplymindmap.view.NodeMotionListenerView;
-import org.rogach.simplymindmap.view.NodeView;
 import java.awt.AWTException;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -34,7 +28,13 @@ import java.awt.event.MouseEvent;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import org.rogach.simplymindmap.controller.NodeMotionListener.NodeMotionAdapter;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
+import org.rogach.simplymindmap.util.Tools;
+import org.rogach.simplymindmap.view.MapView;
+import org.rogach.simplymindmap.view.NodeMotionListenerView;
+import org.rogach.simplymindmap.view.NodeView;
 
 /**
  * The MouseMotionListener which belongs to every NodeView

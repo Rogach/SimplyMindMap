@@ -22,8 +22,6 @@
  */
 package org.rogach.simplymindmap.util;
 
-import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.IconInformation;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -43,6 +41,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.border.BevelBorder;
+import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.modes.IconInformation;
 
 public class IconSelectionPopupDialog extends JDialog implements KeyListener,
 		MouseListener {

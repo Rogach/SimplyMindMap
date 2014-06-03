@@ -20,14 +20,14 @@
 
 package org.rogach.simplymindmap.view;
 
-import org.rogach.simplymindmap.modes.EdgeAdapter;
-import org.rogach.simplymindmap.modes.MindMapEdge;
-import org.rogach.simplymindmap.util.Tools;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Stroke;
+import org.rogach.simplymindmap.modes.EdgeAdapter;
+import org.rogach.simplymindmap.modes.MindMapEdge;
+import org.rogach.simplymindmap.util.Tools;
 
 /**
  * This class represents a single Edge of a MindMap.

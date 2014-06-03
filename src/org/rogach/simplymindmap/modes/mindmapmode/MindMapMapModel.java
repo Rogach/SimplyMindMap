@@ -20,10 +20,6 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode;
 
-import org.rogach.simplymindmap.modes.MapAdapter;
-import org.rogach.simplymindmap.modes.MindMapLinkRegistry;
-import org.rogach.simplymindmap.nanoxml.XMLParseException;
-import org.rogach.simplymindmap.util.Tools;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -38,6 +34,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.modes.MapAdapter;
+import org.rogach.simplymindmap.modes.MindMapLinkRegistry;
+import org.rogach.simplymindmap.nanoxml.XMLParseException;
+import org.rogach.simplymindmap.util.Tools;
 
 public class MindMapMapModel extends MapAdapter {
 

@@ -22,13 +22,6 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode.actions;
 
-import org.rogach.simplymindmap.controller.actions.MoveNodesAction;
-import org.rogach.simplymindmap.controller.actions.NodeListMember;
-import org.rogach.simplymindmap.controller.actions.XmlAction;
-import org.rogach.simplymindmap.modes.MapAdapter;
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
-import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
-import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActorXml;
 import java.awt.event.ActionEvent;
 import java.util.Collections;
 import java.util.Comparator;
@@ -38,7 +31,14 @@ import java.util.TreeSet;
 import java.util.Vector;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
+import org.rogach.simplymindmap.controller.actions.MoveNodesAction;
+import org.rogach.simplymindmap.controller.actions.NodeListMember;
+import org.rogach.simplymindmap.controller.actions.XmlAction;
+import org.rogach.simplymindmap.modes.MapAdapter;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
+import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
+import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActorXml;
 
 public class NodeUpAction extends AbstractAction implements ActorXml {
 	private final MindMapController modeController;

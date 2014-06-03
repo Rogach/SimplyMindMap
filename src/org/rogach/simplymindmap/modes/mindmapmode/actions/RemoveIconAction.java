@@ -23,6 +23,10 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode.actions;
 
+import java.util.List;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.actions.AddIconAction;
 import org.rogach.simplymindmap.controller.actions.RemoveIconXmlAction;
 import org.rogach.simplymindmap.controller.actions.XmlAction;
@@ -31,13 +35,9 @@ import org.rogach.simplymindmap.modes.IconInformation;
 import org.rogach.simplymindmap.modes.MindIcon;
 import org.rogach.simplymindmap.modes.MindMap;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.xml.ActionPair;
 import org.rogach.simplymindmap.util.Tools;
-import java.util.List;
-import javax.swing.Action;
-import javax.swing.ImageIcon;
-import javax.swing.KeyStroke;
-import org.rogach.simplymindmap.modes.mindmapmode.MindMapNode;
 
 /**
  * @author foltin

@@ -23,7 +23,6 @@
  */
 package org.rogach.simplymindmap.main;
 
-import org.rogach.simplymindmap.util.Tools;
 import java.io.InputStream;
 import java.net.URL;
 import java.text.MessageFormat;
@@ -32,6 +31,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.rogach.simplymindmap.util.Tools;
 
 /**
  * @author Dimitri Polivaev 12.07.2005

@@ -22,12 +22,12 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode.listeners;
 
-import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.view.MapView;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
+import org.rogach.simplymindmap.view.MapView;
 
 /**
  * @author foltin

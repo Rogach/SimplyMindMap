@@ -20,11 +20,6 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode.listeners;
 
-import org.rogach.simplymindmap.controller.NodeMouseMotionListener.NodeMouseMotionObserver;
-import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.util.Tools;
-import org.rogach.simplymindmap.view.MainView;
-import org.rogach.simplymindmap.view.NodeView;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
@@ -33,7 +28,12 @@ import java.util.TimerTask;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import org.rogach.simplymindmap.controller.NodeMouseMotionListener.NodeMouseMotionObserver;
+import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
+import org.rogach.simplymindmap.util.Tools;
+import org.rogach.simplymindmap.view.MainView;
+import org.rogach.simplymindmap.view.NodeView;
 
 /**
  * The MouseMotionListener which belongs to every NodeView.
