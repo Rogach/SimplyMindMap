@@ -49,12 +49,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import org.rogach.simplymindmap.controller.MindMapNodesSelection;
 import org.rogach.simplymindmap.main.ResourceKeys;
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.model.MapAdapter;
 import org.rogach.simplymindmap.model.MindIcon;
-import org.rogach.simplymindmap.model.MindMap;
 import org.rogach.simplymindmap.model.XMLElementAdapter;
 import org.rogach.simplymindmap.controller.actions.BoldAction;
 import org.rogach.simplymindmap.controller.actions.ChangeNodeLevelAction;
@@ -177,7 +174,7 @@ public class MindMapController {
    * The model, this controller belongs to. It may be null, if it is the
    * default controller that does not show a map.
    */
-  private MapAdapter mModel;
+  private MindMapMapModel mModel;
   private HashSet mNodeSelectionListeners = new HashSet();
   private HashSet mNodeLifetimeListeners = new HashSet();
   // status, currently: default, blocked (PN)
@@ -260,7 +257,7 @@ public class MindMapController {
 	// fc, 14.12.2004: changes, such that different models can be used:
 	private NewNodeCreator myNewNodeCreator = null;
 
-  public void setModel(MapAdapter model) {
+  public void setModel(MindMapMapModel model) {
     mModel = model;
   }
 
@@ -282,7 +279,7 @@ public class MindMapController {
       // Tell any node hooks that the node is changed:
       updateNode(node);
     }
-    ((MapAdapter) getMap()).nodeChangedInternal(node);
+    ((MindMapMapModel) getMap()).nodeChangedInternal(node);
   }
 
   public void refreshMap() {
@@ -296,7 +293,7 @@ public class MindMapController {
       MindMapNode child = (MindMapNode) iterator.next();
       refreshMapFrom(child);
     }
-    ((MapAdapter) getMap()).nodeChangedInternal(node);
+    ((MindMapMapModel) getMap()).nodeChangedInternal(node);
   }
 
   /**
@@ -529,14 +526,14 @@ public class MindMapController {
     this.isBlocked = isBlocked;
   }
 
-  public MindMap getMap() {
+  public MindMapMapModel getMap() {
     return mModel;
   }
 
   // fc, 29.2.2004: there is no sense in having this private and the
   // controller public,
   // because the getController().getModel() method is available anyway.
-  public MapAdapter getModel() {
+  public MindMapMapModel getModel() {
     return mModel;
   }
 
@@ -760,12 +757,12 @@ public class MindMapController {
   }
   
 	public interface NewNodeCreator {
-		MindMapNode createNode(String userObject, MindMap map);
+		MindMapNode createNode(String userObject, MindMapMapModel map);
 	}
 
 	public class DefaultMindMapNodeCreator implements NewNodeCreator {
 
-		public MindMapNode createNode(String userObject, MindMap map) {
+		public MindMapNode createNode(String userObject, MindMapMapModel map) {
 			return new MindMapNode(userObject, map);
 		}
 
@@ -775,7 +772,7 @@ public class MindMapController {
 		myNewNodeCreator = creator;
 	}
 
-	public MindMapNode newNode(String userObject, MindMap map) {
+	public MindMapNode newNode(String userObject, MindMapMapModel map) {
 		// singleton default:
 		if (myNewNodeCreator == null) {
 			myNewNodeCreator = new DefaultMindMapNodeCreator();

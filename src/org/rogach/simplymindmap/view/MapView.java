@@ -68,7 +68,6 @@ import org.rogach.simplymindmap.controller.listeners.NodeKeyListener;
 import org.rogach.simplymindmap.controller.listeners.NodeMotionListener;
 import org.rogach.simplymindmap.controller.listeners.NodeMouseMotionListener;
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.model.MindMap;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.model.MindMapMapModel;
 import org.rogach.simplymindmap.model.MindMapNode;
@@ -947,7 +946,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	// get/set methods
 	//
 
-	public MindMap getModel() {
+	public MindMapMapModel getModel() {
 		return model;
 	}
 

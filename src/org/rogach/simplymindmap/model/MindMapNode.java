@@ -83,16 +83,16 @@ public class MindMapNode implements MutableTreeNode {
    */
   private MindMapEdge edge;
   private Collection<NodeView> views = null;
-  private MindMap map = null;
+  private MindMapMapModel model = null;
   EventListenerList listenerList = new EventListenerList();
 
 	public MindMapNode(String userObject) {
 		this(userObject, null);
 	}
 
-	public MindMapNode(String userObject, MindMap map) {
+	public MindMapNode(String userObject, MindMapMapModel map) {
     setText(userObject);
-    this.map = map;
+    this.model = map;
 		children = new LinkedList();
 		setEdge(new MindMapEdgeModel(this));
 	}
@@ -152,8 +152,8 @@ public class MindMapNode implements MutableTreeNode {
 		}
 	}
 
-  public void setMap(MindMap map) {
-    this.map = map;
+  public void setMap(MindMapMapModel map) {
+    this.model = map;
   }
 
   public String getText() {
@@ -312,8 +312,8 @@ public class MindMapNode implements MutableTreeNode {
     return icons;
   }
 
-  public MindMap getMap() {
-    return map;
+  public MindMapMapModel getModel() {
+    return model;
   }
 
   public void addIcon(MindIcon _icon, int position) {
@@ -734,7 +734,7 @@ public class MindMapNode implements MutableTreeNode {
   }
 
   public MindMapController getMindMapController() {
-    return map.getMindMapController();
+    return model.getMindMapController();
   }
 
   private void saveChildren(Writer writer, MindMapLinkRegistry registry, MindMapNode node, boolean saveHidden) throws IOException {

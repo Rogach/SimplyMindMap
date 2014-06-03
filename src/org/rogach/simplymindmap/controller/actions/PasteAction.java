@@ -428,7 +428,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 			}
 
 			MindMapNode node = mMindMapController.newNode(visibleText,
-					parent.getMap());
+					parent.getModel());
 			if (textLines.length == 1) {
 				pastedNode = node;
 			}

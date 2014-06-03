@@ -26,10 +26,10 @@ package org.rogach.simplymindmap.controller.actions;
 import java.awt.Font;
 import org.rogach.simplymindmap.controller.actions.instance.FontNodeAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
-import org.rogach.simplymindmap.model.MindMap;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
+import org.rogach.simplymindmap.model.MindMapMapModel;
 import org.rogach.simplymindmap.util.Tools;
 
 /**
@@ -40,8 +40,6 @@ public class FontFamilyAction extends NodeGeneralAction implements NodeActorXml 
 	/** This action is used for all fonts, which have to be set first. */
 	private String actionFont;
 
-	/**
-     */
 	public FontFamilyAction(MindMapController modeController) {
 		super(modeController, "font_family", null, (NodeActorXml) null);
 		addActor(this);
@@ -54,7 +52,7 @@ public class FontFamilyAction extends NodeGeneralAction implements NodeActorXml 
 		super.actionPerformed(null);
 	}
 
-	public ActionPair apply(MindMap model, MindMapNode selected) {
+	public ActionPair apply(MindMapMapModel model, MindMapNode selected) {
 		return getActionPair(selected, actionFont);
 	}
 

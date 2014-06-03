@@ -29,10 +29,10 @@ import javax.swing.Action;
 import javax.swing.JMenuItem;
 import org.rogach.simplymindmap.controller.actions.instance.BoldNodeAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
-import org.rogach.simplymindmap.model.MindMap;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
+import org.rogach.simplymindmap.model.MindMapMapModel;
 
 public class BoldAction extends NodeGeneralAction implements NodeActorXml {
 	/**
@@ -57,7 +57,7 @@ public class BoldAction extends NodeGeneralAction implements NodeActorXml {
 		return BoldNodeAction.class;
 	}
 
-	public ActionPair apply(MindMap model, MindMapNode selected) {
+	public ActionPair apply(MindMapMapModel model, MindMapNode selected) {
 		// every node is set to the inverse of the focussed node.
 		boolean bold = modeController.getSelected().isBold();
 		return getActionPair(selected, !bold);

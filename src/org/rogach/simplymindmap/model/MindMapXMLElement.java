@@ -20,7 +20,6 @@
 
 package org.rogach.simplymindmap.model;
 
-import org.rogach.simplymindmap.model.MindMapEdgeModel;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Vector;
@@ -70,7 +69,7 @@ public class MindMapXMLElement extends XMLElementAdapter {
 			ClassLoader loader = this.getClass().getClassLoader();
 			// constructed.
 			Class nodeJavaClass = Class.forName(nodeClass, true, loader);
-			Class[] constrArgs = new Class[] { Object.class, MindMap.class };
+			Class[] constrArgs = new Class[] { Object.class, MindMapMapModel.class };
 			Object[] constrObjs = new Object[] { null, getMap() };
 			Constructor constructor = nodeJavaClass.getConstructor(constrArgs);
 			MindMapNode nodeImplementor = (MindMapNode) constructor
