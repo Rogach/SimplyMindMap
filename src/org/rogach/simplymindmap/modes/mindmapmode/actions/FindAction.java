@@ -20,7 +20,6 @@
 package org.rogach.simplymindmap.modes.mindmapmode.actions;
 
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.ControllerAdapter;
 import org.rogach.simplymindmap.modes.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
 import java.awt.Container;
@@ -45,9 +44,10 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 
 public class FindAction extends AbstractAction {
-	private final ControllerAdapter controller;
+	private final MindMapController controller;
 
 	private ArrayList findNodesUnfoldedByLastFind;
 
@@ -89,7 +89,7 @@ public class FindAction extends AbstractAction {
 	/** This isn't stored and is per map. */
 	private String mLastSearchString;
 
-	public FindAction(ControllerAdapter controller) {
+	public FindAction(MindMapController controller) {
 		super("", null);
 		this.controller = controller;
 	}
@@ -210,11 +210,11 @@ public class FindAction extends AbstractAction {
 	}
 
 	public static class FindNextAction extends AbstractAction {
-		private final ControllerAdapter controller;
+		private final MindMapController controller;
 
 		private final FindAction find;
 
-		public FindNextAction(ControllerAdapter controller, FindAction find) {
+		public FindNextAction(MindMapController controller, FindAction find) {
 			super("");
 			this.controller = controller;
 			this.find = find;

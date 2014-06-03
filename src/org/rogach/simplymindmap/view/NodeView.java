@@ -23,7 +23,6 @@ package org.rogach.simplymindmap.view;
 import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.modes.MindIcon;
 import org.rogach.simplymindmap.modes.MindMapNode;
-import org.rogach.simplymindmap.modes.ModeController;
 import org.rogach.simplymindmap.util.HtmlTools;
 import org.rogach.simplymindmap.util.Tools;
 import java.awt.BasicStroke;
@@ -56,6 +55,7 @@ import javax.swing.ToolTipManager;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeNode;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 
 /**
  * This class represents a single Node of a MindMap (in analogy to
@@ -132,7 +132,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 			mFoldingListener.addActionListener(new ActionListener() {
 				
 				public void actionPerformed(ActionEvent pE) {
-					getModeController().setFolded(getModel(), !getModel().isFolded());
+					getController().setFolded(getModel(), !getModel().isFolded());
 				}
 			});
 		}
@@ -314,7 +314,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 
 	public void requestFocus() {
 		// delegate to mapview:
-		getModeController().obtainFocusForSelected();
+		getController().obtainFocusForSelected();
 	}
 
 
@@ -346,8 +346,8 @@ public class NodeView extends JComponent implements TreeModelListener {
 		return map;
 	}
 
-	protected ModeController getModeController() {
-		return getMap().getModel().getModeController();
+	protected MindMapController getController() {
+		return getMap().getModel().getMindMapController();
 	}
 
 	boolean isParentHidden() {

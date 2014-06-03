@@ -34,6 +34,7 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 
 public interface MindMapNode extends MutableTreeNode {
 
@@ -45,7 +46,7 @@ public interface MindMapNode extends MutableTreeNode {
 	 * @return returns the unique id of the node. It is generated using the
 	 *         LinkRegistry.
 	 */
-	String getObjectId(ModeController controller);
+	String getObjectId(MindMapController controller);
 
 	/**
 	 * @return returns a ListIterator of all children of the node if the node is

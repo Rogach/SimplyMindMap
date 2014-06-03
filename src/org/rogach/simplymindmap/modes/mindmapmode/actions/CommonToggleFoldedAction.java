@@ -23,7 +23,6 @@
 package org.rogach.simplymindmap.modes.mindmapmode.actions;
 
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.ControllerAdapter;
 import org.rogach.simplymindmap.modes.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
 import java.awt.event.ActionEvent;
@@ -31,6 +30,7 @@ import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 
 /**
  * @author foltin
@@ -38,11 +38,11 @@ import javax.swing.AbstractAction;
  */
 public class CommonToggleFoldedAction extends AbstractAction {
 
-	private ControllerAdapter modeController;
+	private final MindMapController modeController;
 
 	private Logger logger;
 
-	public CommonToggleFoldedAction(ControllerAdapter controller) {
+	public CommonToggleFoldedAction(MindMapController controller) {
 		super(Resources.getInstance().getText("toggle_folded"));
 		this.modeController = controller;
 		logger = Logger.getLogger(this.getClass().getName());

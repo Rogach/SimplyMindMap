@@ -28,9 +28,7 @@ import org.rogach.simplymindmap.controller.actions.TransferableContent;
 import org.rogach.simplymindmap.controller.actions.UndoPasteNodeAction;
 import org.rogach.simplymindmap.controller.actions.XmlAction;
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.ControllerAdapter;
 import org.rogach.simplymindmap.modes.MindMapNode;
-import org.rogach.simplymindmap.modes.ModeController;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapMapModel;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapNodeModel;
@@ -225,7 +223,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 			String textFromClipboard = (String) TransferData;
 			if (textFromClipboard != null) {
 				String[] textLines = textFromClipboard
-						.split(ModeController.NODESEPARATOR);
+						.split(MindMapController.NODESEPARATOR);
 				// and now? paste it:
 				String mapContent = MindMapMapModel.MAP_INITIAL_START
 						+ "1.0.1" + "\"><node TEXT=\"DUMMY\">";
@@ -492,7 +490,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 					pUndoAction
 							.setNodeAmount(Tools.countOccurrences(
 									textFromClipboard,
-									ControllerAdapter.NODESEPARATOR) + 1);
+									MindMapController.NODESEPARATOR) + 1);
 					amountAlreadySet = true;
 				}
 			}

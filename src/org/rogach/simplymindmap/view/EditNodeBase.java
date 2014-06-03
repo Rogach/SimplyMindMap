@@ -24,7 +24,6 @@
 package org.rogach.simplymindmap.view;
 
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.ModeController;
 import org.rogach.simplymindmap.util.Tools;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -46,6 +45,7 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.text.JTextComponent;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 
 /**
  * @author foltin
@@ -57,13 +57,13 @@ public class EditNodeBase {
 	protected static final int BUTTON_SPLIT = 2;
 	protected NodeView node;
 	private EditControl editControl;
-	private ModeController controller;
+	private MindMapController controller;
 	protected String text;
 	// this enables from outside close the edit mode
 	protected FocusListener textFieldListener = null;
 
 	EditNodeBase(final NodeView node, final String text,
-			ModeController controller, EditControl editControl)
+			MindMapController controller, EditControl editControl)
 	{
 		this.controller = controller;
 		this.editControl = editControl;
@@ -180,7 +180,7 @@ public class EditNodeBase {
 		return controller.getView();
 	}
 
-	protected ModeController getModeController() {
+	protected MindMapController getModeController() {
 		return controller;
 	}
 

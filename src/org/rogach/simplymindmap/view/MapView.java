@@ -191,7 +191,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 		private void changeSelection(NodeView pNode, boolean pIsSelected) {
 			if (pNode.getModel() == null)
 				return;
-			getModel().getModeController().changeSelection(pNode, pIsSelected);
+			getModel().getMindMapController().changeSelection(pNode, pIsSelected);
 			
 		}
 
@@ -221,11 +221,11 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 		private void removeFocusForHooks(NodeView node) {
 			if (node.getModel() == null)
 				return;
-			getModel().getModeController().onLostFocusNode(node);
+			getModel().getMindMapController().onLostFocusNode(node);
 		}
 
 		private void addFocusForHooks(NodeView node) {
-			getModel().getModeController().onFocusNode(node);
+			getModel().getMindMapController().onFocusNode(node);
 		}
 
 		public NodeView get(int i) {
@@ -298,7 +298,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 		super();
     this.controller = new MindMapController(this);
 		this.model = model;
-    this.model.setModeController(controller);
+    this.model.setMindMapController(controller);
 		if (logger == null)
 			logger = Logger.getLogger(this.getClass().getName());
 		mCenterNodeTimer = new Timer();
@@ -609,7 +609,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 		} else {
 			// If folded in the direction, unfold
 			if (oldSelected.getModel().isFolded()) {
-				model.getModeController().setFolded(oldSelected.getModel(),
+				model.getMindMapController().setFolded(oldSelected.getModel(),
 						false);
 				return oldSelected;
 			}
@@ -631,7 +631,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 		} else {
 			// If folded in the direction, unfold
 			if (oldSelected.getModel().isFolded()) {
-				model.getModeController().setFolded(oldSelected.getModel(),
+				model.getMindMapController().setFolded(oldSelected.getModel(),
 						false);
 				return oldSelected;
 			}
@@ -793,7 +793,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 		this.selected.clear();
 		this.selected.add(newSelected);
 
-		// getController().getMode().getDefaultModeController().onSelectHook(newSelected.getModel());
+		// getController().getMode().getDefaultMindMapController().onSelectHook(newSelected.getModel());
 		// set last focused as preferred (PN)
 		if (newSelected.getModel().getParentNode() != null) {
 			((NodeView) newSelected.getParent()).setPreferredChild(newSelected);

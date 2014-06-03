@@ -23,12 +23,13 @@ package org.rogach.simplymindmap.modes;
 import java.util.List;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 
 public interface MindMap extends TreeModel {
 
 	MindMapNode getRootNode();
 
-	ModeController getModeController();
+	MindMapController getMindMapController();
 
 	void nodeChanged(TreeNode node);
 

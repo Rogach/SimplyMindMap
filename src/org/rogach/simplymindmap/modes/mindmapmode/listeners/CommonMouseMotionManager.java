@@ -23,10 +23,10 @@
 package org.rogach.simplymindmap.modes.mindmapmode.listeners;
 
 import org.rogach.simplymindmap.controller.MapMouseMotionListener.MapMouseMotionReceiver;
-import org.rogach.simplymindmap.modes.ModeController;
 import org.rogach.simplymindmap.view.MapView;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 
 /**
  * @author foltin
@@ -38,14 +38,14 @@ public class CommonMouseMotionManager implements MapMouseMotionReceiver {
 
 	int originY = -1;
 
-	private final ModeController mController;
+	private final MindMapController mController;
 
 	// |= oldX >=0 iff we are in the drag
 
 	/**
 	 *
 	 */
-	public CommonMouseMotionManager(ModeController controller) {
+	public CommonMouseMotionManager(MindMapController controller) {
 		super();
 		this.mController = controller;
 

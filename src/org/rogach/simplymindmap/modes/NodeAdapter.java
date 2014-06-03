@@ -44,6 +44,7 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 
 /**
  * This class represents a single Node of a Tree. It contains direct handles to
@@ -613,14 +614,14 @@ public abstract class NodeAdapter implements MindMapNode {
 	 * 
 	 * @see freemind.modes.MindMapNode#getNodeId()
 	 */
-	public String getObjectId(ModeController controller) {
+	public String getObjectId(MindMapController controller) {
 		return controller.getNodeID(this);
 	}
 
 	public XMLElement save(Writer writer, MindMapLinkRegistry registry,
 			boolean saveInvisible, boolean saveChildren) throws IOException {
 		// pre save event to save all contents of the node:
-		getModeController().firePreSaveEvent(this);
+		getMindMapController().firePreSaveEvent(this);
 		XMLElement node = new XMLElement();
 
 		node.setName(XMLElementAdapter.XML_NODE);
@@ -717,8 +718,8 @@ public abstract class NodeAdapter implements MindMapNode {
 		return node;
 	}
 
-	public ModeController getModeController() {
-		return map.getModeController();
+	public MindMapController getMindMapController() {
+		return map.getMindMapController();
 	}
 
 	private void saveChildren(Writer writer, MindMapLinkRegistry registry,

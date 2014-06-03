@@ -95,7 +95,7 @@ public class NodeMotionListenerView extends JComponent {
 		this.isMouseEntered = true;
 		// fc, 13.3.2008: variable is not used:
 		// final FreeMindMain frame =
-		// movedView.getMap().getModel().getModeController().getFrame();
+		// movedView.getMap().getModel().getMindMapController().getFrame();
 		repaint();
 	}
 

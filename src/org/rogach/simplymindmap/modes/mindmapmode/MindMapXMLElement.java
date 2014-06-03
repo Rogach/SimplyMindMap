@@ -22,7 +22,6 @@ package org.rogach.simplymindmap.modes.mindmapmode;
 
 import org.rogach.simplymindmap.modes.EdgeAdapter;
 import org.rogach.simplymindmap.modes.MindMap;
-import org.rogach.simplymindmap.modes.ModeController;
 import org.rogach.simplymindmap.modes.NodeAdapter;
 import org.rogach.simplymindmap.modes.XMLElementAdapter;
 import org.rogach.simplymindmap.nanoxml.XMLElement;
@@ -36,14 +35,14 @@ public class MindMapXMLElement extends XMLElementAdapter {
 	// Logging:
 	private static java.util.logging.Logger logger;
 
-	public MindMapXMLElement(ModeController pModeController) {
-		super(pModeController);
+	public MindMapXMLElement(MindMapController pMindMapController) {
+		super(pMindMapController);
 		init();
 	}
 
-	protected MindMapXMLElement(ModeController pModeController,
+	protected MindMapXMLElement(MindMapController pMindMapController,
 			Vector ArrowLinkAdapters, HashMap IDToTarget) {
-		super(pModeController, ArrowLinkAdapters, IDToTarget);
+		super(pMindMapController, ArrowLinkAdapters, IDToTarget);
 		init();
 	}
 
@@ -59,7 +58,7 @@ public class MindMapXMLElement extends XMLElementAdapter {
 	/** abstract method to create elements of my type (factory). */
 	protected XMLElement createAnotherElement() {
 		// We do not need to initialize the things of XMLElement.
-		return new MindMapXMLElement(mModeController, mArrowLinkAdapters,
+		return new MindMapXMLElement(mMindMapController, mArrowLinkAdapters,
 				mIdToTarget);
 	}
 

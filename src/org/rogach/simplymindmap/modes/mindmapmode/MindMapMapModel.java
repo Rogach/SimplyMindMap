@@ -20,11 +20,9 @@
 
 package org.rogach.simplymindmap.modes.mindmapmode;
 
-import org.rogach.simplymindmap.main.FreeMindCommon;
 import org.rogach.simplymindmap.modes.MapAdapter;
 import org.rogach.simplymindmap.modes.MindMapLinkRegistry;
 import org.rogach.simplymindmap.modes.MindMapNode;
-import org.rogach.simplymindmap.modes.ModeController;
 import org.rogach.simplymindmap.modes.NodeAdapter;
 import org.rogach.simplymindmap.nanoxml.XMLParseException;
 import org.rogach.simplymindmap.util.Tools;
@@ -148,10 +146,10 @@ public class MindMapMapModel extends MapAdapter {
     }
 		try {
 			HashMap IDToTarget = new HashMap();
-			return (MindMapNodeModel) mModeController.createNodeTreeFromXml(
+			return (MindMapNodeModel) mMindMapController.createNodeTreeFromXml(
 					reader, IDToTarget);
 			// MindMapXMLElement mapElement = new
-			// MindMapXMLElement(mModeController);
+			// MindMapXMLElement(mMindMapController);
 			// mapElement.parseFromReader(reader);
 			// // complete the arrow links:
 			// mapElement.processUnfinishedLinks(getLinkRegistry());
@@ -163,7 +161,7 @@ public class MindMapMapModel extends MapAdapter {
 			System.err.println(errorMessage);
 			org.rogach.simplymindmap.main.Resources.getInstance().logException(ex);
 			MindMapXMLElement mapElement = new MindMapXMLElement(
-					mModeController);
+					mMindMapController);
 			NodeAdapter result = mapElement.createNodeAdapter(null);
 			result.setText(errorMessage);
 			return (MindMapNodeModel) result;

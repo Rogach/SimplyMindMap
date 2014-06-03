@@ -27,11 +27,12 @@ import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 
 public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 
 	static protected Logger logger;
-	protected ModeController mModeController;
+	protected MindMapController mMindMapController;
 
 	public MapAdapter() {
 		super(null);
@@ -40,13 +41,13 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 		}
 	}
 
-	public ModeController getModeController() {
-		return mModeController;
+	public MindMapController getMindMapController() {
+		return mMindMapController;
 	}
   
-  public void setModeController(ModeController controller) {
-    this.mModeController = controller;
-    this.mModeController.setModel(this);
+  public void setMindMapController(MindMapController controller) {
+    this.mMindMapController = controller;
+    this.mMindMapController.setModel(this);
   }
 
 	public MindMapNode getRootNode() {
@@ -65,18 +66,18 @@ public abstract class MapAdapter extends DefaultTreeModel implements MindMap {
 	 * This method should not be called directly!
 	 */
 	public void nodeChanged(TreeNode node) {
-		getModeController().nodeChanged((MindMapNode) node);
+		getMindMapController().nodeChanged((MindMapNode) node);
 	}
 
 	public void nodeRefresh(TreeNode node) {
-		getModeController().nodeRefresh((MindMapNode) node);
+		getMindMapController().nodeRefresh((MindMapNode) node);
 	}
 
 	/**
 	 * Invoke this method if you've totally changed the children of node and its
 	 * childrens children... This will post a treeStructureChanged event.
 	 */
-	void nodeChangedInternal(TreeNode node) {
+	public void nodeChangedInternal(TreeNode node) {
 		if (node != null) {
 			fireTreeNodesChanged(this, getPathToRoot(node), null, null);
 		}

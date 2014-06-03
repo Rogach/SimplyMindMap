@@ -21,11 +21,11 @@
 package org.rogach.simplymindmap.modes.mindmapmode.listeners;
 
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.ModeController;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.logging.Logger;
 import javax.swing.KeyStroke;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 
 /**
  * The KeyListener which belongs to the node and cares for Events like C-D
@@ -37,7 +37,7 @@ public class CommonNodeKeyListener implements KeyListener {
 		void edit(KeyEvent e, boolean addNew, boolean editLong);
 	}
 
-	private ModeController c;
+	private MindMapController c;
 
 	private String up, down, left, right;
 
@@ -57,7 +57,7 @@ public class CommonNodeKeyListener implements KeyListener {
 
 	private static Logger logger;
 
-	public CommonNodeKeyListener(ModeController controller,
+	public CommonNodeKeyListener(MindMapController controller,
 			EditHandler editHandler) {
 		c = controller;
 		this.editHandler = editHandler;
@@ -125,7 +125,7 @@ public class CommonNodeKeyListener implements KeyListener {
 			return;
 
 			// case KeyEvent.VK_SPACE:
-			// c.getMode().getModeController().toggleFolded();
+			// c.getMode().getMindMapController().toggleFolded();
 			// e.consume();
 			// return;
 		}

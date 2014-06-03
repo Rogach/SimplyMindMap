@@ -22,7 +22,6 @@ package org.rogach.simplymindmap.modes.mindmapmode.listeners;
 
 import org.rogach.simplymindmap.controller.NodeMouseMotionListener.NodeMouseMotionObserver;
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.ModeController;
 import org.rogach.simplymindmap.util.Tools;
 import org.rogach.simplymindmap.view.MainView;
 import org.rogach.simplymindmap.view.NodeView;
@@ -34,6 +33,7 @@ import java.util.TimerTask;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 
 /**
  * The MouseMotionListener which belongs to every NodeView.
@@ -41,7 +41,7 @@ import javax.swing.SwingUtilities;
  */
 public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
 
-	private final ModeController c;
+	private final MindMapController c;
 
 	// Logging:
 	private static java.util.logging.Logger logger;
@@ -87,7 +87,7 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
 
 	private MouseEvent mMousePressedEvent;
 
-	public CommonNodeMouseMotionListener(ModeController controller) {
+	public CommonNodeMouseMotionListener(MindMapController controller) {
 		c = controller;
 		if (logger == null)
 			logger = Logger.getLogger(this.getClass().getName());
@@ -226,11 +226,11 @@ public class CommonNodeMouseMotionListener implements NodeMouseMotionObserver {
 	}
 
 	protected class timeDelayedSelection extends TimerTask {
-		private final ModeController c;
+		private final MindMapController c;
 
 		private final MouseEvent e;
 
-		timeDelayedSelection(ModeController c, MouseEvent e) {
+		timeDelayedSelection(MindMapController c, MouseEvent e) {
 			this.c = c;
 			this.e = e;
 		}

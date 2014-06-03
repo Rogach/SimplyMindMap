@@ -26,7 +26,6 @@ package org.rogach.simplymindmap.view;
 import org.rogach.simplymindmap.main.ResourceKeys;
 import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.modes.MindMapNode;
-import org.rogach.simplymindmap.modes.ModeController;
 import org.rogach.simplymindmap.util.Tools;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -51,6 +50,7 @@ import javax.swing.KeyStroke;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 
 /**
  * @author foltin
@@ -79,14 +79,14 @@ public class EditNodeTextField extends EditNodeBase {
 	private UndoManager mUndoManager;
 
 	public EditNodeTextField(final NodeView node, final String text,
-			final KeyEvent firstEvent, ModeController controller,
+			final KeyEvent firstEvent, MindMapController controller,
 			EditControl editControl) {
 		this(node, text, firstEvent, controller, editControl, node.getMap(),
 				node);
 	}
 
 	public EditNodeTextField(final NodeView node, final String text,
-			final KeyEvent firstEvent, ModeController controller,
+			final KeyEvent firstEvent, MindMapController controller,
 			EditControl editControl, JComponent pParent,
 			JComponent pFocusListener) {
 		super(node, text, controller, editControl);

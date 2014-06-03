@@ -23,11 +23,11 @@
 package org.rogach.simplymindmap.modes.mindmapmode.listeners;
 
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.ControllerAdapter;
 import org.rogach.simplymindmap.view.MapView;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 
 /**
  * @author foltin
@@ -62,13 +62,13 @@ public class MindMapMouseWheelEventHandler implements MouseWheelListener {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * freemind.modes.ModeController.MouseWheelEventHandler#handleMouseWheelEvent
+	 * freemind.modes.MindMapController.MouseWheelEventHandler#handleMouseWheelEvent
 	 * (java.awt.event.MouseWheelEvent)
 	 */
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		MapView mapView = (MapView) e.getSource();
-		ControllerAdapter mController = (ControllerAdapter) mapView.getModel()
-				.getModeController();
+		MindMapController mController = (MindMapController) mapView.getModel()
+				.getMindMapController();
 		if (mController.isBlocked()) {
 			return; // block the scroll during edit (PN)
 		}

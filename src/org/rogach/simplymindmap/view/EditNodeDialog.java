@@ -24,7 +24,6 @@
 package org.rogach.simplymindmap.view;
 
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.modes.ModeController;
 import org.rogach.simplymindmap.util.Tools;
 import java.awt.Color;
 import java.awt.Component;
@@ -44,6 +43,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 
 /**
  * @author foltin
@@ -56,7 +56,7 @@ public class EditNodeDialog extends EditNodeBase {
 	private static Tools.BooleanHolder booleanHolderForConfirmState;
 
 	public EditNodeDialog(final NodeView node, final String text,
-			final KeyEvent firstEvent, ModeController controller,
+			final KeyEvent firstEvent, MindMapController controller,
 			EditControl editControl) {
 		super(node, text, controller, editControl);
 		this.firstEvent = firstEvent;

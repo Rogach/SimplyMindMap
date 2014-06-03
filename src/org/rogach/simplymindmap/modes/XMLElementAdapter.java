@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 import java.util.logging.Logger;
+import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 
 public abstract class XMLElementAdapter extends XMLElement {
 
@@ -67,21 +68,17 @@ public abstract class XMLElementAdapter extends XMLElement {
 	public static final String XML_NODE_XHTML_TYPE_NODE = "NODE";
 	public static final String XML_NODE_XHTML_TYPE_NOTE = "NOTE";
 
-	private String attributeName;
-
-	private String attributeValue;
-
-	protected final ModeController mModeController;
+	protected final MindMapController mMindMapController;
 
 	// Overhead methods
 
-	public XMLElementAdapter(ModeController modeController) {
+	public XMLElementAdapter(MindMapController modeController) {
 		this(modeController, new Vector(), new HashMap());
 	}
 
-	protected XMLElementAdapter(ModeController modeController,
+	protected XMLElementAdapter(MindMapController modeController,
 			Vector arrowLinkAdapters, HashMap IDToTarget) {
-		this.mModeController = modeController;
+		this.mMindMapController = modeController;
 		this.mArrowLinkAdapters = arrowLinkAdapters;
 		this.mIdToTarget = IDToTarget;
 		if (logger == null) {
@@ -325,7 +322,7 @@ public abstract class XMLElementAdapter extends XMLElement {
 	}
 
 	protected MindMap getMap() {
-		return mModeController.getMap();
+		return mMindMapController.getMap();
 	}
 
 	public HashMap getIDToTarget() {
