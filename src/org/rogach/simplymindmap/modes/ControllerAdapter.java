@@ -423,14 +423,6 @@ public abstract class ControllerAdapter implements ModeController {
 		changeSelection(node, !visible);
 	}
 
-	/**
-	 * Overwrite this to set all of your actions which are dependent on whether
-	 * there is a map or not.
-	 */
-	protected void setAllActions(boolean enabled) {
-		// controller actions:
-	}
-
 	// status, currently: default, blocked (PN)
 	// (blocked to protect against particular events e.g. in edit mode)
 	private boolean isBlocked = false;

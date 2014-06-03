@@ -83,6 +83,9 @@ import java.util.Vector;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import org.rogach.simplymindmap.modes.mindmapmode.actions.ChangeNodeLevelAction;
+import org.rogach.simplymindmap.modes.mindmapmode.actions.FitToPageAction;
+import org.rogach.simplymindmap.modes.mindmapmode.actions.IconSelectionAction;
 
 public class MindMapController extends ControllerAdapter implements
 		MindMapActions {
@@ -134,6 +137,7 @@ public class MindMapController extends ControllerAdapter implements
 	public NodeUpAction nodeUp = null;
 	public NodeDownAction nodeDown = null;
   
+  public IconSelectionAction iconSelectionAction = null;
 	public IconAction unknownIconAction = null;
 	public RemoveIconAction removeLastIconAction = null;
 	public RemoveAllIconsAction removeAllIconsAction = null;
@@ -143,6 +147,11 @@ public class MindMapController extends ControllerAdapter implements
 	public FindNextAction findNext = null;
 	public SelectBranchAction selectBranchAction = null;
 	public SelectAllAction selectAllAction = null;
+  
+  public ChangeNodeLevelAction changeNodeLevelRight = null;
+  public ChangeNodeLevelAction changeNodeLevelLeft = null;
+  
+  public FitToPageAction fitToPage = null;
 
 	// Extension Actions
 	public Vector iconActions = new Vector(); // fc
@@ -187,6 +196,8 @@ public class MindMapController extends ControllerAdapter implements
 		nodeUp = new NodeUpAction(this);
 		nodeDown = new NodeDownAction(this);
 		nodeColor = new NodeColorAction(this);
+    
+    iconSelectionAction = new IconSelectionAction(this);
 		// this is an unknown icon and thus corrected by mindicon:
 		removeLastIconAction = new RemoveIconAction(this);
 		// this action handles the xml stuff: (undo etc.)
@@ -201,6 +212,10 @@ public class MindMapController extends ControllerAdapter implements
 		selectBranchAction = new SelectBranchAction(this);
 		selectAllAction = new SelectAllAction(this);
 
+    changeNodeLevelLeft = new ChangeNodeLevelAction("left", this);
+    changeNodeLevelRight = new ChangeNodeLevelAction("right", this);
+    
+    fitToPage = new FitToPageAction(this);
 	}
 
 	public boolean isUndoAction() {
@@ -252,47 +267,6 @@ public class MindMapController extends ControllerAdapter implements
 	// convenience methods
 	public MindMapMapModel getMindMapMapModel() {
 		return (MindMapMapModel) getMap();
-	}
-
-	/**
-	 * Enabled/Disabled all actions that are dependent on whether there is a map
-	 * open or not.
-	 */
-	protected void setAllActions(boolean enabled) {
-		logger.fine("setAllActions:" + enabled);
-		super.setAllActions(enabled);
-		// own actions
-		increaseNodeFont.setEnabled(enabled);
-		decreaseNodeFont.setEnabled(enabled);
-		editLong.setEnabled(enabled);
-		newSibling.setEnabled(enabled);
-		newPreviousSibling.setEnabled(enabled);
-		for (int i = 0; i < iconActions.size(); ++i) {
-			((Action) iconActions.get(i)).setEnabled(enabled);
-		}
-		cut.setEnabled(enabled);
-		copy.setEnabled(enabled);
-		copySingle.setEnabled(enabled);
-		paste.setEnabled(enabled);
-		undo.setEnabled(enabled);
-		redo.setEnabled(enabled);
-		edit.setEnabled(enabled);
-		newChild.setEnabled(enabled);
-		toggleFolded.setEnabled(enabled);
-		toggleChildrenFolded.setEnabled(enabled);
-		italic.setEnabled(enabled);
-		bold.setEnabled(enabled);
-		find.setEnabled(enabled);
-		findNext.setEnabled(enabled);
-		nodeUp.setEnabled(enabled);
-		nodeDown.setEnabled(enabled);
-		deleteChild.setEnabled(enabled);
-		nodeColor.setEnabled(enabled);
-		removeLastIconAction.setEnabled(enabled);
-		removeAllIconsAction.setEnabled(enabled);
-		selectAllAction.setEnabled(enabled);
-		selectBranchAction.setEnabled(enabled);
-		moveNodeAction.setEnabled(enabled);
 	}
 
 	public void setBold(MindMapNode node, boolean bolded) {
