@@ -19,18 +19,12 @@ public class StandaloneTree {
   public static void main(String[] args) throws Exception {
     UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
     
-    Properties defaultPreferences = readDefaultPreferences();
-    
-    FreeMindCommon common = new FreeMindCommon(defaultPreferences);
-    
     // populate data
-    MindMapNodeModel root = new MindMapNodeModel("root", null);
-    root.add(new MindMapNodeModel("child0", null));
-    root.add(new MindMapNodeModel("child1", null));
+    MindMapNodeModel root = new MindMapNodeModel("root");
     
-    MindMapMapModel m = new MindMapMapModel(root, common);
+    MindMapMapModel m = new MindMapMapModel(root);
     
-    MapView mapView = new MapView(m, defaultPreferences);
+    MapView mapView = new MapView(m);
     mapView.selectAsTheOnlyOneSelected(mapView.getRoot());
     
     JFrame frame = new JFrame();
@@ -39,7 +33,6 @@ public class StandaloneTree {
     scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     scrollPane.setViewportView(mapView);
-    
     
     // need scrollpane to wrap mind map
     BorderLayout layout = new BorderLayout();

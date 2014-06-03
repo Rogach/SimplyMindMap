@@ -381,7 +381,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 			// node to
 			// the parent of real parent.
 			realParent = parent;
-			parent = new MindMapNodeModel(mMindMapController.getMap());
+			parent = new MindMapNodeModel(null, mMindMapController.getMap());
 		}
 
 		ArrayList parentNodes = new ArrayList();
@@ -525,7 +525,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 	protected int determineAmountOfNewNodes(Transferable t)
 			throws UnsupportedFlavorException, IOException {
 		// create a new node for testing purposes.
-		MindMapNodeModel parent = new MindMapNodeModel(mMindMapController.getMap());
+		MindMapNodeModel parent = new MindMapNodeModel(null, mMindMapController.getMap());
 		pasteStringWithoutRedisplay(t, parent, false, false);
 		final int childCount = parent.getChildCount();
 		return childCount;

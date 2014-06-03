@@ -65,7 +65,7 @@ public class MindMapXMLElement extends XMLElementAdapter {
 
 	protected NodeAdapter createNodeAdapter(String nodeClass) {
 		if (nodeClass == null) {
-			return new MindMapNodeModel(getMap());
+			return new MindMapNodeModel(null, getMap());
 		}
 		// reflection:
 		try {
@@ -83,7 +83,7 @@ public class MindMapXMLElement extends XMLElementAdapter {
 			org.rogach.simplymindmap.main.Resources.getInstance().logException(e,
 					"Error occurred loading node implementor: " + nodeClass);
 			// the best we can do is to return the normal class:
-			NodeAdapter node = new MindMapNodeModel(getMap());
+			NodeAdapter node = new MindMapNodeModel(null, getMap());
 			return node;
 		}
 	}

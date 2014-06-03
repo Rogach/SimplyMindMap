@@ -272,7 +272,6 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	private Color background = null;
 	private Rectangle boundingRectangle = null;
 	private boolean fitToPage = true;
-  private Properties properties = null;
   private MindMapController controller = null;
   
   private NodeDragListener nodeDragListener;
@@ -295,9 +294,8 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	//
 	static boolean NEED_PREF_SIZE_BUG_FIX = false;
 
-	public MapView(MindMapMapModel model, Properties properties) {
+	public MapView(MindMapMapModel model) {
 		super();
-    this.properties = properties;
     this.controller = new MindMapController(this);
 		this.model = model;
     this.model.setModeController(controller);
@@ -456,11 +454,11 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 	public int getMaxNodeWidth() {
 		if (maxNodeWidth == 0) {
 			try {
-				maxNodeWidth = Integer.parseInt(properties
+				maxNodeWidth = Integer.parseInt(Resources.getInstance()
 						.getProperty("max_node_width"));
 			} catch (NumberFormatException e) {
 				org.rogach.simplymindmap.main.Resources.getInstance().logException(e);
-				maxNodeWidth = Integer.parseInt(properties
+				maxNodeWidth = Integer.parseInt(Resources.getInstance()
 						.getProperty("el__max_default_window_width"));
 			}
 		}
@@ -1342,7 +1340,7 @@ public class MapView extends JPanel implements Printable, Autoscroll {
 
 		double userZoomFactor = 1;
 		try {
-			userZoomFactor = Double.parseDouble(properties
+			userZoomFactor = Double.parseDouble(Resources.getInstance()
 					.getProperty("user_zoom"));
 		} catch (Exception e) {
 			// freemind.main.Resources.getInstance().logException(e);

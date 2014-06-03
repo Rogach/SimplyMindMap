@@ -41,6 +41,7 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
+import org.rogach.simplymindmap.main.Resources;
 
 public class MindMapMapModel extends MapAdapter {
 
@@ -60,18 +61,18 @@ public class MindMapMapModel extends MapAdapter {
 	// Constructors
 	//
 
-	public MindMapMapModel(FreeMindCommon common) {
-		this(null, common);
+	public MindMapMapModel() {
+		this(null);
 	}
 
-	public MindMapMapModel(MindMapNodeModel root, FreeMindCommon common) {
+	public MindMapMapModel(MindMapNodeModel root) {
 		super();
 
 		// register new LinkRegistryAdapter
 		linkRegistry = new MindMapLinkRegistry();
 
 		if (root == null)
-			root = new MindMapNodeModel(common.getResourceString("new_mindmap"),
+			root = new MindMapNodeModel(Resources.getInstance().getResourceString("new_mindmap"),
 					 this);
     updateMapReferenceInNodes(root);
 		setRoot(root);
