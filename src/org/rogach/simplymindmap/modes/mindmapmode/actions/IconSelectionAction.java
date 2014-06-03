@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.util.Vector;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JOptionPane;
 import org.rogach.simplymindmap.modes.mindmapmode.MindMapController;
 import org.rogach.simplymindmap.util.IconSelectionPopupDialog;
 import org.rogach.simplymindmap.util.Tools;
@@ -28,15 +29,8 @@ public class IconSelectionAction extends AbstractAction {
     actions.addAll(iconActions);
     actions.add(controller.removeLastIconAction);
     actions.add(controller.removeAllIconsAction);
-    Component c = controller.getView();
-    while (!(c instanceof Window) && c != null) {
-      c = c.getParent();
-    }
-    if (c == null) {
-      throw new RuntimeException("No parent frame found!");
-    }
-    Window frame = (Window) c;
-    IconSelectionPopupDialog selectionDialog = new IconSelectionPopupDialog(frame, actions);
+    IconSelectionPopupDialog selectionDialog = 
+            new IconSelectionPopupDialog(JOptionPane.getFrameForComponent(controller.getView()), actions);
     final MapView mapView = controller.getView();
     mapView.scrollNodeToVisible(focussed, 0);
     selectionDialog.pack();

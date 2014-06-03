@@ -107,7 +107,7 @@ public class EditNodeBase {
 		}
 
 		EditDialog(EditNodeBase base) {
-      super(base.getFrame(), Resources.getInstance().getText("edit_long_node"), ModalityType.APPLICATION_MODAL);
+      super(JOptionPane.getFrameForComponent(base.node), Resources.getInstance().getText("edit_long_node"), ModalityType.APPLICATION_MODAL);
 			getContentPane().setLayout(new BorderLayout());
 			setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 			DialogWindowListener dfl = new DialogWindowListener();
@@ -182,17 +182,6 @@ public class EditNodeBase {
 
 	protected MindMapController getModeController() {
 		return controller;
-	}
-
-	protected Window getFrame() {
-    Component c = node;
-    while (!(c instanceof Window) && c != null) {
-      c = c.getParent();
-    }
-    if (c == null) {
-      throw new RuntimeException("Failed to get parent JFrame for dialog");
-    }
-		return (Window) c;
 	}
 
 	protected boolean binOptionIsTrue(String option) {
