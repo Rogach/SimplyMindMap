@@ -68,7 +68,6 @@ import org.rogach.simplymindmap.modes.mindmapmode.actions.FontSizeAction;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.IconAction;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.IconSelectionAction;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.ItalicAction;
-import org.rogach.simplymindmap.modes.mindmapmode.actions.ModeControllerActionHandler;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.MoveNodeAction;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.NewChildAction;
 import org.rogach.simplymindmap.modes.mindmapmode.actions.NewPreviousSiblingAction;
@@ -201,11 +200,6 @@ public class MindMapController {
 		// prepare undo:
 		undo = new UndoAction(this);
 		redo = new RedoAction(this);
-		// register default action handler:
-		// the executor must be the first here, because it is executed last
-		// then.
-		getActionFactory().registerHandler(
-				new ModeControllerActionHandler(getActionFactory()));
 		getActionFactory().registerUndoHandler(
 				new UndoActionHandler(this, undo, redo));
 		cut = new CutAction(this);

@@ -34,11 +34,6 @@ import org.rogach.simplymindmap.controller.actions.XmlAction;
  */
 public class ActionFactory {
   
-	/**
-	 * This Vector denotes all handler of the action to be called for each
-	 * action.
-	 */
-	private Vector registeredHandler;
 	/** HashMap of Action class -> actor instance. */
 	private HashMap registeredActors;
 	private UndoActionHandler undoActionHandler;
@@ -52,23 +47,7 @@ public class ActionFactory {
 		if (logger == null) {
 			logger = Logger.getLogger(this.getClass().getName());
 		}
-		registeredHandler = new Vector();
 		registeredActors = new HashMap();
-	}
-
-	/**
-	 * The handler is put in front. Thus it is called before others are called.
-	 */
-	public void registerHandler(ActionHandler newHandler) {
-		// if it is present, put it in front:
-		if (!registeredHandler.contains(newHandler)) {
-			registeredHandler.remove(newHandler);
-		}
-		registeredHandler.add(0, newHandler);
-	}
-
-	public void deregisterHandler(ActionHandler newHandler) {
-		registeredHandler.remove(newHandler);
 	}
 
 	/**
@@ -85,7 +64,6 @@ public class ActionFactory {
 	private boolean executeAction(ActionPair pair) {
 		if (pair == null)
 			return false;
-		boolean returnValue = true;
 		// register for undo first, as the filter things are repeated when the
 		// undo is executed as well!
 		if (undoActionHandler != null) {
@@ -93,34 +71,25 @@ public class ActionFactory {
 				undoActionHandler.executeAction(pair);
 			} catch (Exception e) {
 				org.rogach.simplymindmap.main.Resources.getInstance().logException(e);
-				returnValue = false;
+				return false;
 			}
 		}
 
 		ActionPair filteredPair = pair;
-
-		Object[] aArray = registeredHandler.toArray();
-		for (int i = 0; i < aArray.length; i++) {
-			ActionHandler handler = (ActionHandler) aArray[i];
-			try {
-				handler.executeAction(filteredPair.getDoAction());
-			} catch (Exception e) {
-				org.rogach.simplymindmap.main.Resources.getInstance().logException(e);
-				returnValue = false;
-				// to break or not to break. this is the question here...
-			}
-		}
-		return returnValue;
+    try {
+      ActorXml actor = getActor(filteredPair.getDoAction());
+      actor.act(filteredPair.getDoAction());
+    } catch (Exception e) {
+      org.rogach.simplymindmap.main.Resources.getInstance().logException(e);
+      return false;
+    }
+    return true;
 	}
 
-	/**
-	 */
 	public void registerActor(ActorXml actor, Class action) {
 		registeredActors.put(action, actor);
 	}
 
-	/**
-	 */
 	public void deregisterActor(Class action) {
 		registeredActors.remove(action);
 	}
@@ -132,10 +101,6 @@ public class ActionFactory {
 				return (ActorXml) registeredActors.get(actorClass);
 			}
 		}
-		// Class actionClass = action.getClass();
-		// if(registeredActors.containsKey(actionClass)) {
-		// return (ActorXml) registeredActors.get(actionClass);
-		// }
 		throw new IllegalArgumentException("No actor present for xmlaction"
 				+ action.getClass());
 	}
