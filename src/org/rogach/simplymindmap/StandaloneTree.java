@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -19,13 +20,20 @@ public class StandaloneTree {
       Logger.getLogger(StandaloneTree.class.getName()).log(Level.SEVERE, null, ex);
     }
 
-    MindMap mindMap = new MindMap();
-
     JFrame frame = new JFrame();
+    
+    MindMap mindMap = new MindMap();
+    MindMap mindMap2 = new MindMap();
+    
+    JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+    splitPane.setLeftComponent(mindMap);
+    splitPane.setRightComponent(mindMap2);
+    
+
     BorderLayout layout = new BorderLayout();
     frame.getContentPane().setLayout(layout);
-    frame.getContentPane().add(mindMap, BorderLayout.CENTER);
-
+    frame.getContentPane().add(splitPane, BorderLayout.CENTER);
+    
     frame.addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent e) {
@@ -36,6 +44,7 @@ public class StandaloneTree {
     mindMap.getView().centerNode(mindMap.getView().getRoot());
 
     frame.setSize(800, 500);
+    splitPane.setDividerLocation(400);
     frame.setVisible(true);
 
     mindMap.getController().obtainFocusForSelected(); // eagerly grab focus for map, else it will require clicking before proper use

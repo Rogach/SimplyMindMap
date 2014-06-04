@@ -169,6 +169,10 @@ public class MapView extends JPanel implements Autoscroll {
 		// on the other hand it doesn't allow key navigation (sdfe)
 		disableMoveCursor = resources.getBoolProperty(PropertyKey.DISABLE_CURSOR_MOVE_PAPER);
 	}
+  
+  public MindMapResources getResources() {
+    return resources;
+  }
 
 	public void initRoot() {
 		rootContentLocation = new Point();
