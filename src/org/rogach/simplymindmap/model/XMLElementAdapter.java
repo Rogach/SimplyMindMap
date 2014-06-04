@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.Vector;
 import java.util.logging.Logger;
 import org.rogach.simplymindmap.controller.MindMapController;
+import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.nanoxml.XMLElement;
 import org.rogach.simplymindmap.util.XmlTools;
 

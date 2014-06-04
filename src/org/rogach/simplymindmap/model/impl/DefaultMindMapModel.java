@@ -15,7 +15,7 @@ public class DefaultMindMapModel extends AbstractMindMapModel {
   
   @Override
   public MindMapNode newNode(String userObject) {
-    return new MindMapNode(userObject, this);
+    return new DefaultMindMapNode(userObject, this);
   }
   
 }

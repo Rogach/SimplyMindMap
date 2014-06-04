@@ -83,8 +83,6 @@ public class DeleteChildAction extends AbstractAction implements ActorXml {
 		deleteWithoutUndo(selectedNode);
 	}
 
-	/**
-     */
 	public void deleteWithoutUndo(MindMapNode selectedNode) {
 		MindMapNode parent = selectedNode.getParentNode();
 		controller.fireNodePreDeleteEvent(selectedNode);

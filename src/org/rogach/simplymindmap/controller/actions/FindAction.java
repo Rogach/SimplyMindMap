@@ -248,7 +248,7 @@ public class FindAction extends AbstractAction {
 	public boolean find(MindMapNode node, Collection<String> subterms,
 			boolean caseSensitive) {
 		findNodesUnfoldedByLastFind = new ArrayList<MindMapNode>();
-		LinkedList<MindMapNode> nodes = new LinkedList<MindMapNode>();
+		LinkedList<MindMapNode> nodes = new LinkedList<>();
 		nodes.addFirst(node);
 		findFromNode = node;
 		Collection<String> finalizedSubterms;
@@ -401,8 +401,6 @@ public class FindAction extends AbstractAction {
 		return false;
 	}
 
-	/**
-	 */
 	private void centerNode(MindMapNode node) {
 		// Select the node and scroll to it.
 		controller.centerNode(node);

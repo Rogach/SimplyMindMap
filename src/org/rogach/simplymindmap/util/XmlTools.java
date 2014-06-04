@@ -5,7 +5,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Vector;
 import static org.rogach.simplymindmap.util.Tools.listToString;
 import static org.rogach.simplymindmap.util.Tools.stringToList;
 

@@ -32,14 +32,13 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.logging.Logger;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.nanoxml.XMLParseException;
 import org.rogach.simplymindmap.util.Tools;
 
@@ -73,9 +72,9 @@ public abstract class AbstractMindMapModel extends DefaultTreeModel {
 		// register new LinkRegistryAdapter
 		linkRegistry = new MindMapLinkRegistry();
 
-		if (root == null)
-			root = new MindMapNode(Resources.getInstance().getResourceString("new_mindmap"),
-					 this);
+		if (root == null) {
+			root = newNode("root");
+    }
     updateMapReferenceInNodes(root);
 		setRoot(root);
 	}

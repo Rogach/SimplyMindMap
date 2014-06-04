@@ -36,7 +36,6 @@ import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 import org.rogach.simplymindmap.controller.actions.xml.AbstractXmlAction;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.model.AbstractMindMapModel;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
 
@@ -153,8 +152,6 @@ public class NodeGeneralAction extends AbstractXmlAction {
 	public void act(XmlAction action) {
 	}
 
-	/**
-     */
 	protected MindMapNode getNodeFromID(String string) {
 		return modeController.getNodeFromID(string);
 	}

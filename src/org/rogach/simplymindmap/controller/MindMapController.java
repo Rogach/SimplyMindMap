@@ -84,8 +84,8 @@ import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.controller.actions.xml.UndoActionHandler;
 import org.rogach.simplymindmap.main.ResourceKeys;
 import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.model.MindIcon;
 import org.rogach.simplymindmap.model.AbstractMindMapModel;
+import org.rogach.simplymindmap.model.MindIcon;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.model.MindMapXMLElement;
 import org.rogach.simplymindmap.model.XMLElementAdapter;
@@ -404,7 +404,7 @@ public class MindMapController {
   }
 
   public void fireRecursiveNodeCreateEvent(MindMapNode node) {
-    for (Iterator i = node.childrenUnfolded(); i.hasNext();) {
+    for (Iterator<MindMapNode> i = node.childrenUnfolded(); i.hasNext();) {
       MindMapNode child = (MindMapNode) i.next();
       fireRecursiveNodeCreateEvent(child);
     }
@@ -418,8 +418,7 @@ public class MindMapController {
   public void firePreSaveEvent(MindMapNode node) {
     // copy to prevent concurrent modification.
     HashSet<NodeSelectionListener> listenerCopy = new HashSet<>(mNodeSelectionListeners);
-    for (Iterator iter = listenerCopy.iterator(); iter.hasNext();) {
-      NodeSelectionListener listener = (NodeSelectionListener) iter.next();
+    for (NodeSelectionListener listener : listenerCopy) {
       listener.onSaveNode(node);
     }
   }

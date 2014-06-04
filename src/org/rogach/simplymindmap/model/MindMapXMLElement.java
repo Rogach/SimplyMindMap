@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.Vector;
 import java.util.logging.Logger;
 import org.rogach.simplymindmap.controller.MindMapController;
+import org.rogach.simplymindmap.model.MindMapNode;
+import org.rogach.simplymindmap.model.impl.DefaultMindMapNode;
 import org.rogach.simplymindmap.nanoxml.XMLElement;
 
 public class MindMapXMLElement extends XMLElementAdapter {
@@ -62,7 +64,7 @@ public class MindMapXMLElement extends XMLElementAdapter {
 
 	protected MindMapNode createNodeAdapter(String nodeClass) {
 		if (nodeClass == null) {
-			return new MindMapNode(null, getMapModel());
+			return new DefaultMindMapNode(null, getMapModel());
 		}
 		// reflection:
 		try {
@@ -80,7 +82,7 @@ public class MindMapXMLElement extends XMLElementAdapter {
 			org.rogach.simplymindmap.main.Resources.getInstance().logException(e,
 					"Error occurred loading node implementor: " + nodeClass);
 			// the best we can do is to return the normal class:
-			MindMapNode node = new MindMapNode(null, getMapModel());
+			MindMapNode node = new DefaultMindMapNode(null, getMapModel());
 			return node;
 		}
 	}
