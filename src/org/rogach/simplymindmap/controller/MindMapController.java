@@ -79,6 +79,8 @@ import org.rogach.simplymindmap.controller.actions.SingleNodeOperation;
 import org.rogach.simplymindmap.controller.actions.ToggleChildrenFoldedAction;
 import org.rogach.simplymindmap.controller.actions.ToggleFoldedAction;
 import org.rogach.simplymindmap.controller.actions.UndoAction;
+import org.rogach.simplymindmap.controller.actions.ZoomInAction;
+import org.rogach.simplymindmap.controller.actions.ZoomOutAction;
 import org.rogach.simplymindmap.controller.actions.xml.ActionFactory;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.controller.actions.xml.UndoActionHandler;
@@ -126,7 +128,6 @@ public class MindMapController {
 	public UndoAction undo = null;
 	public RedoAction redo = null;
 	public CopyAction copy = null;
-	public Action copySingle = null;
 	public CutAction cut = null;
 	public PasteAction paste = null;
 	public BoldAction bold = null;
@@ -156,6 +157,8 @@ public class MindMapController {
   public ChangeNodeLevelAction changeNodeLevelRight = null;
   public ChangeNodeLevelAction changeNodeLevelLeft = null;
   
+  public ZoomInAction zoomIn = null;
+  public ZoomOutAction zoomOut = null;
   public FitToPageAction fitToPage = null;
 
 	public Vector<Action> iconActions = new Vector<>();
@@ -238,6 +241,8 @@ public class MindMapController {
     changeNodeLevelLeft = new ChangeNodeLevelAction("left", this);
     changeNodeLevelRight = new ChangeNodeLevelAction("right", this);
     
+    zoomIn = new ZoomInAction(this);
+    zoomOut = new ZoomOutAction(this);
     fitToPage = new FitToPageAction(this);
 	}
 

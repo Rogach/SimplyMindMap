@@ -102,6 +102,8 @@ public class MindMapResources {
     if (value == null) {
       value = resourceKey;
     }
+    // remove mnemonic hints (we don't use mnemonics)
+    value = value.replace("&", "");
     return value;
   }
   

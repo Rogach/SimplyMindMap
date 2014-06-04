@@ -1,7 +1,9 @@
 package org.rogach.simplymindmap;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.Properties;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import org.rogach.simplymindmap.controller.MindMapController;
@@ -10,10 +12,12 @@ import org.rogach.simplymindmap.model.impl.DefaultMindMapModel;
 import org.rogach.simplymindmap.util.MindMapResources;
 import org.rogach.simplymindmap.view.MapView;
 import org.rogach.simplymindmap.view.MapViewScrollPane;
+import org.rogach.simplymindmap.view.MindMapMenuBar;
 
 public class MindMap extends JPanel {
   
   private final MapView view;
+  private final MindMapMenuBar menuBar;
   private final MindMapResources resources;
   
   public MindMap() {
@@ -34,14 +38,27 @@ public class MindMap extends JPanel {
     view = new MapView(mapModel, resources);
     view.selectAsTheOnlyOneSelected(view.getRoot());
     
+    menuBar = new MindMapMenuBar(view.getController());
+    JLabel plainLabel = new JLabel("lorem ipsum");
+    
+//    menuBar.setMinimumSize(new Dimension(200, 30));
+//    menuBar.setPreferredSize(new Dimension(200, 30));
+//    menuBar.setMaximumSize(new Dimension(200, 30));
+    
     MapViewScrollPane scrollPane = new MapViewScrollPane();
     scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     scrollPane.setViewportView(view);
     
+    JPanel contentPanel = new JPanel();
+    BorderLayout contentLayout = new BorderLayout();
+    contentPanel.setLayout(contentLayout);
+    contentPanel.add(scrollPane, BorderLayout.CENTER);
+    contentPanel.add(menuBar, BorderLayout.NORTH);
+
     BorderLayout layout = new BorderLayout();
     this.setLayout(layout);
-    this.add(scrollPane, BorderLayout.CENTER);
+    this.add(contentPanel, BorderLayout.CENTER);
   }
   
   public MapView getView() {
@@ -58,6 +75,10 @@ public class MindMap extends JPanel {
   
   public MindMapResources getResources() {
     return resources;
+  }
+  
+  public void setMenuBarVisible(boolean visible) {
+    menuBar.setVisible(visible);
   }
   
 }
