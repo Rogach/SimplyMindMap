@@ -47,8 +47,6 @@ public class MindMapMenuBar extends JMenuBar {
     JMenu formatMenu = new JMenu(controller.getResources().getText("menu_format"));
     formatMenu.add(controller.increaseNodeFont);
     formatMenu.add(controller.decreaseNodeFont);
-    formatMenu.add(controller.fontSize);
-    formatMenu.add(controller.fontFamily);
     formatMenu.add(controller.italic);
     formatMenu.add(controller.bold);
     formatMenu.add(controller.nodeColor);

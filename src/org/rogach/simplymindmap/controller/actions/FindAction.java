@@ -43,6 +43,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
@@ -112,11 +113,8 @@ public class FindAction extends AbstractAction {
 		if (!found) {
 			String messageText = controller.getResources().getText("no_found_from");
 			String searchTerm = getSearchTermAsEscapedString(messageText);
-      // temp
-//			controller.getController().informationMessage(
-//					messageText.replaceAll("\\$1", searchTerm).replaceAll(
-//							"\\$2", getFindFromText()),
-//					controller.getView().getSelected());
+      String messageBody = messageText.replaceAll("\\$1", searchTerm).replaceAll("\\$2", getFindFromText());
+      JOptionPane.showMessageDialog(controller.getView(), messageBody, null, JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -131,7 +129,7 @@ public class FindAction extends AbstractAction {
 
 	void displayDialog() {
 		mDialog = null;
-		mDialog = new JDialog((Frame) null,
+		mDialog = new JDialog(SwingUtilities.windowForComponent(controller.getView()),
 				controller.getResources().getText("find"));
 		mDialog.setModal(true);
 		mDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -209,10 +207,7 @@ public class FindAction extends AbstractAction {
 		public void actionPerformed(ActionEvent e) {
 			Collection subterms = find.getSubterms();
 			if (subterms == null) {
-        // temp
-//				controller.getController().informationMessage(
-//						controller.getText("no_previous_find"),
-//						controller.getView().getSelected());
+        JOptionPane.showMessageDialog(controller.getView(), controller.getResources().getText("no_previous_find"), null, JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			boolean found = find.findNext();
@@ -221,11 +216,8 @@ public class FindAction extends AbstractAction {
 				String messageText = controller.getResources().getText("no_more_found_from");
 				String searchTerm = find
 						.getSearchTermAsEscapedString(messageText);
-        // temp
-//				controller.getController().informationMessage(
-//						messageText.replaceAll("\\$1", searchTerm).replaceAll(
-//								"\\$2", find.getFindFromText()),
-//						controller.getView().getSelected());
+        String messageBody = messageText.replaceAll("\\$1", searchTerm).replaceAll("\\$2", find.getFindFromText());
+        JOptionPane.showMessageDialog(controller.getView(), messageBody, null, JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
