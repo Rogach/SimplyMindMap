@@ -109,6 +109,11 @@ public class MindMapController {
   public static final int NEW_SIBLING_BEHIND = 3;
   public static final int NEW_SIBLING_BEFORE = 4;
   public static final String NODESEPARATOR = "<nodeseparator>";
+  
+  public static final float[] zoomValues = { 25 / 100f, 50 / 100f,
+    75 / 100f, 100 / 100f, 150 / 100f, 200 / 100f, 300 / 100f,
+    400 / 100f };
+  
 	// for MouseEventHandlers
 	private HashSet mRegisteredMouseWheelEventHandler = new HashSet();
 

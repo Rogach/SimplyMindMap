@@ -10,7 +10,7 @@ public class AboutAction extends AbstractAction {
   private final MindMapController controller;
   
   public AboutAction(MindMapController controller) {
-    super(controller.getResources().getText("simplymindmap_about"));
+    super(controller.getResources().getText("simplymindmap_about"), controller.getResources().getIcon("clone_original.png"));
     this.controller = controller;
   }
 

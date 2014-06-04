@@ -2,10 +2,12 @@ package org.rogach.simplymindmap;
 
 import java.awt.BorderLayout;
 import java.util.Properties;
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.MindMapMenuBar;
+import org.rogach.simplymindmap.controller.MindMapToolBar;
 import org.rogach.simplymindmap.model.AbstractMindMapModel;
 import org.rogach.simplymindmap.model.impl.DefaultMindMapModel;
 import org.rogach.simplymindmap.util.MindMapResources;
@@ -16,7 +18,9 @@ public class MindMap extends JPanel {
   
   private final MapView view;
   private final MindMapMenuBar menuBar;
+  private final MindMapToolBar toolBar;
   private final MindMapResources resources;
+  private final JPanel headerPanel;
   
   public MindMap() {
     this(new DefaultMindMapModel());
@@ -37,6 +41,12 @@ public class MindMap extends JPanel {
     view.selectAsTheOnlyOneSelected(view.getRoot());
     
     menuBar = new MindMapMenuBar(view.getController());
+    toolBar = new MindMapToolBar(view.getController());
+    
+    headerPanel = new JPanel();
+    headerPanel.setLayout(new BorderLayout());
+    headerPanel.add(menuBar, BorderLayout.NORTH);
+    headerPanel.add(toolBar, BorderLayout.CENTER);
     
     MapViewScrollPane scrollPane = new MapViewScrollPane();
     scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -44,13 +54,11 @@ public class MindMap extends JPanel {
     scrollPane.setViewportView(view);
     
     JPanel contentPanel = new JPanel();
-    BorderLayout contentLayout = new BorderLayout();
-    contentPanel.setLayout(contentLayout);
+    contentPanel.setLayout(new BorderLayout());
     contentPanel.add(scrollPane, BorderLayout.CENTER);
-    contentPanel.add(menuBar, BorderLayout.NORTH);
+    contentPanel.add(headerPanel, BorderLayout.NORTH);
 
-    BorderLayout layout = new BorderLayout();
-    this.setLayout(layout);
+    this.setLayout(new BorderLayout());
     this.add(contentPanel, BorderLayout.CENTER);
   }
   
@@ -70,8 +78,8 @@ public class MindMap extends JPanel {
     return resources;
   }
   
-  public void setMenuBarVisible(boolean visible) {
-    menuBar.setVisible(visible);
+  public void setHeaderVisible(boolean visible) {
+    headerPanel.setVisible(visible);
   }
   
 }
