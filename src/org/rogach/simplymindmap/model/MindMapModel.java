@@ -102,7 +102,7 @@ public class MindMapModel extends DefaultTreeModel {
 
   public void setMindMapController(MindMapController controller) {
     this.mMindMapController = controller;
-    this.mMindMapController.setModel(this);
+    this.mMindMapController.setMapModel(this);
   }
 
   public MindMapNode getRootNode() {
@@ -380,6 +380,10 @@ public class MindMapModel extends DefaultTreeModel {
 			return false;
 		}
 	}
+  
+  public MindMapNode newNode(String userObject) {
+    return new MindMapNode(userObject, this);
+  }
 
 
 }

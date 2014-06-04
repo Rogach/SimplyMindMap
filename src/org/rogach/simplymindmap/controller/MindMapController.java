@@ -253,10 +253,7 @@ public class MindMapController {
 		}
 	}
 
-	// fc, 14.12.2004: changes, such that different models can be used:
-	private NewNodeCreator myNewNodeCreator = null;
-
-  public void setModel(MindMapModel model) {
+  public void setMapModel(MindMapModel model) {
     mModel = model;
   }
 
@@ -278,11 +275,11 @@ public class MindMapController {
       // Tell any node hooks that the node is changed:
       updateNode(node);
     }
-    ((MindMapModel) getMap()).nodeChangedInternal(node);
+    getMapModel().nodeChangedInternal(node);
   }
 
   public void refreshMap() {
-    final MindMapNode root = getMap().getRootNode();
+    final MindMapNode root = getMapModel().getRootNode();
     refreshMapFrom(root);
   }
 
@@ -292,13 +289,11 @@ public class MindMapController {
       MindMapNode child = (MindMapNode) iterator.next();
       refreshMapFrom(child);
     }
-    ((MindMapModel) getMap()).nodeChangedInternal(node);
+    getMapModel().nodeChangedInternal(node);
   }
 
-  /**
-   */
   public void nodeStructureChanged(MindMapNode node) {
-    getMap().nodeStructureChanged(node);
+    getMapModel().nodeStructureChanged(node);
   }
 
   /**
@@ -380,7 +375,7 @@ public class MindMapController {
       // call create node for all:
       // TODO: fc, 10.2.08: this event goes to all listeners. It should be for
       // the new listener only?
-      fireRecursiveNodeCreateEvent((MindMapNode) getMap().getRoot());
+      fireRecursiveNodeCreateEvent(getMapModel().getRootNode());
     }
   }
 
@@ -523,14 +518,10 @@ public class MindMapController {
     this.isBlocked = isBlocked;
   }
 
-  public MindMapModel getMap() {
-    return mModel;
-  }
-
   // fc, 29.2.2004: there is no sense in having this private and the
   // controller public,
   // because the getController().getModel() method is available anyway.
-  public MindMapModel getModel() {
+  public MindMapModel getMapModel() {
     return mModel;
   }
 
@@ -546,7 +537,7 @@ public class MindMapController {
    * @throws {@link IllegalArgumentException} when node isn't found.
    */
   public MindMapNode getNodeFromID(String nodeID) {
-    MindMapNode node = (MindMapNode) getMap().getLinkRegistry().getTargetForId(nodeID);
+    MindMapNode node = getMapModel().getLinkRegistry().getTargetForId(nodeID);
     if (node == null) {
       throw new IllegalArgumentException("Node belonging to the node id " + nodeID + " not found in map");
     }
@@ -554,7 +545,7 @@ public class MindMapController {
   }
 
   public String getNodeID(MindMapNode selected) {
-    return getMap().getLinkRegistry().registerLinkTarget(selected);
+    return getMapModel().getLinkRegistry().registerLinkTarget(selected);
   }
 
   public MindMapNode getSelected() {
@@ -630,7 +621,7 @@ public class MindMapController {
    */
   public void displayNode(MindMapNode node, ArrayList<MindMapNode> nodesUnfoldedByDisplay) {
     // Unfold the path to the node
-    Object[] path = getMap().getPathToRoot(node);
+    Object[] path = getMapModel().getPathToRoot(node);
     // Iterate the path with the exception of the last node
     for (int i = 0; i < path.length - 1; i++) {
       MindMapNode nodeOnPath = (MindMapNode) path[i];
@@ -669,7 +660,7 @@ public class MindMapController {
   }
 
   public void insertNodeInto(MindMapNode newNode, MindMapNode parent, int index) {
-    getModel().insertNodeInto(newNode, parent, index);
+    getMapModel().insertNodeInto(newNode, parent, index);
     // call hooks
     fireRecursiveNodeCreateEvent(newNode);
   }
@@ -752,34 +743,9 @@ public class MindMapController {
      */
     void onPostDeleteNode(MindMapNode node, MindMapNode parent);
   }
-  
-	public interface NewNodeCreator {
-		MindMapNode createNode(String userObject, MindMapModel map);
-	}
 
-	public class DefaultMindMapNodeCreator implements NewNodeCreator {
-
-		public MindMapNode createNode(String userObject, MindMapModel map) {
-			return new MindMapNode(userObject, map);
-		}
-
-	}
-
-	public void setNewNodeCreator(NewNodeCreator creator) {
-		myNewNodeCreator = creator;
-	}
-
-	public MindMapNode newNode(String userObject, MindMapModel map) {
-		// singleton default:
-		if (myNewNodeCreator == null) {
-			myNewNodeCreator = new DefaultMindMapNodeCreator();
-		}
-		return myNewNodeCreator.createNode(userObject, map);
-	}
-
-	// convenience methods
-	public MindMapModel getMindMapMapModel() {
-		return (MindMapModel) getMap();
+	public MindMapNode newNode(String userObject) {
+    return this.getMapModel().newNode(userObject);
 	}
 
 	public void setBold(MindMapNode node, boolean bolded) {
@@ -840,7 +806,7 @@ public class MindMapController {
 	public Transferable copy(MindMapNode node, boolean saveInvisible) {
 		StringWriter stringWriter = new StringWriter();
 		try {
-			((MindMapNode) node).save(stringWriter, getMap()
+			((MindMapNode) node).save(stringWriter, getMapModel()
 					.getLinkRegistry(), saveInvisible, true);
 		} catch (IOException e) {
 		}
@@ -862,7 +828,7 @@ public class MindMapController {
 					copyInvisible);
 
 			return new MindMapNodesSelection(forNodesFlavor,
-					getMap().getAsPlainText(selectedNodes), null, createForNodeIdsFlavor);
+					getMapModel().getAsPlainText(selectedNodes), null, createForNodeIdsFlavor);
 		}
 
 		catch (UnsupportedFlavorException | IOException ex) {
@@ -1045,7 +1011,7 @@ public class MindMapController {
 		XMLElementAdapter element = (XMLElementAdapter) createXMLElement();
 		element.setIDToTarget(pIDToTarget);
 		element.parseFromReader(pReader);
-		element.processUnfinishedLinks(getModel().getLinkRegistry());
+		element.processUnfinishedLinks(getMapModel().getLinkRegistry());
 		MindMapNode node = element.getMapChild();
 		return node;
 	}
@@ -1054,7 +1020,7 @@ public class MindMapController {
 		// first deselect, and then remove. 
 		NodeView nodeView = getView().getNodeView(selectedNode);
 		getView().deselect(nodeView);
-		getModel().removeNodeFromParent(selectedNode);
+		getMapModel().removeNodeFromParent(selectedNode);
 	}
 
 	public void repaintMap() {
@@ -1111,8 +1077,8 @@ public class MindMapController {
 
     /* the < relation. */
     public int compare(MindMapNode n1, MindMapNode n2) {
-      Object[] path1 = getModel().getPathToRoot(n1);
-      Object[] path2 = getModel().getPathToRoot(n2);
+      Object[] path1 = getMapModel().getPathToRoot(n1);
+      Object[] path2 = getMapModel().getPathToRoot(n2);
       int depth = path1.length - path2.length;
       if (depth > 0) {
         return -1;

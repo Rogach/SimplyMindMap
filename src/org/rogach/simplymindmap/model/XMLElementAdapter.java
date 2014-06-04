@@ -344,8 +344,8 @@ public abstract class XMLElementAdapter extends XMLElement {
 		}
 	}
 
-	protected MindMapModel getMap() {
-		return mMindMapController.getMap();
+	protected MindMapModel getMapModel() {
+		return mMindMapController.getMapModel();
 	}
 
 	public HashMap getIDToTarget() {

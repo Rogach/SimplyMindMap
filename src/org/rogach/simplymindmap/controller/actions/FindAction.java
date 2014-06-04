@@ -366,7 +366,7 @@ public class FindAction extends AbstractAction {
 	 */
 	public void displayNode(MindMapNode node, List<MindMapNode> nodesUnfoldedByDisplay) {
 		// Unfold the path to the node
-		Object[] path = controller.getMap().getPathToRoot(node);
+		Object[] path = controller.getMapModel().getPathToRoot(node);
 		// Iterate the path with the exception of the last node
 		for (int i = 0; i < path.length - 1; i++) {
 			MindMapNode nodeOnPath = (MindMapNode) path[i];

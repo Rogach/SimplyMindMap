@@ -122,7 +122,7 @@ public class NodeUpAction extends AbstractAction implements ActorXml {
 	 */
 	public int moveNodeTo(MindMapNode newChild, MindMapNode parent,
 			int direction) {
-		MindMapModel model = modeController.getModel();
+		MindMapModel model = modeController.getMapModel();
 		int index = model.getIndexOfChild(parent, newChild);
 		int newIndex = index;
 		int maxIndex = parent.getChildCount();

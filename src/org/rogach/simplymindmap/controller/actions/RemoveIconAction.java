@@ -79,7 +79,7 @@ public class RemoveIconAction extends NodeGeneralAction implements
 
 	public int removeLastIcon(MindMapNode node) {
 		modeController.doTransaction(
-				(String) getValue(NAME), apply(modeController.getMap(), node));
+				(String) getValue(NAME), apply(modeController.getMapModel(), node));
 		return node.getIcons().size();
 	}
 

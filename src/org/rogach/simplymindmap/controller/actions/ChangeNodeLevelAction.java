@@ -57,14 +57,14 @@ public class ChangeNodeLevelAction extends AbstractAction {
     String selectedNodeId = selectedNode.getObjectId(controller);
     // WORKAROUND: Make target of local hyperlinks for the case, that ids
     // are not stored persistently.
-    controller.getMap().getLinkRegistry().registerLocalHyperlinkId(selectedNodeId);
+    controller.getMapModel().getLinkRegistry().registerLocalHyperlinkId(selectedNodeId);
     Vector<String> selectedNodesId = new Vector<>();
     for (Iterator iter = selectedNodes.iterator(); iter.hasNext();) {
       MindMapNode node = (MindMapNode) iter.next();
       String nodeId = node.getObjectId(controller);
       // WORKAROUND: Make target of local hyperlinks for the case, that
       // ids are not stored persistently.
-      controller.getMap().getLinkRegistry().registerLocalHyperlinkId(nodeId);
+      controller.getMapModel().getLinkRegistry().registerLocalHyperlinkId(nodeId);
       selectedNodesId.add(nodeId);
     }
     if (upwards) {

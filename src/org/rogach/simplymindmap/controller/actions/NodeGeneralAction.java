@@ -110,7 +110,7 @@ public class NodeGeneralAction extends AbstractXmlAction {
 					.hasNext();) {
 				MindMapNode selected = (MindMapNode) it.next();
 				singleNodeOperation.apply(
-						(MindMapModel) this.modeController.getMap(),
+						this.modeController.getMapModel(),
 						selected);
 			}
 		} else {
@@ -124,7 +124,7 @@ public class NodeGeneralAction extends AbstractXmlAction {
 			for (ListIterator it = modeController.getSelecteds().listIterator(); it
 					.hasNext();) {
 				MindMapNode selected = (MindMapNode) it.next();
-				ActionPair pair = actor.apply(this.modeController.getMap(),
+				ActionPair pair = actor.apply(this.modeController.getMapModel(),
 						selected);
 				if (pair != null) {
 					doAction.addChoice(pair.getDoAction());

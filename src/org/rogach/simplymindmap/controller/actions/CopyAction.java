@@ -37,7 +37,7 @@ public class CopyAction extends AbstractAction {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (controller.getMap() != null) {
+		if (controller.getMapModel() != null) {
 			Transferable copy = controller.copy();
 			if (copy != null) {
 				controller.setClipboardContents(copy);

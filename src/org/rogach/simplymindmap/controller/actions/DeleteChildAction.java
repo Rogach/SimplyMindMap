@@ -90,7 +90,7 @@ public class DeleteChildAction extends AbstractAction implements ActorXml {
 		controller.fireNodePreDeleteEvent(selectedNode);
 
     // deregister node:
-		controller.getModel().getLinkRegistry()
+		controller.getMapModel().getLinkRegistry()
 				.deregisterLinkTarget(selectedNode);
 
 		// deselect

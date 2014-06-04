@@ -66,10 +66,10 @@ public class NewChildAction extends AbstractAction implements ActorXml {
 		NewNodeAction addNodeAction = (NewNodeAction) action;
 		MindMapNode parent = this.c.getNodeFromID(addNodeAction.getNode());
 		int index = addNodeAction.getIndex();
-		MindMapNode newNode = c.newNode("", parent.getModel());
+		MindMapNode newNode = c.newNode("");
 		newNode.setLeft(addNodeAction.getPosition().equals("left"));
 		String newId = addNodeAction.getNewId();
-		String givenId = c.getModel().getLinkRegistry()
+		String givenId = c.getMapModel().getLinkRegistry()
 				.registerLinkTarget(newNode, newId);
 		if (!givenId.equals(newId)) {
 			throw new IllegalArgumentException("Designated id '" + newId
@@ -147,8 +147,8 @@ public class NewChildAction extends AbstractAction implements ActorXml {
 			index = parent.getChildCount();
 		}
 		// bug fix from Dimitri.
-		c.getModel().getLinkRegistry().registerLinkTarget(parent);
-		String newId = c.getModel().getLinkRegistry().generateUniqueID(null);
+		c.getMapModel().getLinkRegistry().registerLinkTarget(parent);
+		String newId = c.getMapModel().getLinkRegistry().generateUniqueID(null);
 		NewNodeAction newNodeAction = getAddNodeAction(parent, index, newId,
 				newNodeIsLeft);
 		// Undo-action
