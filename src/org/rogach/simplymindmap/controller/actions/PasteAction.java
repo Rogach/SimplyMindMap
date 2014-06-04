@@ -35,6 +35,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.MindMapNodesSelection;
 import org.rogach.simplymindmap.controller.actions.instance.PasteNodeAction;
@@ -56,6 +58,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 
 	public PasteAction(MindMapController controller) {
 		super(controller.getResources().getText("paste"), controller.getResources().getIcon("editpaste.png"));
+    this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(controller.getResources().unsafeGetProperty("keystroke_paste")));
 		this.controller = controller;
 		if (logger == null) {
 			logger = Logger.getLogger(this.getClass().getName());

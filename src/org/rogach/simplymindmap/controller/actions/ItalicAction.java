@@ -25,6 +25,7 @@ package org.rogach.simplymindmap.controller.actions;
 
 import javax.swing.Action;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.actions.instance.ItalicNodeAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
@@ -39,6 +40,7 @@ public class ItalicAction extends NodeGeneralAction implements NodeActorXml {
 	 */
 	public ItalicAction(MindMapController modeController) {
 		super(modeController, "italic", "org/rogach/simplymindmap/images/Italic16.gif");
+    this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(controller.getResources().unsafeGetProperty("keystroke_node_toggle_italic")));
 		this.modeController = modeController;
 		addActor(this);
 	}

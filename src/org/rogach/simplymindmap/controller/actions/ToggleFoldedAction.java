@@ -27,6 +27,8 @@ import java.awt.event.ActionEvent;
 import java.util.ListIterator;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.actions.instance.CompoundAction;
 import org.rogach.simplymindmap.controller.actions.instance.FoldAction;
@@ -43,6 +45,7 @@ public class ToggleFoldedAction extends AbstractAction implements ActorXml {
 
 	public ToggleFoldedAction(MindMapController controller) {
 		super(controller.getResources().getText("toggle_folded"));
+    this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(controller.getResources().unsafeGetProperty("keystroke_toggle_folded")));
 		this.controller = controller;
 		controller.getActionFactory().registerActor(this,
 				getDoActionClass());

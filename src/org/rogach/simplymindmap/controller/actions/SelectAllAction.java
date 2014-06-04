@@ -20,6 +20,8 @@
 
 package org.rogach.simplymindmap.controller.actions;
 
+import javax.swing.Action;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.model.AbstractMindMapModel;
 import org.rogach.simplymindmap.model.MindMapNode;
@@ -38,6 +40,7 @@ public class SelectAllAction extends NodeGeneralAction {
 						false);
 			}
 		});
+    this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(controller.getResources().unsafeGetProperty("keystroke_select_all")));
 	}
 
 }

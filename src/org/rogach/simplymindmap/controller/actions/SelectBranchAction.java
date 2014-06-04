@@ -21,6 +21,8 @@
 package org.rogach.simplymindmap.controller.actions;
 
 import java.awt.event.ActionEvent;
+import javax.swing.Action;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
 
 /** */
@@ -31,6 +33,7 @@ public class SelectBranchAction extends FreemindAction {
      */
 	public SelectBranchAction(final MindMapController modeController) {
 		super("select_branch", (String) null, modeController);
+    this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(modeController.getResources().unsafeGetProperty("keystroke_select_branch")));
 	}
 
 	public void actionPerformed(ActionEvent e) {

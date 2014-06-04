@@ -2,6 +2,8 @@ package org.rogach.simplymindmap.controller.actions;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
 
 public class ZoomOutAction extends AbstractAction {
@@ -15,6 +17,7 @@ public class ZoomOutAction extends AbstractAction {
   
   public ZoomOutAction(MindMapController controller) {
     super(controller.getResources().getText("zoom_out"));
+    this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(controller.getResources().unsafeGetProperty("keystroke_zoom_out")));
     this.controller = controller;
   }
 

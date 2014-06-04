@@ -25,6 +25,8 @@ package org.rogach.simplymindmap.controller.actions;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.model.MindMapNode;
 
@@ -33,6 +35,7 @@ public class NodeDownAction extends AbstractAction {
 
 	public NodeDownAction(MindMapController controller) {
 		super(controller.getResources().getText("node_down"));
+    this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(controller.getResources().unsafeGetProperty("keystroke_node_down")));
 		this.modeController = controller;
 	}
 

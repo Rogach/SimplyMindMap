@@ -24,6 +24,8 @@ package org.rogach.simplymindmap.controller.actions;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
 
 public class NewSiblingAction extends AbstractAction {
@@ -31,6 +33,7 @@ public class NewSiblingAction extends AbstractAction {
 
 	public NewSiblingAction(MindMapController controller) {
 		super(controller.getResources().getText("new_sibling_behind"));
+    this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(controller.getResources().unsafeGetProperty("keystroke_add")));
 		this.controller = controller;
 	}
 

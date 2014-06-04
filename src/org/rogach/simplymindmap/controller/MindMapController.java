@@ -46,11 +46,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.actions.BoldAction;
 import org.rogach.simplymindmap.controller.actions.ChangeNodeLevelAction;
 import org.rogach.simplymindmap.controller.actions.CompoundActionHandler;
 import org.rogach.simplymindmap.controller.actions.CopyAction;
 import org.rogach.simplymindmap.controller.actions.CutAction;
+import org.rogach.simplymindmap.controller.actions.DecreaseNodeFontAction;
 import org.rogach.simplymindmap.controller.actions.DeleteChildAction;
 import org.rogach.simplymindmap.controller.actions.EditAction;
 import org.rogach.simplymindmap.controller.actions.FindAction;
@@ -60,6 +62,7 @@ import org.rogach.simplymindmap.controller.actions.FontFamilyAction;
 import org.rogach.simplymindmap.controller.actions.FontSizeAction;
 import org.rogach.simplymindmap.controller.actions.IconAction;
 import org.rogach.simplymindmap.controller.actions.IconSelectionAction;
+import org.rogach.simplymindmap.controller.actions.IncreaseNodeFontAction;
 import org.rogach.simplymindmap.controller.actions.ItalicAction;
 import org.rogach.simplymindmap.controller.actions.MoveNodeAction;
 import org.rogach.simplymindmap.controller.actions.NewChildAction;
@@ -190,18 +193,8 @@ public class MindMapController {
 	}
 
 	private void createStandardActions() {
-    increaseNodeFont = new NodeGeneralAction(this,
-			"increase_node_font_size", null, new SingleNodeOperation() {
-				public void apply(AbstractMindMapModel map, MindMapNode node) {
-					increaseFontSize(node, 1);
-				}
-			});
-    decreaseNodeFont = new NodeGeneralAction(this,
-			"decrease_node_font_size", null, new SingleNodeOperation() {
-				public void apply(AbstractMindMapModel map, MindMapNode node) {
-					increaseFontSize(node, -1);
-				}
-			});
+    increaseNodeFont = new IncreaseNodeFontAction(this);
+    decreaseNodeFont = new DecreaseNodeFontAction(this);
 		// prepare undo:
 		undo = new UndoAction(this);
 		redo = new RedoAction(this);
@@ -931,6 +924,7 @@ public class MindMapController {
 	protected class EditLongAction extends AbstractAction {
 		public EditLongAction() {
 			super(getResources().getText("edit_long_node"));
+      this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(getResources().unsafeGetProperty("keystroke_edit_long_node")));
 		}
 
 		public void actionPerformed(ActionEvent e) {

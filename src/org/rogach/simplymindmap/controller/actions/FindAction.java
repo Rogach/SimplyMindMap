@@ -35,12 +35,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
@@ -88,6 +90,7 @@ public class FindAction extends AbstractAction {
 
 	public FindAction(MindMapController controller) {
 		super(controller.getResources().getText("find"), controller.getResources().getIcon("filefind.png"));
+    this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(controller.getResources().unsafeGetProperty("keystroke_find")));
 		this.controller = controller;
 	}
 
@@ -198,6 +201,7 @@ public class FindAction extends AbstractAction {
 
 		public FindNextAction(MindMapController controller, FindAction find) {
 			super(controller.getResources().getText("find_next"));
+      this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(controller.getResources().unsafeGetProperty("keystroke_find_next")));
 			this.controller = controller;
 			this.find = find;
 		}

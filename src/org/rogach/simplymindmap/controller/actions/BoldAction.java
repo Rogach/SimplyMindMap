@@ -27,6 +27,7 @@ package org.rogach.simplymindmap.controller.actions;
 
 import javax.swing.Action;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.actions.instance.BoldNodeAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
@@ -39,6 +40,7 @@ public class BoldAction extends NodeGeneralAction implements NodeActorXml {
 	 */
 	public BoldAction(MindMapController modeController) {
 		super(modeController, "bold", "org/rogach/simplymindmap/images/Bold16.gif");
+    this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(controller.getResources().unsafeGetProperty("keystroke_node_toggle_boldface")));
 		addActor(this);
 	}
 

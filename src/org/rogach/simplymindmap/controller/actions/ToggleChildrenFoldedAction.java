@@ -25,6 +25,8 @@ package org.rogach.simplymindmap.controller.actions;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.view.MapView;
@@ -34,6 +36,7 @@ public class ToggleChildrenFoldedAction extends AbstractAction {
 
 	public ToggleChildrenFoldedAction(MindMapController modeController) {
 		super(modeController.getResources().getText("toggle_children_folded"));
+    this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(modeController.getResources().unsafeGetProperty("keystroke_toggle_children_folded")));
 		this.modeController = modeController;
 	}
 

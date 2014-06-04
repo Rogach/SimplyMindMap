@@ -31,6 +31,8 @@ import java.util.TreeSet;
 import java.util.Vector;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.actions.instance.MoveNodesAction;
 import org.rogach.simplymindmap.controller.actions.instance.NodeListMember;
@@ -46,6 +48,7 @@ public class NodeUpAction extends AbstractAction implements ActorXml {
 
 	public NodeUpAction(MindMapController modeController) {
 		super(modeController.getResources().getText("node_up"));
+    this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(modeController.getResources().unsafeGetProperty("keystroke_node_up")));
 		this.modeController = modeController;
 		modeController.getActionFactory().registerActor(this,
 				getDoActionClass());

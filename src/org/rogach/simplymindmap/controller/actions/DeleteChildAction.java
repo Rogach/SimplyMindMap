@@ -27,7 +27,9 @@ import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.util.Iterator;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.actions.PasteAction.NodeCoordinate;
 import org.rogach.simplymindmap.controller.actions.instance.DeleteNodeAction;
@@ -46,6 +48,7 @@ public class DeleteChildAction extends AbstractAction implements ActorXml {
 
 	public DeleteChildAction(MindMapController modeController) {
 		super(modeController.getResources().getText("remove_node"), modeController.getResources().getIcon("editdelete.png"));
+    this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(modeController.getResources().unsafeGetProperty("keystroke_delete_child")));
 		text = "";
 		this.controller = modeController;
 		this.controller.getActionFactory().registerActor(this,

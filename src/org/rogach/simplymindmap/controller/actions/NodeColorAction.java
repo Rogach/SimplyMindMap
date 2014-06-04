@@ -27,6 +27,8 @@ package org.rogach.simplymindmap.controller.actions;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.ListIterator;
+import javax.swing.Action;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.actions.instance.NodeColorFormatAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
@@ -41,6 +43,7 @@ public class NodeColorAction extends FreemindAction implements ActorXml {
 
 	public NodeColorAction(MindMapController controller) {
 		super("node_color", (String) null, controller);
+    this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(controller.getResources().unsafeGetProperty("keystroke_node_color")));
 		this.controller = controller;
 		controller.getActionFactory().registerActor(this, getDoActionClass());
 	}

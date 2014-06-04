@@ -30,6 +30,8 @@ import java.awt.event.KeyEvent;
 import java.util.Vector;
 import java.util.regex.Pattern;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.actions.instance.EditNodeAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
@@ -54,6 +56,7 @@ public class EditAction extends AbstractAction implements ActorXml {
 
 	public EditAction(MindMapController modeController) {
 		super(modeController.getResources().getText("edit_node"), modeController.getResources().getIcon("Btn_edit.gif"));
+    this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(modeController.getResources().unsafeGetProperty("keystroke_edit")));
 		this.controller = modeController;
 		this.controller.getActionFactory().registerActor(this,
 				getDoActionClass());

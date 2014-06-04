@@ -29,7 +29,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.actions.PasteAction.NodeCoordinate;
 import org.rogach.simplymindmap.controller.actions.instance.CompoundAction;
@@ -47,6 +49,7 @@ public class CutAction extends AbstractAction implements ActorXml {
 
 	public CutAction(MindMapController c) {
 		super(c.getResources().getText("cut"), c.getResources().getIcon("editcut.png"));
+    this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(c.getResources().unsafeGetProperty("keystroke_cut")));
 		if (logger == null) {
 			logger = Logger.getLogger(this.getClass().getName());
 		}

@@ -7,7 +7,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
@@ -18,6 +20,7 @@ public class ChangeNodeLevelAction extends AbstractAction {
 
   public ChangeNodeLevelAction(String direction, MindMapController controller) {
     super(controller.getResources().getText("accessories/plugins/ChangeNodeLevelAction_" + direction + ".properties_name"));
+    this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(controller.getResources().unsafeGetProperty("keystroke_accessories/plugins/ChangeNodeLevelAction_" + direction + ".properties_key")));
     this.direction = direction;
     this.controller = controller;
   }

@@ -26,6 +26,8 @@ package org.rogach.simplymindmap.controller.actions;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
 
 public class CopyAction extends AbstractAction {
@@ -33,6 +35,7 @@ public class CopyAction extends AbstractAction {
 
 	public CopyAction(MindMapController controller) {
 		super(controller.getResources().getText("copy"), controller.getResources().getIcon("editcopy.png"));
+    this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(controller.getResources().unsafeGetProperty("keystroke_copy")));
 		this.controller = controller;
 	}
 

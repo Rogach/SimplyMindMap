@@ -27,6 +27,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.actions.instance.DeleteNodeAction;
 import org.rogach.simplymindmap.controller.actions.instance.NewNodeAction;
@@ -43,6 +45,7 @@ public class NewChildAction extends AbstractAction implements ActorXml {
 
 	public NewChildAction(MindMapController modeController) {
 		super(modeController.getResources().getText("new_child"), modeController.getResources().getIcon("idea.png"));
+    this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(modeController.getResources().unsafeGetProperty("keystroke_add_child")));
 		this.controller = modeController;
 		this.controller.getActionFactory().registerActor(this, getDoActionClass());
 		if (logger == null) {

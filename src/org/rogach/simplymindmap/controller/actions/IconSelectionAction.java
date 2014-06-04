@@ -5,6 +5,7 @@ import java.util.Vector;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.util.IconSelectionPopupDialog;
 import org.rogach.simplymindmap.util.Tools;
@@ -16,6 +17,7 @@ public class IconSelectionAction extends AbstractAction {
 
   public IconSelectionAction(MindMapController controller) {
     super(controller.getResources().getText("accessories/plugins/IconSelectionPlugin.properties_name"), controller.getResources().getIcon("kalzium.png"));
+    this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(controller.getResources().unsafeGetProperty("keystroke_accessories/plugins/IconSelectionPlugin.properties.properties_key")));
     this.controller = controller;
   }
 
