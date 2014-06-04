@@ -152,7 +152,7 @@ public class MindMapNode implements MutableTreeNode {
 		}
 	}
 
-  public void setMap(MindMapModel map) {
+  public void setModel(MindMapModel map) {
     this.model = map;
   }
 

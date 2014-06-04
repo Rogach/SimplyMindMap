@@ -81,7 +81,7 @@ public class MindMapModel extends DefaultTreeModel {
 	}
   
   private void updateMapReferenceInNodes(MindMapNode node) {
-    node.setMap(this);
+    node.setModel(this);
     for (MindMapNode child : node.getChildren()) {
       updateMapReferenceInNodes(child);
     }
@@ -348,13 +348,13 @@ public class MindMapModel extends DefaultTreeModel {
 		return buffer;
 	}
   
-  public String getAsPlainText(List mindMapNodes) {
+  public String getAsPlainText(List<MindMapNode> mindMapNodes) {
 		// Returns success of the operation.
 		try {
 			StringWriter stringWriter = new StringWriter();
       try (BufferedWriter fileout = new BufferedWriter(stringWriter)) {
-        for (ListIterator it = mindMapNodes.listIterator(); it.hasNext();) {
-          ((MindMapNode) it.next()).saveTXT(fileout,/* depth= */0);
+        for (MindMapNode node : mindMapNodes) {
+          node.saveTXT(fileout, /* depth= */ 0);
         }
       }
 			return stringWriter.toString();

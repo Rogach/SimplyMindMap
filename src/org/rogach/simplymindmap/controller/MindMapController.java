@@ -854,7 +854,7 @@ public class MindMapController {
 		return copy(getView().getSelectedNodesSortedByY(), false);
 	}
 
-	public Transferable copy(List selectedNodes, boolean copyInvisible) {
+	public Transferable copy(List<MindMapNode> selectedNodes, boolean copyInvisible) {
 		try {
 			String forNodesFlavor = createForNodesFlavor(selectedNodes,
 					copyInvisible);

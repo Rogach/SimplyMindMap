@@ -9,6 +9,7 @@ import java.util.Properties;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
+import javax.swing.table.AbstractTableModel;
 import org.rogach.simplymindmap.model.MindMapModel;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.view.MapView;
