@@ -1,4 +1,4 @@
-package org.rogach.simplymindmap.view;
+package org.rogach.simplymindmap.controller;
 
 import javax.swing.Action;
 import javax.swing.JMenu;

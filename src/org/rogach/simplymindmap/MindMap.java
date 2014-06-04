@@ -12,7 +12,7 @@ import org.rogach.simplymindmap.model.impl.DefaultMindMapModel;
 import org.rogach.simplymindmap.util.MindMapResources;
 import org.rogach.simplymindmap.view.MapView;
 import org.rogach.simplymindmap.view.MapViewScrollPane;
-import org.rogach.simplymindmap.view.MindMapMenuBar;
+import org.rogach.simplymindmap.controller.MindMapMenuBar;
 
 public class MindMap extends JPanel {
   
@@ -39,11 +39,6 @@ public class MindMap extends JPanel {
     view.selectAsTheOnlyOneSelected(view.getRoot());
     
     menuBar = new MindMapMenuBar(view.getController());
-    JLabel plainLabel = new JLabel("lorem ipsum");
-    
-//    menuBar.setMinimumSize(new Dimension(200, 30));
-//    menuBar.setPreferredSize(new Dimension(200, 30));
-//    menuBar.setMaximumSize(new Dimension(200, 30));
     
     MapViewScrollPane scrollPane = new MapViewScrollPane();
     scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
