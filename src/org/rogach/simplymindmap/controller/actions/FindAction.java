@@ -87,7 +87,7 @@ public class FindAction extends AbstractAction {
 	private String mLastSearchString;
 
 	public FindAction(MindMapController controller) {
-		super(controller.getResources().getText("find"), null);
+		super(controller.getResources().getText("find"), controller.getResources().getIcon("filefind.png"));
 		this.controller = controller;
 	}
 

@@ -54,9 +54,9 @@ public class PasteAction extends AbstractAction implements ActorXml {
 	private final MindMapController controller;
 	private UndoPasteHandler mUndoPasteHandler;
 
-	public PasteAction(MindMapController pMindMapController) {
-		super(pMindMapController.getResources().getText("paste"), null);
-		this.controller = pMindMapController;
+	public PasteAction(MindMapController controller) {
+		super(controller.getResources().getText("paste"), controller.getResources().getIcon("editpaste.png"));
+		this.controller = controller;
 		if (logger == null) {
 			logger = Logger.getLogger(this.getClass().getName());
 		}

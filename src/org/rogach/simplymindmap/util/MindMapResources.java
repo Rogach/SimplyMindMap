@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 public class MindMapResources {
   
@@ -144,4 +145,13 @@ public class MindMapResources {
 			return defaultValue;
 		}
 	}
+  
+  public ImageIcon getIcon(String imageName) {
+    URL iconURL = getResource("org/rogach/simplymindmap/images/" + imageName);
+    if (iconURL != null) {
+      return new ImageIcon(iconURL);
+    } else {
+      return new ImageIcon("org/rogach/simplymindmap/images/IconNotFound.png");
+    }
+  }
 }

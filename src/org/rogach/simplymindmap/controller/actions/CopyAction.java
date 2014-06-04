@@ -32,7 +32,7 @@ public class CopyAction extends AbstractAction {
 	private final MindMapController controller;
 
 	public CopyAction(MindMapController controller) {
-		super(controller.getResources().getText("copy"), null);
+		super(controller.getResources().getText("copy"), controller.getResources().getIcon("editcopy.png"));
 		this.controller = controller;
 	}
 

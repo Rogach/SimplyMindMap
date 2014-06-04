@@ -15,7 +15,7 @@ public class IconSelectionAction extends AbstractAction {
   private MindMapController controller;
 
   public IconSelectionAction(MindMapController controller) {
-    super(controller.getResources().getText("accessories/plugins/IconSelectionPlugin.properties_name"));
+    super(controller.getResources().getText("accessories/plugins/IconSelectionPlugin.properties_name"), controller.getResources().getIcon("kalzium.png"));
     this.controller = controller;
   }
 
