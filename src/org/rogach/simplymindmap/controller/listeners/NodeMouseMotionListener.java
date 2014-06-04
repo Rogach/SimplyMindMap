@@ -30,6 +30,7 @@ import java.util.TimerTask;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import org.rogach.simplymindmap.controller.MindMapController;
+import org.rogach.simplymindmap.controller.MindMapPopupMenu;
 import org.rogach.simplymindmap.util.PropertyKey;
 import org.rogach.simplymindmap.util.Tools;
 import org.rogach.simplymindmap.view.MainView;
@@ -59,10 +60,13 @@ public class NodeMouseMotionListener implements MouseMotionListener,
 
 	private MouseEvent mMousePressedEvent;
   
+  private final MindMapPopupMenu popupMenu;
+  
 	public NodeMouseMotionListener(MindMapController controller) {
     this.controller = controller;
     if (delayedSelectionEnabled == null)
 			updateSelectionMethod();
+    popupMenu = new MindMapPopupMenu(controller);
 	}
 
 	public void mouseClicked(MouseEvent e) {
@@ -174,9 +178,8 @@ public class NodeMouseMotionListener implements MouseMotionListener,
 		// Only Right mouse release is a popup trigger!
 		// OK, but Right mouse <i>press</i> <i>is</i> a popup trigger on Linux.
     
-		//c.showPopupMenu(e);
-    //popupmenu.show(e.getComponent(), e.getX(), e.getY());
-    //e.consume();
+    popupMenu.show(e.getComponent(), e.getX(), e.getY());
+    e.consume();
 	}
 
 	protected Rectangle getControlRegion(Point2D p) {
