@@ -1,10 +1,8 @@
 package org.rogach.simplymindmap.controller;
 
-import javax.swing.Action;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JSeparator;
-import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.actions.AboutAction;
 
 public class MindMapMenuBar extends JMenuBar {

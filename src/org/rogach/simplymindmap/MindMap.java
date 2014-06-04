@@ -1,18 +1,16 @@
 package org.rogach.simplymindmap;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.util.Properties;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import org.rogach.simplymindmap.controller.MindMapController;
+import org.rogach.simplymindmap.controller.MindMapMenuBar;
 import org.rogach.simplymindmap.model.AbstractMindMapModel;
 import org.rogach.simplymindmap.model.impl.DefaultMindMapModel;
 import org.rogach.simplymindmap.util.MindMapResources;
 import org.rogach.simplymindmap.view.MapView;
 import org.rogach.simplymindmap.view.MapViewScrollPane;
-import org.rogach.simplymindmap.controller.MindMapMenuBar;
 
 public class MindMap extends JPanel {
   

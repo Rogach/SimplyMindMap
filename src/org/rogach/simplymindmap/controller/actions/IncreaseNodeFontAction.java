@@ -1,6 +1,5 @@
 package org.rogach.simplymindmap.controller.actions;
 
-import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
