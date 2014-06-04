@@ -315,7 +315,7 @@ public abstract class AbstractMindMapNode implements MindMapNode {
     if (getFont() != null) {
       return getFont().getFamily();
     } else {
-      return getMindMapController().getResources().getProperty(PropertyKey.DEFAULT_FONT_SIZE);
+      return getMindMapController().getResources().getProperty(PropertyKey.DEFAULT_FONT);
     }
   }
 
