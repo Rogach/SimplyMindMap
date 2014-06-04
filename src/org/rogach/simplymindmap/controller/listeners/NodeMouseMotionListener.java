@@ -180,8 +180,8 @@ public class NodeMouseMotionListener implements MouseMotionListener,
     
     if (e.isPopupTrigger()) {
       popupMenu.show(e.getComponent(), e.getX(), e.getY());
+      e.consume();
     }
-    e.consume();
 	}
 
 	protected Rectangle getControlRegion(Point2D p) {
