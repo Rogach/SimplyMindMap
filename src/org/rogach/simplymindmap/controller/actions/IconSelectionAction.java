@@ -15,7 +15,7 @@ public class IconSelectionAction extends AbstractAction {
   private MindMapController controller;
 
   public IconSelectionAction(MindMapController controller) {
-    super();
+    super(controller.getResources().getText("accessories/plugins/IconSelectionPlugin.properties_name"));
     this.controller = controller;
   }
 

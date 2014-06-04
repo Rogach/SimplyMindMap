@@ -43,10 +43,6 @@ public class MindMapMenuBar extends JMenuBar {
     iconMenu.add(controller.iconSelectionAction);
     iconMenu.add(controller.removeLastIconAction);
     iconMenu.add(controller.removeAllIconsAction);
-    iconMenu.add(new JSeparator());
-    for (Action iconAction : controller.iconActions) {
-      iconMenu.add(iconAction);
-    }
     insertMenu.add(iconMenu);
     this.add(insertMenu);
     

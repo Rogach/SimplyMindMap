@@ -45,7 +45,7 @@ public class DeleteChildAction extends AbstractAction implements ActorXml {
 	private String text;
 
 	public DeleteChildAction(MindMapController modeController) {
-		super("", null);
+		super(modeController.getResources().getText("remove_node"), null);
 		text = "";
 		this.controller = modeController;
 		this.controller.getActionFactory().registerActor(this,

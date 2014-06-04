@@ -87,7 +87,7 @@ public class FindAction extends AbstractAction {
 	private String mLastSearchString;
 
 	public FindAction(MindMapController controller) {
-		super("", null);
+		super(controller.getResources().getText("find"), null);
 		this.controller = controller;
 	}
 
@@ -197,7 +197,7 @@ public class FindAction extends AbstractAction {
 		private final FindAction find;
 
 		public FindNextAction(MindMapController controller, FindAction find) {
-			super("");
+			super(controller.getResources().getText("find_next"));
 			this.controller = controller;
 			this.find = find;
 		}

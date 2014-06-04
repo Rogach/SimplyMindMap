@@ -46,7 +46,7 @@ public class CutAction extends AbstractAction implements ActorXml {
 	private static java.util.logging.Logger logger = null;
 
 	public CutAction(MindMapController c) {
-		super("", null);
+		super(c.getResources().getText("cut"), null);
 		if (logger == null) {
 			logger = Logger.getLogger(this.getClass().getName());
 		}

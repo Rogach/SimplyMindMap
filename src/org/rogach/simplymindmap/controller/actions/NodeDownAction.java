@@ -31,9 +31,9 @@ import org.rogach.simplymindmap.model.MindMapNode;
 public class NodeDownAction extends AbstractAction {
 	private final MindMapController modeController;
 
-	public NodeDownAction(MindMapController adapter) {
-		super("");
-		this.modeController = adapter;
+	public NodeDownAction(MindMapController controller) {
+		super(controller.getResources().getText("node_down"));
+		this.modeController = controller;
 	}
 
 	public void actionPerformed(ActionEvent e) {

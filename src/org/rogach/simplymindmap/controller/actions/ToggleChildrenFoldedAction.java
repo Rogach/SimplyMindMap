@@ -33,7 +33,7 @@ public class ToggleChildrenFoldedAction extends AbstractAction {
 	private final MindMapController modeController;
 
 	public ToggleChildrenFoldedAction(MindMapController modeController) {
-		super("");
+		super(modeController.getResources().getText("toggle_children_folded"));
 		this.modeController = modeController;
 	}
 

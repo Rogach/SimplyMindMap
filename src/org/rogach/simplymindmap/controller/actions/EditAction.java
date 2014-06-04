@@ -53,7 +53,7 @@ public class EditAction extends AbstractAction implements ActorXml {
 	private EditNodeBase mCurrentEditDialog = null;
 
 	public EditAction(MindMapController modeController) {
-		super("");
+		super(modeController.getResources().getText("edit_node"));
 		this.controller = modeController;
 		this.controller.getActionFactory().registerActor(this,
 				getDoActionClass());

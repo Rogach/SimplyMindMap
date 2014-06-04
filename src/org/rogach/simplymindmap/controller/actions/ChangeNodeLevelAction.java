@@ -17,7 +17,7 @@ public class ChangeNodeLevelAction extends AbstractAction {
   private MindMapController controller;
 
   public ChangeNodeLevelAction(String direction, MindMapController controller) {
-    super();
+    super(controller.getResources().getText("accessories/plugins/ChangeNodeLevelAction_" + direction + ".properties_name"));
     this.direction = direction;
     this.controller = controller;
   }

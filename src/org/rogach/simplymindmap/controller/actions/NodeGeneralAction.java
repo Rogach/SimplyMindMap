@@ -54,11 +54,8 @@ public class NodeGeneralAction extends AbstractXmlAction {
 	 */
 	protected NodeGeneralAction(MindMapController modeController,
 			final String textID, String iconPath) {
-		super(null, iconPath == null ? null : new ImageIcon(modeController.getResources().getResource(iconPath)), modeController);
+		super(modeController.getResources().getText(textID), iconPath == null ? null : new ImageIcon(modeController.getResources().getResource(iconPath)), modeController);
 		this.controller = modeController;
-		if (textID != null) {
-			setName("");
-		}
 
 		this.singleNodeOperation = null;
 		this.actor = null;

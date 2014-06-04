@@ -63,7 +63,7 @@ public abstract class FreemindAction extends AbstractAction {
 	 */
 	public FreemindAction(String title, String iconPath,
 			final MindMapController mindMapController) {
-		this("", (ImageIcon) null, mindMapController);
+		this(mindMapController.getResources().getText(title), (ImageIcon) null, mindMapController);
 	}
 
 	public void addActor(ActorXml actor) {

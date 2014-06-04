@@ -115,9 +115,9 @@ public class MindMapController {
 	private Clipboard clipboard = null;
 	private Clipboard selection = null;
 
-	public Action editLong = new EditLongAction();
-	public Action newSibling = new NewSiblingAction(this);
-	public Action newPreviousSibling = new NewPreviousSiblingAction(this);
+	public Action editLong = null;
+	public Action newSibling = null;
+	public Action newPreviousSibling = null;
 
 	public Action showAttributeManagerAction = null;
 	public Action propertyAction = null;
@@ -215,7 +215,10 @@ public class MindMapController {
 		fontSize = new FontSizeAction(this);
 		fontFamily = new FontFamilyAction(this);
 		edit = new EditAction(this);
+    editLong = new EditLongAction();
 		newChild = new NewChildAction(this);
+    newSibling = new NewSiblingAction(this);
+    newPreviousSibling = new NewPreviousSiblingAction(this);
 		deleteChild = new DeleteChildAction(this);
 		toggleFolded = new ToggleFoldedAction(this);
 		toggleChildrenFolded = new ToggleChildrenFoldedAction(this);
@@ -927,7 +930,7 @@ public class MindMapController {
 
 	protected class EditLongAction extends AbstractAction {
 		public EditLongAction() {
-			super("");
+			super(getResources().getText("edit_long_node"));
 		}
 
 		public void actionPerformed(ActionEvent e) {

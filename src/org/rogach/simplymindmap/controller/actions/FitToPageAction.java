@@ -14,6 +14,7 @@ public class FitToPageAction extends AbstractAction {
   private MindMapController controller;
 
   public FitToPageAction(MindMapController controller) {
+    super(controller.getResources().getText("fit_to_page"));
     this.controller = controller;
   }
 
