@@ -127,7 +127,7 @@ public class NodeMouseMotionListener implements MouseMotionListener,
 		if(Tools.isLinux() || Tools.isMacOsX()) {
 			ev = mMousePressedEvent;
 		} 
-		handlePopupMenu(ev);
+    handlePopupMenu(ev);
 		
 		if (ev.isConsumed()) {
 			return;
@@ -178,7 +178,9 @@ public class NodeMouseMotionListener implements MouseMotionListener,
 		// Only Right mouse release is a popup trigger!
 		// OK, but Right mouse <i>press</i> <i>is</i> a popup trigger on Linux.
     
-    popupMenu.show(e.getComponent(), e.getX(), e.getY());
+    if (e.isPopupTrigger()) {
+      popupMenu.show(e.getComponent(), e.getX(), e.getY());
+    }
     e.consume();
 	}
 
