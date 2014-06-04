@@ -22,6 +22,7 @@ package org.rogach.simplymindmap.model;
 
 import java.awt.Color;
 import org.rogach.simplymindmap.nanoxml.XMLElement;
+import org.rogach.simplymindmap.util.PropertyKey;
 import org.rogach.simplymindmap.util.XmlTools;
 
 public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {
@@ -102,15 +103,19 @@ public abstract class EdgeAdapter extends LineAdapter implements MindMapEdge {
 	}
 
 	protected Color getStandardColor() {
+    if (standardColor == null) {
+      String stdColor = target.getMindMapController().getResources().getProperty(PropertyKey.STANDARD_EDGE_COLOR);
+			if (stdColor != null && stdColor.length() == 7) {
+				setStandardColor(XmlTools.xmlToColor(stdColor));
+			} else {
+				setStandardColor(Color.RED);
+			}
+    }
 		return standardColor;
 	}
 
 	protected void setStandardColor(Color standardColor) {
-		EdgeAdapter.standardColor = standardColor;
-	}
-  
-	protected String getStandardColorPropertyString() {
-		return "standardedgecolor";
+		this.standardColor = standardColor;
 	}
   
 }

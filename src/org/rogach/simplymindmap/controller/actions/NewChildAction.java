@@ -33,18 +33,18 @@ import org.rogach.simplymindmap.controller.actions.instance.NewNodeAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.controller.actions.xml.ActorXml;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.MindMapNode;
+import org.rogach.simplymindmap.util.PropertyKey;
 import org.rogach.simplymindmap.view.NodeView;
 
 public class NewChildAction extends AbstractAction implements ActorXml {
-	private final MindMapController c;
+	private final MindMapController controller;
 	private static Logger logger = null;
 
 	public NewChildAction(MindMapController modeController) {
 		super("", null);
-		this.c = modeController;
-		this.c.getActionFactory().registerActor(this, getDoActionClass());
+		this.controller = modeController;
+		this.controller.getActionFactory().registerActor(this, getDoActionClass());
 		if (logger == null) {
 			logger = Logger.getLogger(this.getClass().getName());
 		}
@@ -52,7 +52,7 @@ public class NewChildAction extends AbstractAction implements ActorXml {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		this.c.addNew(c.getSelected(), MindMapController.NEW_CHILD, null);
+		this.controller.addNew(controller.getSelected(), MindMapController.NEW_CHILD, null);
 	}
 
 	/*
@@ -64,19 +64,19 @@ public class NewChildAction extends AbstractAction implements ActorXml {
 	 */
 	public void act(XmlAction action) {
 		NewNodeAction addNodeAction = (NewNodeAction) action;
-		MindMapNode parent = this.c.getNodeFromID(addNodeAction.getNode());
+		MindMapNode parent = this.controller.getNodeFromID(addNodeAction.getNode());
 		int index = addNodeAction.getIndex();
-		MindMapNode newNode = c.newNode("");
+		MindMapNode newNode = controller.newNode("");
 		newNode.setLeft(addNodeAction.getPosition().equals("left"));
 		String newId = addNodeAction.getNewId();
-		String givenId = c.getMapModel().getLinkRegistry()
+		String givenId = controller.getMapModel().getLinkRegistry()
 				.registerLinkTarget(newNode, newId);
 		if (!givenId.equals(newId)) {
 			throw new IllegalArgumentException("Designated id '" + newId
 					+ "' was not given to the node. It received '" + givenId
 					+ "'.");
 		}
-		c.insertNodeInto(newNode, parent, index);
+		controller.insertNodeInto(newNode, parent, index);
 	}
 
 	/*
@@ -103,9 +103,9 @@ public class NewChildAction extends AbstractAction implements ActorXml {
 					childPosition++;
 				}
 				newNode = addNewNode(parent, childPosition, targetNode.isLeft());
-				final NodeView nodeView = c.getNodeView(newNode);
-				c.select(nodeView);
-				c.edit.edit(nodeView, c.getNodeView(target), e, true, false,
+				final NodeView nodeView = controller.getNodeView(newNode);
+				controller.select(nodeView);
+				controller.edit.edit(nodeView, controller.getNodeView(target), e, true, false,
 						false);
 				break;
 			} else {
@@ -120,16 +120,15 @@ public class NewChildAction extends AbstractAction implements ActorXml {
 		case MindMapController.NEW_CHILD_WITHOUT_FOCUS: {
 			final boolean parentFolded = targetNode.isFolded();
 			if (parentFolded) {
-				c.setFolded(targetNode, false);
+				controller.setFolded(targetNode, false);
 			}
-			int position = Resources.getInstance().getProperty("placenewbranches")
-					.equals("last") ? targetNode.getChildCount() : 0;
+			int position = controller.getResources().getProperty(PropertyKey.PLACE_NEW_BRANCHES).equals("last") ? targetNode.getChildCount() : 0;
 			newNode = addNewNode(targetNode, position);
-			final NodeView nodeView = c.getNodeView(newNode);
+			final NodeView nodeView = controller.getNodeView(newNode);
 			if (newNodeMode == MindMapController.NEW_CHILD) {
-				c.select(nodeView);
+				controller.select(nodeView);
 			}
-			c.edit.edit(nodeView, c.getNodeView(target), e, true, parentFolded,
+			controller.edit.edit(nodeView, controller.getNodeView(target), e, true, parentFolded,
 					false);
 			break;
 		}
@@ -147,14 +146,14 @@ public class NewChildAction extends AbstractAction implements ActorXml {
 			index = parent.getChildCount();
 		}
 		// bug fix from Dimitri.
-		c.getMapModel().getLinkRegistry().registerLinkTarget(parent);
-		String newId = c.getMapModel().getLinkRegistry().generateUniqueID(null);
+		controller.getMapModel().getLinkRegistry().registerLinkTarget(parent);
+		String newId = controller.getMapModel().getLinkRegistry().generateUniqueID(null);
 		NewNodeAction newNodeAction = getAddNodeAction(parent, index, newId,
 				newNodeIsLeft);
 		// Undo-action
-		DeleteNodeAction deleteAction = c.deleteChild
+		DeleteNodeAction deleteAction = controller.deleteChild
 				.getDeleteNodeAction(newId);
-		c.doTransaction(Resources.getInstance().getText("new_child"),
+		controller.doTransaction(controller.getResources().getText("new_child"),
 				new ActionPair(newNodeAction, deleteAction));
 		return (MindMapNode) parent.getChildAt(index);
 	}
@@ -163,7 +162,7 @@ public class NewChildAction extends AbstractAction implements ActorXml {
 			String newId, boolean newNodeIsLeft) {
 		String pos = newNodeIsLeft ? "left" : "right";
 		NewNodeAction newNodeAction = new NewNodeAction();
-		newNodeAction.setNode(c.getNodeID(parent));
+		newNodeAction.setNode(controller.getNodeID(parent));
 		newNodeAction.setPosition(pos);
 		newNodeAction.setIndex(index);
 		newNodeAction.setNewId(newId);

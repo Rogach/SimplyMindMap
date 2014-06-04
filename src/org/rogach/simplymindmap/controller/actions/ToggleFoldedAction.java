@@ -33,19 +33,18 @@ import org.rogach.simplymindmap.controller.actions.instance.FoldAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.controller.actions.xml.ActorXml;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.MindMapNode;
-import org.rogach.simplymindmap.util.Tools;
+import org.rogach.simplymindmap.util.PropertyKey;
 
 public class ToggleFoldedAction extends AbstractAction implements ActorXml {
-	private final MindMapController modeController;
+	private final MindMapController controller;
 
 	private Logger logger;
 
 	public ToggleFoldedAction(MindMapController controller) {
 		super("");
-		this.modeController = controller;
-		modeController.getActionFactory().registerActor(this,
+		this.controller = controller;
+		controller.getActionFactory().registerActor(this,
 				getDoActionClass());
 		logger = Logger.getLogger(this.getClass().getName());
 	}
@@ -55,7 +54,7 @@ public class ToggleFoldedAction extends AbstractAction implements ActorXml {
 	}
 
 	public void toggleFolded() {
-		toggleFolded(modeController.getSelecteds().listIterator());
+		toggleFolded(controller.getSelecteds().listIterator());
 	}
 
 	public void toggleFolded(ListIterator listIterator) {
@@ -66,7 +65,7 @@ public class ToggleFoldedAction extends AbstractAction implements ActorXml {
 				CommonToggleFoldedAction.reset(listIterator), fold, false);
 		CompoundAction undoAction = createFoldAction(
 				CommonToggleFoldedAction.reset(listIterator), !fold, true);
-		modeController.doTransaction(
+		controller.doTransaction(
 				(String) getValue(NAME), new ActionPair(doAction, undoAction));
 	}
 
@@ -107,12 +106,10 @@ public class ToggleFoldedAction extends AbstractAction implements ActorXml {
 		if ((undo && (node.isFolded() == fold))
 				|| (!undo && (node.isFolded() != fold))) {
 			if (node.hasChildren()
-					|| Tools.safeEquals(
-							Resources.getInstance().getProperty(
-									"enable_leaves_folding"), "true")) {
+					|| controller.getResources().getBoolProperty(PropertyKey.ENABLE_LEAVES_FOLDING)) {
 				foldAction = new FoldAction();
 				foldAction.setFolded(fold);
-				foldAction.setNode(modeController.getNodeID(node));
+				foldAction.setNode(controller.getNodeID(node));
 			}
 		}
 		return foldAction;
@@ -121,12 +118,12 @@ public class ToggleFoldedAction extends AbstractAction implements ActorXml {
 	public void act(XmlAction action) {
 		if (action instanceof FoldAction) {
 			FoldAction foldAction = (FoldAction) action;
-			MindMapNode node = modeController.getNodeFromID(foldAction
+			MindMapNode node = controller.getNodeFromID(foldAction
 					.getNode());
 			boolean fold = foldAction.getFolded();
-			modeController._setFolded(node, fold);
-			if (Resources.getInstance().getBoolProperty("resources_save_folding_state")) {
-				modeController.nodeChanged(node);
+			controller._setFolded(node, fold);
+			if (controller.getResources().getBoolProperty(PropertyKey.SAVE_FOLDING_STATE)) {
+				controller.nodeChanged(node);
 			}
 		}
 	}
@@ -143,7 +140,7 @@ public class ToggleFoldedAction extends AbstractAction implements ActorXml {
 		if (doAction == null || undoAction == null) {
 			return;
 		}
-		modeController.doTransaction(
+		controller.doTransaction(
 				(String) getValue(NAME), new ActionPair(doAction, undoAction));
 	}
 

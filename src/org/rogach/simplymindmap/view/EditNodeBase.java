@@ -43,7 +43,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.text.JTextComponent;
 import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.util.MindMapResources;
 import org.rogach.simplymindmap.util.Tools;
 
 /**
@@ -56,7 +56,7 @@ public class EditNodeBase {
 	protected static final int BUTTON_SPLIT = 2;
 	protected NodeView node;
 	private EditControl editControl;
-	private MindMapController controller;
+	protected MindMapController controller;
 	protected String text;
 	// this enables from outside close the edit mode
 	protected FocusListener textFieldListener = null;
@@ -73,6 +73,7 @@ public class EditNodeBase {
 	abstract static class EditDialog extends JDialog {
 		private static final long serialVersionUID = 6064679828160694117L;
 		private EditNodeBase base;
+    private MindMapResources resources;
 
 		class DialogWindowListener extends WindowAdapter {
 			/*
@@ -105,8 +106,9 @@ public class EditNodeBase {
 			}
 		}
 
-		EditDialog(EditNodeBase base) {
-      super(JOptionPane.getFrameForComponent(base.node), Resources.getInstance().getText("edit_long_node"), ModalityType.APPLICATION_MODAL);
+		EditDialog(EditNodeBase base, MindMapResources resources) {
+      super(JOptionPane.getFrameForComponent(base.node), resources.getText("edit_long_node"), ModalityType.APPLICATION_MODAL);
+      this.resources = resources;
 			getContentPane().setLayout(new BorderLayout());
 			setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 			DialogWindowListener dfl = new DialogWindowListener();
@@ -117,7 +119,7 @@ public class EditNodeBase {
 		protected void confirmedSubmit() {
 			if (isChanged()) {
 				final int action = JOptionPane.showConfirmDialog(this,
-						Resources.getInstance().getText("long_node_changed_submit"), "",
+						resources.getText("long_node_changed_submit"), "",
 						JOptionPane.YES_NO_CANCEL_OPTION);
 				if (action == JOptionPane.CANCEL_OPTION)
 					return;
@@ -132,7 +134,7 @@ public class EditNodeBase {
 		protected void confirmedCancel() {
 			if (isChanged()) {
 				final int action = JOptionPane.showConfirmDialog(this,
-						Resources.getInstance().getText("long_node_changed_cancel"), "",
+						resources.getText("long_node_changed_cancel"), "",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (action == JOptionPane.CANCEL_OPTION)
 					return;
@@ -183,16 +185,12 @@ public class EditNodeBase {
 		return controller;
 	}
 
-	protected boolean binOptionIsTrue(String option) {
-		return Resources.getInstance().getBoolProperty(option);
-	}
-
 	protected class EditCopyAction extends AbstractAction {
 		private static final long serialVersionUID = 5104219263806454592L;
 		private JTextComponent textComponent;
 
 		public EditCopyAction(JTextComponent textComponent) {
-			super(Resources.getInstance().getText("copy"));
+			super(controller.getResources().getText("copy"));
 			this.textComponent = textComponent;
 		}
 

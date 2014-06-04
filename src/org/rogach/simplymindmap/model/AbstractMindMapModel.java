@@ -32,13 +32,13 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.nanoxml.XMLParseException;
 import org.rogach.simplymindmap.util.Tools;
 
@@ -308,8 +308,7 @@ public abstract class AbstractMindMapModel extends DefaultTreeModel {
 			// return (MindMapNodeModel) mapElement.getMapChild();
 		} catch (XMLParseException | IOException ex) {
 			String errorMessage = "Error while parsing file:" + ex;
-			System.err.println(errorMessage);
-			org.rogach.simplymindmap.main.Resources.getInstance().logException(ex);
+      Logger.getLogger(AbstractMindMapModel.class.getName()).log(Level.SEVERE, null, ex);
 			MindMapXMLElement mapElement = new MindMapXMLElement(
 					mMindMapController);
 			MindMapNode result = mapElement.createNodeAdapter(null);
@@ -341,7 +340,7 @@ public abstract class AbstractMindMapModel extends DefaultTreeModel {
 			}
 			in.close();
 		} catch (Exception e) {
-			org.rogach.simplymindmap.main.Resources.getInstance().logException(e);
+      Logger.getLogger(AbstractMindMapModel.class.getName()).log(Level.SEVERE, null, e);
 			return new StringBuffer();
 		}
 		return buffer;
@@ -359,7 +358,7 @@ public abstract class AbstractMindMapModel extends DefaultTreeModel {
 			return stringWriter.toString();
 
 		} catch (Exception e) {
-			org.rogach.simplymindmap.main.Resources.getInstance().logException(e);
+      Logger.getLogger(AbstractMindMapModel.class.getName()).log(Level.SEVERE, null, e);
 			return null;
 		}
 	}
@@ -374,8 +373,7 @@ public abstract class AbstractMindMapModel extends DefaultTreeModel {
 			return true;
 
 		} catch (Exception e) {
-			System.err.println("Error in MindMapMapModel.saveTXT(): ");
-			org.rogach.simplymindmap.main.Resources.getInstance().logException(e);
+      Logger.getLogger(AbstractMindMapModel.class.getName()).log(Level.SEVERE, null, e);
 			return false;
 		}
 	}

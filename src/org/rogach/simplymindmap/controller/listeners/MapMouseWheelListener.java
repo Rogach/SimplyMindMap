@@ -24,7 +24,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.util.PropertyKey;
 import org.rogach.simplymindmap.view.MapView;
 
 /**
@@ -32,7 +32,7 @@ import org.rogach.simplymindmap.view.MapView;
  */
 public class MapMouseWheelListener implements MouseWheelListener {
   
-  private static int SCROLL_SKIPS = Resources.getInstance().getIntProperty("wheel_velocity", 8);
+  private final int SCROLL_SKIPS;
 	private static final int HORIZONTAL_SCROLL_MASK = InputEvent.SHIFT_MASK
 			| InputEvent.BUTTON1_MASK | InputEvent.BUTTON2_MASK
 			| InputEvent.BUTTON3_MASK;
@@ -42,6 +42,7 @@ public class MapMouseWheelListener implements MouseWheelListener {
   
 	public MapMouseWheelListener(MapView view) {
     this.view = view;
+    this.SCROLL_SKIPS = view.getController().getResources().getIntProperty(PropertyKey.WHEEL_VELOCITY, 8);
 	}
 
 	public void mouseWheelMoved(MouseWheelEvent e) {

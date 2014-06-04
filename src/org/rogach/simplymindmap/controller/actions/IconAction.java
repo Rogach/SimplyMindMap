@@ -34,7 +34,6 @@ import org.rogach.simplymindmap.controller.actions.instance.AddIconAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.controller.actions.xml.ActorXml;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.IconInformation;
 import org.rogach.simplymindmap.model.MindIcon;
 import org.rogach.simplymindmap.model.MindMapNode;
@@ -43,13 +42,13 @@ import org.rogach.simplymindmap.util.Tools;
 public class IconAction extends FreemindAction implements ActorXml,
 		IconInformation {
 	public MindIcon icon;
-	private final MindMapController modeController;
+	private final MindMapController controller;
 	private final RemoveIconAction removeLastIconAction;
 
 	public IconAction(MindMapController controller, MindIcon _icon,
 			RemoveIconAction removeLastIconAction) {
 		super(_icon.getDescription(), _icon.getIcon(), controller);
-		this.modeController = controller;
+		this.controller = controller;
 		this.removeLastIconAction = removeLastIconAction;
 		putValue(Action.SHORT_DESCRIPTION, _icon.getDescription());
 		this.icon = _icon;
@@ -82,7 +81,7 @@ public class IconAction extends FreemindAction implements ActorXml,
 	}
 
 	private void addLastIcon() {
-		for (ListIterator it = modeController.getSelecteds().listIterator(); it
+		for (ListIterator it = controller.getSelecteds().listIterator(); it
 				.hasNext();) {
 			MindMapNode selected = (MindMapNode) it.next();
 			addIcon(selected, icon);
@@ -90,7 +89,7 @@ public class IconAction extends FreemindAction implements ActorXml,
 	}
 
 	private void removeIcon(boolean removeFirst) {
-		for (ListIterator it = modeController.getSelecteds().listIterator(); it
+		for (ListIterator it = controller.getSelecteds().listIterator(); it
 				.hasNext();) {
 			MindMapNode selected = (MindMapNode) it.next();
 			removeIcon(selected, icon, removeFirst);
@@ -98,17 +97,17 @@ public class IconAction extends FreemindAction implements ActorXml,
 	}
 
 	private void removeAllIcons() {
-		for (ListIterator it = modeController.getSelecteds().listIterator(); it
+		for (ListIterator it = controller.getSelecteds().listIterator(); it
 				.hasNext();) {
 			MindMapNode selected = (MindMapNode) it.next();
 			if (selected.getIcons().size() > 0) {
-				modeController.removeAllIcons(selected);
+				controller.removeAllIcons(selected);
 			}
 		}
 	}
 
 	public void addIcon(MindMapNode node, MindIcon icon) {
-		modeController.doTransaction(
+		controller.doTransaction(
 				(String) getValue(NAME), getAddLastIconActionPair(node, icon));
 	}
 
@@ -118,7 +117,7 @@ public class IconAction extends FreemindAction implements ActorXml,
 		if (removeIconActionPair == null) {
 			return;
 		}
-		modeController.doTransaction(
+		controller.doTransaction(
 				(String) getValue(NAME), removeIconActionPair);
 	}
 
@@ -184,13 +183,13 @@ public class IconAction extends FreemindAction implements ActorXml,
 	public void act(XmlAction action) {
 		if (action instanceof AddIconAction) {
 			AddIconAction iconAction = (AddIconAction) action;
-			MindMapNode node = modeController.getNodeFromID(iconAction
+			MindMapNode node = controller.getNodeFromID(iconAction
 					.getNode());
 			String iconName = iconAction.getIconName();
 			int position = iconAction.getIconPosition();
-			MindIcon icon = MindIcon.factory(iconName);
+			MindIcon icon = MindIcon.factory(iconName, controller.getResources());
 			node.addIcon(icon, position);
-			modeController.nodeChanged(node);
+			controller.nodeChanged(node);
 		}
 	}
 
@@ -201,7 +200,7 @@ public class IconAction extends FreemindAction implements ActorXml,
 	public AddIconAction createAddIconAction(MindMapNode node, MindIcon icon,
 			int iconPosition) {
 		AddIconAction action = new AddIconAction();
-		action.setNode(node.getObjectId(modeController));
+		action.setNode(node.getObjectId(controller));
 		action.setIconName(icon.getName());
 		action.setIconPosition(iconPosition);
 		return action;
@@ -213,8 +212,7 @@ public class IconAction extends FreemindAction implements ActorXml,
 
 	public KeyStroke getKeyStroke() {
 		final String keystrokeResourceName = icon.getKeystrokeResourceName();
-		final String keyStrokeDescription = Resources.getInstance().common
-				.getAdjustableProperty(keystrokeResourceName);
+		final String keyStrokeDescription = controller.getResources().unsafeGetProperty(keystrokeResourceName);
 		return Tools.getKeyStroke(keyStrokeDescription);
 	}
 

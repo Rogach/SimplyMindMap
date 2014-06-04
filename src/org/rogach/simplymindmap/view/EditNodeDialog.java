@@ -42,7 +42,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.util.PropertyKey;
 import org.rogach.simplymindmap.util.Tools;
 
 /**
@@ -67,7 +67,7 @@ public class EditNodeDialog extends EditNodeBase {
 		private JTextArea textArea;
 
 		LongNodeDialog() {
-			super(EditNodeDialog.this);
+			super(EditNodeDialog.this, controller.getResources());
 			textArea = new JTextArea(getText());
 			textArea.setLineWrap(true);
 			textArea.setWrapStyleWord(true);
@@ -85,23 +85,23 @@ public class EditNodeDialog extends EditNodeBase {
 			int preferredHeight = getNode().getHeight();
 			preferredHeight = Math.max(
 					preferredHeight,
-					Integer.parseInt(Resources.getInstance().getProperty(
-							"el__min_default_window_height")));
+          controller.getResources().getIntProperty(PropertyKey.MIN_DEFAULT_WINDOW_HEIGHT, 0)
+      );
 			preferredHeight = Math.min(
 					preferredHeight,
-					Integer.parseInt(Resources.getInstance().getProperty(
-							"el__max_default_window_height")));
+					controller.getResources().getIntProperty(PropertyKey.MAX_DEFAULT_WINDOW_HEIGHT, 0)
+      );
 
 			int preferredWidth = getNode().getWidth();
 			preferredWidth = Math.max(
 					preferredWidth,
-					Integer.parseInt(Resources.getInstance().getProperty(
-							"el__min_default_window_width")));
+          controller.getResources().getIntProperty(PropertyKey.MIN_DEFAULT_WINDOW_WIDTH, 0)
+      );
 			preferredWidth = Math.min(
 					preferredWidth,
-					Integer.parseInt(Resources.getInstance().getProperty(
-							"el__max_default_window_width")));
-
+					controller.getResources().getIntProperty(PropertyKey.MAX_DEFAULT_WINDOW_WIDTH, 0)
+      );
+      
 			editorScrollPane.setPreferredSize(new Dimension(preferredWidth,
 					preferredHeight));
 			// textArea.setPreferredSize(new Dimension(500, 160));
@@ -111,12 +111,11 @@ public class EditNodeDialog extends EditNodeBase {
 			// String performedAction;
 			final JButton okButton = new JButton();
 			final JButton cancelButton = new JButton();
-			final JCheckBox enterConfirms = new JCheckBox("",
-					binOptionIsTrue("el__enter_confirms_by_default"));
+			final JCheckBox enterConfirms = new JCheckBox("", controller.getResources().getBoolProperty(PropertyKey.ENTER_CONFIRMS_BY_DEFAULT));
 
-			Tools.setLabelAndMnemonic(okButton, Resources.getInstance().getText("ok"));
-			Tools.setLabelAndMnemonic(cancelButton, Resources.getInstance().getText("cancel"));
-			Tools.setLabelAndMnemonic(enterConfirms, Resources.getInstance().getText("enter_confirms"));
+			Tools.setLabelAndMnemonic(okButton, controller.getResources().getText("ok"));
+			Tools.setLabelAndMnemonic(cancelButton, controller.getResources().getText("cancel"));
+			Tools.setLabelAndMnemonic(enterConfirms, controller.getResources().getText("enter_confirms"));
 
 			if (booleanHolderForConfirmState == null) {
 				booleanHolderForConfirmState = new Tools.BooleanHolder();
@@ -230,7 +229,7 @@ public class EditNodeDialog extends EditNodeBase {
 			buttonPane.add(cancelButton);
 			buttonPane.setMaximumSize(new Dimension(1000, 20));
 
-			if (Resources.getInstance().getProperty("el__buttons_position").equals("above")) {
+			if (controller.getResources().getProperty(PropertyKey.BUTTONS_POSITION).equals("above")) {
 				panel.add(buttonPane);
 				panel.add(editorScrollPane);
 			} else {

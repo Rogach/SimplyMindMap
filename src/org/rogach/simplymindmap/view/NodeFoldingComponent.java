@@ -42,8 +42,8 @@ import javax.swing.JComponent;
 import javax.swing.Timer;
 import javax.swing.plaf.basic.BasicButtonListener;
 import javax.swing.plaf.basic.BasicButtonUI;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.MindMapNode;
+import org.rogach.simplymindmap.util.PropertyKey;
 import org.rogach.simplymindmap.util.Tools;
 
 /**
@@ -54,7 +54,6 @@ public class NodeFoldingComponent extends JButton {
 	private static final int TIMER_DELAY = 50;
 	private static final int COLOR_COUNTER_MAX = 15;
 	private static final int SIZE_FACTOR_ON_MOUSE_OVER = 4;
-	protected static java.util.logging.Logger logger = null;
 	private boolean mIsEntered;
 	private int mColorCounter = 0;
 	private NodeView nodeView;
@@ -63,10 +62,6 @@ public class NodeFoldingComponent extends JButton {
 
 	public NodeFoldingComponent(NodeView view) {
 		super();
-		if (logger == null) {
-			logger = org.rogach.simplymindmap.main.Resources.getInstance().getLogger(
-					this.getClass().getName());			
-		}
 		this.nodeView = view;
 		setModel(new DefaultButtonModel());
 		init(null, null);
@@ -77,7 +72,7 @@ public class NodeFoldingComponent extends JButton {
 		setFocusable(false);
 		setAlignmentY(Component.TOP_ALIGNMENT);
 		setUI(new RoundImageButtonUI());
-		mIsEnabled = Resources.getInstance().getBoolProperty("resources_display_folding_buttons");
+		mIsEnabled = view.getModel().getMindMapController().getResources().getBoolProperty(PropertyKey.DISPLAY_FOLDING_BUTTONS);
 		if (mIsEnabled) {
 			addMouseListener(new MouseListener() {
 	

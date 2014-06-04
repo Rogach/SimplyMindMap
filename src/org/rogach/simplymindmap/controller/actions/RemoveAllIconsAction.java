@@ -32,7 +32,6 @@ import org.rogach.simplymindmap.controller.actions.instance.CompoundAction;
 import org.rogach.simplymindmap.controller.actions.instance.RemoveAllIconsXmlAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.AbstractMindMapModel;
 import org.rogach.simplymindmap.model.IconInformation;
 import org.rogach.simplymindmap.model.MindIcon;
@@ -71,25 +70,25 @@ public class RemoveAllIconsAction extends NodeGeneralAction implements
 	public RemoveAllIconsXmlAction createRemoveAllIconsXmlAction(
 			MindMapNode node) {
 		RemoveAllIconsXmlAction action = new RemoveAllIconsXmlAction();
-		action.setNode(node.getObjectId(modeController));
+		action.setNode(node.getObjectId(controller));
 		return action;
 	}
 
 	public void act(XmlAction action) {
 		if (action instanceof RemoveAllIconsXmlAction) {
 			RemoveAllIconsXmlAction removeAction = (RemoveAllIconsXmlAction) action;
-			MindMapNode node = modeController.getNodeFromID(removeAction
+			MindMapNode node = controller.getNodeFromID(removeAction
 					.getNode());
 			while (node.getIcons().size() > 0) {
 				node.removeIcon(MindIcon.LAST);
 			}
-			modeController.nodeChanged(node);
+			controller.nodeChanged(node);
 		}
 	}
 
 	public void removeAllIcons(MindMapNode node) {
-		modeController.doTransaction(
-				(String) getValue(NAME), apply(modeController.getMapModel(), node));
+		controller.doTransaction(
+				(String) getValue(NAME), apply(controller.getMapModel(), node));
 	}
 
 	public Class getDoActionClass() {
@@ -105,8 +104,7 @@ public class RemoveAllIconsAction extends NodeGeneralAction implements
 	}
 
 	public KeyStroke getKeyStroke() {
-		return Tools.getKeyStroke(Resources.getInstance().common
-				.getAdjustableProperty(getKeystrokeResourceName()));
+		return Tools.getKeyStroke(controller.getResources().unsafeGetProperty(getKeystrokeResourceName()));
 	}
 
 	public String getKeystrokeResourceName() {

@@ -37,13 +37,11 @@ import java.util.ListIterator;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
 
@@ -82,9 +80,7 @@ public class FindAction extends AbstractAction {
 	private JDialog mDialog;
 
 	private int mResult;
-
-	private JCheckBox mFindInNotesTooBox;
-
+  
 	private JTextField mSearchField;
 
 	/** This isn't stored and is per map. */
@@ -111,7 +107,7 @@ public class FindAction extends AbstractAction {
 		boolean found = find(controller.getSelected(), subterms, false);
 		controller.getView().repaint();
 		if (!found) {
-			String messageText = Resources.getInstance().getText("no_found_from");
+			String messageText = controller.getResources().getText("no_found_from");
 			String searchTerm = getSearchTermAsEscapedString(messageText);
       // temp
 //			controller.getController().informationMessage(
@@ -125,13 +121,7 @@ public class FindAction extends AbstractAction {
 		mResult = pResult;
 		mDialog.setVisible(false);
 		mDialog.dispose();
-		// Store "find in notes too" value to prop.
 		if (pResult == JOptionPane.OK_OPTION) {
-			Resources
-					.getInstance()
-					.getProperties()
-					.setProperty("resources_search_in_notes_too",
-							mFindInNotesTooBox.isSelected() ? "true" : "false");
 			mLastSearchString = mSearchField.getText();
 		}
 	}
@@ -139,7 +129,7 @@ public class FindAction extends AbstractAction {
 	void displayDialog() {
 		mDialog = null;
 		mDialog = new JDialog((Frame) null,
-				Resources.getInstance().getText("find"));
+				controller.getResources().getText("find"));
 		mDialog.setModal(true);
 		mDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		AbstractAction cancelAction = new AbstractAction() {
@@ -162,7 +152,7 @@ public class FindAction extends AbstractAction {
 		});
 		Container contentPane = mDialog.getContentPane();
 		contentPane.setLayout(new GridBagLayout());
-		contentPane.add(new JLabel(Resources.getInstance().getText("find_what")),
+		contentPane.add(new JLabel(controller.getResources().getText("find_what")),
 				new GridBagConstraints(1, 0, 1, 1, 1.0, 1.0,
 						GridBagConstraints.WEST, GridBagConstraints.BOTH,
 						new Insets(5, 5, 0, 0), 0, 0));
@@ -172,29 +162,20 @@ public class FindAction extends AbstractAction {
 		contentPane.add(mSearchField, new GridBagConstraints(2, 0, 10, 1, 1.0,
 				1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
 				new Insets(5, 5, 0, 0), 0, 0));
-		ImageIcon findImage = new ImageIcon(Resources.getInstance()
+		ImageIcon findImage = new ImageIcon(controller.getResources()
 				.getResource("org/rogach/simplymindmap/images/filefind_big.png"));
 		contentPane.add(new JLabel(findImage), new GridBagConstraints(0, 0, 1,
 				2, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
 				new Insets(5, 5, 0, 0), 0, 0));
-		mFindInNotesTooBox = new JCheckBox(
-				Resources.getInstance()
-						.getText("ExtendedFindDialog.find_search_in_notes_too"));
-		mFindInNotesTooBox.setSelected(Resources.getInstance().getBoolProperty(
-				"resources_search_in_notes_too"));
-		Tools.setLabelAndMnemonic(mFindInNotesTooBox, null);
-		contentPane.add(mFindInNotesTooBox, new GridBagConstraints(0, 2, 3, 1,
-				1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
-				new Insets(5, 5, 0, 0), 0, 0));
 		JButton okButton = new JButton(
-				Resources.getInstance().getText("ExtendedFindDialog.ok"));
+				controller.getResources().getText("ExtendedFindDialog.ok"));
 		Tools.setLabelAndMnemonic(okButton, null);
 		okButton.addActionListener(okAction);
 		contentPane.add(okButton, new GridBagConstraints(2, 3, 1, 1, 1.0, 1.0,
 				GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(5,
 						5, 0, 0), 0, 0));
 		JButton cancelButton = new JButton(
-				Resources.getInstance().getText("ExtendedFindDialog.cancel"));
+				controller.getResources().getText("ExtendedFindDialog.cancel"));
 		Tools.setLabelAndMnemonic(cancelButton, null);
 		cancelButton.addActionListener(cancelAction);
 		contentPane.add(cancelButton, new GridBagConstraints(3, 3, 1, 1, 1.0,
@@ -233,7 +214,7 @@ public class FindAction extends AbstractAction {
 			boolean found = find.findNext();
 			controller.getView().repaint();
 			if (!found) {
-				String messageText = Resources.getInstance().getText("no_more_found_from");
+				String messageText = controller.getResources().getText("no_more_found_from");
 				String searchTerm = find
 						.getSearchTermAsEscapedString(messageText);
         // temp

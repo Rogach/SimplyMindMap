@@ -53,10 +53,11 @@ import javax.swing.tree.TreeNode;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.listeners.NodeDragListener;
 import org.rogach.simplymindmap.controller.listeners.NodeDropListener;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.MindIcon;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.util.HtmlTools;
+import org.rogach.simplymindmap.util.MindMapResources;
+import org.rogach.simplymindmap.util.PropertyKey;
 import org.rogach.simplymindmap.util.Tools;
 
 /**
@@ -170,7 +171,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 		mainView.addMouseMotionListener(this.map.getNodeMouseMotionListener());
     addDragListener(new NodeDragListener(map.getController()));
     addDropListener(new NodeDropListener(map.getController()));
-		if (!model.isRoot() && "true".equals(Resources.getInstance().getProperty("enable_node_movement"))) {
+		if (!model.isRoot() && getModel().getMindMapController().getResources().getBoolProperty(PropertyKey.ENABLE_NODE_MOVEMENT)) {
 			motionListenerView = new NodeMotionListenerView(this);
 			add(motionListenerView);
 		}
@@ -801,7 +802,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 
 	private void updateText() {
 		String nodeText = getModel().toString();
-		final boolean isHtml = nodeText.startsWith("<html>");
 		// 6) Set the text
 		// Right now, this implementation is quite logical, although it allows
 		// for nonconvex feature of nodes starting with <html>.
@@ -810,60 +810,21 @@ public class NodeView extends JComponent implements TreeModelListener {
 		// restricted
 		// boolean isMultiline = nodeText.indexOf("\n") >= 0;
 		boolean widthMustBeRestricted = false;
-		if (!isHtml) {
-			String[] lines = nodeText.split("\n");
-			for (int line = 0; line < lines.length; line++) {
-				// Compute the width the node would spontaneously take,
-				// by preliminarily setting the text.
-				setText(lines[line]);
-				widthMustBeRestricted = mainView.getPreferredSize().width > map
-						.getZoomed(map.getMaxNodeWidth())
-						+ mainView.getIconWidth();
-				if (widthMustBeRestricted) {
-					break;
-				}
-			}
-			isLong = widthMustBeRestricted || lines.length > 1;
-		}
+    String[] lines = nodeText.split("\n");
+    for (int line = 0; line < lines.length; line++) {
+      // Compute the width the node would spontaneously take,
+      // by preliminarily setting the text.
+      setText(lines[line]);
+      widthMustBeRestricted = mainView.getPreferredSize().width > map
+          .getZoomed(map.getMaxNodeWidth())
+          + mainView.getIconWidth();
+      if (widthMustBeRestricted) {
+        break;
+      }
+    }
+    isLong = widthMustBeRestricted || lines.length > 1;
 
-		if (isHtml) {
-			// If user does not want us to set the width automatically, he'll
-			// use <body width="">,
-			// <body width="800">, or avoid the <body> tag altogether.
-
-			// Set user HTML head
-			String htmlLongNodeHead = Resources.getInstance()
-					.getProperty("html_long_node_head");
-			if (htmlLongNodeHead != null && !htmlLongNodeHead.equals("")) {
-				if (nodeText.matches("(?ims).*<head>.*")) {
-					nodeText = nodeText.replaceFirst("(?ims).*<head>.*",
-							"<head>" + htmlLongNodeHead);
-				} else {
-					nodeText = nodeText.replaceFirst("(?ims)<html>",
-							"<html><head>" + htmlLongNodeHead + "</head>");
-				}
-			}
-
-			// Find out if the width has to be restricted.
-			if (nodeText.length() < 30000) {
-				// Empirically determined limit, above which we restrict the
-				// width without actually checking it.
-				// The purpose of that is to speed up rendering of very long
-				// nodes.
-				setText(nodeText);
-				widthMustBeRestricted = mainView.getPreferredSize().width > map
-						.getZoomed(map.getMaxNodeWidth())
-						+ mainView.getIconWidth();
-			} else {
-				widthMustBeRestricted = true;
-			}
-
-			if (widthMustBeRestricted) {
-				nodeText = nodeText.replaceFirst("(?i)<body>", "<body width=\""
-						+ map.getMaxNodeWidth() + "\">");
-			}
-			setText(nodeText);
-		} else if (isLong) {
+		if (isLong) {
 			String text = HtmlTools.plainToHTML(nodeText);
 			if (widthMustBeRestricted) {
 				text = text.replaceFirst("(?i)<p>",
@@ -877,7 +838,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 
 	private void updateFont() {
 		Font font = getModel().getFont();
-    font = font == null ? Tools.getDefaultFont() : font;
+    font = font == null ? Tools.getDefaultFont(this.getModel().getMindMapController().getResources()) : font;
 		if (font != null) {
 			mainView.setFont(font);
 		} else {
@@ -960,12 +921,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 
 	public int getMaxToolTipWidth() {
 		if (maxToolTipWidth == 0) {
-			try {
-				maxToolTipWidth = Resources.getInstance().getIntProperty(
-						"max_tooltip_width", 600);
-			} catch (NumberFormatException e) {
-				maxToolTipWidth = 600;
-			}
+			maxToolTipWidth = getModel().getMindMapController().getResources().getIntProperty(PropertyKey.MAX_TOOLTIP_WIDTH, 600);
 		}
 		return maxToolTipWidth;
 	}
@@ -1257,7 +1213,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 	}
 
 	public int getZoomedFoldingSymbolHalfWidth() {
-		int preferredFoldingSymbolHalfWidth = (int) ((getFoldingSymbolWidth() * map
+		int preferredFoldingSymbolHalfWidth = (int) ((getFoldingSymbolWidth(getModel().getMindMapController().getResources()) * map
 				.getZoom()) / 2);
 		return Math.min(preferredFoldingSymbolHalfWidth, getHeight() / 2);
 	}
@@ -1386,10 +1342,10 @@ public class NodeView extends JComponent implements TreeModelListener {
 		return getParentView().getBackgroundColor();
 	}
 
-	public static int getFoldingSymbolWidth() {
+	public static int getFoldingSymbolWidth(MindMapResources resources) {
 		if (FOLDING_SYMBOL_WIDTH == -1) {
-			FOLDING_SYMBOL_WIDTH = Resources.getInstance().getIntProperty(
-					"foldingsymbolwidth", 8);
+			FOLDING_SYMBOL_WIDTH = resources.getIntProperty(
+					         PropertyKey.FOLDING_SYMBOL_WIDTH, 8);
 		}
 		return FOLDING_SYMBOL_WIDTH;
 	}

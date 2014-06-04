@@ -38,7 +38,6 @@ import org.rogach.simplymindmap.controller.actions.instance.UndoPasteNodeAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.controller.actions.xml.ActorXml;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.MindMapNode;
 
 public class CutAction extends AbstractAction implements ActorXml {
@@ -60,7 +59,7 @@ public class CutAction extends AbstractAction implements ActorXml {
 	public void actionPerformed(ActionEvent e) {
 		if (controller.getView().getRoot().isSelected()) {
       JOptionPane.showMessageDialog(controller.getView(), 
-              Resources.getInstance().getResourceString("cannot_delete_root"), "", JOptionPane.ERROR_MESSAGE);
+              controller.getResources().getText("cannot_delete_root"), "", JOptionPane.ERROR_MESSAGE);
       return;
 		}
 		Transferable copy = controller.cut();

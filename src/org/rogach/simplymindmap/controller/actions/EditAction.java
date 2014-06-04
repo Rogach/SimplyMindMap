@@ -35,7 +35,6 @@ import org.rogach.simplymindmap.controller.actions.instance.EditNodeAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.controller.actions.xml.ActorXml;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.view.EditNodeBase;
 import org.rogach.simplymindmap.view.EditNodeDialog;
@@ -50,20 +49,19 @@ import org.rogach.simplymindmap.view.NodeView;
 public class EditAction extends AbstractAction implements ActorXml {
 	private static final Pattern HTML_HEAD = Pattern.compile(
 			"\\s*<head>.*</head>", Pattern.DOTALL);
-	private final MindMapController mMindMapController;
+	private final MindMapController controller;
 	private EditNodeBase mCurrentEditDialog = null;
 
 	public EditAction(MindMapController modeController) {
 		super("");
-		this.mMindMapController = modeController;
-		this.mMindMapController.getActionFactory().registerActor(this,
+		this.controller = modeController;
+		this.controller.getActionFactory().registerActor(this,
 				getDoActionClass());
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-    System.out.println("edit action");
-		MindMapNode selected = this.mMindMapController.getSelected();
-		this.mMindMapController.edit(null, false, false);
+		MindMapNode selected = this.controller.getSelected();
+		this.controller.edit(null, false, false);
 	}
 
 	/*
@@ -75,11 +73,11 @@ public class EditAction extends AbstractAction implements ActorXml {
 	 */
 	public void act(XmlAction action) {
 		EditNodeAction editAction = (EditNodeAction) action;
-		MindMapNode node = this.mMindMapController.getNodeFromID(editAction
+		MindMapNode node = this.controller.getNodeFromID(editAction
 				.getNode());
 		if (!node.toString().equals(editAction.getText())) {
 			node.setUserObject(editAction.getText());
-			this.mMindMapController.nodeChanged(node);
+			this.controller.nodeChanged(node);
 		}
 	}
 
@@ -94,13 +92,13 @@ public class EditAction extends AbstractAction implements ActorXml {
 
 	// edit begins with home/end or typing (PN 6.2)
 	public void edit(KeyEvent e, boolean addNew, boolean editLong) {
-		NodeView selectedNodeView = mMindMapController.getView().getSelected();
+		NodeView selectedNodeView = controller.getView().getSelected();
 		if (selectedNodeView != null) {
 			if (e == null || !addNew) {
 				edit(selectedNodeView, selectedNodeView, e, false, false,
 						editLong);
-			} else if (!mMindMapController.isBlocked()) {
-				mMindMapController.addNew(mMindMapController.getSelected(),
+			} else if (!controller.isBlocked()) {
+				controller.addNew(controller.getSelected(),
 						MindMapController.NEW_SIBLING_BEHIND, e);
 			}
 			if (e != null) {
@@ -121,7 +119,7 @@ public class EditAction extends AbstractAction implements ActorXml {
 
 		stopEditing();
 		// EditNodeBase.closeEdit();
-		mMindMapController.setBlocked(true); // locally "modal" stated
+		controller.setBlocked(true); // locally "modal" stated
 
 		String text = node.getModel().toString();
 
@@ -129,13 +127,13 @@ public class EditAction extends AbstractAction implements ActorXml {
 
 		if (isLongNode || editLong) {
 			EditNodeDialog nodeEditDialog = new EditNodeDialog(node, text,
-					firstEvent, mMindMapController,
+					firstEvent, controller,
 					new EditNodeBase.EditControl() {
 
 						public void cancel() {
-							mMindMapController.setBlocked(false);
+							controller.setBlocked(false);
 							mCurrentEditDialog = null;
-              mMindMapController.obtainFocusForSelected();
+              controller.obtainFocusForSelected();
 						}
 
 						public void ok(String newText) {
@@ -150,20 +148,20 @@ public class EditAction extends AbstractAction implements ActorXml {
 		}
 		// inline editing:
 		EditNodeTextField textfield = new EditNodeTextField(node, text,
-				firstEvent, mMindMapController, new EditNodeBase.EditControl() {
+				firstEvent, controller, new EditNodeBase.EditControl() {
 
 					public void cancel() {
 						if (isNewNode) { // delete also the node and set focus
 											// to the parent
-							mMindMapController.getView()
+							controller.getView()
 									.selectAsTheOnlyOneSelected(node);
 							Vector<MindMapNode> nodeList = new Vector<>();
 							nodeList.add(node.getModel());
-							mMindMapController.cut(nodeList);
-							mMindMapController.select(prevSelected);
+							controller.cut(nodeList);
+							controller.select(prevSelected);
 							// include max level for navigation
 							if (parentFolded) {
-								mMindMapController.setFolded(
+								controller.setFolded(
 										prevSelected.getModel(), true);
 							}
 						}
@@ -176,8 +174,8 @@ public class EditAction extends AbstractAction implements ActorXml {
 					}
 
 					private void endEdit() {
-						mMindMapController.obtainFocusForSelected();
-						mMindMapController.setBlocked(false);
+						controller.obtainFocusForSelected();
+						controller.setBlocked(false);
 						mCurrentEditDialog = null;
 					}
 
@@ -191,20 +189,20 @@ public class EditAction extends AbstractAction implements ActorXml {
 		String oldText = selected.toString();
 
 		EditNodeAction EditAction = new EditNodeAction();
-		EditAction.setNode(mMindMapController.getNodeID(selected));
+		EditAction.setNode(controller.getNodeID(selected));
 		EditAction.setText(newText);
 
 		EditNodeAction undoEditAction = new EditNodeAction();
-		undoEditAction.setNode(mMindMapController.getNodeID(selected));
+		undoEditAction.setNode(controller.getNodeID(selected));
 		undoEditAction.setText(oldText);
 
-		mMindMapController.doTransaction(
-				Resources.getInstance().getText("edit_node"),
+		controller.doTransaction(
+				controller.getResources().getText("edit_node"),
 				new ActionPair(EditAction, undoEditAction));
 	}
 
 	protected MindMapController getMindMapController() {
-		return mMindMapController;
+		return controller;
 	}
 
 	private void setHtmlText(final NodeView node, String newText) {

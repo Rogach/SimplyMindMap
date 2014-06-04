@@ -31,6 +31,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ListIterator;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.swing.AbstractAction;
@@ -42,7 +43,6 @@ import org.rogach.simplymindmap.controller.actions.instance.UndoPasteNodeAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.controller.actions.xml.ActorXml;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.AbstractMindMapModel;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.nanoxml.XMLParseException;
@@ -51,31 +51,31 @@ import org.rogach.simplymindmap.util.Tools;
 public class PasteAction extends AbstractAction implements ActorXml {
 
 	private static java.util.logging.Logger logger;
-	private final MindMapController mMindMapController;
+	private final MindMapController controller;
 	private UndoPasteHandler mUndoPasteHandler;
 
 	public PasteAction(MindMapController pMindMapController) {
 		super("", null);
-		this.mMindMapController = pMindMapController;
+		this.controller = pMindMapController;
 		if (logger == null) {
 			logger = Logger.getLogger(this.getClass().getName());
 		}
 
-		this.mMindMapController.getActionFactory().registerActor(this,
+		this.controller.getActionFactory().registerActor(this,
 				getDoActionClass());
 
 		// special undo handler for paste.
-		mUndoPasteHandler = new UndoPasteHandler(mMindMapController);
-		this.mMindMapController.getActionFactory().registerActor(
+		mUndoPasteHandler = new UndoPasteHandler(controller);
+		this.controller.getActionFactory().registerActor(
 				mUndoPasteHandler, UndoPasteNodeAction.class);
 
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		Transferable clipboardContents = this.mMindMapController
+		Transferable clipboardContents = this.controller
 				.getClipboardContents();
-		MindMapNode selectedNode = this.mMindMapController.getSelected();
-		this.mMindMapController.paste(clipboardContents, selectedNode);
+		MindMapNode selectedNode = this.controller.getSelected();
+		this.controller.paste(clipboardContents, selectedNode);
 	}
 
 	/*
@@ -88,7 +88,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 	public void act(XmlAction action) {
 		PasteNodeAction pasteAction = (PasteNodeAction) action;
 		_paste(getTransferable(pasteAction.getTransferableContent()),
-				mMindMapController.getNodeFromID(pasteAction.getNode()),
+				controller.getNodeFromID(pasteAction.getNode()),
 				pasteAction.getAsSibling(), pasteAction.getIsLeft());
 	}
 
@@ -111,7 +111,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 	public PasteNodeAction getPasteNodeAction(Transferable t,
 			NodeCoordinate coord, UndoPasteNodeAction pUndoAction) {
 		PasteNodeAction pasteAction = new PasteNodeAction();
-		final String targetId = mMindMapController.getNodeID(coord.target);
+		final String targetId = controller.getNodeID(coord.target);
 		pasteAction.setNode(targetId);
 		pasteAction.setTransferableContent(getTransferableContent(t,
 				pUndoAction));
@@ -129,7 +129,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 	public void paste(MindMapNode node, MindMapNode parent) {
 		if (node != null) {
 			insertNodeInto(node, parent);
-			mMindMapController.nodeStructureChanged(parent);
+			controller.nodeStructureChanged(parent);
 		}
 	}
 
@@ -162,7 +162,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 		 * d) But, as there are many possibilities which data flavor is pasted,
 		 * it has to be determined before, which one will be taken.
 		 */
-		return mMindMapController.doTransaction("paste",
+		return controller.doTransaction("paste",
 				new ActionPair(pasteAction, undoAction));
 	}
 
@@ -232,7 +232,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 				mapContent += "</node></map>";
 				// logger.info("Pasting " + mapContent);
 				try {
-					MindMapNode node = mMindMapController.getMapModel()
+					MindMapNode node = controller.getMapModel()
 							.loadTree(
 									new AbstractMindMapModel.StringReaderCreator(
 											mapContent), false);
@@ -244,7 +244,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 						// addUndoAction(importNode);
 					}
 				} catch (XMLParseException | IOException e) {
-					org.rogach.simplymindmap.main.Resources.getInstance().logException(e);
+          Logger.getLogger(PasteAction.class.getName()).log(Level.SEVERE, null, e);
 				}
 			}
 		}
@@ -289,7 +289,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 							isLeft, t);
 					break;
 				} catch (UnsupportedFlavorException | IOException e) {
-					Resources.getInstance().logException(e);
+					Logger.getLogger(PasteAction.class.getName()).log(Level.SEVERE, null, e);
 				}
 			}
 		}
@@ -311,13 +311,13 @@ public class PasteAction extends AbstractAction implements ActorXml {
 		// Call nodeStructureChanged(target) after this function.
 		logger.fine("Pasting " + pasted + " to " + target);
 		try {
-			MindMapNode node = (MindMapNode) mMindMapController
+			MindMapNode node = (MindMapNode) controller
 					.createNodeTreeFromXml(new StringReader(pasted),
 							pIDToTarget);
 			insertNodeInto(node, target, asSibling, isLeft, changeSide);
 			return node;
 		} catch (IOException ee) {
-			org.rogach.simplymindmap.main.Resources.getInstance().logException(ee);
+			Logger.getLogger(PasteAction.class.getName()).log(Level.SEVERE, null, ee);
 			return null;
 		}
 	}
@@ -376,7 +376,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 			// node to
 			// the parent of real parent.
 			realParent = parent;
-      parent = mMindMapController.getMapModel().newNode(null);
+      parent = controller.getMapModel().newNode(null);
 		}
 
 		ArrayList<MindMapNode> parentNodes = new ArrayList<>();
@@ -425,7 +425,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 				}
 			}
 
-			MindMapNode node = mMindMapController.newNode(visibleText);
+			MindMapNode node = controller.newNode(visibleText);
 			if (textLines.length == 1) {
 				pastedNode = node;
 			}
@@ -465,11 +465,11 @@ public class PasteAction extends AbstractAction implements ActorXml {
 	/**
      */
 	private void insertNodeInto(MindMapNode node, MindMapNode parent, int i) {
-		mMindMapController.insertNodeInto(node, parent, i);
+		controller.insertNodeInto(node, parent, i);
 	}
 
 	private void insertNodeInto(MindMapNode node, MindMapNode parent) {
-		mMindMapController.insertNodeInto(node, parent);
+		controller.insertNodeInto(node, parent);
 	}
 
 	private TransferableContent getTransferableContent(Transferable t,
@@ -505,7 +505,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 			}
 			return trans;
 		} catch (UnsupportedFlavorException | IOException e) {
-			org.rogach.simplymindmap.main.Resources.getInstance().logException(e);
+			Logger.getLogger(PasteAction.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return null;
 	}
@@ -517,7 +517,7 @@ public class PasteAction extends AbstractAction implements ActorXml {
 	protected int determineAmountOfNewNodes(Transferable t)
 			throws UnsupportedFlavorException, IOException {
 		// create a new node for testing purposes.
-		MindMapNode parent = mMindMapController.getMapModel().newNode(null);
+		MindMapNode parent = controller.getMapModel().newNode(null);
 		pasteStringWithoutRedisplay(t, parent, false, false);
 		final int childCount = parent.getChildCount();
 		return childCount;

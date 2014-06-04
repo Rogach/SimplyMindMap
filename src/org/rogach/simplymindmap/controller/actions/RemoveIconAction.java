@@ -32,7 +32,6 @@ import org.rogach.simplymindmap.controller.actions.instance.AddIconAction;
 import org.rogach.simplymindmap.controller.actions.instance.RemoveIconXmlAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.AbstractMindMapModel;
 import org.rogach.simplymindmap.model.IconInformation;
 import org.rogach.simplymindmap.model.MindIcon;
@@ -72,14 +71,14 @@ public class RemoveIconAction extends NodeGeneralAction implements
 	public RemoveIconXmlAction createRemoveIconXmlAction(MindMapNode node,
 			int iconPosition) {
 		RemoveIconXmlAction action = new RemoveIconXmlAction();
-		action.setNode(node.getObjectId(modeController));
+		action.setNode(node.getObjectId(controller));
 		action.setIconPosition(iconPosition);
 		return action;
 	}
 
 	public int removeLastIcon(MindMapNode node) {
-		modeController.doTransaction(
-				(String) getValue(NAME), apply(modeController.getMapModel(), node));
+		controller.doTransaction(
+				(String) getValue(NAME), apply(controller.getMapModel(), node));
 		return node.getIcons().size();
 	}
 
@@ -90,11 +89,11 @@ public class RemoveIconAction extends NodeGeneralAction implements
 	public void act(XmlAction action) {
 		if (action instanceof org.rogach.simplymindmap.controller.actions.instance.RemoveIconXmlAction) {
 			org.rogach.simplymindmap.controller.actions.instance.RemoveIconXmlAction removeAction = (org.rogach.simplymindmap.controller.actions.instance.RemoveIconXmlAction) action;
-			MindMapNode node = modeController.getNodeFromID(removeAction
+			MindMapNode node = controller.getNodeFromID(removeAction
 					.getNode());
 			int position = removeAction.getIconPosition();
 			node.removeIcon(position);
-			modeController.nodeChanged(node);
+			controller.nodeChanged(node);
 		}
 	}
 
@@ -115,8 +114,7 @@ public class RemoveIconAction extends NodeGeneralAction implements
 	}
 
 	public KeyStroke getKeyStroke() {
-		return Tools.getKeyStroke(Resources.getInstance().common
-				.getAdjustableProperty(getKeystrokeResourceName()));
+		return Tools.getKeyStroke(controller.getResources().unsafeGetProperty(getKeystrokeResourceName()));
 	}
 
 	public String getKeystrokeResourceName() {

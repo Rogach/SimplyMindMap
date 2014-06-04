@@ -82,8 +82,6 @@ import org.rogach.simplymindmap.controller.actions.UndoAction;
 import org.rogach.simplymindmap.controller.actions.xml.ActionFactory;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.controller.actions.xml.UndoActionHandler;
-import org.rogach.simplymindmap.main.ResourceKeys;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.AbstractMindMapModel;
 import org.rogach.simplymindmap.model.MindIcon;
 import org.rogach.simplymindmap.model.MindMapNode;
@@ -91,6 +89,8 @@ import org.rogach.simplymindmap.model.MindMapXMLElement;
 import org.rogach.simplymindmap.model.XMLElementAdapter;
 import org.rogach.simplymindmap.nanoxml.XMLElement;
 import org.rogach.simplymindmap.nanoxml.XMLParseException;
+import org.rogach.simplymindmap.util.MindMapResources;
+import org.rogach.simplymindmap.util.PropertyKey;
 import org.rogach.simplymindmap.util.Tools;
 import org.rogach.simplymindmap.view.MainView;
 import org.rogach.simplymindmap.view.MapView;
@@ -99,6 +99,7 @@ import org.rogach.simplymindmap.view.NodeView;
 public class MindMapController {
   
 	private static Logger logger;
+  private final MindMapResources resources;
   public static final int NEW_CHILD_WITHOUT_FOCUS = 1; // old model of
   // insertion
   public static final int NEW_CHILD = 2;
@@ -119,18 +120,8 @@ public class MindMapController {
 	public Action showAttributeManagerAction = null;
 	public Action propertyAction = null;
 
-	public Action increaseNodeFont = new NodeGeneralAction(this,
-			"increase_node_font_size", null, new SingleNodeOperation() {
-				public void apply(AbstractMindMapModel map, MindMapNode node) {
-					increaseFontSize(node, 1);
-				}
-			});
-	public Action decreaseNodeFont = new NodeGeneralAction(this,
-			"decrease_node_font_size", null, new SingleNodeOperation() {
-				public void apply(AbstractMindMapModel map, MindMapNode node) {
-					increaseFontSize(node, -1);
-				}
-			});
+	public Action increaseNodeFont = null;
+	public Action decreaseNodeFont = null;
 
 	public UndoAction undo = null;
 	public RedoAction redo = null;
@@ -181,21 +172,33 @@ public class MindMapController {
   private boolean isBlocked = false;
   protected MapView mView;
   
-	public MindMapController(MapView view) {
+	public MindMapController(MapView view, MindMapResources resources) {
 		super();
     this.mView = view;
+    this.resources = resources;
 		if (logger == null) {
 			logger = Logger.getLogger(this.getClass().getName());
 		}
 		// create action factory:
 		actionFactory = new ActionFactory();
     new CompoundActionHandler(this); // eagerly initialize compound action handler
-    logger.info("createIconActions");
     createStandardActions();
     createIconActions();
 	}
 
 	private void createStandardActions() {
+    increaseNodeFont = new NodeGeneralAction(this,
+			"increase_node_font_size", null, new SingleNodeOperation() {
+				public void apply(AbstractMindMapModel map, MindMapNode node) {
+					increaseFontSize(node, 1);
+				}
+			});
+    decreaseNodeFont = new NodeGeneralAction(this,
+			"decrease_node_font_size", null, new SingleNodeOperation() {
+				public void apply(AbstractMindMapModel map, MindMapNode node) {
+					increaseFontSize(node, -1);
+				}
+			});
 		// prepare undo:
 		undo = new UndoAction(this);
 		redo = new RedoAction(this);
@@ -222,7 +225,7 @@ public class MindMapController {
 		removeLastIconAction = new RemoveIconAction(this);
 		// this action handles the xml stuff: (undo etc.)
 		unknownIconAction = new IconAction(this,
-				MindIcon.factory((String) MindIcon.getAllIconNames().get(0)),
+				MindIcon.factory((String) MindIcon.getAllIconNames(resources).get(0), resources),
 				removeLastIconAction);
 		removeLastIconAction.setIconAction(unknownIconAction);
 		removeAllIconsAction = new RemoveAllIconsAction(this, unknownIconAction);
@@ -243,10 +246,10 @@ public class MindMapController {
 	}
 
 	private void createIconActions() {
-		Vector iconNames = MindIcon.getAllIconNames();
+		Vector iconNames = MindIcon.getAllIconNames(resources);
 		for (int i = 0; i < iconNames.size(); ++i) {
 			String iconName = ((String) iconNames.get(i));
-			MindIcon myIcon = MindIcon.factory(iconName);
+			MindIcon myIcon = MindIcon.factory(iconName, resources);
 			IconAction myAction = new IconAction(this, myIcon,
 					removeLastIconAction);
 			iconActions.add(myAction);
@@ -349,18 +352,10 @@ public class MindMapController {
   public void registerNodeSelectionListener(NodeSelectionListener listener, boolean pCallWithCurrentSelection) {
     mNodeSelectionListeners.add(listener);
     if (pCallWithCurrentSelection) {
-      try {
-        listener.onFocusNode(getSelectedView());
-      } catch (Exception e) {
-        Resources.getInstance().logException(e);
-      }
+      listener.onFocusNode(getSelectedView());
       for (Iterator it = getView().getSelecteds().iterator(); it.hasNext();) {
         NodeView view = (NodeView) it.next();
-        try {
-          listener.onSelectionChange(view, true);
-        } catch (Exception e) {
-          Resources.getInstance().logException(e);
-        }
+        listener.onSelectionChange(view, true);
       }
     }
   }
@@ -530,6 +525,10 @@ public class MindMapController {
 
   public void setView(MapView pView) {
     mView = pView;
+  }
+  
+  public MindMapResources getResources() {
+    return resources;
   }
 
   /**
@@ -831,7 +830,7 @@ public class MindMapController {
 		}
 
 		catch (UnsupportedFlavorException | IOException ex) {
-			org.rogach.simplymindmap.main.Resources.getInstance().logException(ex);
+      Logger.getLogger(MindMapController.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return null;
 	}
@@ -856,8 +855,7 @@ public class MindMapController {
 			boolean isLeft) {
 		if (!asSibling
 				&& target.isFolded()
-				&& Resources.getInstance().getBoolProperty(
-						ResourceKeys.RESOURCE_UNFOLD_ON_PASTE)) {
+				&& resources.getBoolProperty(PropertyKey.UNFOLD_ON_PASTE)) {
 			setFolded(target, false);
 		}
 		return paste.paste(t, target, asSibling, isLeft);

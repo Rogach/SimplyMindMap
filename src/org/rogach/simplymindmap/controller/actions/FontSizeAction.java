@@ -68,7 +68,7 @@ public class FontSizeAction extends NodeGeneralAction implements NodeActorXml {
 		if (Tools.safeEquals(fontSizeValue, node.getFontSize())) {
 			return;
 		}
-		modeController.doTransaction(
+		controller.doTransaction(
 				(String) getValue(NAME), getActionPair(node, fontSizeValue));
 
 	}
@@ -102,7 +102,7 @@ public class FontSizeAction extends NodeGeneralAction implements NodeActorXml {
 				int size = Integer.valueOf(fontSizeAction.getSize()).intValue();
 				if (!node.getFontSize().equals(fontSizeAction.getSize())) {
 					node.setFontSize(size);
-					modeController.nodeChanged(node);
+					controller.nodeChanged(node);
 				}
 			} catch (NumberFormatException e) {
 				return;

@@ -24,6 +24,7 @@ package org.rogach.simplymindmap.controller.actions.xml;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 
@@ -69,7 +70,7 @@ public class ActionFactory {
 			try {
 				undoActionHandler.executeAction(pair);
 			} catch (Exception e) {
-				org.rogach.simplymindmap.main.Resources.getInstance().logException(e);
+        Logger.getLogger(ActionFactory.class.getName()).log(Level.SEVERE, null, e);
 				return false;
 			}
 		}
@@ -79,7 +80,7 @@ public class ActionFactory {
       ActorXml actor = getActor(filteredPair.getDoAction());
       actor.act(filteredPair.getDoAction());
     } catch (Exception e) {
-      org.rogach.simplymindmap.main.Resources.getInstance().logException(e);
+      Logger.getLogger(ActionFactory.class.getName()).log(Level.SEVERE, null, e);
       return false;
     }
     return true;

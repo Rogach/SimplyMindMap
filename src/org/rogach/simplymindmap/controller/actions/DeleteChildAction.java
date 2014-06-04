@@ -36,7 +36,6 @@ import org.rogach.simplymindmap.controller.actions.instance.UndoPasteNodeAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
 import org.rogach.simplymindmap.controller.actions.xml.ActorXml;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.view.MapView;
 import org.rogach.simplymindmap.view.NodeView;
@@ -60,7 +59,7 @@ public class DeleteChildAction extends AbstractAction implements ActorXml {
 			MindMapNode node = (MindMapNode) iterator.next();
 			if (node.isRoot()) {
         JOptionPane.showMessageDialog(controller.getView(), 
-              Resources.getInstance().getResourceString("cannot_delete_root"), "", JOptionPane.ERROR_MESSAGE);
+              controller.getResources().getText("cannot_delete_root"), "", JOptionPane.ERROR_MESSAGE);
         return;
 			}
 		}

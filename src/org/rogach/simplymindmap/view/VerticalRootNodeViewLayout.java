@@ -25,7 +25,7 @@ package org.rogach.simplymindmap.view;
 
 import java.awt.Dimension;
 import java.awt.Point;
-import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.util.PropertyKey;
 import org.rogach.simplymindmap.util.Tools;
 
 /**
@@ -33,9 +33,6 @@ import org.rogach.simplymindmap.util.Tools;
  * @author dimitri 05.06.2005
  */
 public class VerticalRootNodeViewLayout extends NodeViewLayoutAdapter {
-	private static final String USE_COMMON_OUT_POINT_FOR_ROOT_NODE_STRING = "use_common_out_point_for_root_node";
-	static boolean USE_COMMON_OUT_POINT_FOR_ROOT_NODE = Resources.getInstance()
-			.getBoolProperty(USE_COMMON_OUT_POINT_FOR_ROOT_NODE_STRING);
 
 	static private VerticalRootNodeViewLayout instance = null;
 
@@ -90,7 +87,7 @@ public class VerticalRootNodeViewLayout extends NodeViewLayoutAdapter {
 	public Point getMainViewOutPoint(NodeView view, NodeView targetView,
 			Point destinationPoint) {
 		final MainView mainView = view.getMainView();
-		if (USE_COMMON_OUT_POINT_FOR_ROOT_NODE) {
+		if (view.getModel().getMindMapController().getResources().getBoolProperty(PropertyKey.USE_COMMON_OUT_POINT_FOR_ROOT_NODE)) {
 			if (targetView.isLeft()) {
 				return mainView.getLeftPoint();
 			} else {

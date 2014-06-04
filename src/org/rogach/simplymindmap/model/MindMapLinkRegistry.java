@@ -50,16 +50,7 @@ public class MindMapLinkRegistry {
 	protected HashMap mIdToLink;
 	protected HashSet<String> mLocallyLinkedIds;
 
-	protected static java.util.logging.Logger logger = null;
-
-	// //////////////////////////////////////////////////////////////////////////////////////
-	// // Methods /////
-	// //////////////////////////////////////////////////////////////////////////////////////
-	public MindMapLinkRegistry(/* MindMap map */) {
-		if (logger == null) {
-			logger = org.rogach.simplymindmap.main.Resources.getInstance().getLogger(
-					this.getClass().getName());
-		}
+	public MindMapLinkRegistry() {
 		mTargetToId = new HashMap<>();
 		mIdToTarget = new HashMap<>();
 		mIdToLinks = new HashMap<>();

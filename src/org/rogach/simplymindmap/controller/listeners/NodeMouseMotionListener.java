@@ -30,7 +30,7 @@ import java.util.TimerTask;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.util.PropertyKey;
 import org.rogach.simplymindmap.util.Tools;
 import org.rogach.simplymindmap.view.MainView;
 import org.rogach.simplymindmap.view.NodeView;
@@ -150,19 +150,18 @@ public class NodeMouseMotionListener implements MouseMotionListener,
 			timeForDelayedSelection = new Tools.IntHolder();
 		}
 		delayedSelectionEnabled = new Tools.BooleanHolder();
-		delayedSelectionEnabled.setValue(Resources.getInstance()
-				.getProperty("selection_method")
-				.equals("selection_method_direct") ? false : true);
+		delayedSelectionEnabled.setValue(
+            !controller.getResources().getProperty(PropertyKey.SELECTION_METHOD)
+            .equals("selection_method_direct"));
 		/*
 		 * set time for delay to infinity, if selection_method equals
 		 * selection_method_by_click.
 		 */
-		if (Resources.getInstance().getProperty("selection_method")
+		if (controller.getResources().getProperty(PropertyKey.SELECTION_METHOD)
 				.equals("selection_method_by_click")) {
 			timeForDelayedSelection.setValue(Integer.MAX_VALUE);
 		} else {
-			timeForDelayedSelection.setValue(Integer.parseInt(Resources.getInstance()
-					.getProperty("time_for_delayed_selection")));
+			timeForDelayedSelection.setValue(controller.getResources().getIntProperty(PropertyKey.TIME_FOR_DELAYED_SELECTION, 100));
 		}
 	}
   

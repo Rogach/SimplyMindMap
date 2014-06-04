@@ -24,12 +24,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.main.Resources;
-
-/**
- * The KeyListener which belongs to the node and cares for Events like C-D
- * (Delete Node). It forwards the requests to NodeController.
- */
+import org.rogach.simplymindmap.util.PropertyKey;
 public class NodeKeyListener implements KeyListener {
 
   private MindMapController controller;
@@ -50,17 +45,15 @@ public class NodeKeyListener implements KeyListener {
 
 	public NodeKeyListener(MindMapController controller) {
     this.controller = controller;
-    up = Resources.getInstance().common.getAdjustableProperty("keystroke_move_up");
-		down = Resources.getInstance().common.getAdjustableProperty("keystroke_move_down");
-		left = Resources.getInstance().common.getAdjustableProperty("keystroke_move_left");
-		right = Resources.getInstance().common.getAdjustableProperty("keystroke_move_right");
+    up = controller.getResources().getProperty(PropertyKey.KEYSTROKE_MOVE_UP);
+		down = controller.getResources().getProperty(PropertyKey.KEYSTROKE_MOVE_DOWN);
+		left = controller.getResources().getProperty(PropertyKey.KEYSTROKE_MOVE_LEFT);
+		right = controller.getResources().getProperty(PropertyKey.KEYSTROKE_MOVE_RIGHT);
 
 		// like in excel - write a letter means edit (PN)
 		// on the other hand it doesn't allow key navigation (sdfe)
-		disabledKeyType = Resources.getInstance().getBoolProperty(
-				"disable_key_type");
-		keyTypeAddsNew = Resources.getInstance().getBoolProperty(
-				"key_type_adds_new");
+		disabledKeyType = controller.getResources().getBoolProperty(PropertyKey.DISABLE_KEY_TYPE);
+		keyTypeAddsNew = controller.getResources().getBoolProperty(PropertyKey.KEY_TYPE_ADDS_NEW);
 		keyStrokeUp = KeyStroke.getKeyStroke(up);
 		keyStrokeDown = KeyStroke.getKeyStroke(down);
 		keyStrokeLeft = KeyStroke.getKeyStroke(left);

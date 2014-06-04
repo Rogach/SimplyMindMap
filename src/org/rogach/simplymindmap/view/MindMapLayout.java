@@ -34,13 +34,8 @@ public class MindMapLayout implements LayoutManager {
 	// minimal width for input field of leaf or folded node (PN)
 	// the MINIMAL_LEAF_WIDTH is reserved by calculation of the map width
 	public final static int MINIMAL_LEAF_WIDTH = 150;
-	protected static java.util.logging.Logger logger = null;
 
 	public MindMapLayout() {
-		if (logger == null) {
-			logger = org.rogach.simplymindmap.main.Resources.getInstance().getLogger(
-					this.getClass().getName());
-		}
 	}
 
 	public void addLayoutComponent(String name, Component comp) {

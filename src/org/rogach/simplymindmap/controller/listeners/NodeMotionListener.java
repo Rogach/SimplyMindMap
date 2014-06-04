@@ -29,6 +29,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import org.rogach.simplymindmap.controller.MindMapController;
@@ -123,7 +125,7 @@ public class NodeMotionListener extends MouseAdapter implements
 								e.getYOnScreen() + diffy);
 					}
 				} catch (AWTException e1) {
-					org.rogach.simplymindmap.main.Resources.getInstance().logException(e1);
+          Logger.getLogger(NodeMotionListener.class.getName()).log(Level.SEVERE, null, e1);
 				}
 				dragStartingPoint.x += ((node.getHGap() < 0) ? 2 : 1) * diffx;
 				dragStartingPoint.y += ((node.getShiftY() < 0) ? 2 : 1) * diffy;

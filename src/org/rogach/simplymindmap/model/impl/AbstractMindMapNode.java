@@ -41,7 +41,6 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.AbstractMindMapModel;
 import org.rogach.simplymindmap.model.MindIcon;
 import org.rogach.simplymindmap.model.MindMapEdge;
@@ -50,6 +49,7 @@ import org.rogach.simplymindmap.model.MindMapLinkRegistry;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.model.XMLElementAdapter;
 import org.rogach.simplymindmap.nanoxml.XMLElement;
+import org.rogach.simplymindmap.util.PropertyKey;
 import org.rogach.simplymindmap.util.Tools;
 import org.rogach.simplymindmap.util.XmlTools;
 import org.rogach.simplymindmap.view.NodeView;
@@ -251,7 +251,7 @@ public abstract class AbstractMindMapNode implements MindMapNode {
   // Node holds font only in the case that the font is not default.
   @Override
   public void establishOwnFont() {
-    font = (font != null) ? font : Tools.getDefaultFont();
+    font = (font != null) ? font : Tools.getDefaultFont(getMindMapController().getResources());
   }
 
   @Override
@@ -306,7 +306,7 @@ public abstract class AbstractMindMapNode implements MindMapNode {
     if (getFont() != null) {
       return new Integer(getFont().getSize()).toString();
     } else {
-      return Resources.getInstance().getProperty("defaultfontsize");
+      return getMindMapController().getResources().getProperty(PropertyKey.DEFAULT_FONT_SIZE);
     }
   }
 
@@ -315,7 +315,7 @@ public abstract class AbstractMindMapNode implements MindMapNode {
     if (getFont() != null) {
       return getFont().getFamily();
     } else {
-      return Resources.getInstance().getProperty("defaultfontsize");
+      return getMindMapController().getResources().getProperty(PropertyKey.DEFAULT_FONT_SIZE);
     }
   }
 

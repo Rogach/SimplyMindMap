@@ -47,8 +47,6 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.main.ResourceKeys;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
 
@@ -74,7 +72,6 @@ public class EditNodeTextField extends EditNodeBase {
 	protected JTextField textfield;
 	protected JComponent mParent;
 	private final JComponent mFocusListener;
-	protected static java.util.logging.Logger logger = null;
 	private Tools.IntHolder mEventSource;
 	private UndoManager mUndoManager;
 
@@ -93,10 +90,6 @@ public class EditNodeTextField extends EditNodeBase {
 		this.firstEvent = firstEvent;
 		mParent = pParent;
 		mFocusListener = pFocusListener;
-		if (logger == null) {
-			logger = org.rogach.simplymindmap.main.Resources.getInstance().getLogger(
-					this.getClass().getName());
-		}
 	}
 
 	public void show() {
@@ -236,8 +229,6 @@ public class EditNodeTextField extends EditNodeBase {
 	// listener class
 	class TextFieldListener implements KeyListener, FocusListener,
 			MouseListener, ComponentListener {
-		private boolean checkSpelling = Resources.getInstance()
-				.getBoolProperty(ResourceKeys.CHECK_SPELLING);
 
 		public void focusGained(FocusEvent e) {
 		} // focus gained
@@ -249,9 +240,6 @@ public class EditNodeTextField extends EditNodeBase {
 			// other viewers)
 			// - block selected events while in editing mode
 			if (!textfield.isVisible() || mEventSource.getValue() == CANCEL) {
-				if (checkSpelling) {
-					mEventSource.setValue(EDIT); // allow focus lost again
-				}
 				return;
 			}
 			if (e == null) { // can be when called explicitly

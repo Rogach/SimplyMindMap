@@ -56,9 +56,10 @@ import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.MouseConfigurator;
 import org.rogach.simplymindmap.controller.listeners.NodeMotionListener;
 import org.rogach.simplymindmap.controller.listeners.NodeMouseMotionListener;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.AbstractMindMapModel;
 import org.rogach.simplymindmap.model.MindMapNode;
+import org.rogach.simplymindmap.util.MindMapResources;
+import org.rogach.simplymindmap.util.PropertyKey;
 import org.rogach.simplymindmap.util.Tools;
 import org.rogach.simplymindmap.util.Tools.Pair;
 import org.rogach.simplymindmap.util.XmlTools;
@@ -71,7 +72,6 @@ public class MapView extends JPanel implements Autoscroll {
 
 	int mPaintingTime;
 	int mPaintingAmount;
-	static boolean printOnWhiteBackground;
 	static Color standardMapBackgroundColor;
 	static Color standardSelectColor;
 	static Color standardSelectRectangleColor;
@@ -103,23 +103,25 @@ public class MapView extends JPanel implements Autoscroll {
 	private boolean selectedsValid = true;
 	
 	static boolean NEED_PREF_SIZE_BUG_FIX = false;
+  
+  private MindMapResources resources;
 
-	public MapView(AbstractMindMapModel model) {
+	public MapView(AbstractMindMapModel model, MindMapResources resources) {
 		super();
-    this.controller = new MindMapController(this);
+    this.controller = new MindMapController(this, resources);
 		this.model = model;
     this.model.setMindMapController(controller);
+    this.resources = resources;
 		if (logger == null)
 			logger = Logger.getLogger(this.getClass().getName());
 		mCenterNodeTimer = new Timer();
     
 		// initialize the standard colors.
-    standardMapBackgroundColor = XmlTools.xmlToColor(Resources.getInstance().getProperty("standardbackgroundcolor"));
-    standardNodeTextColor = XmlTools.xmlToColor(Resources.getInstance().getProperty("standardnodetextcolor"));
-    standardSelectColor = XmlTools.xmlToColor(Resources.getInstance().getProperty("standardselectednodecolor"));
-    standardSelectRectangleColor = XmlTools.xmlToColor(Resources.getInstance().getProperty("standardselectednoderectanglecolor"));
-    standardDrawRectangleForSelection = XmlTools.xmlToBoolean(Resources.getInstance().getProperty("standarddrawrectangleforselection"));
-    printOnWhiteBackground = XmlTools.xmlToBoolean(Resources.getInstance().getProperty("printonwhitebackground"));
+    standardMapBackgroundColor = XmlTools.xmlToColor(resources.getProperty(PropertyKey.STANDARD_BACKGROUND_COLOR));
+    standardNodeTextColor = XmlTools.xmlToColor(resources.getProperty(PropertyKey.STANDARD_NODE_TEXT_COLOR));
+    standardSelectColor = XmlTools.xmlToColor(resources.getProperty(PropertyKey.STANDARD_NODE_SELECTED_COLOR));
+    standardSelectRectangleColor = XmlTools.xmlToColor(resources.getProperty(PropertyKey.STANDARD_SELECTED_NODE_RECTANGLE_COLOR));
+    standardDrawRectangleForSelection = XmlTools.xmlToBoolean(resources.getProperty(PropertyKey.STANDARD_DRAW_RECTANGLE_FOR_SELECTION));
 		this.setAutoscrolls(true);
 
 		this.setLayout(new MindMapLayout());
@@ -165,8 +167,7 @@ public class MapView extends JPanel implements Autoscroll {
 		this.setFocusTraversalPolicyProvider(true);
 		// like in excel - write a letter means edit (PN)
 		// on the other hand it doesn't allow key navigation (sdfe)
-		disableMoveCursor = Resources.getInstance().getBoolProperty(
-				"disable_cursor_move_paper");
+		disableMoveCursor = resources.getBoolProperty(PropertyKey.DISABLE_CURSOR_MOVE_PAPER);
 	}
 
 	public void initRoot() {
@@ -179,14 +180,7 @@ public class MapView extends JPanel implements Autoscroll {
 
 	public int getMaxNodeWidth() {
 		if (maxNodeWidth == 0) {
-			try {
-				maxNodeWidth = Integer.parseInt(Resources.getInstance()
-						.getProperty("max_node_width"));
-			} catch (NumberFormatException e) {
-				org.rogach.simplymindmap.main.Resources.getInstance().logException(e);
-				maxNodeWidth = Integer.parseInt(Resources.getInstance()
-						.getProperty("el__max_default_window_width"));
-			}
+        maxNodeWidth = resources.getIntProperty(PropertyKey.MAX_NODE_WIDTH, resources.getIntProperty(PropertyKey.MAX_DEFAULT_WINDOW_WIDTH, 100));
 		}
 		return maxNodeWidth;
 	}

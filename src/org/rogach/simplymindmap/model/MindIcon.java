@@ -28,14 +28,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.KeyStroke;
-import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.util.MindMapResources;
+import org.rogach.simplymindmap.util.PropertyKey;
 
 /**
  * This class represents a MindIcon than can be applied to a node or a whole
  * branch.
  */
 public class MindIcon implements Comparable, IconInformation {
-	public static final String PROPERTY_STRING_ICONS_LIST = "icons.list";
 	private String name;
 	private int number = UNKNOWN;
 	/**
@@ -52,17 +52,21 @@ public class MindIcon implements Comparable, IconInformation {
 	public static final int LAST = UNKNOWN;
 	static int nextNumber = UNKNOWN - 1;
 	private JComponent component = null;
+  
+  private final MindMapResources resources;
 
-	private MindIcon(String name) {
+	private MindIcon(String name, MindMapResources resources) {
 		setName(name);
 		associatedIcon = null;
+    this.resources = resources;
 	}
 
 	/**
      */
-	private MindIcon(String name, ImageIcon icon) {
+	private MindIcon(String name, ImageIcon icon, MindMapResources resources) {
 		setName(name);
 		associatedIcon = icon;
+    this.resources = resources;
 	}
 
 	public String toString() {
@@ -114,7 +118,7 @@ public class MindIcon implements Comparable, IconInformation {
 
 	public String getDescription() {
 		String resource = new String("icon_" + getName());
-		return Resources.getInstance().getResourceString(resource, resource);
+		return resources.getText(resource);
 	}
 
 	public String getIconFileName() {
@@ -132,14 +136,14 @@ public class MindIcon implements Comparable, IconInformation {
 	public ImageIcon getIcon() {
 		// We need the frame to be able to obtain the resource URL of the icon.
 		if (iconNotFound == null) {
-			iconNotFound = new ImageIcon(Resources.getInstance().getResource(
+			iconNotFound = new ImageIcon(resources.getResource(
 					"org/rogach/simplymindmap/images/IconNotFound.png"));
 		}
 
 		if (associatedIcon != null)
 			return associatedIcon;
 		if (name != null) {
-			URL imageURL = Resources.getInstance().getResource(
+			URL imageURL = resources.getResource(
 					getIconFileName());
 			ImageIcon icon = imageURL == null ? iconNotFound : new ImageIcon(
 					imageURL);
@@ -161,11 +165,11 @@ public class MindIcon implements Comparable, IconInformation {
 		this.associatedIcon = _associatedIcon;
 	}
 
-	public static Vector<String> getAllIconNames() {
+	public static Vector<String> getAllIconNames(MindMapResources resources) {
 		if (mAllIconNames != null)
 			return mAllIconNames;
 		Vector<String> mAllIconNames = new Vector<>();
-		String icons = Resources.getInstance().getProperty(PROPERTY_STRING_ICONS_LIST);
+		String icons = resources.getProperty(PropertyKey.ICONS_LIST);
 		StringTokenizer tokenizer = new StringTokenizer(icons, ";");
 		while (tokenizer.hasMoreTokens()) {
 			mAllIconNames.add(tokenizer.nextToken());
@@ -173,23 +177,23 @@ public class MindIcon implements Comparable, IconInformation {
 		return mAllIconNames;
 	}
 
-	public static MindIcon factory(String iconName) {
+	public static MindIcon factory(String iconName, MindMapResources resources) {
 		if (createdIcons.containsKey(iconName)) {
 			return (MindIcon) createdIcons.get(iconName);
 		}
-		MindIcon icon = new MindIcon(iconName);
+		MindIcon icon = new MindIcon(iconName, resources);
 		createdIcons.put(iconName, icon);
 		return icon;
 	}
 
 	/**
      */
-	public static MindIcon factory(String iconName, ImageIcon icon) {
+	public static MindIcon factory(String iconName, ImageIcon icon, MindMapResources resources) {
 		if (createdIcons.containsKey(iconName)) {
 			return (MindIcon) createdIcons.get(iconName);
 		}
-		MindIcon mindIcon = new MindIcon(iconName, icon);
-		getAllIconNames().add(iconName);
+		MindIcon mindIcon = new MindIcon(iconName, icon, resources);
+		getAllIconNames(resources).add(iconName);
 		createdIcons.put(iconName, mindIcon);
 		return mindIcon;
 	}
@@ -211,7 +215,7 @@ public class MindIcon implements Comparable, IconInformation {
 
 	private int getNumber() {
 		if (number == UNKNOWN) {
-			number = getAllIconNames().indexOf(name);
+			number = getAllIconNames(resources).indexOf(name);
 		}
 		if (number == UNKNOWN) {
 			number = nextNumber--;

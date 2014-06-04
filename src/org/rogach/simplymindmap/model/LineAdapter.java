@@ -21,8 +21,6 @@
 package org.rogach.simplymindmap.model;
 
 import java.awt.Color;
-import org.rogach.simplymindmap.main.Resources;
-import org.rogach.simplymindmap.util.XmlTools;
 
 public abstract class LineAdapter implements MindMapLine {
 
@@ -42,27 +40,12 @@ public abstract class LineAdapter implements MindMapLine {
 	public LineAdapter(MindMapNode target) {
 		this.target = target;
 		width = DEFAULT_WIDTH;
-		updateStandards();
 
 	}
 
 	//
 	// Attributes
 	//
-
-	/**
-     */
-	protected void updateStandards() {
-		if (getStandardColor() == null) {
-			String stdColor = Resources.getInstance().getProperty(
-					getStandardColorPropertyString());
-			if (stdColor != null && stdColor.length() == 7) {
-				setStandardColor(XmlTools.xmlToColor(stdColor));
-			} else {
-				setStandardColor(Color.RED);
-			}
-		}
-	}
 
 	public Color getColor() {
 		if (color == null) {
@@ -133,7 +116,5 @@ public abstract class LineAdapter implements MindMapLine {
 	 * See {@link LineAdapter.setStandardColor}
 	 */
 	protected abstract Color getStandardColor();
-
-	protected abstract String getStandardColorPropertyString();
 
 }

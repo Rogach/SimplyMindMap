@@ -63,7 +63,7 @@ public class FontFamilyAction extends NodeGeneralAction implements NodeActorXml 
 	/**
      */
 	public void setFontFamily(MindMapNode node, String fontFamilyValue) {
-		modeController.doTransaction(
+		controller.doTransaction(
 				(String) getValue(NAME), getActionPair(node, fontFamilyValue));
 	}
 
@@ -98,7 +98,7 @@ public class FontFamilyAction extends NodeGeneralAction implements NodeActorXml 
 				node.setFont(
 						new Font(fontFamily, node.getFont().getStyle(), node
 								.getFont().getSize()));
-				modeController.nodeChanged(node);
+				controller.nodeChanged(node);
 			}
 		}
 	}

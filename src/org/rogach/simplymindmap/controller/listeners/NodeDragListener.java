@@ -32,8 +32,8 @@ import java.awt.dnd.DragSourceListener;
 import java.awt.event.InputEvent;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.MindMapNodesSelection;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.MindMapNode;
+import org.rogach.simplymindmap.util.PropertyKey;
 import org.rogach.simplymindmap.util.Tools;
 import org.rogach.simplymindmap.view.MainView;
 
@@ -60,7 +60,7 @@ public class NodeDragListener implements DragGestureListener {
 	}
 
 	public void dragGestureRecognized(DragGestureEvent e) {
-		if (!Resources.getInstance().getBoolProperty("draganddrop"))
+		if (!controller.getResources().getBoolProperty(PropertyKey.DRAG_AND_DROP))
 			return;
 
 		MindMapNode node = ((MainView) e.getComponent()).getNodeView()

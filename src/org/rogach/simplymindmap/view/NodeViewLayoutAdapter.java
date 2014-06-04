@@ -33,7 +33,6 @@ import org.rogach.simplymindmap.util.Tools;
  */
 abstract public class NodeViewLayoutAdapter implements NodeViewLayout {
 	protected final int LISTENER_VIEW_WIDTH = 10;
-	protected static java.util.logging.Logger logger = null;
 	protected Point location = new Point();
 	private static Dimension minDimension;
 	private NodeView view;
@@ -44,10 +43,6 @@ abstract public class NodeViewLayoutAdapter implements NodeViewLayout {
 	private int spaceAround;
 
 	public NodeViewLayoutAdapter() {
-		if (logger == null) {
-			logger = org.rogach.simplymindmap.main.Resources.getInstance().getLogger(
-					this.getClass().getName());
-		}
 	}
 	
 	public void addLayoutComponent(String arg0, Component arg1) {

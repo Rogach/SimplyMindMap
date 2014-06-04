@@ -34,7 +34,7 @@ import org.rogach.simplymindmap.controller.actions.instance.CompoundAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 import org.rogach.simplymindmap.controller.actions.xml.AbstractXmlAction;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
-import org.rogach.simplymindmap.main.Resources;
+import org.rogach.simplymindmap.util.PropertyKey;
 import org.rogach.simplymindmap.util.Tools;
 
 public class UndoAction extends AbstractXmlAction {
@@ -146,13 +146,7 @@ public class UndoAction extends AbstractXmlAction {
 			ActionPair storagePair = new ActionPair(dcDo, dcUndo);
 			actionPairList.add(0, storagePair);
 			// and cut vector, if bigger than given size:
-			int maxEntries = 100;
-			try {
-				maxEntries = new Integer(Resources.getInstance().getProperty(
-						"undo_levels")).intValue();
-			} catch (NumberFormatException e) {
-				org.rogach.simplymindmap.main.Resources.getInstance().logException(e);
-			}
+			int maxEntries = controller.getResources().getIntProperty(PropertyKey.UNDO_LEVELS, 100);
 			while (actionPairList.size() > maxEntries) {
 				actionPairList.remove(actionPairList.size() - 1); // remove
 																	// last elt

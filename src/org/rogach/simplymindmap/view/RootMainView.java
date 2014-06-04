@@ -27,7 +27,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.util.Tools;
 
 class RootMainView extends MainView {
@@ -113,15 +112,6 @@ class RootMainView extends MainView {
 	public void setDraggedOver(Point p) {
 		setDraggedOver((dropPosition(p.getX())) ? NodeView.DRAGGED_OVER_SON_LEFT
 				: NodeView.DRAGGED_OVER_SON);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see freemind.view.mindmapview.NodeView#getStyle()
-	 */
-	String getStyle() {
-		return Resources.getInstance().getProperty("standardrootnodestyle");
 	}
 
 	/**

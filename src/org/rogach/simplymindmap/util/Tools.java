@@ -56,6 +56,7 @@ import java.util.ListIterator;
 import java.util.Random;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
@@ -67,7 +68,6 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import org.rogach.simplymindmap.controller.actions.instance.CompoundAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.view.NodeView;
 
 /**
@@ -173,10 +173,10 @@ public class Tools {
 				+ text.substring(1, text.length());
 	}
 
-  public static Font getDefaultFont() {
-    String fontFamily = Resources.getInstance().getProperty("defaultfont");
-    int fontStyle = Resources.getInstance().getIntProperty("defaultfontstyle", 0);
-    int fontSize = Resources.getInstance().getIntProperty("defaultfontsize", 12);
+  public static Font getDefaultFont(MindMapResources resources) {
+    String fontFamily = resources.getProperty(PropertyKey.DEFAULT_FONT);
+    int fontStyle = resources.getIntProperty(PropertyKey.DEFAULT_FONT_STYLE, 0);
+    int fontSize = resources.getIntProperty(PropertyKey.DEFAULT_FONT_SIZE, 12);
     return new Font(fontFamily, fontStyle, fontSize);
   }
 
@@ -636,7 +636,7 @@ public class Tools {
 				logger.warning("Can't wait for event queue, if I'm inside this queue!");
 			}
 		} catch (InterruptedException | InvocationTargetException e) {
-			org.rogach.simplymindmap.main.Resources.getInstance().logException(e);
+      Logger.getLogger(Tools.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 

@@ -40,7 +40,6 @@ public abstract class MainView extends JLabel {
 	static Dimension minimumSize = new Dimension(0, 0);
 	static Dimension maximumSize = new Dimension(Integer.MAX_VALUE,
 			Integer.MAX_VALUE);
-	private static java.util.logging.Logger logger = null;
 	private static final int MIN_HOR_NODE_SIZE = 10;
 
 	int getZoomedFoldingSymbolHalfWidth() {
@@ -48,10 +47,6 @@ public abstract class MainView extends JLabel {
 	}
 
 	MainView() {
-		if (logger == null) {
-			logger = org.rogach.simplymindmap.main.Resources.getInstance().getLogger(
-					this.getClass().getName());
-		}
 		isPainting = false;
 		setAlignmentX(NodeView.CENTER_ALIGNMENT);
 		setHorizontalAlignment(CENTER);

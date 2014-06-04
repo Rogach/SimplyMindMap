@@ -27,7 +27,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import javax.swing.JComponent;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.util.Tools;
 
 /**
@@ -38,21 +37,15 @@ import org.rogach.simplymindmap.util.Tools;
  * 
  */
 public class NodeMotionListenerView extends JComponent {
-	protected static java.util.logging.Logger logger = null;
 	public NodeMotionListenerView(NodeView view) {
 		super();
-		if (logger == null) {
-			logger = org.rogach.simplymindmap.main.Resources.getInstance().getLogger(
-					this.getClass().getName());
-		}
 		this.movedView = view;
 		MapView map = view.getMap();
 		addMouseListener(map.getNodeMotionListener());
 		addMouseMotionListener(map.getNodeMotionListener());
 		// fc, 16.6.2005: to emphasis the possible movement.
 		this.setCursor(new Cursor(Cursor.MOVE_CURSOR));
-		final String helpMsg = Resources.getInstance().getResourceString(
-				"node_location_help");
+		final String helpMsg = view.getModel().getMindMapController().getResources().getText("node_location_help");
 		this.setToolTipText(helpMsg);
 	}
 

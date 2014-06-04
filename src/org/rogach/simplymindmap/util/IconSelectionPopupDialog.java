@@ -41,7 +41,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.border.BevelBorder;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.IconInformation;
 
 public class IconSelectionPopupDialog extends JDialog implements KeyListener,
@@ -57,10 +56,11 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
 	private Position selected = new Position(0, 0);
 	private static Position lastPosition = new Position(0, 0);
 	private int mModifiers;
+  private final MindMapResources resources;
 
-	public IconSelectionPopupDialog(Window caller, Vector icons) {
-
-		super(caller, Resources.getInstance().getResourceString("select_icon"));
+	public IconSelectionPopupDialog(Window caller, Vector icons, MindMapResources resources) {
+		super(caller, resources.getText("select_icon"));
+    this.resources = resources;
 		getContentPane().setLayout(new BorderLayout());
 		this.icons = icons;
 
@@ -105,7 +105,7 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
 
 		getContentPane().add(iconPanel, BorderLayout.CENTER);
 		descriptionLabel = new JLabel(" ");
-    descriptionLabel.setFont(Tools.getDefaultFont());
+    descriptionLabel.setFont(Tools.getDefaultFont(resources));
 		// descriptionLabel.setEnabled(false);
 		getContentPane().add(descriptionLabel, BorderLayout.SOUTH);
 		setSelectedPosition(lastPosition);
@@ -152,9 +152,7 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
 		final int index = calculateIndex(position);
 		final IconInformation iconInformation = (IconInformation) icons
 				.get(index);
-		final String keyStroke = Resources.getInstance().common
-				.getAdjustableProperty(iconInformation
-						.getKeystrokeResourceName());
+		final String keyStroke = resources.unsafeGetProperty(iconInformation.getKeystrokeResourceName());
 		if (keyStroke != null) {
 			descriptionLabel.setText(iconInformation.getDescription() + ", "
 					+ keyStroke);

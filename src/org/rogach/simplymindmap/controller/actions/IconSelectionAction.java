@@ -28,7 +28,7 @@ public class IconSelectionAction extends AbstractAction {
     actions.add(controller.removeLastIconAction);
     actions.add(controller.removeAllIconsAction);
     IconSelectionPopupDialog selectionDialog = 
-            new IconSelectionPopupDialog(JOptionPane.getFrameForComponent(controller.getView()), actions);
+            new IconSelectionPopupDialog(JOptionPane.getFrameForComponent(controller.getView()), actions, controller.getResources());
     final MapView mapView = controller.getView();
     mapView.scrollNodeToVisible(focussed, 0);
     selectionDialog.pack();

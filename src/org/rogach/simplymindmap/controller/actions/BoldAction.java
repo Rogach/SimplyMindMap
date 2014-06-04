@@ -48,7 +48,7 @@ public class BoldAction extends NodeGeneralAction implements NodeActorXml {
 			MindMapNode node = getNodeFromID(boldact.getNode());
 			if (node.isBold() != boldact.getBold()) {
 				node.setBold(boldact.getBold());
-				modeController.nodeChanged(node);
+				controller.nodeChanged(node);
 			}
 		}
 	}
@@ -59,7 +59,7 @@ public class BoldAction extends NodeGeneralAction implements NodeActorXml {
 
 	public ActionPair apply(AbstractMindMapModel model, MindMapNode selected) {
 		// every node is set to the inverse of the focussed node.
-		boolean bold = modeController.getSelected().isBold();
+		boolean bold = controller.getSelected().isBold();
 		return getActionPair(selected, !bold);
 	}
 
@@ -81,7 +81,7 @@ public class BoldAction extends NodeGeneralAction implements NodeActorXml {
 	}
 
 	public boolean isSelected(JMenuItem item, Action action) {
-		return modeController.getSelected().isBold();
+		return controller.getSelected().isBold();
 	}
 
 }

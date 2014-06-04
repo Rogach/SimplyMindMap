@@ -24,6 +24,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.CubicCurve2D;
+import org.rogach.simplymindmap.util.PropertyKey;
 
 /**
  * This class represents a single Edge of a MindMap.
@@ -46,7 +47,7 @@ public class BezierEdgeView extends EdgeView {
 		int sign = (getTarget().isLeft()) ? -1 : 1;
 		int sourceSign = 1;
 		if (getSource().isRoot()
-				&& !VerticalRootNodeViewLayout.USE_COMMON_OUT_POINT_FOR_ROOT_NODE) {
+				&& !source.getModel().getMindMapController().getResources().getBoolProperty(PropertyKey.USE_COMMON_OUT_POINT_FOR_ROOT_NODE)) {
 			sourceSign = 0;
 		}
 		int xctrl = getMap().getZoomed(sourceSign * sign * XCTRL);

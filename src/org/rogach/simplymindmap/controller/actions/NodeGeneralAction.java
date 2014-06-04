@@ -35,12 +35,11 @@ import org.rogach.simplymindmap.controller.actions.instance.CompoundAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 import org.rogach.simplymindmap.controller.actions.xml.AbstractXmlAction;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
 
 public class NodeGeneralAction extends AbstractXmlAction {
-	protected final MindMapController modeController;
+	protected final MindMapController controller;
 
 	private org.rogach.simplymindmap.controller.actions.NodeActorXml actor;
 
@@ -55,8 +54,8 @@ public class NodeGeneralAction extends AbstractXmlAction {
 	 */
 	protected NodeGeneralAction(MindMapController modeController,
 			final String textID, String iconPath) {
-		super(null, iconPath == null ? null : new ImageIcon(Resources.getInstance().getResource(iconPath)), modeController);
-		this.modeController = modeController;
+		super(null, iconPath == null ? null : new ImageIcon(modeController.getResources().getResource(iconPath)), modeController);
+		this.controller = modeController;
 		if (textID != null) {
 			setName("");
 		}
@@ -105,11 +104,11 @@ public class NodeGeneralAction extends AbstractXmlAction {
 
 	public void xmlActionPerformed(ActionEvent e) {
 		if (singleNodeOperation != null) {
-			for (ListIterator it = modeController.getSelecteds().listIterator(); it
+			for (ListIterator it = controller.getSelecteds().listIterator(); it
 					.hasNext();) {
 				MindMapNode selected = (MindMapNode) it.next();
 				singleNodeOperation.apply(
-						this.modeController.getMapModel(),
+						this.controller.getMapModel(),
 						selected);
 			}
 		} else {
@@ -120,10 +119,10 @@ public class NodeGeneralAction extends AbstractXmlAction {
 			CompoundAction undo = new CompoundAction();
 			// sort selectedNodes list by depth, in order to guarantee that
 			// sons are deleted first:
-			for (ListIterator it = modeController.getSelecteds().listIterator(); it
+			for (ListIterator it = controller.getSelecteds().listIterator(); it
 					.hasNext();) {
 				MindMapNode selected = (MindMapNode) it.next();
-				ActionPair pair = actor.apply(this.modeController.getMapModel(),
+				ActionPair pair = actor.apply(this.controller.getMapModel(),
 						selected);
 				if (pair != null) {
 					doAction.addChoice(pair.getDoAction());
@@ -132,14 +131,14 @@ public class NodeGeneralAction extends AbstractXmlAction {
 			}
 			if (doAction.sizeChoiceList() == 0)
 				return;
-			modeController.doTransaction((String) getValue(NAME),
+			controller.doTransaction((String) getValue(NAME),
 					new ActionPair(doAction, undo));
 		}
 
 	}
 
 	protected void execute(ActionPair pair) {
-		modeController.doTransaction(getShortDescription(), pair);
+		controller.doTransaction(getShortDescription(), pair);
 	}
 
 	/*
@@ -153,14 +152,14 @@ public class NodeGeneralAction extends AbstractXmlAction {
 	}
 
 	protected MindMapNode getNodeFromID(String string) {
-		return modeController.getNodeFromID(string);
+		return controller.getNodeFromID(string);
 	}
 
 	/**
      */
 	protected String getNodeID(MindMapNode selected) {
 		// TODO Auto-generated method stub
-		return modeController.getNodeID(selected);
+		return controller.getNodeID(selected);
 	}
 
 }

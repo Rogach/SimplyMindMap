@@ -30,10 +30,11 @@ import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.MindMapNodesSelection;
-import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.view.MainView;
 import org.rogach.simplymindmap.view.NodeView;
@@ -148,7 +149,7 @@ public class NodeDropListener implements DropTargetListener {
 					MindMapNode actualNode = targetNode;
 					do {
 						if (selecteds.contains(actualNode)) {
-							String message = Resources.getInstance()
+							String message = controller.getResources()
 									.getText("cannot_move_to_child");
               JOptionPane.showMessageDialog(controller.getView(), message, "", JOptionPane.ERROR_MESSAGE);
               return;
@@ -171,8 +172,7 @@ public class NodeDropListener implements DropTargetListener {
 
 				}
 		} catch (UnsupportedFlavorException | IOException | HeadlessException e) {
-			System.err.println("Drop exception:" + e);
-			org.rogach.simplymindmap.main.Resources.getInstance().logException(e);
+      Logger.getLogger(NodeDropListener.class.getName()).log(Level.SEVERE, null, e);
 			dtde.dropComplete(false);
 			return;
 		}
