@@ -28,6 +28,8 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MindMapNodesSelection implements Transferable, ClipboardOwner {
 
@@ -56,7 +58,7 @@ public class MindMapNodesSelection implements Transferable, ClipboardOwner {
 			copyNodeIdsFlavor = new DataFlavor(
 					"application/freemind-node-ids; class=java.util.List");
 		} catch (Exception e) {
-			System.err.println(e);
+      Logger.getLogger(MindMapNodesSelection.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 

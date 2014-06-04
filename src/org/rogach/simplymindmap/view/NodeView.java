@@ -43,6 +43,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComponent;
 import javax.swing.SwingConstants;
@@ -842,8 +843,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 		if (font != null) {
 			mainView.setFont(font);
 		} else {
-			// We can survive this trouble.
-			System.err.println("NodeView.update(): default font is null.");
+      Logger.getLogger(NodeView.class.getName()).log(Level.SEVERE, "NodeView.update(): default font is null.");
 		}
 	}
 

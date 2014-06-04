@@ -37,8 +37,7 @@ public class MindMapResources {
         defaultProperties.load(in);
       }
     } catch (IOException ex) {
-      ex.printStackTrace();
-      System.err.println("Panic! Error while loading default properties.");
+      Logger.getLogger(MindMapResources.class.getName()).log(Level.SEVERE, null, ex);
     }
     return defaultProperties;
   }
