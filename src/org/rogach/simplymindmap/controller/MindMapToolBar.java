@@ -6,7 +6,9 @@ import java.awt.event.ActionListener;
 import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.JToolBar;
+import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
+import org.rogach.simplymindmap.view.NodeView;
 
 public class MindMapToolBar extends JToolBar {
   public MindMapToolBar(MindMapController controller) {
@@ -31,13 +33,38 @@ public class MindMapToolBar extends JToolBar {
     comboBox.setMaximumSize(new Dimension(90, 50));
     comboBox.setSelectedItem(controller.getSelected().getFontFamilyName());
     comboBox.setFont(comboBox.getFont().deriveFont(11f));
-    comboBox.addActionListener(new ActionListener() {
+    final ActionListener fontChangeListener = new ActionListener() {
 
       @Override
       public void actionPerformed(ActionEvent e) {
         controller.fontFamily.actionPerformed((String) comboBox.getSelectedItem());
+        controller.obtainFocusForSelected();
       }
-    });
+    };
+    comboBox.addActionListener(fontChangeListener);
+    controller.registerNodeSelectionListener(new MindMapController.NodeSelectionListener() {
+
+      @Override
+      public void onUpdateNodeHook(MindMapNode node) {}
+
+      @Override
+      public void onFocusNode(NodeView node) {}
+
+      @Override
+      public void onLostFocusNode(NodeView node) {}
+
+      @Override
+      public void onSaveNode(MindMapNode node) {}
+
+      @Override
+      public void onSelectionChange(NodeView pNode, boolean pIsSelected) {
+        if (pIsSelected) {
+          comboBox.removeActionListener(fontChangeListener);
+          comboBox.setSelectedItem(controller.getSelected().getFontFamilyName());
+          comboBox.addActionListener(fontChangeListener);
+        }
+      }
+    }, false);
     return comboBox;
   }
   
@@ -46,13 +73,38 @@ public class MindMapToolBar extends JToolBar {
     final JComboBox<String> comboBox = new JComboBox<>(fontSizes);
     comboBox.setMaximumSize(new Dimension(40, 50));
     comboBox.setSelectedItem(controller.getSelected().getFontSize());
-    comboBox.addActionListener(new ActionListener() {
+    final ActionListener fontSizeChangeListener = new ActionListener() {
 
       @Override
       public void actionPerformed(ActionEvent e) {
         controller.fontSize.actionPerformed((String) comboBox.getSelectedItem());
+        controller.obtainFocusForSelected();
       }
-    });
+    };
+    comboBox.addActionListener(fontSizeChangeListener);
+    controller.registerNodeSelectionListener(new MindMapController.NodeSelectionListener() {
+
+      @Override
+      public void onUpdateNodeHook(MindMapNode node) {}
+
+      @Override
+      public void onFocusNode(NodeView node) {}
+
+      @Override
+      public void onLostFocusNode(NodeView node) {}
+
+      @Override
+      public void onSaveNode(MindMapNode node) {}
+
+      @Override
+      public void onSelectionChange(NodeView pNode, boolean pIsSelected) {
+        if (pIsSelected) {
+          comboBox.removeActionListener(fontSizeChangeListener);
+          comboBox.setSelectedItem(controller.getSelected().getFontSize());
+          comboBox.addActionListener(fontSizeChangeListener);
+        }
+      }
+    }, false);
     return comboBox;
   }
 }
