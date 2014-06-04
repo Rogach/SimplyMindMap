@@ -10,8 +10,9 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.table.AbstractTableModel;
-import org.rogach.simplymindmap.model.MindMapModel;
+import org.rogach.simplymindmap.model.AbstractMindMapModel;
 import org.rogach.simplymindmap.model.MindMapNode;
+import org.rogach.simplymindmap.model.impl.DefaultMindMapModel;
 import org.rogach.simplymindmap.view.MapView;
 import org.rogach.simplymindmap.view.MapViewScrollPane;
 
@@ -22,7 +23,7 @@ public class StandaloneTree {
     // populate data
     MindMapNode root = new MindMapNode("root");
     
-    MindMapModel m = new MindMapModel(root);
+    AbstractMindMapModel m = new DefaultMindMapModel(root);
     
     MapView mapView = new MapView(m);
     mapView.selectAsTheOnlyOneSelected(mapView.getRoot());

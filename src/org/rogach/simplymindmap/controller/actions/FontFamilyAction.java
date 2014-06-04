@@ -28,7 +28,7 @@ import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.actions.instance.FontNodeAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
-import org.rogach.simplymindmap.model.MindMapModel;
+import org.rogach.simplymindmap.model.AbstractMindMapModel;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
 
@@ -52,7 +52,7 @@ public class FontFamilyAction extends NodeGeneralAction implements NodeActorXml 
 		super.actionPerformed(null);
 	}
 
-	public ActionPair apply(MindMapModel model, MindMapNode selected) {
+	public ActionPair apply(AbstractMindMapModel model, MindMapNode selected) {
 		return getActionPair(selected, actionFont);
 	}
 

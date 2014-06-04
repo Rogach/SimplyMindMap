@@ -70,7 +70,7 @@ public class MindMapXMLElement extends XMLElementAdapter {
 			ClassLoader loader = this.getClass().getClassLoader();
 			// constructed.
 			Class<?> nodeJavaClass = Class.forName(nodeClass, true, loader);
-			Class[] constrArgs = new Class[] { Object.class, MindMapModel.class };
+			Class[] constrArgs = new Class[] { Object.class, AbstractMindMapModel.class };
 			Object[] constrObjs = new Object[] { null, getMapModel() };
 			Constructor<?> constructor = nodeJavaClass.getConstructor(constrArgs);
 			MindMapNode nodeImplementor = (MindMapNode) constructor

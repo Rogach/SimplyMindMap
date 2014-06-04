@@ -85,7 +85,7 @@ import org.rogach.simplymindmap.controller.actions.xml.UndoActionHandler;
 import org.rogach.simplymindmap.main.ResourceKeys;
 import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.model.MindIcon;
-import org.rogach.simplymindmap.model.MindMapModel;
+import org.rogach.simplymindmap.model.AbstractMindMapModel;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.model.MindMapXMLElement;
 import org.rogach.simplymindmap.model.XMLElementAdapter;
@@ -121,13 +121,13 @@ public class MindMapController {
 
 	public Action increaseNodeFont = new NodeGeneralAction(this,
 			"increase_node_font_size", null, new SingleNodeOperation() {
-				public void apply(MindMapModel map, MindMapNode node) {
+				public void apply(AbstractMindMapModel map, MindMapNode node) {
 					increaseFontSize(node, 1);
 				}
 			});
 	public Action decreaseNodeFont = new NodeGeneralAction(this,
 			"decrease_node_font_size", null, new SingleNodeOperation() {
-				public void apply(MindMapModel map, MindMapNode node) {
+				public void apply(AbstractMindMapModel map, MindMapNode node) {
 					increaseFontSize(node, -1);
 				}
 			});
@@ -173,7 +173,7 @@ public class MindMapController {
    * The model, this controller belongs to. It may be null, if it is the
    * default controller that does not show a map.
    */
-  private MindMapModel mModel;
+  private AbstractMindMapModel mModel;
   private HashSet<NodeSelectionListener> mNodeSelectionListeners = new HashSet<>();
   private HashSet<NodeLifetimeListener> mNodeLifetimeListeners = new HashSet<>();
   // status, currently: default, blocked (PN)
@@ -253,7 +253,7 @@ public class MindMapController {
 		}
 	}
 
-  public void setMapModel(MindMapModel model) {
+  public void setMapModel(AbstractMindMapModel model) {
     mModel = model;
   }
 
@@ -521,7 +521,7 @@ public class MindMapController {
   // fc, 29.2.2004: there is no sense in having this private and the
   // controller public,
   // because the getController().getModel() method is available anyway.
-  public MindMapModel getMapModel() {
+  public AbstractMindMapModel getMapModel() {
     return mModel;
   }
 

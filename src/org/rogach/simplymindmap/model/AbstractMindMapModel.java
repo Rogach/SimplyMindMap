@@ -43,7 +43,7 @@ import org.rogach.simplymindmap.main.Resources;
 import org.rogach.simplymindmap.nanoxml.XMLParseException;
 import org.rogach.simplymindmap.util.Tools;
 
-public class MindMapModel extends DefaultTreeModel {
+public abstract class AbstractMindMapModel extends DefaultTreeModel {
 
 	public static final String MAP_INITIAL_START = "<map version=\"";
 	public static final String RESTORE_MODE_MIND_MAP = "MindMap:";
@@ -63,11 +63,11 @@ public class MindMapModel extends DefaultTreeModel {
 	// Constructors
 	//
 
-	public MindMapModel() {
+	public AbstractMindMapModel() {
 		this(null);
 	}
 
-	public MindMapModel(MindMapNode root) {
+	public AbstractMindMapModel(MindMapNode root) {
 		super(null);
 
 		// register new LinkRegistryAdapter
@@ -381,9 +381,6 @@ public class MindMapModel extends DefaultTreeModel {
 		}
 	}
   
-  public MindMapNode newNode(String userObject) {
-    return new MindMapNode(userObject, this);
-  }
-
+  public abstract MindMapNode newNode(String userObject);
 
 }

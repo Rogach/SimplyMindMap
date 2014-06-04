@@ -27,7 +27,7 @@ import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.actions.instance.MoveNodeXmlAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
-import org.rogach.simplymindmap.model.MindMapModel;
+import org.rogach.simplymindmap.model.AbstractMindMapModel;
 import org.rogach.simplymindmap.model.MindMapNode;
 
 public class MoveNodeAction extends NodeGeneralAction implements NodeActorXml {
@@ -55,7 +55,7 @@ public class MoveNodeAction extends NodeGeneralAction implements NodeActorXml {
 		return MoveNodeXmlAction.class;
 	}
 
-	public ActionPair apply(MindMapModel model, MindMapNode selected) {
+	public ActionPair apply(AbstractMindMapModel model, MindMapNode selected) {
 		// reset position
 		if (selected.isRoot())
 			return null;

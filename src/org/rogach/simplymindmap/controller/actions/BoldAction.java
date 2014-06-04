@@ -31,7 +31,7 @@ import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.actions.instance.BoldNodeAction;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
-import org.rogach.simplymindmap.model.MindMapModel;
+import org.rogach.simplymindmap.model.AbstractMindMapModel;
 import org.rogach.simplymindmap.model.MindMapNode;
 
 public class BoldAction extends NodeGeneralAction implements NodeActorXml {
@@ -57,7 +57,7 @@ public class BoldAction extends NodeGeneralAction implements NodeActorXml {
 		return BoldNodeAction.class;
 	}
 
-	public ActionPair apply(MindMapModel model, MindMapNode selected) {
+	public ActionPair apply(AbstractMindMapModel model, MindMapNode selected) {
 		// every node is set to the inverse of the focussed node.
 		boolean bold = modeController.getSelected().isBold();
 		return getActionPair(selected, !bold);
