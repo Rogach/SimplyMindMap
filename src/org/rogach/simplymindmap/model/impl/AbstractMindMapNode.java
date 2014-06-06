@@ -374,16 +374,12 @@ public abstract class AbstractMindMapNode implements MindMapNode {
     }
   }
   
-  public void addStateIcon(MindIcon icon) {
-    this.addStateIcon(icon, MindIcon.LAST);
-  }
-  
   public void addStateIcon(MindIcon icon, int position) {
     createIcons();
     if (position == MindIcon.LAST) {
-      icons.add(icon);
+      stateIcons.add(icon);
     } else {
-      icons.add(position, icon);
+      stateIcons.add(position, icon);
     }
     this.getMindMapController().nodeChanged(this);
   }
