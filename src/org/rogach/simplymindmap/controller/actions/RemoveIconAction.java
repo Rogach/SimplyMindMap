@@ -106,7 +106,7 @@ public class RemoveIconAction extends NodeGeneralAction implements
 	}
 
 	public String getDescription() {
-		return (String) getValue(Action.SHORT_DESCRIPTION);
+		return controller.getResources().getText("remove_last_icon");
 	}
 
 	public ImageIcon getIcon() {

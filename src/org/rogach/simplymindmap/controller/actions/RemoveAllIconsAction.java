@@ -47,8 +47,6 @@ public class RemoveAllIconsAction extends NodeGeneralAction implements
 
 	private final IconAction addIconAction;
 
-	/**
-     */
 	public RemoveAllIconsAction(MindMapController modeController,
 			IconAction addIconAction) {
 		super(modeController, "remove_all_icons", "org/rogach/simplymindmap/images/edittrash.png");
@@ -96,7 +94,7 @@ public class RemoveAllIconsAction extends NodeGeneralAction implements
 	}
 
 	public String getDescription() {
-		return (String) getValue(Action.SHORT_DESCRIPTION);
+		return controller.getResources().getText("remove_all_icons");
 	}
 
 	public ImageIcon getIcon() {

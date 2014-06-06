@@ -105,8 +105,7 @@ public class IconSelectionPopupDialog extends JDialog implements KeyListener,
 
 		getContentPane().add(iconPanel, BorderLayout.CENTER);
 		descriptionLabel = new JLabel(" ");
-    descriptionLabel.setFont(Tools.getDefaultFont(resources));
-		// descriptionLabel.setEnabled(false);
+    descriptionLabel.setFont(Tools.getDefaultFont(resources).deriveFont(10f));
 		getContentPane().add(descriptionLabel, BorderLayout.SOUTH);
 		setSelectedPosition(lastPosition);
 		select(getSelectedPosition());
