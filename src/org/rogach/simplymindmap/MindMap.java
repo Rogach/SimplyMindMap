@@ -8,6 +8,8 @@ import javax.swing.JScrollPane;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.controller.MindMapMenuBar;
 import org.rogach.simplymindmap.controller.MindMapToolBar;
+import org.rogach.simplymindmap.controller.listeners.DefaultUndoableActionListener;
+import org.rogach.simplymindmap.controller.listeners.UndoableActionListener;
 import org.rogach.simplymindmap.model.AbstractMindMapModel;
 import org.rogach.simplymindmap.model.impl.DefaultMindMapModel;
 import org.rogach.simplymindmap.util.MindMapResources;
@@ -80,6 +82,26 @@ public class MindMap extends JPanel {
   
   public void setHeaderVisible(boolean visible) {
     headerPanel.setVisible(visible);
+  }
+  
+  public void addUndoableActionListener(UndoableActionListener undoListener) {
+    this.getController().getActionFactory().addUndoableActionListener(undoListener);
+    if (undoListener instanceof DefaultUndoableActionListener) {
+      DefaultUndoableActionListener defaultUndoListener = 
+              (DefaultUndoableActionListener) undoListener;
+      this.getController().undo.setUndoHandler(defaultUndoListener);
+      this.getController().redo.setUndoHandler(defaultUndoListener);
+      defaultUndoListener.setUndoAction(this.getController().undo);
+      defaultUndoListener.setRedoAction(this.getController().redo);
+      toolBar.setUndoActionsVisible(true);
+    }
+  }
+  
+  public void removeUndoableActionListener(UndoableActionListener undoListener) {
+    this.getController().getActionFactory().removeUndoableActionListener(undoListener);
+    if (undoListener instanceof DefaultUndoableActionListener) {
+      toolBar.setUndoActionsVisible(false);
+    }
   }
   
 }

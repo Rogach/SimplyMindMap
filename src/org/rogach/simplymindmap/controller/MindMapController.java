@@ -84,7 +84,6 @@ import org.rogach.simplymindmap.controller.actions.ZoomInAction;
 import org.rogach.simplymindmap.controller.actions.ZoomOutAction;
 import org.rogach.simplymindmap.controller.actions.xml.ActionFactory;
 import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
-import org.rogach.simplymindmap.controller.actions.xml.UndoActionHandler;
 import org.rogach.simplymindmap.model.AbstractMindMapModel;
 import org.rogach.simplymindmap.model.MindIcon;
 import org.rogach.simplymindmap.model.MindMapNode;
@@ -201,8 +200,6 @@ public class MindMapController {
 		// prepare undo:
 		undo = new UndoAction(this);
 		redo = new RedoAction(this);
-		getActionFactory().registerUndoHandler(
-				new UndoActionHandler(this, undo, redo));
 		cut = new CutAction(this);
 		paste = new PasteAction(this);
 		copy = new CopyAction(this);
@@ -243,10 +240,6 @@ public class MindMapController {
     zoomIn = new ZoomInAction(this);
     zoomOut = new ZoomOutAction(this);
     fitToPage = new FitToPageAction(this);
-	}
-
-	public boolean isUndoAction() {
-		return undo.isUndoAction() || redo.isUndoAction();
 	}
 
 	private void createIconActions() {

@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import org.rogach.simplymindmap.controller.listeners.DefaultUndoableActionListener;
 
 public class StandaloneTree {
   public static void main(String[] args) {
@@ -41,6 +42,8 @@ public class StandaloneTree {
     });
 
     mindMap.getView().centerNode(mindMap.getView().getRoot());
+    
+    mindMap.addUndoableActionListener(new DefaultUndoableActionListener());
 
     frame.setSize(800, 500);
     splitPane.setDividerLocation(400);

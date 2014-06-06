@@ -23,22 +23,31 @@
 
 package org.rogach.simplymindmap.controller.actions;
 
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.KeyStroke;
 import org.rogach.simplymindmap.controller.MindMapController;
-import org.rogach.simplymindmap.controller.actions.xml.ActionPair;
+import org.rogach.simplymindmap.controller.listeners.DefaultUndoableActionListener;
 
-public class RedoAction extends UndoAction {
-	private MindMapController controller;
+public class RedoAction extends AbstractAction {
+
+  private DefaultUndoableActionListener undoHandler;
 
 	public RedoAction(MindMapController controller) {
-		super(controller, "", null, controller);
-		this.controller = controller;
+    super(controller.getResources().getText("redo"), controller.getResources().getIcon("redo.png"));
+    this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(controller.getResources().unsafeGetProperty("keystroke_redo")));
+		this.setEnabled(false);
 	}
 
-	/**
-     */
-	protected void informUndoPartner(ActionPair pair) {
-		this.controller.undo.add(pair.reverse());
-		this.controller.undo.setEnabled(true);
-	}
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    assert undoHandler != null;
+    undoHandler.redo();
+  }
+  
+  public void setUndoHandler(DefaultUndoableActionListener undoHandler) {
+    this.undoHandler = undoHandler;
+  }
 
 }

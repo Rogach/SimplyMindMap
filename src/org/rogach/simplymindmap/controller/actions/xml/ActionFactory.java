@@ -22,11 +22,15 @@
 
 package org.rogach.simplymindmap.controller.actions.xml;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.rogach.simplymindmap.controller.actions.instance.XmlAction;
+import org.rogach.simplymindmap.controller.listeners.UndoableActionListener;
+import org.rogach.simplymindmap.controller.listeners.UndoableActionPair;
 
 /**
  * @author foltin
@@ -36,12 +40,9 @@ public class ActionFactory {
   
 	/** HashMap of Action class -> actor instance. */
 	private HashMap<Class, ActorXml> registeredActors;
-	private UndoActionHandler undoActionHandler;
 	private static java.util.logging.Logger logger = null;
+  private List<UndoableActionListener> undoListeners = new ArrayList<>();
 
-	/**
-	 *
-	 */
 	public ActionFactory() {
 		super();
 		if (logger == null) {
@@ -64,27 +65,25 @@ public class ActionFactory {
 	private boolean executeAction(ActionPair pair) {
 		if (pair == null)
 			return false;
-		// register for undo first, as the filter things are repeated when the
-		// undo is executed as well!
-		if (undoActionHandler != null) {
-			try {
-				undoActionHandler.executeAction(pair);
-			} catch (Exception e) {
-        Logger.getLogger(ActionFactory.class.getName()).log(Level.SEVERE, null, e);
-				return false;
-			}
-		}
+    
+    for (UndoableActionListener undoListener : undoListeners) {
+      undoListener.undoableActionPerformed(new UndoableActionPair(pair, this));
+    }
 
 		ActionPair filteredPair = pair;
     try {
-      ActorXml actor = getActor(filteredPair.getDoAction());
-      actor.act(filteredPair.getDoAction());
+      executeXmlAction(filteredPair.getDoAction());
     } catch (Exception e) {
       Logger.getLogger(ActionFactory.class.getName()).log(Level.SEVERE, null, e);
       return false;
     }
     return true;
 	}
+  
+  public void executeXmlAction(XmlAction action) {
+    ActorXml actor = getActor(action);
+    actor.act(action);
+  }
 
 	public void registerActor(ActorXml actor, Class action) {
 		registeredActors.put(action, actor);
@@ -104,8 +103,12 @@ public class ActionFactory {
 		throw new IllegalArgumentException("No actor present for xmlaction"
 				+ action.getClass());
 	}
-
-	public void registerUndoHandler(UndoActionHandler undoActionHandler) {
-		this.undoActionHandler = undoActionHandler;
-	}
+  
+  public void addUndoableActionListener(UndoableActionListener undoListener) {
+    undoListeners.add(undoListener);
+  }
+  
+  public void removeUndoableActionListener(UndoableActionListener undoListener) {
+    undoListeners.remove(undoListener);
+  }
 }

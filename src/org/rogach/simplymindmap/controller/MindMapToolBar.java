@@ -4,13 +4,20 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JSeparator;
 import javax.swing.JToolBar;
 import org.rogach.simplymindmap.model.MindMapNode;
 import org.rogach.simplymindmap.util.Tools;
 import org.rogach.simplymindmap.view.NodeView;
 
 public class MindMapToolBar extends JToolBar {
+  
+  private JButton undoButton;
+  private JButton redoButton;
+  private JSeparator undoSeparator;
+  
   public MindMapToolBar(MindMapController controller) {
     super();
     
@@ -20,6 +27,13 @@ public class MindMapToolBar extends JToolBar {
     this.add(controller.copy);
     this.add(controller.paste);
     this.addSeparator();
+    
+    undoButton = this.add(controller.undo);
+    redoButton = this.add(controller.redo);
+    undoSeparator = new JToolBar.Separator(null);
+    this.add(undoSeparator);
+    setUndoActionsVisible(false);
+    
     this.add(controller.newChild);
     this.add(controller.italic);
     this.add(controller.bold);
@@ -106,5 +120,11 @@ public class MindMapToolBar extends JToolBar {
       }
     }, false);
     return comboBox;
+  }
+  
+  public void setUndoActionsVisible(boolean visible) {
+    undoButton.setVisible(visible);
+    redoButton.setVisible(visible);
+    undoSeparator.setVisible(visible);
   }
 }
