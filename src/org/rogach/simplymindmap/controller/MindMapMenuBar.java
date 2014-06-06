@@ -1,8 +1,13 @@
 package org.rogach.simplymindmap.controller;
 
+import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
+import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 import org.rogach.simplymindmap.controller.actions.AboutAction;
 
 public class MindMapMenuBar extends JMenuBar {
@@ -10,60 +15,74 @@ public class MindMapMenuBar extends JMenuBar {
     super();
     
     JMenu editMenu = new JMenu(controller.getResources().getText("edit"));
-    editMenu.add(controller.selectAllAction);
-    editMenu.add(controller.selectBranchAction);
+    muteAccelerator(editMenu.add(controller.selectAllAction));
+    muteAccelerator(editMenu.add(controller.selectBranchAction));
     editMenu.add(new JSeparator());
-    editMenu.add(controller.cut);
-    editMenu.add(controller.copy);
-    editMenu.add(controller.paste);
+    muteAccelerator(editMenu.add(controller.cut));
+    muteAccelerator(editMenu.add(controller.copy));
+    muteAccelerator(editMenu.add(controller.paste));
     editMenu.add(new JSeparator());
-    editMenu.add(controller.edit);
-    editMenu.add(controller.editLong);
-    editMenu.add(controller.deleteChild);
+    muteAccelerator(editMenu.add(controller.edit));
+    muteAccelerator(editMenu.add(controller.editLong));
+    muteAccelerator(editMenu.add(controller.deleteChild));
     editMenu.add(new JSeparator());
-    editMenu.add(controller.find);
-    editMenu.add(controller.findNext);
+    muteAccelerator(editMenu.add(controller.find));
+    muteAccelerator(editMenu.add(controller.findNext));
     this.add(editMenu);
     
     JMenu viewMenu = new JMenu(controller.getResources().getText("menu_view"));
-    viewMenu.add(controller.zoomIn);
-    viewMenu.add(controller.zoomOut);
-    viewMenu.add(controller.fitToPage);
+    muteAccelerator(viewMenu.add(controller.zoomIn));
+    muteAccelerator(viewMenu.add(controller.zoomOut));
+    muteAccelerator(viewMenu.add(controller.fitToPage));
     this.add(viewMenu);
     
     JMenu insertMenu = new JMenu(controller.getResources().getText("menu_insert"));
-    insertMenu.add(controller.newChild);
-    insertMenu.add(controller.newSibling);
-    insertMenu.add(controller.newPreviousSibling);
+    muteAccelerator(insertMenu.add(controller.newChild));
+    muteAccelerator(insertMenu.add(controller.newSibling));
+    muteAccelerator(insertMenu.add(controller.newPreviousSibling));
     insertMenu.add(new JSeparator());
     
     JMenu iconMenu = new JMenu(controller.getResources().getText("icon_menu"));
-    iconMenu.add(controller.iconSelectionAction);
-    iconMenu.add(controller.removeLastIconAction);
-    iconMenu.add(controller.removeAllIconsAction);
+    muteAccelerator(iconMenu.add(controller.iconSelectionAction));
+    muteAccelerator(iconMenu.add(controller.removeLastIconAction));
+    muteAccelerator(iconMenu.add(controller.removeAllIconsAction));
     insertMenu.add(iconMenu);
     this.add(insertMenu);
     
     JMenu formatMenu = new JMenu(controller.getResources().getText("menu_format"));
-    formatMenu.add(controller.increaseNodeFont);
-    formatMenu.add(controller.decreaseNodeFont);
-    formatMenu.add(controller.italic);
-    formatMenu.add(controller.bold);
-    formatMenu.add(controller.nodeColor);
+    muteAccelerator(formatMenu.add(controller.increaseNodeFont));
+    muteAccelerator(formatMenu.add(controller.decreaseNodeFont));
+    muteAccelerator(formatMenu.add(controller.italic));
+    muteAccelerator(formatMenu.add(controller.bold));
+    muteAccelerator(formatMenu.add(controller.nodeColor));
     this.add(formatMenu);
     
     JMenu navigateMenu = new JMenu(controller.getResources().getText("menu_navigate"));
-    navigateMenu.add(controller.nodeUp);
-    navigateMenu.add(controller.nodeDown);
-    navigateMenu.add(controller.changeNodeLevelLeft);
-    navigateMenu.add(controller.changeNodeLevelRight);
+    muteAccelerator(navigateMenu.add(controller.nodeUp));
+    muteAccelerator(navigateMenu.add(controller.nodeDown));
+    muteAccelerator(navigateMenu.add(controller.changeNodeLevelLeft));
+    muteAccelerator(navigateMenu.add(controller.changeNodeLevelRight));
     navigateMenu.add(new JSeparator());
-    navigateMenu.add(controller.toggleFolded);
-    navigateMenu.add(controller.toggleChildrenFolded);
+    muteAccelerator(navigateMenu.add(controller.toggleFolded));
+    muteAccelerator(navigateMenu.add(controller.toggleChildrenFolded));
     this.add(navigateMenu);
     
     JMenu helpMenu = new JMenu(controller.getResources().getText("help"));
     helpMenu.add(new AboutAction(controller));
     this.add(helpMenu);
+  }
+  
+  /**
+   * Removes accelerator bindings from menu item (button still displays hint
+   * about accelerator).
+   * Motivation: since keybindings should only work on our mindmap, and shouldn't
+   * spill out to other components, we need to remove them from menubar - but
+   * we still need to display keybindings to user (so he doesn't need to read
+   * the manual, which he is not going to read anyway).
+   */
+  private void muteAccelerator(JMenuItem menuItem) {
+    for (KeyStroke ks : SwingUtilities.getUIInputMap(menuItem, JComponent.WHEN_IN_FOCUSED_WINDOW).keys()) {
+      SwingUtilities.getUIInputMap(menuItem, JComponent.WHEN_IN_FOCUSED_WINDOW).remove(ks);
+    }
   }
 }

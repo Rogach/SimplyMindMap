@@ -2,7 +2,6 @@ package org.rogach.simplymindmap;
 
 import java.awt.BorderLayout;
 import java.util.Properties;
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import org.rogach.simplymindmap.controller.MindMapController;
