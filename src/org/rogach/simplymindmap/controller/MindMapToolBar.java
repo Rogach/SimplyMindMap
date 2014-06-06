@@ -44,6 +44,7 @@ public class MindMapToolBar extends JToolBar {
   
   public JComboBox<String> getFontFamilySelector(final MindMapController controller) {
     final JComboBox<String> comboBox = new JComboBox<>(new Vector<String>(Tools.getAvailableFontFamilyNames()));
+    comboBox.setPreferredSize(new Dimension(90, comboBox.getPreferredSize().height));
     comboBox.setMaximumSize(new Dimension(90, 50));
     comboBox.setSelectedItem(controller.getSelected().getFontFamilyName());
     comboBox.setFont(comboBox.getFont().deriveFont(11f));
@@ -85,6 +86,7 @@ public class MindMapToolBar extends JToolBar {
   public JComboBox<String> getFontSizeSelector(final MindMapController controller) {
     String[] fontSizes = new String[] { "8", "10", "12", "14", "16", "18", "20", "24", "28" };
     final JComboBox<String> comboBox = new JComboBox<>(fontSizes);
+    comboBox.setPreferredSize(new Dimension(40, comboBox.getPreferredSize().height));
     comboBox.setMaximumSize(new Dimension(40, 50));
     comboBox.setSelectedItem(controller.getSelected().getFontSize());
     final ActionListener fontSizeChangeListener = new ActionListener() {

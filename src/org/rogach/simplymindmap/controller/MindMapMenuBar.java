@@ -1,5 +1,6 @@
 package org.rogach.simplymindmap.controller;
 
+import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
@@ -81,8 +82,11 @@ public class MindMapMenuBar extends JMenuBar {
    * the manual, which he is not going to read anyway).
    */
   private void muteAccelerator(JMenuItem menuItem) {
-    for (KeyStroke ks : SwingUtilities.getUIInputMap(menuItem, JComponent.WHEN_IN_FOCUSED_WINDOW).keys()) {
-      SwingUtilities.getUIInputMap(menuItem, JComponent.WHEN_IN_FOCUSED_WINDOW).remove(ks);
+    InputMap inputMap = SwingUtilities.getUIInputMap(menuItem, JComponent.WHEN_IN_FOCUSED_WINDOW);
+    if (inputMap != null) {
+      for (KeyStroke ks : SwingUtilities.getUIInputMap(menuItem, JComponent.WHEN_IN_FOCUSED_WINDOW).keys()) {
+        SwingUtilities.getUIInputMap(menuItem, JComponent.WHEN_IN_FOCUSED_WINDOW).remove(ks);
+      }
     }
   }
 }

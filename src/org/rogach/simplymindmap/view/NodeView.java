@@ -852,7 +852,7 @@ public class NodeView extends JComponent implements TreeModelListener {
 		MultipleImage iconImages = new MultipleImage(1.0f);
 		boolean iconPresent = false;
 
-		List icons = (getModel()).getIcons();
+		List icons = (getModel()).getAllIcons();
 		for (Iterator i = icons.iterator(); i.hasNext();) {
 			MindIcon myIcon = (MindIcon) i.next();
 			iconPresent = true;

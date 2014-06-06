@@ -10,6 +10,7 @@ import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.rogach.simplymindmap.controller.listeners.DefaultUndoableActionListener;
+import org.rogach.simplymindmap.model.MindIcon;
 
 public class StandaloneTree {
   public static void main(String[] args) {
@@ -45,9 +46,11 @@ public class StandaloneTree {
     
     mindMap.addUndoableActionListener(new DefaultUndoableActionListener());
 
-    frame.setSize(800, 500);
-    splitPane.setDividerLocation(400);
+    frame.setSize(900, 500);
+    splitPane.setDividerLocation(450);
     frame.setVisible(true);
+    
+    mindMap.getMapModel().getRootNode().addStateIcon(MindIcon.factory("idea", mindMap.getResources()), MindIcon.LAST);
 
     mindMap.getController().obtainFocusForSelected(); // eagerly grab focus for map, else it will require clicking before proper use
   }

@@ -35,6 +35,8 @@ public interface MindMapNode extends MutableTreeNode {
   //
 
   void addIcon(MindIcon _icon, int position);
+  
+  void addStateIcon(MindIcon icon, int position);
 
   void addTreeModelListener(TreeModelListener l);
 
@@ -95,8 +97,11 @@ public interface MindMapNode extends MutableTreeNode {
 
   int getHGap();
 
-  // fc, 24.9.2003:
-  List getIcons();
+  List<MindIcon> getIcons();
+  
+  List<MindIcon> getStateIcons();
+  
+  List<MindIcon> getAllIcons();
 
   int getIndex(TreeNode node);
 
@@ -183,6 +188,8 @@ public interface MindMapNode extends MutableTreeNode {
 
   /** @return returns the number of remaining icons. */
   int removeIcon(int position);
+  
+  int removeStateIcon(int position);
 
   void removeTreeModelListener(TreeModelListener l);
 

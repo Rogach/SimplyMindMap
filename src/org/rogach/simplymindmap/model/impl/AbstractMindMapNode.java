@@ -24,6 +24,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -65,6 +66,7 @@ public abstract class AbstractMindMapNode implements MindMapNode {
   private TreeMap<String, String> toolTip = null;
   /** stores the icons associated with this node. */
   protected Vector<MindIcon> icons = null;
+  protected Vector<MindIcon> stateIcons = null;
   protected Color color;
   protected Color backgroundColor;
   protected boolean folded;
@@ -336,11 +338,25 @@ public abstract class AbstractMindMapNode implements MindMapNode {
 
   // fc, 24.9.2003:
   @Override
-  public List getIcons() {
+  public List<MindIcon> getIcons() {
     if (icons == null) {
-      return Collections.EMPTY_LIST;
+      return Collections.emptyList();
     }
     return icons;
+  }
+  
+  public List<MindIcon> getStateIcons() {
+    if (stateIcons == null) {
+      return Collections.emptyList();
+    }
+    return stateIcons;
+  }
+  
+  public List<MindIcon> getAllIcons() {
+    List<MindIcon> allIcons = new ArrayList<>();
+    allIcons.addAll(getStateIcons());
+    allIcons.addAll(getIcons());
+    return allIcons;
   }
 
   @Override
@@ -357,6 +373,20 @@ public abstract class AbstractMindMapNode implements MindMapNode {
       icons.add(position, _icon);
     }
   }
+  
+  public void addStateIcon(MindIcon icon) {
+    this.addStateIcon(icon, MindIcon.LAST);
+  }
+  
+  public void addStateIcon(MindIcon icon, int position) {
+    createIcons();
+    if (position == MindIcon.LAST) {
+      icons.add(icon);
+    } else {
+      icons.add(position, icon);
+    }
+    this.getMindMapController().nodeChanged(this);
+  }
 
   /** @return returns the number of remaining icons. */
   @Override
@@ -372,6 +402,22 @@ public abstract class AbstractMindMapNode implements MindMapNode {
     }
     return returnSize;
   }
+  
+  public int removeStateIcon(int position) {
+    createIcons();
+    if (position == MindIcon.LAST) {
+      position = stateIcons.size() - 1;
+    }
+    stateIcons.remove(position);
+    this.getMindMapController().nodeChanged(this);
+    int returnSize = stateIcons.size();
+    if (returnSize == 0) {
+      stateIcons = null;
+    }
+    return returnSize;
+  }
+  
+  
 
   /**
    * True iff one of node's <i>strict</i> descendants is folded. A node N is
@@ -682,6 +728,9 @@ public abstract class AbstractMindMapNode implements MindMapNode {
   private void createIcons() {
     if (icons == null) {
       icons = new Vector<>();
+    }
+    if (stateIcons == null) {
+      stateIcons = new Vector<>();
     }
   }
 
