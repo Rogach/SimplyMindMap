@@ -18,7 +18,6 @@ public class DefaultUndoableActionListener implements UndoableActionListener {
   
   @Override
   public void undoableActionPerformed(UndoableAction action) {
-    System.out.println("action happened!");
     redoStack.clear();
     undoStack.push(action);
     if (undoAction != null) {
