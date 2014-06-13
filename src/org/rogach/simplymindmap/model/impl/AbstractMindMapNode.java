@@ -33,8 +33,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.SortedMap;
-import java.util.TreeMap;
 import java.util.Vector;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelListener;
@@ -63,7 +61,6 @@ public abstract class AbstractMindMapNode implements MindMapNode {
   static final int SHIFT = -2; // height of the vertical shift between node and
   private static boolean sSaveOnlyIntrinsicallyNeededIds = false;
   protected Object userObject = "no text";
-  private TreeMap<String, String> toolTip = null;
   /** stores the icons associated with this node. */
   protected Vector<MindIcon> icons = null;
   protected Vector<MindIcon> stateIcons = null;
@@ -603,6 +600,10 @@ public abstract class AbstractMindMapNode implements MindMapNode {
     }
   }
   
+  public int getPosition() {
+    return this.position;
+  }
+  
   public void setPosition(int position) {
     this.position = position;
   }
@@ -715,46 +716,12 @@ public abstract class AbstractMindMapNode implements MindMapNode {
     return level;
   }
 
-  private void createToolTip() {
-    if (toolTip == null) {
-      toolTip = new TreeMap<>();
-    }
-  }
-
   private void createIcons() {
     if (icons == null) {
       icons = new Vector<>();
     }
     if (stateIcons == null) {
       stateIcons = new Vector<>();
-    }
-  }
-
-  /**
-   */
-  @Override
-  public SortedMap<String, String> getToolTip() {
-    if (toolTip == null) {
-      return new TreeMap<>();
-    }
-    ;
-    return Collections.unmodifiableSortedMap(toolTip);
-  }
-
-  /**
-   */
-  @Override
-  public void setToolTip(String key, String string) {
-    createToolTip();
-    if (string == null) {
-      if (toolTip.containsKey(key)) {
-        toolTip.remove(key);
-      }
-      if (toolTip.size() == 0) {
-        toolTip = null;
-      }
-    } else {
-      toolTip.put(key, string);
     }
   }
 

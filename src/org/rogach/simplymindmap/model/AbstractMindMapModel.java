@@ -110,6 +110,7 @@ public abstract class AbstractMindMapModel extends DefaultTreeModel {
 
   public void setRoot(MindMapNode root) {
     super.setRoot(root);
+    updateMapReferenceInNodes(root);
   }
 
   /**

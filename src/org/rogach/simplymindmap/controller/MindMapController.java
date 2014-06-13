@@ -671,11 +671,6 @@ public class MindMapController {
     insertNodeInto(newChild, parent, parent.getChildCount());
   }
 
-  public void setToolTip(MindMapNode node, String key, String value) {
-    node.setToolTip(key, value);
-    nodeRefresh(node);
-  }
-
   public static interface MouseWheelEventHandler {
 
     /**

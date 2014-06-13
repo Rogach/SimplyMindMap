@@ -17,7 +17,6 @@
  *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-
 package org.rogach.simplymindmap.view;
 
 import java.awt.BasicStroke;
@@ -42,12 +41,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComponent;
 import javax.swing.SwingConstants;
-import javax.swing.ToolTipManager;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeNode;
@@ -89,7 +86,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 	//
 	// Constructors
 	//
-	private int maxToolTipWidth;
 	private NodeView preferredChild;
 	private JComponent contentPane;
 	protected NodeMotionListenerView motionListenerView;
@@ -152,7 +148,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 				// left blank on purpose
 			}
 			c.remove(i);
-			ToolTipManager.sharedInstance().unregisterComponent(mainView);
 			mainView.removeMouseListener(this.map.getNodeMouseMotionListener());
 			mainView.removeMouseMotionListener(this.map
 					.getNodeMouseMotionListener());
@@ -167,7 +162,6 @@ public class NodeView extends JComponent implements TreeModelListener {
     }
     
 		this.mainView = newMainView;
-		ToolTipManager.sharedInstance().registerComponent(mainView);
 		mainView.addMouseListener(this.map.getNodeMouseMotionListener());
 		mainView.addMouseMotionListener(this.map.getNodeMouseMotionListener());
     addDragListener(new NodeDragListener(map.getController()));
@@ -187,7 +181,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 			motionListenerView = null;
 		}
 		removeFoldingListener();
-		ToolTipManager.sharedInstance().unregisterComponent(mainView);
 	}
 
 	void addDragListener(DragGestureListener dgl) {
@@ -792,7 +785,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 			removeFoldingListener();
 		}
 		updateText();
-		updateToolTip();
 		revalidate(); // Because of zoom?
 	}
 
@@ -889,45 +881,6 @@ public class NodeView extends JComponent implements TreeModelListener {
 		return isSelected() && !MapView.standardDrawRectangleForSelection;
 	}
 
-	/**
-	 * Updates the tool tip of the node.
-	 */
-	public void updateToolTip() {
-		Map tooltips = getModel().getToolTip();
-		/*
-		 * if(tooltips.size() == 1) { String toolTipText = (String)
-		 * tooltips.values().iterator().next();
-		 * logger.finest("setting tooltip to "+toolTipText);
-		 * mainView.setToolTipText(toolTipText); } else
-		 */if (tooltips.size() == 0) {
-			mainView.setToolTipText(null);
-		} else {
-			// html table
-			StringBuffer text = new StringBuffer("<html><table width=\""
-					+ getMaxToolTipWidth() + "\">");
-			for (Iterator i = tooltips.keySet().iterator(); i.hasNext();) {
-				String key = (String) i.next();
-				String value = (String) tooltips.get(key);
-				// no html end inside the value:
-				value = value.replaceAll("</html>", "");
-				text.append("<tr><td>");
-				text.append(value);
-				text.append("</td></tr>");
-			}
-			text.append("</table></html>");
-			mainView.setToolTipText(text.toString());
-		}
-	}
-
-	public int getMaxToolTipWidth() {
-		if (maxToolTipWidth == 0) {
-			maxToolTipWidth = getModel().getMindMapController().getResources().getIntProperty(PropertyKey.MAX_TOOLTIP_WIDTH, 600);
-		}
-		return maxToolTipWidth;
-	}
-
-	/**
-     */
 	public void setIcon(MultipleImage image) {
 		mainView.setIcon(image);
 	}

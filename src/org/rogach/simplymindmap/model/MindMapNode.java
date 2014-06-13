@@ -9,7 +9,6 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.SortedMap;
 import java.util.Vector;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelListener;
@@ -133,10 +132,6 @@ public interface MindMapNode extends MutableTreeNode {
 
   String getText();
 
-  /**
-   */
-  SortedMap<String, String> getToolTip();
-
   int getVGap();
 
   Collection<NodeView> getViewers();
@@ -233,10 +228,6 @@ public interface MindMapNode extends MutableTreeNode {
 
   void setText(String text);
 
-  /**
-   */
-  void setToolTip(String key, String string);
-
   void setUserObject(Object object);
 
   void setVGap(int gap);
@@ -259,6 +250,8 @@ public interface MindMapNode extends MutableTreeNode {
   
   void addToPathVector(Vector<MindMapNode> pathVector);
 
+  int getPosition();
+  
   void setPosition(int position);
 
   void saveChildrenText(Writer fileout, int depth) throws IOException;
