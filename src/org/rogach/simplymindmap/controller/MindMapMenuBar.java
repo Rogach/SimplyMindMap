@@ -56,6 +56,7 @@ public class MindMapMenuBar extends JMenuBar {
     muteAccelerator(formatMenu.add(controller.italic));
     muteAccelerator(formatMenu.add(controller.bold));
     muteAccelerator(formatMenu.add(controller.nodeColor));
+    muteAccelerator(formatMenu.add(controller.nodeBackgroundColor));
     this.add(formatMenu);
     
     JMenu navigateMenu = new JMenu(controller.getResources().getText("menu_navigate"));

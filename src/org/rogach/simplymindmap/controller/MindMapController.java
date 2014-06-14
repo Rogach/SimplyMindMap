@@ -68,6 +68,7 @@ import org.rogach.simplymindmap.controller.actions.MoveNodeAction;
 import org.rogach.simplymindmap.controller.actions.NewChildAction;
 import org.rogach.simplymindmap.controller.actions.NewPreviousSiblingAction;
 import org.rogach.simplymindmap.controller.actions.NewSiblingAction;
+import org.rogach.simplymindmap.controller.actions.NodeBackgroundColorAction;
 import org.rogach.simplymindmap.controller.actions.NodeColorAction;
 import org.rogach.simplymindmap.controller.actions.NodeDownAction;
 import org.rogach.simplymindmap.controller.actions.NodeUpAction;
@@ -140,6 +141,7 @@ public class MindMapController {
 	public FontSizeAction fontSize = null;
 	public FontFamilyAction fontFamily = null;
 	public NodeColorAction nodeColor = null;
+  public NodeBackgroundColorAction nodeBackgroundColor = null;
 	public EditAction edit = null;
 	public NewChildAction newChild = null;
 	public DeleteChildAction deleteChild = null;
@@ -218,6 +220,7 @@ public class MindMapController {
 		nodeUp = new NodeUpAction(this);
 		nodeDown = new NodeDownAction(this);
 		nodeColor = new NodeColorAction(this);
+    nodeBackgroundColor = new NodeBackgroundColorAction(this);
     
     iconSelectionAction = new IconSelectionAction(this);
 		// this is an unknown icon and thus corrected by mindicon:

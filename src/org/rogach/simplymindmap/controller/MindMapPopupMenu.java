@@ -36,6 +36,7 @@ public class MindMapPopupMenu extends JPopupMenu {
     formatMenu.add(controller.italic);
     formatMenu.add(controller.bold);
     formatMenu.add(controller.nodeColor);
+    formatMenu.add(controller.nodeBackgroundColor);
     this.add(formatMenu);
   }
 }
