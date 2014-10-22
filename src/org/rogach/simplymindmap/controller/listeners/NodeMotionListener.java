@@ -95,6 +95,7 @@ public class NodeMotionListener extends MouseAdapter implements
 					int hGap = getHGap(dragNextPoint, node, dragStartingPoint);
 					node.setShiftY(nodeShiftY);
 					node.setHGap(hGap);
+                    dragStartingPoint = dragNextPoint;
 				} else {
 					MindMapNode parentNode = nodeView.getVisibleParentView()
 							.getModel();
@@ -102,7 +103,6 @@ public class NodeMotionListener extends MouseAdapter implements
 							.setVGap(getVGap(dragNextPoint, dragStartingPoint));
 					controller.nodeRefresh(parentNode);
 				}
-				dragStartingPoint = dragNextPoint;
 				controller.nodeRefresh(node);
 			}
 			Point mapPoint = e.getPoint();
