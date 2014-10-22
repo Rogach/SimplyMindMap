@@ -8,6 +8,7 @@ import javax.swing.KeyStroke;
 public class MapViewScrollPane extends JScrollPane {
 
   public MapViewScrollPane() {
+      this.getVerticalScrollBar().setUnitIncrement(32);
   }
 
   protected boolean processKeyBinding(KeyStroke pKs, KeyEvent pE, int pCondition, boolean pPressed) {
