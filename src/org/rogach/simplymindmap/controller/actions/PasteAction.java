@@ -346,8 +346,6 @@ public class PasteAction extends AbstractAction implements ActorXml {
 		}
 	}
 
-	static final Pattern nonLinkCharacter = Pattern.compile("[ \n()'\",;]");
-
 	/**
 	 * Paste String (as opposed to other flavours)
 	 * 
@@ -367,19 +365,16 @@ public class PasteAction extends AbstractAction implements ActorXml {
 
 		String textFromClipboard = (String) t
 				.getTransferData(DataFlavor.stringFlavor);
-		Pattern mailPattern = Pattern.compile("([^@ <>\\*']+@[^@ <>\\*']+)");
 
 		String[] textLines = textFromClipboard.split("\n");
 
-		MindMapNode realParent = null;
 		if (asSibling) {
 			// When pasting as sibling, we use virtual node as parent. When the
 			// pasting to
 			// virtual node is completed, we insert the children of that virtual
 			// node to
 			// the parent of real parent.
-			realParent = parent;
-      parent = controller.getMapModel().newNode(null);
+            parent = controller.getMapModel().newNode(null);
 		}
 
 		ArrayList<MindMapNode> parentNodes = new ArrayList<>();
@@ -387,8 +382,6 @@ public class PasteAction extends AbstractAction implements ActorXml {
 
 		parentNodes.add(parent);
 		parentNodesDepths.add(new Integer(-1));
-
-		String[] linkPrefixes = { "http://", "ftp://", "https://" };
 
 		MindMapNode pastedNode = null;
 
@@ -404,29 +397,6 @@ public class PasteAction extends AbstractAction implements ActorXml {
 				++depth;
 			}
 			String visibleText = text.trim();
-
-			// If the text is a recognizable link (e.g.
-			// http://www.google.com/index.html),
-			// make it more readable by look nicer by cutting off obvious prefix
-			// and other
-			// transforamtions.
-
-			if (visibleText.matches("^http://(www\\.)?[^ ]*$")) {
-				visibleText = visibleText.replaceAll("^http://(www\\.)?", "")
-						.replaceAll("(/|\\.[^\\./\\?]*)$", "")
-						.replaceAll("((\\.[^\\./]*\\?)|\\?)[^/]*$", " ? ...")
-						.replaceAll("_|%20", " ");
-				String[] textParts = visibleText.split("/");
-				visibleText = "";
-				for (int textPartIdx = 0; textPartIdx < textParts.length; textPartIdx++) {
-					if (textPartIdx > 0) {
-						visibleText += " > ";
-					}
-					visibleText += textPartIdx == 0 ? textParts[textPartIdx]
-							: Tools.firstLetterCapitalized(textParts[textPartIdx]
-									.replaceAll("^~*", ""));
-				}
-			}
 
 			MindMapNode node = controller.newNode(visibleText);
 			if (textLines.length == 1) {
