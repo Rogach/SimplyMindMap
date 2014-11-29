@@ -32,62 +32,61 @@ import org.rogach.simplymindmap.nanoxml.XMLElement;
 
 public class MindMapXMLElement extends XMLElementAdapter {
 
-	// Logging:
-	private static java.util.logging.Logger logger;
+  // Logging:
+  private static java.util.logging.Logger logger;
 
-	public MindMapXMLElement(MindMapController pMindMapController) {
-		super(pMindMapController);
-		init();
-	}
+  public MindMapXMLElement(MindMapController pMindMapController) {
+    super(pMindMapController);
+    init();
+  }
 
-	protected MindMapXMLElement(MindMapController pMindMapController,
-			Vector ArrowLinkAdapters, HashMap<String, MindMapNode> IDToTarget) {
-		super(pMindMapController, IDToTarget);
-		init();
-	}
+  protected MindMapXMLElement(MindMapController pMindMapController,
+      Vector ArrowLinkAdapters, HashMap<String, MindMapNode> IDToTarget) {
+    super(pMindMapController, IDToTarget);
+    init();
+  }
 
-	/**
+  /**
      *
      */
-	private void init() {
-		if (logger == null) {
-			logger = Logger.getLogger(this.getClass().getName());
-		}
-	}
+  private void init() {
+    if (logger == null) {
+      logger = Logger.getLogger(this.getClass().getName());
+    }
+  }
 
-	/** abstract method to create elements of my type (factory). */
-	protected XMLElement createAnotherElement() {
-		// We do not need to initialize the things of XMLElement.
-		return new MindMapXMLElement(mMindMapController, mArrowLinkAdapters,
-				mIdToTarget);
-	}
+  /** abstract method to create elements of my type (factory). */
+  protected XMLElement createAnotherElement() {
+    // We do not need to initialize the things of XMLElement.
+    return new MindMapXMLElement(mMindMapController, mArrowLinkAdapters,
+        mIdToTarget);
+  }
 
-	protected MindMapNode createNodeAdapter(String nodeClass) {
-		if (nodeClass == null) {
-			return new DefaultMindMapNode(null, getMapModel());
-		}
-		// reflection:
-		try {
-			// construct class loader:
-			ClassLoader loader = this.getClass().getClassLoader();
-			// constructed.
-			Class<?> nodeJavaClass = Class.forName(nodeClass, true, loader);
-			Class[] constrArgs = new Class[] { Object.class, AbstractMindMapModel.class };
-			Object[] constrObjs = new Object[] { null, getMapModel() };
-			Constructor<?> constructor = nodeJavaClass.getConstructor(constrArgs);
-			MindMapNode nodeImplementor = (MindMapNode) constructor
-					.newInstance(constrObjs);
-			return nodeImplementor;
-		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+  protected MindMapNode createNodeAdapter(String nodeClass) {
+    if (nodeClass == null) {
+      return getMapModel().newNode(null);
+    }
+    // reflection:
+    try {
+      // construct class loader:
+      ClassLoader loader = this.getClass().getClassLoader();
+      // constructed.
+      Class<?> nodeJavaClass = Class.forName(nodeClass, true, loader);
+      Class[] constrArgs = new Class[] { Object.class, AbstractMindMapModel.class };
+      Object[] constrObjs = new Object[] { null, getMapModel() };
+      Constructor<?> constructor = nodeJavaClass.getConstructor(constrArgs);
+      MindMapNode nodeImplementor = (MindMapNode) constructor
+          .newInstance(constrObjs);
+      return nodeImplementor;
+    } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
       Logger.getLogger(MindMapXMLElement.class.getName()).log(Level.SEVERE, null, e);
-			// the best we can do is to return the normal class:
-			MindMapNode node = new DefaultMindMapNode(null, getMapModel());
-			return node;
-		}
-	}
+      // the best we can do is to return the normal class:
+      return getMapModel().newNode(null);
+    }
+  }
 
-	protected EdgeAdapter createEdgeAdapter(MindMapNode node) {
-		return new MindMapEdgeModel(node);
-	}
+  protected EdgeAdapter createEdgeAdapter(MindMapNode node) {
+    return new MindMapEdgeModel(node);
+  }
 
 }
