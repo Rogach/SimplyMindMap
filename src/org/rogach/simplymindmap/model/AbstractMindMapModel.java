@@ -39,6 +39,7 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import org.rogach.simplymindmap.controller.MindMapController;
+import org.rogach.simplymindmap.nanoxml.XMLElement;
 import org.rogach.simplymindmap.nanoxml.XMLParseException;
 import org.rogach.simplymindmap.util.Tools;
 
@@ -380,5 +381,7 @@ public abstract class AbstractMindMapModel extends DefaultTreeModel {
 	}
   
   public abstract MindMapNode newNode(String userObject);
+  
+  public abstract XMLElement createXMLElement();
 
 }

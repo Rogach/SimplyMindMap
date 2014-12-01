@@ -20,6 +20,7 @@
 
 package org.rogach.simplymindmap.model.impl;
 
+import java.awt.Container;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
@@ -51,6 +52,7 @@ import org.rogach.simplymindmap.nanoxml.XMLElement;
 import org.rogach.simplymindmap.util.PropertyKey;
 import org.rogach.simplymindmap.util.Tools;
 import org.rogach.simplymindmap.util.XmlTools;
+import org.rogach.simplymindmap.view.MapView;
 import org.rogach.simplymindmap.view.NodeView;
 
 /**
@@ -85,74 +87,74 @@ public abstract class AbstractMindMapNode implements MindMapNode {
   private AbstractMindMapModel model = null;
   EventListenerList listenerList = new EventListenerList();
 
-	public AbstractMindMapNode(String userObject) {
-		this(userObject, null);
-	}
+  public AbstractMindMapNode(String userObject) {
+    this(userObject, null);
+  }
 
-	public AbstractMindMapNode(String userObject, AbstractMindMapModel map) {
+  public AbstractMindMapNode(String userObject, AbstractMindMapModel map) {
     setText(userObject);
     this.model = map;
-		children = new LinkedList<>();
-		setEdge(new MindMapEdgeModel(this));
-	}
+    children = new LinkedList<>();
+    setEdge(new MindMapEdgeModel(this));
+  }
 
   @Override
-	public void collectColors(HashSet<Color> colors) {
-		if (color != null) {
-			colors.add(getColor());
-		}
+  public void collectColors(HashSet<Color> colors) {
+    if (color != null) {
+      colors.add(getColor());
+    }
     for (ListIterator<MindMapNode> e = childrenUnfolded(); e.hasNext();) {
-			e.next().collectColors(colors);
-		}
-	}
-  
-  @Override
-	public String getPlainTextContent() {
-		return getText();
-	}
+      e.next().collectColors(colors);
+    }
+  }
 
   @Override
-	public void saveTXT(Writer fileout, int depth) throws IOException {
-		String plainTextContent = getPlainTextContent();
-		for (int i = 0; i < depth; ++i) {
-			fileout.write("    ");
-		}
-		if (plainTextContent.matches(" *")) {
-			fileout.write("o");
-		} else {
+  public String getPlainTextContent() {
+    return getText();
+  }
+
+  @Override
+  public void saveTXT(Writer fileout, int depth) throws IOException {
+    String plainTextContent = getPlainTextContent();
+    for (int i = 0; i < depth; ++i) {
+      fileout.write("    ");
+    }
+    if (plainTextContent.matches(" *")) {
+      fileout.write("o");
+    } else {
       fileout.write(plainTextContent);
-		}
+    }
 
-		fileout.write("\n");
-		// fileout.write(System.getProperty("line.separator"));
-		// fileout.newLine();
+    fileout.write("\n");
+    // fileout.write(System.getProperty("line.separator"));
+    // fileout.newLine();
 
-		// ^ One would rather expect here one of the above commands
-		// commented out. However, it does not work as expected on
-		// Windows. My unchecked hypothesis is, that the String Java stores
-		// in Clipboard carries information that it actually is \n
-		// separated string. The current coding works fine with pasting on
-		// Windows (and I expect, that on Unix too, because \n is a Unix
-		// separator). This method is actually used only for pasting
-		// purposes, it is never used for writing to file. As a result, the
-		// writing to file is not tested.
+    // ^ One would rather expect here one of the above commands
+    // commented out. However, it does not work as expected on
+    // Windows. My unchecked hypothesis is, that the String Java stores
+    // in Clipboard carries information that it actually is \n
+    // separated string. The current coding works fine with pasting on
+    // Windows (and I expect, that on Unix too, because \n is a Unix
+    // separator). This method is actually used only for pasting
+    // purposes, it is never used for writing to file. As a result, the
+    // writing to file is not tested.
 
-		// Another hypothesis is, that something goes astray when creating
-		// StringWriter.
+    // Another hypothesis is, that something goes astray when creating
+    // StringWriter.
 
-		saveChildrenText(fileout, depth);
-	}
+    saveChildrenText(fileout, depth);
+  }
 
-	public void saveChildrenText(Writer fileout, int depth) throws IOException {
-		for (ListIterator<MindMapNode> e = sortedChildrenUnfolded(); e.hasNext();) {
-			final MindMapNode child = e.next();
-			if (child.isVisible()) {
-				child.saveTXT(fileout, depth + 1);
-			} else {
-				child.saveChildrenText(fileout, depth);
-			}
-		}
-	}
+  public void saveChildrenText(Writer fileout, int depth) throws IOException {
+    for (ListIterator<MindMapNode> e = sortedChildrenUnfolded(); e.hasNext();) {
+      final MindMapNode child = e.next();
+      if (child.isVisible()) {
+        child.saveTXT(fileout, depth + 1);
+      } else {
+        child.saveChildrenText(fileout, depth);
+      }
+    }
+  }
 
   @Override
   public void setModel(AbstractMindMapModel map) {
@@ -175,6 +177,10 @@ public abstract class AbstractMindMapNode implements MindMapNode {
       return;
     }
     userObject = text;
+  }
+
+  public NodeView newViewer(int position, MapView mapView, Container parent) {
+    return new NodeView(this, position, mapView, parent);
   }
 
   @Override
@@ -341,14 +347,14 @@ public abstract class AbstractMindMapNode implements MindMapNode {
     }
     return icons;
   }
-  
+
   public List<MindIcon> getStateIcons() {
     if (stateIcons == null) {
       return Collections.emptyList();
     }
     return stateIcons;
   }
-  
+
   public List<MindIcon> getAllIcons() {
     List<MindIcon> allIcons = new ArrayList<>();
     allIcons.addAll(getStateIcons());
@@ -370,7 +376,7 @@ public abstract class AbstractMindMapNode implements MindMapNode {
       icons.add(position, _icon);
     }
   }
-  
+
   public void addStateIcon(MindIcon icon, int position) {
     createIcons();
     if (position == MindIcon.LAST) {
@@ -395,7 +401,7 @@ public abstract class AbstractMindMapNode implements MindMapNode {
     }
     return returnSize;
   }
-  
+
   public int removeStateIcon(int position) {
     createIcons();
     if (position == MindIcon.LAST) {
@@ -409,8 +415,8 @@ public abstract class AbstractMindMapNode implements MindMapNode {
     }
     return returnSize;
   }
-  
-  
+
+
 
   /**
    * True iff one of node's <i>strict</i> descendants is folded. A node N is
@@ -599,11 +605,11 @@ public abstract class AbstractMindMapNode implements MindMapNode {
       }
     }
   }
-  
+
   public int getPosition() {
     return this.position;
   }
-  
+
   public void setPosition(int position) {
     this.position = position;
   }
@@ -736,9 +742,7 @@ public abstract class AbstractMindMapNode implements MindMapNode {
   }
 
   @Override
-  public XMLElement save(Writer writer, MindMapLinkRegistry registry, boolean saveInvisible, boolean saveChildren) throws IOException {
-    // pre save event to save all contents of the node:
-    getMindMapController().firePreSaveEvent(this);
+  public XMLElement save(boolean saveInvisible) throws IOException {
     XMLElement node = new XMLElement();
     node.setName(XMLElementAdapter.XML_NODE);
     /** fc, 12.6.2005: XML must not contain any zero characters. */
@@ -755,14 +759,6 @@ public abstract class AbstractMindMapNode implements MindMapNode {
     // VVV save if and only if parent is root.
     if (!(isRoot()) && (getParentNode().isRoot())) {
       node.setAttribute("POSITION", isLeft() ? "left" : "right");
-    }
-    // the id is used, if there is a local hyperlink pointing to me or a
-    // real link.
-    String label = registry.getLabel(this);
-    if (!sSaveOnlyIntrinsicallyNeededIds) {
-      if (label != null) {
-        node.setAttribute("ID", label);
-      }
     }
     if (color != null) {
       node.setAttribute("COLOR", XmlTools.colorToXml(getColor()));
@@ -809,13 +805,8 @@ public abstract class AbstractMindMapNode implements MindMapNode {
       iconElement.setAttribute("BUILTIN", ((MindIcon) getIcons().get(i)).getName());
       node.addChild(iconElement);
     }
-    if (saveChildren && childrenUnfolded().hasNext()) {
-      node.writeWithoutClosingTag(writer);
-      // recursive
-      saveChildren(writer, registry, this, saveInvisible);
-      node.writeClosingTag(writer);
-    } else {
-      node.write(writer);
+    if (saveInvisible || childrenUnfolded().hasNext()) {
+      saveChildren(this, node, saveInvisible);
     }
     return node;
   }
@@ -825,14 +816,10 @@ public abstract class AbstractMindMapNode implements MindMapNode {
     return model.getMindMapController();
   }
 
-  private void saveChildren(Writer writer, MindMapLinkRegistry registry, MindMapNode node, boolean saveHidden) throws IOException {
+  private void saveChildren(MindMapNode node, XMLElement xmlNode, boolean saveHidden) throws IOException {
     for (ListIterator<MindMapNode> e = node.childrenUnfolded(); e.hasNext();) {
       MindMapNode child = e.next();
-      if (saveHidden || child.isVisible()) {
-        child.save(writer, registry, saveHidden, true);
-      } else {
-        saveChildren(writer, registry, child, saveHidden);
-      }
+      xmlNode.addChild(child.save(saveHidden));
     }
   }
 

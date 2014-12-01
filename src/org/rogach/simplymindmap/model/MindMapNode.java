@@ -1,5 +1,6 @@
 package org.rogach.simplymindmap.model;
 
+import java.awt.Container;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import org.rogach.simplymindmap.controller.MindMapController;
 import org.rogach.simplymindmap.nanoxml.XMLElement;
+import org.rogach.simplymindmap.view.MapView;
 import org.rogach.simplymindmap.view.NodeView;
 
 public interface MindMapNode extends MutableTreeNode {
@@ -34,10 +36,12 @@ public interface MindMapNode extends MutableTreeNode {
   //
 
   void addIcon(MindIcon _icon, int position);
-  
+
   void addStateIcon(MindIcon icon, int position);
 
   void addTreeModelListener(TreeModelListener l);
+
+  NodeView newViewer(int position, MapView mapView, Container parent);
 
   void addViewer(NodeView viewer);
 
@@ -97,9 +101,9 @@ public interface MindMapNode extends MutableTreeNode {
   int getHGap();
 
   List<MindIcon> getIcons();
-  
+
   List<MindIcon> getStateIcons();
-  
+
   List<MindIcon> getAllIcons();
 
   int getIndex(TreeNode node);
@@ -183,14 +187,14 @@ public interface MindMapNode extends MutableTreeNode {
 
   /** @return returns the number of remaining icons. */
   int removeIcon(int position);
-  
+
   int removeStateIcon(int position);
 
   void removeTreeModelListener(TreeModelListener l);
 
   void removeViewer(NodeView viewer);
 
-  XMLElement save(Writer writer, MindMapLinkRegistry registry, boolean saveInvisible, boolean saveChildren) throws IOException;
+  XMLElement save(boolean saveInvisible) throws IOException;
 
   void saveTXT(Writer fileout, int depth) throws IOException;
 
@@ -247,11 +251,11 @@ public interface MindMapNode extends MutableTreeNode {
   void toggleBold();
 
   void toggleItalic();
-  
+
   void addToPathVector(Vector<MindMapNode> pathVector);
 
   int getPosition();
-  
+
   void setPosition(int position);
 
   void saveChildrenText(Writer fileout, int depth) throws IOException;

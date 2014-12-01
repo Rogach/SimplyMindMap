@@ -30,70 +30,70 @@ import javax.swing.JComponent;
 import org.rogach.simplymindmap.util.Tools;
 
 /**
- * 
+ *
  * The oval appearing to move nodes to other positions.
- * 
+ *
  * @author Dimitri
- * 
+ *
  */
 public class NodeMotionListenerView extends JComponent {
-	public NodeMotionListenerView(NodeView view) {
-		super();
-		this.movedView = view;
-		MapView map = view.getMap();
-		addMouseListener(map.getNodeMotionListener());
-		addMouseMotionListener(map.getNodeMotionListener());
-		// fc, 16.6.2005: to emphasis the possible movement.
-		this.setCursor(new Cursor(Cursor.MOVE_CURSOR));
-		final String helpMsg = view.getModel().getMindMapController().getResources().getText("node_location_help");
-		this.setToolTipText(helpMsg);
-	}
+  public NodeMotionListenerView(NodeView view) {
+    super();
+    this.movedView = view;
+    MapView map = view.getMap();
+    addMouseListener(map.getNodeMotionListener());
+    addMouseMotionListener(map.getNodeMotionListener());
+    // fc, 16.6.2005: to emphasis the possible movement.
+    this.setCursor(new Cursor(Cursor.MOVE_CURSOR));
+    final String helpMsg = map.getController().getResources().getText("node_location_help");
+    this.setToolTipText(helpMsg);
+  }
 
-	private NodeView movedView;
-	private boolean isMouseEntered;
+  private NodeView movedView;
+  private boolean isMouseEntered;
 
-	public NodeView getMovedView() {
-		return movedView;
-	}
+  public NodeView getMovedView() {
+    return movedView;
+  }
 
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		if (isMouseEntered()) {
-			Graphics2D g2 = (Graphics2D) g;
+  public void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    if (isMouseEntered()) {
+      Graphics2D g2 = (Graphics2D) g;
       Object renderingHint1 = g2.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, (true) ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF);
-			// set antialiasing.
-			Object renderingHint = renderingHint1;
-			Color color = g2.getColor();
-			Stroke oldStroke = g2.getStroke();
-			g2.setStroke(new BasicStroke());
-			if (movedView.getModel().getHGap() <= 0) {
-				g2.setColor(Color.RED);
-				g.fillOval(0, 0, getWidth() - 1, getHeight() - 1);
-			} else {
-				g2.setColor(Color.BLACK);
-				g.drawOval(0, 0, getWidth() - 1, getHeight() - 1);
-			}
-			g2.setStroke(oldStroke);
-			g2.setColor(color);
-			Tools.restoreAntialiasing(g2, renderingHint);
-		}
-	}
+      // set antialiasing.
+      Object renderingHint = renderingHint1;
+      Color color = g2.getColor();
+      Stroke oldStroke = g2.getStroke();
+      g2.setStroke(new BasicStroke());
+      if (movedView.getModel().getHGap() <= 0) {
+        g2.setColor(Color.RED);
+        g.fillOval(0, 0, getWidth() - 1, getHeight() - 1);
+      } else {
+        g2.setColor(Color.BLACK);
+        g.drawOval(0, 0, getWidth() - 1, getHeight() - 1);
+      }
+      g2.setStroke(oldStroke);
+      g2.setColor(color);
+      Tools.restoreAntialiasing(g2, renderingHint);
+    }
+  }
 
-	public boolean isMouseEntered() {
-		return isMouseEntered;
-	}
+  public boolean isMouseEntered() {
+    return isMouseEntered;
+  }
 
-	public void setMouseEntered() {
-		this.isMouseEntered = true;
-		// fc, 13.3.2008: variable is not used:
-		// final FreeMindMain frame =
-		// movedView.getMap().getModel().getMindMapController().getFrame();
-		repaint();
-	}
+  public void setMouseEntered() {
+    this.isMouseEntered = true;
+    // fc, 13.3.2008: variable is not used:
+    // final FreeMindMain frame =
+    // movedView.getMap().getModel().getMindMapController().getFrame();
+    repaint();
+  }
 
-	public void setMouseExited() {
-		this.isMouseEntered = false;
-		repaint();
-	}
+  public void setMouseExited() {
+    this.isMouseEntered = false;
+    repaint();
+  }
 }

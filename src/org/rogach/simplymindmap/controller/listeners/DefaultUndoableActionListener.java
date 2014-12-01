@@ -5,17 +5,17 @@ import javax.swing.Action;
 
 public class DefaultUndoableActionListener implements UndoableActionListener {
 
-  private final Stack<UndoableAction> undoStack;
-  private final Stack<UndoableAction> redoStack;
-  
-  private Action undoAction = null;
-  private Action redoAction = null;
-  
+  protected final Stack<UndoableAction> undoStack;
+  protected final Stack<UndoableAction> redoStack;
+
+  protected Action undoAction = null;
+  protected Action redoAction = null;
+
   public DefaultUndoableActionListener() {
     this.undoStack = new Stack<>();
     this.redoStack = new Stack<>();
   }
-  
+
   @Override
   public void undoableActionPerformed(UndoableAction action) {
     redoStack.clear();
@@ -27,15 +27,15 @@ public class DefaultUndoableActionListener implements UndoableActionListener {
       redoAction.setEnabled(false);
     }
   }
-  
+
   public void setUndoAction(Action undoAction) {
     this.undoAction = undoAction;
   }
-  
+
   public void setRedoAction(Action redoAction) {
     this.redoAction = redoAction;
   }
-  
+
   public void undo() {
     assert !undoStack.isEmpty();
     UndoableAction undo = undoStack.pop();
@@ -46,7 +46,7 @@ public class DefaultUndoableActionListener implements UndoableActionListener {
       undoAction.setEnabled(false);
     }
   }
-  
+
   public void redo() {
     assert !redoStack.isEmpty();
     UndoableAction redo = redoStack.pop();
@@ -57,5 +57,5 @@ public class DefaultUndoableActionListener implements UndoableActionListener {
       redoAction.setEnabled(false);
     }
   }
-  
+
 }

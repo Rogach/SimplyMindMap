@@ -33,7 +33,7 @@ public abstract class XMLElementAdapter extends XMLElement {
 	// Logging:
 	protected static java.util.logging.Logger logger;
 
-	private Object userObject = null;
+	protected Object userObject = null;
 	private MindMapNode mapChild = null;
 	private HashMap<String, String> nodeAttributes = new HashMap<>();
 

@@ -24,60 +24,60 @@ import org.rogach.simplymindmap.model.MindMapNode;
 
 class NodeViewFactory {
 
-	private static NodeViewFactory factory;
-	private EdgeView bezierEdgeView;
+  private static NodeViewFactory factory;
+  private EdgeView bezierEdgeView;
 
-	// Singleton
-	private NodeViewFactory() {
+  // Singleton
+  private NodeViewFactory() {
 
-	}
+  }
 
-	static NodeViewFactory getInstance() {
-		if (factory == null) {
-			factory = new NodeViewFactory();
-		}
-		return factory;
-	}
+  static NodeViewFactory getInstance() {
+    if (factory == null) {
+      factory = new NodeViewFactory();
+    }
+    return factory;
+  }
 
-	EdgeView getEdge(NodeView newView) {
-		if (bezierEdgeView == null) {
-			bezierEdgeView = new BezierEdgeView();
-		}
-		return bezierEdgeView;
-	}
+  EdgeView getEdge(NodeView newView) {
+    if (bezierEdgeView == null) {
+      bezierEdgeView = new BezierEdgeView();
+    }
+    return bezierEdgeView;
+  }
 
   /**
-	 * Factory method which creates the right NodeView for the model.
-	 */
-	NodeView newNodeView(MindMapNode model, int position, MapView map,
-			Container parent) {
-		NodeView newView = new NodeView(model, position, map, parent);
+   * Factory method which creates the right NodeView for the model.
+   */
+  NodeView newNodeView(MindMapNode model, int position, MapView map,
+      Container parent) {
+    NodeView newView = model.newViewer(position, map, parent);
 
-		if (model.isRoot()) {
-			final MainView mainView = new RootMainView();
-			newView.setMainView(mainView);
-			newView.setLayout(VerticalRootNodeViewLayout.getInstance());
+    if (model.isRoot()) {
+      final MainView mainView = new RootMainView();
+      newView.setMainView(mainView);
+      newView.setLayout(VerticalRootNodeViewLayout.getInstance());
 
-		} else {
-			newView.setMainView(newMainView(model));
-			if (newView.isLeft()) {
-				newView.setLayout(LeftNodeViewLayout.getInstance());
-			} else {
-				newView.setLayout(RightNodeViewLayout.getInstance());
-			}
-		}
+    } else {
+      newView.setMainView(newMainView(model));
+      if (newView.isLeft()) {
+        newView.setLayout(LeftNodeViewLayout.getInstance());
+      } else {
+        newView.setLayout(RightNodeViewLayout.getInstance());
+      }
+    }
 
-		model.addViewer(newView);
-		newView.update();
-		return newView;
-	}
+    model.addViewer(newView);
+    newView.update();
+    return newView;
+  }
 
-	MainView newMainView(MindMapNode model) {
-		if (model.isRoot()) {
-			return new RootMainView();
-		} else {
+  MainView newMainView(MindMapNode model) {
+    if (model.isRoot()) {
+      return new RootMainView();
+    } else {
       return new ForkMainView();
     }
-	}
-  
+  }
+
 }

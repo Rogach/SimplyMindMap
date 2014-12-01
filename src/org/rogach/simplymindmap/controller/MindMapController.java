@@ -100,8 +100,8 @@ import org.rogach.simplymindmap.view.MapView;
 import org.rogach.simplymindmap.view.NodeView;
 
 public class MindMapController {
-  
-	private static Logger logger;
+
+  private static Logger logger;
   private final MindMapResources resources;
   public static final int NEW_CHILD_WITHOUT_FOCUS = 1; // old model of
   // insertion
@@ -109,66 +109,66 @@ public class MindMapController {
   public static final int NEW_SIBLING_BEHIND = 3;
   public static final int NEW_SIBLING_BEFORE = 4;
   public static final String NODESEPARATOR = "<nodeseparator>";
-  
+
   public static final float[] zoomValues = { 25 / 100f, 50 / 100f,
     75 / 100f, 100 / 100f, 150 / 100f, 200 / 100f, 300 / 100f,
     400 / 100f };
-  
-	// for MouseEventHandlers
-	private HashSet mRegisteredMouseWheelEventHandler = new HashSet();
 
-	private ActionFactory actionFactory;
-	private Clipboard clipboard = null;
-	private Clipboard selection = null;
+  // for MouseEventHandlers
+  private HashSet mRegisteredMouseWheelEventHandler = new HashSet();
 
-	public Action editLong = null;
-	public Action newSibling = null;
-	public Action newPreviousSibling = null;
+  private ActionFactory actionFactory;
+  private Clipboard clipboard = null;
+  private Clipboard selection = null;
 
-	public Action showAttributeManagerAction = null;
-	public Action propertyAction = null;
+  public Action editLong = null;
+  public Action newSibling = null;
+  public Action newPreviousSibling = null;
 
-	public Action increaseNodeFont = null;
-	public Action decreaseNodeFont = null;
+  public Action showAttributeManagerAction = null;
+  public Action propertyAction = null;
 
-	public UndoAction undo = null;
-	public RedoAction redo = null;
-	public CopyAction copy = null;
-	public CutAction cut = null;
-	public PasteAction paste = null;
-	public BoldAction bold = null;
-	public ItalicAction italic = null;
-	public FontSizeAction fontSize = null;
-	public FontFamilyAction fontFamily = null;
-	public NodeColorAction nodeColor = null;
+  public Action increaseNodeFont = null;
+  public Action decreaseNodeFont = null;
+
+  public UndoAction undo = null;
+  public RedoAction redo = null;
+  public CopyAction copy = null;
+  public CutAction cut = null;
+  public PasteAction paste = null;
+  public BoldAction bold = null;
+  public ItalicAction italic = null;
+  public FontSizeAction fontSize = null;
+  public FontFamilyAction fontFamily = null;
+  public NodeColorAction nodeColor = null;
   public NodeBackgroundColorAction nodeBackgroundColor = null;
-	public EditAction edit = null;
-	public NewChildAction newChild = null;
-	public DeleteChildAction deleteChild = null;
-	public ToggleFoldedAction toggleFolded = null;
-	public ToggleChildrenFoldedAction toggleChildrenFolded = null;
-	public NodeUpAction nodeUp = null;
-	public NodeDownAction nodeDown = null;
-  
+  public EditAction edit = null;
+  public NewChildAction newChild = null;
+  public DeleteChildAction deleteChild = null;
+  public ToggleFoldedAction toggleFolded = null;
+  public ToggleChildrenFoldedAction toggleChildrenFolded = null;
+  public NodeUpAction nodeUp = null;
+  public NodeDownAction nodeDown = null;
+
   public IconSelectionAction iconSelectionAction = null;
-	public IconAction unknownIconAction = null;
-	public RemoveIconAction removeLastIconAction = null;
-	public RemoveAllIconsAction removeAllIconsAction = null;
-	public MoveNodeAction moveNodeAction = null;
-	
-	public FindAction find = null;
-	public FindNextAction findNext = null;
-	public SelectBranchAction selectBranchAction = null;
-	public SelectAllAction selectAllAction = null;
-  
+  public IconAction unknownIconAction = null;
+  public RemoveIconAction removeLastIconAction = null;
+  public RemoveAllIconsAction removeAllIconsAction = null;
+  public MoveNodeAction moveNodeAction = null;
+
+  public FindAction find = null;
+  public FindNextAction findNext = null;
+  public SelectBranchAction selectBranchAction = null;
+  public SelectAllAction selectAllAction = null;
+
   public ChangeNodeLevelAction changeNodeLevelRight = null;
   public ChangeNodeLevelAction changeNodeLevelLeft = null;
-  
+
   public ZoomInAction zoomIn = null;
   public ZoomOutAction zoomOut = null;
   public FitToPageAction fitToPage = null;
 
-	public Vector<Action> iconActions = new Vector<>();
+  public Vector<Action> iconActions = new Vector<>();
   private Color selectionColor = new Color(200, 220, 200);
   /**
    * The model, this controller belongs to. It may be null, if it is the
@@ -181,80 +181,80 @@ public class MindMapController {
   // (blocked to protect against particular events e.g. in edit mode)
   private boolean isBlocked = false;
   protected MapView mView;
-  
-	public MindMapController(MapView view, MindMapResources resources) {
-		super();
+
+  public MindMapController(MapView view, MindMapResources resources) {
+    super();
     this.mView = view;
     this.resources = resources;
-		if (logger == null) {
-			logger = Logger.getLogger(this.getClass().getName());
-		}
-		// create action factory:
-		actionFactory = new ActionFactory();
+    if (logger == null) {
+      logger = Logger.getLogger(this.getClass().getName());
+    }
+    // create action factory:
+    actionFactory = new ActionFactory();
     new CompoundActionHandler(this); // eagerly initialize compound action handler
     createStandardActions();
     createIconActions();
-	}
+  }
 
-	private void createStandardActions() {
+  private void createStandardActions() {
     increaseNodeFont = new IncreaseNodeFontAction(this);
     decreaseNodeFont = new DecreaseNodeFontAction(this);
-		// prepare undo:
-		undo = new UndoAction(this);
-		redo = new RedoAction(this);
-		cut = new CutAction(this);
-		paste = new PasteAction(this);
-		copy = new CopyAction(this);
-		bold = new BoldAction(this);
-		italic = new ItalicAction(this);
-		fontSize = new FontSizeAction(this);
-		fontFamily = new FontFamilyAction(this);
-		edit = new EditAction(this);
+    // prepare undo:
+    undo = new UndoAction(this);
+    redo = new RedoAction(this);
+    cut = new CutAction(this);
+    paste = new PasteAction(this);
+    copy = new CopyAction(this);
+    bold = new BoldAction(this);
+    italic = new ItalicAction(this);
+    fontSize = new FontSizeAction(this);
+    fontFamily = new FontFamilyAction(this);
+    edit = new EditAction(this);
     editLong = new EditLongAction();
-		newChild = new NewChildAction(this);
+    newChild = new NewChildAction(this);
     newSibling = new NewSiblingAction(this);
     newPreviousSibling = new NewPreviousSiblingAction(this);
-		deleteChild = new DeleteChildAction(this);
-		toggleFolded = new ToggleFoldedAction(this);
-		toggleChildrenFolded = new ToggleChildrenFoldedAction(this);
-		nodeUp = new NodeUpAction(this);
-		nodeDown = new NodeDownAction(this);
-		nodeColor = new NodeColorAction(this);
+    deleteChild = new DeleteChildAction(this);
+    toggleFolded = new ToggleFoldedAction(this);
+    toggleChildrenFolded = new ToggleChildrenFoldedAction(this);
+    nodeUp = new NodeUpAction(this);
+    nodeDown = new NodeDownAction(this);
+    nodeColor = new NodeColorAction(this);
     nodeBackgroundColor = new NodeBackgroundColorAction(this);
-    
+
     iconSelectionAction = new IconSelectionAction(this);
-		// this is an unknown icon and thus corrected by mindicon:
-		removeLastIconAction = new RemoveIconAction(this);
-		// this action handles the xml stuff: (undo etc.)
-		unknownIconAction = new IconAction(this,
-				MindIcon.factory((String) MindIcon.getAllIconNames(resources).get(0), resources),
-				removeLastIconAction);
-		removeLastIconAction.setIconAction(unknownIconAction);
-		removeAllIconsAction = new RemoveAllIconsAction(this, unknownIconAction);
-		moveNodeAction = new MoveNodeAction(this);
-		find = new FindAction(this);
-		findNext = new FindNextAction(this, find);
-		selectBranchAction = new SelectBranchAction(this);
-		selectAllAction = new SelectAllAction(this);
+    // this is an unknown icon and thus corrected by mindicon:
+    removeLastIconAction = new RemoveIconAction(this);
+    // this action handles the xml stuff: (undo etc.)
+    unknownIconAction = new IconAction(this,
+        MindIcon.factory((String) MindIcon.getAllIconNames(resources).get(0), resources),
+        removeLastIconAction);
+    removeLastIconAction.setIconAction(unknownIconAction);
+    removeAllIconsAction = new RemoveAllIconsAction(this, unknownIconAction);
+    moveNodeAction = new MoveNodeAction(this);
+    find = new FindAction(this);
+    findNext = new FindNextAction(this, find);
+    selectBranchAction = new SelectBranchAction(this);
+    selectAllAction = new SelectAllAction(this);
 
     changeNodeLevelLeft = new ChangeNodeLevelAction("left", this);
     changeNodeLevelRight = new ChangeNodeLevelAction("right", this);
-    
+
     zoomIn = new ZoomInAction(this);
     zoomOut = new ZoomOutAction(this);
     fitToPage = new FitToPageAction(this);
-	}
+  }
 
-	private void createIconActions() {
-		Vector iconNames = MindIcon.getAllIconNames(resources);
-		for (int i = 0; i < iconNames.size(); ++i) {
-			String iconName = ((String) iconNames.get(i));
-			MindIcon myIcon = MindIcon.factory(iconName, resources);
-			IconAction myAction = new IconAction(this, myIcon,
-					removeLastIconAction);
-			iconActions.add(myAction);
-		}
-	}
+  private void createIconActions() {
+    Vector iconNames = MindIcon.getAllIconNames(resources);
+    for (int i = 0; i < iconNames.size(); ++i) {
+      String iconName = ((String) iconNames.get(i));
+      MindIcon myIcon = MindIcon.factory(iconName, resources);
+      IconAction myAction = new IconAction(this, myIcon,
+          removeLastIconAction);
+      iconActions.add(myAction);
+    }
+  }
 
   public void setMapModel(AbstractMindMapModel model) {
     mModel = model;
@@ -410,14 +410,6 @@ public class MindMapController {
     }
   }
 
-  public void firePreSaveEvent(MindMapNode node) {
-    // copy to prevent concurrent modification.
-    HashSet<NodeSelectionListener> listenerCopy = new HashSet<>(mNodeSelectionListeners);
-    for (NodeSelectionListener listener : listenerCopy) {
-      listener.onSaveNode(node);
-    }
-  }
-
   /**
    * fc, 24.1.2004: having two methods getSelecteds with different return
    * values (linkedlists of models resp. views) is asking for trouble. @see
@@ -526,7 +518,7 @@ public class MindMapController {
   public void setView(MapView pView) {
     mView = pView;
   }
-  
+
   public MindMapResources getResources() {
     return resources;
   }
@@ -703,12 +695,6 @@ public class MindMapController {
     void onLostFocusNode(NodeView node);
 
     /**
-     * Is issued before a node is saved (eg. to save its notes, too, even if
-     * the notes is currently edited).
-     */
-    void onSaveNode(MindMapNode node);
-
-    /**
      * Informs whether or not the node belongs to the group of selected
      * nodes (in contrast to the focused node above).
      * @param pNode
@@ -737,171 +723,171 @@ public class MindMapController {
     void onPostDeleteNode(MindMapNode node, MindMapNode parent);
   }
 
-	public MindMapNode newNode(String userObject) {
+  public MindMapNode newNode(String userObject) {
     return this.getMapModel().newNode(userObject);
-	}
+  }
 
-	public void setBold(MindMapNode node, boolean bolded) {
-		bold.setBold(node, bolded);
-	}
+  public void setBold(MindMapNode node, boolean bolded) {
+    bold.setBold(node, bolded);
+  }
 
-	public void setItalic(MindMapNode node, boolean isItalic) {
-		italic.setItalic(node, isItalic);
-	}
+  public void setItalic(MindMapNode node, boolean isItalic) {
+    italic.setItalic(node, isItalic);
+  }
 
-	// Node editing
-	public void setFontSize(MindMapNode node, String fontSizeValue) {
-		fontSize.setFontSize(node, fontSizeValue);
-	}
+  // Node editing
+  public void setFontSize(MindMapNode node, String fontSizeValue) {
+    fontSize.setFontSize(node, fontSizeValue);
+  }
 
-	/**
+  /**
      *
      */
 
-	public void increaseFontSize(MindMapNode node, int increment) {
-		int newSize = Integer.valueOf(node.getFontSize()).intValue()
-				+ increment;
+  public void increaseFontSize(MindMapNode node, int increment) {
+    int newSize = Integer.valueOf(node.getFontSize()).intValue()
+        + increment;
 
-		if (newSize > 0) {
-			setFontSize(node, Integer.toString(newSize));
-		}
-	}
+    if (newSize > 0) {
+      setFontSize(node, Integer.toString(newSize));
+    }
+  }
 
-	public void setFontFamily(MindMapNode node, String fontFamilyValue) {
-		fontFamily.setFontFamily(node, fontFamilyValue);
-	}
+  public void setFontFamily(MindMapNode node, String fontFamilyValue) {
+    fontFamily.setFontFamily(node, fontFamilyValue);
+  }
 
-	public void setNodeColor(MindMapNode node, Color color) {
-		nodeColor.setNodeColor(node, color);
-	}
+  public void setNodeColor(MindMapNode node, Color color) {
+    nodeColor.setNodeColor(node, color);
+  }
 
-	public void addIcon(MindMapNode node, MindIcon icon) {
-		unknownIconAction.addIcon(node, icon);
-	}
+  public void addIcon(MindMapNode node, MindIcon icon) {
+    unknownIconAction.addIcon(node, icon);
+  }
 
-	public void removeAllIcons(MindMapNode node) {
-		removeAllIconsAction.removeAllIcons(node);
-	}
+  public void removeAllIcons(MindMapNode node) {
+    removeAllIconsAction.removeAllIcons(node);
+  }
 
-	public int removeLastIcon(MindMapNode node) {
-		return removeLastIconAction.removeLastIcon(node);
-	}
+  public int removeLastIcon(MindMapNode node) {
+    return removeLastIconAction.removeLastIcon(node);
+  }
 
-	// edit begins with home/end or typing (PN 6.2)
-	public void edit(KeyEvent e, boolean addNew, boolean editLong) {
-		edit.edit(e, addNew, editLong);
-	}
+  // edit begins with home/end or typing (PN 6.2)
+  public void edit(KeyEvent e, boolean addNew, boolean editLong) {
+    edit.edit(e, addNew, editLong);
+  }
 
-	public void setNodeText(MindMapNode selected, String newText) {
-		edit.setNodeText(selected, newText);
-	}
+  public void setNodeText(MindMapNode selected, String newText) {
+    edit.setNodeText(selected, newText);
+  }
 
-	public Transferable copy(MindMapNode node, boolean saveInvisible) {
-		StringWriter stringWriter = new StringWriter();
-		try {
-			((MindMapNode) node).save(stringWriter, getMapModel()
-					.getLinkRegistry(), saveInvisible, true);
-		} catch (IOException e) {
-		}
-		Vector<String> nodeList = new Vector<>();
+  public Transferable copy(MindMapNode node, boolean saveInvisible) {
+    StringWriter stringWriter = new StringWriter();
+    try {
+      XMLElement xml = ((MindMapNode) node).save(saveInvisible);
+      xml.write(stringWriter);
+    } catch (IOException e) {
+    }
+    Vector<String> nodeList = new Vector<>();
     nodeList.add(getNodeID(node));
-		return new MindMapNodesSelection(stringWriter.toString(),
-				null, null, nodeList);
-	}
-  
-	public Transferable copy() {
-		return copy(getView().getSelectedNodesSortedByY(), false);
-	}
+    return new MindMapNodesSelection(stringWriter.toString(),
+        null, null, nodeList);
+  }
 
-	public Transferable copy(List<MindMapNode> selectedNodes, boolean copyInvisible) {
-		try {
-			String forNodesFlavor = createForNodesFlavor(selectedNodes,
-					copyInvisible);
-			List createForNodeIdsFlavor = createForNodeIdsFlavor(selectedNodes,
-					copyInvisible);
+  public Transferable copy() {
+    return copy(getView().getSelectedNodesSortedByY(), false);
+  }
 
-			return new MindMapNodesSelection(forNodesFlavor,
-					getMapModel().getAsPlainText(selectedNodes), null, createForNodeIdsFlavor);
-		}
+  public Transferable copy(List<MindMapNode> selectedNodes, boolean copyInvisible) {
+    try {
+      String forNodesFlavor = createForNodesFlavor(selectedNodes,
+          copyInvisible);
+      List createForNodeIdsFlavor = createForNodeIdsFlavor(selectedNodes,
+          copyInvisible);
 
-		catch (UnsupportedFlavorException | IOException ex) {
+      return new MindMapNodesSelection(forNodesFlavor,
+          getMapModel().getAsPlainText(selectedNodes), null, createForNodeIdsFlavor);
+    }
+
+    catch (UnsupportedFlavorException | IOException ex) {
       Logger.getLogger(MindMapController.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return null;
-	}
+    }
+    return null;
+  }
 
-	public Transferable cut() {
-		return cut(getView().getSelectedNodesSortedByY());
-	}
+  public Transferable cut() {
+    return cut(getView().getSelectedNodesSortedByY());
+  }
 
-	public Transferable cut(List<MindMapNode> nodeList) {
-		return cut.cut(nodeList);
-	}
+  public Transferable cut(List<MindMapNode> nodeList) {
+    return cut.cut(nodeList);
+  }
 
-	public void paste(Transferable t, MindMapNode parent) {
-		paste(t, /* target= */parent, /* asSibling= */false,
-				parent.isNewChildLeft());
-	}
+  public void paste(Transferable t, MindMapNode parent) {
+    paste(t, /* target= */parent, /* asSibling= */false,
+        parent.isNewChildLeft());
+  }
 
-	/* (non-Javadoc)
-	 * @see freemind.modes.mindmapmode.actions.MindMapActions#paste(java.awt.datatransfer.Transferable, freemind.modes.MindMapNode, boolean, boolean)
-	 */
-	public boolean paste(Transferable t, MindMapNode target, boolean asSibling,
-			boolean isLeft) {
-		if (!asSibling
-				&& target.isFolded()
-				&& resources.getBoolProperty(PropertyKey.UNFOLD_ON_PASTE)) {
-			setFolded(target, false);
-		}
-		return paste.paste(t, target, asSibling, isLeft);
-	}
+  /* (non-Javadoc)
+   * @see freemind.modes.mindmapmode.actions.MindMapActions#paste(java.awt.datatransfer.Transferable, freemind.modes.MindMapNode, boolean, boolean)
+   */
+  public boolean paste(Transferable t, MindMapNode target, boolean asSibling,
+      boolean isLeft) {
+    if (!asSibling
+        && target.isFolded()
+        && resources.getBoolProperty(PropertyKey.UNFOLD_ON_PASTE)) {
+      setFolded(target, false);
+    }
+    return paste.paste(t, target, asSibling, isLeft);
+  }
 
-	public void paste(MindMapNode node, MindMapNode parent) {
-		paste.paste(node, parent);
-	}
+  public void paste(MindMapNode node, MindMapNode parent) {
+    paste.paste(node, parent);
+  }
 
-	public MindMapNode addNew(final MindMapNode target, final int newNodeMode,
-			final KeyEvent e) {
-		edit.stopEditing();
-		return newChild.addNew(target, newNodeMode, e);
-	}
+  public MindMapNode addNew(final MindMapNode target, final int newNodeMode,
+      final KeyEvent e) {
+    edit.stopEditing();
+    return newChild.addNew(target, newNodeMode, e);
+  }
 
-	public MindMapNode addNewNode(MindMapNode parent, int index,
-			boolean newNodeIsLeft) {
-		return newChild.addNewNode(parent, index, newNodeIsLeft);
-	}
+  public MindMapNode addNewNode(MindMapNode parent, int index,
+      boolean newNodeIsLeft) {
+    return newChild.addNewNode(parent, index, newNodeIsLeft);
+  }
 
-	public void deleteNode(MindMapNode selectedNode) {
-		deleteChild.deleteNode(selectedNode);
-	}
+  public void deleteNode(MindMapNode selectedNode) {
+    deleteChild.deleteNode(selectedNode);
+  }
 
-	public void toggleFolded() {
-		toggleFolded.toggleFolded();
-	}
+  public void toggleFolded() {
+    toggleFolded.toggleFolded();
+  }
 
-	public void setFolded(MindMapNode node, boolean folded) {
-		toggleFolded.setFolded(node, folded);
-	}
+  public void setFolded(MindMapNode node, boolean folded) {
+    toggleFolded.setFolded(node, folded);
+  }
 
-	public void moveNodes(MindMapNode selected, List selecteds, int direction) {
-		nodeUp.moveNodes(selected, selecteds, direction);
-	}
+  public void moveNodes(MindMapNode selected, List selecteds, int direction) {
+    nodeUp.moveNodes(selected, selecteds, direction);
+  }
 
-	public void moveNodePosition(MindMapNode node, int parentVGap, int hGap,
-			int shiftY) {
-		moveNodeAction.moveNodeTo(node, parentVGap, hGap, shiftY);
-	}
+  public void moveNodePosition(MindMapNode node, int parentVGap, int hGap,
+      int shiftY) {
+    moveNodeAction.moveNodeTo(node, parentVGap, hGap, shiftY);
+  }
 
-	// ///////////////////////////////////////////////////////////
-	// ///////////////////////////////////////////////////////////
-	// ///////////////////////////////////////////////////////////
-	// ///////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
 
-	public void plainClick(MouseEvent e) {
-		/* perform action only if one selected node. */
-		if (getSelecteds().size() != 1)
-			return;
-		final MainView component = (MainView) e.getComponent();
+  public void plainClick(MouseEvent e) {
+    /* perform action only if one selected node. */
+    if (getSelecteds().size() != 1)
+      return;
+    final MainView component = (MainView) e.getComponent();
     MindMapNode node = (component).getNodeView().getModel();
     if (!node.hasChildren()) {
       // then emulate the plain click.
@@ -909,150 +895,150 @@ public class MindMapController {
       return;
     }
     toggleFolded();
-	}
+  }
 
-	public ActionFactory getActionFactory() {
-		return actionFactory;
-	}
+  public ActionFactory getActionFactory() {
+    return actionFactory;
+  }
 
-	protected class EditLongAction extends AbstractAction {
-		public EditLongAction() {
-			super(getResources().getText("edit_long_node"));
+  protected class EditLongAction extends AbstractAction {
+    public EditLongAction() {
+      super(getResources().getText("edit_long_node"));
       this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(getResources().unsafeGetProperty("keystroke_edit_long_node")));
-		}
+    }
 
-		public void actionPerformed(ActionEvent e) {
-			edit(null, false, true);
-		}
-	}
+    public void actionPerformed(ActionEvent e) {
+      edit(null, false, true);
+    }
+  }
 
-	public void doubleClick(MouseEvent e) {
-		/* perform action only if one selected node. */
-		if (getSelecteds().size() != 1)
-			return;
-		// edit the node only if the node is a leaf (fc 0.7.1), or the root node
-		// (fc 0.9.0)
-		if (!e.isAltDown() && !e.isControlDown() && !e.isShiftDown()
-				&& !e.isPopupTrigger() && e.getButton() == MouseEvent.BUTTON1) {
-			edit(null, false, false);
-		}
-	}
+  public void doubleClick(MouseEvent e) {
+    /* perform action only if one selected node. */
+    if (getSelecteds().size() != 1)
+      return;
+    // edit the node only if the node is a leaf (fc 0.7.1), or the root node
+    // (fc 0.9.0)
+    if (!e.isAltDown() && !e.isControlDown() && !e.isShiftDown()
+        && !e.isPopupTrigger() && e.getButton() == MouseEvent.BUTTON1) {
+      edit(null, false, false);
+    }
+  }
 
-	public boolean extendSelection(MouseEvent e) {
-		NodeView newlySelectedNodeView = ((MainView) e.getComponent())
-				.getNodeView();
-		// MindMapNode newlySelectedNode = newlySelectedNodeView.getModel();
-		boolean extend = e.isControlDown();
-		// Fixes Cannot select multiple single nodes *
-		// https://sourceforge.net/tracker/?func=detail&atid=107118&aid=1675829&group_id=7118
-		if (Tools.isMacOsX()) {
-			extend |= e.isMetaDown();
-		}
-		boolean range = e.isShiftDown();
-		boolean branch = e.isAltGraphDown() || e.isAltDown(); /*
-															 * windows alt,
-															 * linux altgraph
-															 * ....
-															 */
-		boolean retValue = false;
+  public boolean extendSelection(MouseEvent e) {
+    NodeView newlySelectedNodeView = ((MainView) e.getComponent())
+        .getNodeView();
+    // MindMapNode newlySelectedNode = newlySelectedNodeView.getModel();
+    boolean extend = e.isControlDown();
+    // Fixes Cannot select multiple single nodes *
+    // https://sourceforge.net/tracker/?func=detail&atid=107118&aid=1675829&group_id=7118
+    if (Tools.isMacOsX()) {
+      extend |= e.isMetaDown();
+    }
+    boolean range = e.isShiftDown();
+    boolean branch = e.isAltGraphDown() || e.isAltDown(); /*
+                               * windows alt,
+                               * linux altgraph
+                               * ....
+                               */
+    boolean retValue = false;
 
-		if (extend || range || branch
-				|| !getView().isSelected(newlySelectedNodeView)) {
-			if (!range) {
-				if (extend)
-					getView().toggleSelected(newlySelectedNodeView);
-				else
-					select(newlySelectedNodeView);
-				retValue = true;
-			} else {
-				retValue = getView().selectContinuous(newlySelectedNodeView);
-				// /* fc, 25.1.2004: replace getView by controller methods.*/
-				// if (newlySelectedNodeView != getView().getSelected() &&
-				// newlySelectedNodeView.isSiblingOf(getView().getSelected())) {
-				// getView().selectContinuous(newlySelectedNodeView);
-				// retValue = true;
-				// } else {
-				// /* if shift was down, but no range can be selected, then the
-				// new node is simply selected: */
-				// if(!getView().isSelected(newlySelectedNodeView)) {
-				// getView().toggleSelected(newlySelectedNodeView);
-				// retValue = true;
-				// }
-			}
-			if (branch) {
-				getView().selectBranch(newlySelectedNodeView, extend);
-				retValue = true;
-			}
-		}
+    if (extend || range || branch
+        || !getView().isSelected(newlySelectedNodeView)) {
+      if (!range) {
+        if (extend)
+          getView().toggleSelected(newlySelectedNodeView);
+        else
+          select(newlySelectedNodeView);
+        retValue = true;
+      } else {
+        retValue = getView().selectContinuous(newlySelectedNodeView);
+        // /* fc, 25.1.2004: replace getView by controller methods.*/
+        // if (newlySelectedNodeView != getView().getSelected() &&
+        // newlySelectedNodeView.isSiblingOf(getView().getSelected())) {
+        // getView().selectContinuous(newlySelectedNodeView);
+        // retValue = true;
+        // } else {
+        // /* if shift was down, but no range can be selected, then the
+        // new node is simply selected: */
+        // if(!getView().isSelected(newlySelectedNodeView)) {
+        // getView().toggleSelected(newlySelectedNodeView);
+        // retValue = true;
+        // }
+      }
+      if (branch) {
+        getView().selectBranch(newlySelectedNodeView, extend);
+        retValue = true;
+      }
+    }
 
-		if (retValue) {
-			e.consume();
-		}
-		logger.fine("MouseEvent: extend:" + extend + ", range:" + range
-				+ ", branch:" + branch + ", event:" + e + ", retValue:"
-				+ retValue);
+    if (retValue) {
+      e.consume();
+    }
+    logger.fine("MouseEvent: extend:" + extend + ", range:" + range
+        + ", branch:" + branch + ", event:" + e + ", retValue:"
+        + retValue);
     getView().requestFocusInWindow();
-		return retValue;
-	}
+    return retValue;
+  }
 
-	public XMLElement createXMLElement() {
-		return new MindMapXMLElement(this);
-	}
-  
-	public MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, MindMapNode> pIDToTarget)
-			throws XMLParseException, IOException {
-		XMLElementAdapter element = (XMLElementAdapter) createXMLElement();
-		element.setIDToTarget(pIDToTarget);
-		element.parseFromReader(pReader);
-		element.processUnfinishedLinks(getMapModel().getLinkRegistry());
-		MindMapNode node = element.getMapChild();
-		return node;
-	}
+  public XMLElement createXMLElement() {
+    return this.getMapModel().createXMLElement();
+  }
 
-	public void removeNodeFromParent(MindMapNode selectedNode) {
-		// first deselect, and then remove. 
-		NodeView nodeView = getView().getNodeView(selectedNode);
-		getView().deselect(nodeView);
-		getMapModel().removeNodeFromParent(selectedNode);
-	}
+  public MindMapNode createNodeTreeFromXml(Reader pReader, HashMap<String, MindMapNode> pIDToTarget)
+      throws XMLParseException, IOException {
+    XMLElementAdapter element = (XMLElementAdapter) createXMLElement();
+    element.setIDToTarget(pIDToTarget);
+    element.parseFromReader(pReader);
+    element.processUnfinishedLinks(getMapModel().getLinkRegistry());
+    MindMapNode node = element.getMapChild();
+    return node;
+  }
 
-	public void repaintMap() {
-		getView().repaint();
-	}
+  public void removeNodeFromParent(MindMapNode selectedNode) {
+    // first deselect, and then remove.
+    NodeView nodeView = getView().getNodeView(selectedNode);
+    getView().deselect(nodeView);
+    getMapModel().removeNodeFromParent(selectedNode);
+  }
 
-	public Transferable getClipboardContents() {
-		getClipboard();
-		return clipboard.getContents(this);
-	}
+  public void repaintMap() {
+    getView().repaint();
+  }
 
-	protected void getClipboard() {
-		if (clipboard == null) {
-			Toolkit toolkit = Toolkit.getDefaultToolkit();
-			selection = toolkit.getSystemSelection();
-			clipboard = toolkit.getSystemClipboard();
-		}
-	}
+  public Transferable getClipboardContents() {
+    getClipboard();
+    return clipboard.getContents(this);
+  }
 
-	/**
-	 */
-	public void setClipboardContents(Transferable t) {
-		getClipboard();
-		clipboard.setContents(t, null);
-		if (selection != null) {
-			selection.setContents(t, null);
-		}
-	}
+  protected void getClipboard() {
+    if (clipboard == null) {
+      Toolkit toolkit = Toolkit.getDefaultToolkit();
+      selection = toolkit.getSystemSelection();
+      clipboard = toolkit.getSystemClipboard();
+    }
+  }
 
-	/**
-	 * Delegate method to Controller. Must be called after cut.s
-	 */
-	public void obtainFocusForSelected() {
+  /**
+   */
+  public void setClipboardContents(Transferable t) {
+    getClipboard();
+    clipboard.setContents(t, null);
+    if (selection != null) {
+      selection.setContents(t, null);
+    }
+  }
+
+  /**
+   * Delegate method to Controller. Must be called after cut.s
+   */
+  public void obtainFocusForSelected() {
     getView().requestFocusInWindow();
-	}
+  }
 
-	public boolean doTransaction(String pName, ActionPair pPair) {
-		return actionFactory.doTransaction(pName, pPair);
-	}
+  public boolean doTransaction(String pName, ActionPair pPair) {
+    return actionFactory.doTransaction(pName, pPair);
+  }
 
   /**
    * This class sortes nodes by ascending depth of their paths to root. This

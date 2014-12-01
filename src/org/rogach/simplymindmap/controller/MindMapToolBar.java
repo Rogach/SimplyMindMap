@@ -13,27 +13,27 @@ import org.rogach.simplymindmap.util.Tools;
 import org.rogach.simplymindmap.view.NodeView;
 
 public class MindMapToolBar extends JToolBar {
-  
+
   private JButton undoButton;
   private JButton redoButton;
   private JSeparator undoSeparator;
-  
+
   public MindMapToolBar(MindMapController controller) {
     super();
-    
+
     this.setFloatable(false);
-    
+
     this.add(controller.cut);
     this.add(controller.copy);
     this.add(controller.paste);
     this.addSeparator();
-    
+
     undoButton = this.add(controller.undo);
     redoButton = this.add(controller.redo);
     undoSeparator = new JToolBar.Separator(null);
     this.add(undoSeparator);
     setUndoActionsVisible(false);
-    
+
     this.add(controller.newChild);
     this.add(controller.italic);
     this.add(controller.bold);
@@ -41,7 +41,7 @@ public class MindMapToolBar extends JToolBar {
     this.add(getFontFamilySelector(controller));
     this.add(getFontSizeSelector(controller));
   }
-  
+
   public JComboBox<String> getFontFamilySelector(final MindMapController controller) {
     final JComboBox<String> comboBox = new JComboBox<>(new Vector<String>(Tools.getAvailableFontFamilyNames()));
     comboBox.setPreferredSize(new Dimension(90, comboBox.getPreferredSize().height));
@@ -69,9 +69,6 @@ public class MindMapToolBar extends JToolBar {
       public void onLostFocusNode(NodeView node) {}
 
       @Override
-      public void onSaveNode(MindMapNode node) {}
-
-      @Override
       public void onSelectionChange(NodeView pNode, boolean pIsSelected) {
         if (pIsSelected) {
           comboBox.removeActionListener(fontChangeListener);
@@ -82,7 +79,7 @@ public class MindMapToolBar extends JToolBar {
     }, false);
     return comboBox;
   }
-  
+
   public JComboBox<String> getFontSizeSelector(final MindMapController controller) {
     String[] fontSizes = new String[] { "8", "10", "12", "14", "16", "18", "20", "24", "28" };
     final JComboBox<String> comboBox = new JComboBox<>(fontSizes);
@@ -110,9 +107,6 @@ public class MindMapToolBar extends JToolBar {
       public void onLostFocusNode(NodeView node) {}
 
       @Override
-      public void onSaveNode(MindMapNode node) {}
-
-      @Override
       public void onSelectionChange(NodeView pNode, boolean pIsSelected) {
         if (pIsSelected) {
           comboBox.removeActionListener(fontSizeChangeListener);
@@ -123,7 +117,7 @@ public class MindMapToolBar extends JToolBar {
     }, false);
     return comboBox;
   }
-  
+
   public void setUndoActionsVisible(boolean visible) {
     undoButton.setVisible(visible);
     redoButton.setVisible(visible);
