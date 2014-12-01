@@ -177,5 +177,9 @@ public class MindMapLinkRegistry {
 			mIdToLinks.remove(id);
 		}
 	}
+  
+  public HashMap<String, MindMapNode> getIdToTarget() {
+      return mIdToTarget;
+  }
 
 }
