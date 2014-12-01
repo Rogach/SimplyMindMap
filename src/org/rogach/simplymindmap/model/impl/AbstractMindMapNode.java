@@ -742,7 +742,7 @@ public abstract class AbstractMindMapNode implements MindMapNode {
   }
 
   @Override
-  public XMLElement save(boolean saveInvisible) throws IOException {
+  public XMLElement save(MindMapLinkRegistry registry, boolean saveInvisible) throws IOException {
     XMLElement node = new XMLElement();
     node.setName(XMLElementAdapter.XML_NODE);
     /** fc, 12.6.2005: XML must not contain any zero characters. */
@@ -760,6 +760,10 @@ public abstract class AbstractMindMapNode implements MindMapNode {
     if (!(isRoot()) && (getParentNode().isRoot())) {
       node.setAttribute("POSITION", isLeft() ? "left" : "right");
     }
+    String nodeId = registry.getLabel(this);
+    if (!sSaveOnlyIntrinsicallyNeededIds && nodeId != null) {
+        node.setAttribute("ID", nodeId);
+    } 
     if (color != null) {
       node.setAttribute("COLOR", XmlTools.colorToXml(getColor()));
     }
@@ -806,7 +810,7 @@ public abstract class AbstractMindMapNode implements MindMapNode {
       node.addChild(iconElement);
     }
     if (saveInvisible || childrenUnfolded().hasNext()) {
-      saveChildren(this, node, saveInvisible);
+      saveChildren(this, node, registry, saveInvisible);
     }
     return node;
   }
@@ -816,10 +820,10 @@ public abstract class AbstractMindMapNode implements MindMapNode {
     return model.getMindMapController();
   }
 
-  private void saveChildren(MindMapNode node, XMLElement xmlNode, boolean saveHidden) throws IOException {
+  private void saveChildren(MindMapNode node, XMLElement xmlNode, MindMapLinkRegistry registry, boolean saveHidden) throws IOException {
     for (ListIterator<MindMapNode> e = node.childrenUnfolded(); e.hasNext();) {
       MindMapNode child = e.next();
-      xmlNode.addChild(child.save(saveHidden));
+      xmlNode.addChild(child.save(registry, saveHidden));
     }
   }
 

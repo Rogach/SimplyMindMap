@@ -194,7 +194,7 @@ public interface MindMapNode extends MutableTreeNode {
 
   void removeViewer(NodeView viewer);
 
-  XMLElement save(boolean saveInvisible) throws IOException;
+  XMLElement save(MindMapLinkRegistry registry, boolean saveInvisible) throws IOException;
 
   void saveTXT(Writer fileout, int depth) throws IOException;
 

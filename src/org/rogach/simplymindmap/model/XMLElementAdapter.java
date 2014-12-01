@@ -48,7 +48,6 @@ public abstract class XMLElementAdapter extends XMLElement {
 	private String iconName;
 
 	// arrow link attributes:
-	protected Vector mArrowLinkAdapters;
 	protected HashMap<String, MindMapNode> mIdToTarget;
 	public static final String XML_NODE_TEXT = "TEXT";
 	public static final String XML_NODE = "node";
@@ -271,8 +270,6 @@ public abstract class XMLElementAdapter extends XMLElement {
           node.setBackgroundColor(XmlTools.xmlToColor(sValue));
         } break;
       case "ID":
-        // do not set label but annotate in list:
-        // System.out.println("(sValue, node) = " + sValue + ", "+ node);
         mIdToTarget.put(sValue, node);
         break;
       case "VSHIFT":

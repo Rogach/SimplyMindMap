@@ -785,7 +785,7 @@ public class MindMapController {
   public Transferable copy(MindMapNode node, boolean saveInvisible) {
     StringWriter stringWriter = new StringWriter();
     try {
-      XMLElement xml = ((MindMapNode) node).save(saveInvisible);
+      XMLElement xml = ((MindMapNode) node).save(getMapModel().getLinkRegistry(), saveInvisible);
       xml.write(stringWriter);
     } catch (IOException e) {
     }

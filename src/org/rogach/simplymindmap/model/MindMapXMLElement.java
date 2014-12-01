@@ -40,8 +40,7 @@ public class MindMapXMLElement extends XMLElementAdapter {
     init();
   }
 
-  protected MindMapXMLElement(MindMapController pMindMapController,
-      Vector ArrowLinkAdapters, HashMap<String, MindMapNode> IDToTarget) {
+  protected MindMapXMLElement(MindMapController pMindMapController, HashMap<String, MindMapNode> IDToTarget) {
     super(pMindMapController, IDToTarget);
     init();
   }
@@ -58,8 +57,7 @@ public class MindMapXMLElement extends XMLElementAdapter {
   /** abstract method to create elements of my type (factory). */
   protected XMLElement createAnotherElement() {
     // We do not need to initialize the things of XMLElement.
-    return new MindMapXMLElement(mMindMapController, mArrowLinkAdapters,
-        mIdToTarget);
+    return new MindMapXMLElement(mMindMapController, mIdToTarget);
   }
 
   protected MindMapNode createNodeAdapter(String nodeClass) {
